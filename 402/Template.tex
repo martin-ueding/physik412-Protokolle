@@ -1,0 +1,63 @@
+% Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
+
+\input{../../header.tex}
+
+\usepackage{placeins}
+
+\ihead{physik313 – Versuch 8}
+\ifoot{Martin Ueding, Lino Lemmer}
+
+\subject{Praktikumsprotokoll}
+\title{Mikroprozessor}
+\subtitle{physik313 – Versuch 8}
+\author{
+	Martin Ueding
+    \footnote{\href{mailto:mu@martin-ueding.de}{mu@martin-ueding.de}}
+	\and
+	Lino Lemmer
+    \footnote{\href{mailto:s6lilemm@uni-bonn.de}{s6lilemm@uni-bonn.de}}
+}
+
+%\setcounter{tocdepth}{2}
+
+\begin{document}
+
+\maketitle
+
+\section*{\LaTeX-Quelltext}
+
+Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
+\ref{it:mu} eingesehen werden. Die Quellen für dieses Protokoll können auf
+\ref{it:github/alles} eingesehen werden. Die \LaTeX-Datei wird aus
+\ref{it:github/template} generiert.
+
+\begin{enumerate}
+	\item
+		\label{it:mu}
+		\url{http://martin-ueding.de/de/university/physik313/}
+	\item
+		\label{it:github/alles}
+		\url{https://github.com/martin-ueding/physik313-8/}
+	\item
+		\label{it:github/template}
+		\url{https://github.com/martin-ueding/physik313-8/blob/master/Template.tex}
+\end{enumerate}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                  Literatur                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\IfFileExists{\bibliographyfile}{
+	\bibliography{\bibliographyfile}
+}{}
+
+\end{document}
+
+% vim: spell spelllang=de tw=79
