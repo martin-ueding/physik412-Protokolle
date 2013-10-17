@@ -4,18 +4,20 @@
 
 \usepackage{placeins}
 
-\ihead{physik313 – Versuch 8}
+\newcommand\versuchsnummer{402}
+
+\ihead{physik412 – Versuch \versuchsnummer}
 \ifoot{Martin Ueding, Lino Lemmer}
 
 \subject{Praktikumsprotokoll}
 \title{Mikroprozessor}
-\subtitle{physik313 – Versuch 8}
+\subtitle{physik412 – Versuch \versuchsnummer}
 \author{
-	Martin Ueding
-    \footnote{\href{mailto:mu@martin-ueding.de}{mu@martin-ueding.de}}
-	\and
-	Lino Lemmer
-    \footnote{\href{mailto:s6lilemm@uni-bonn.de}{s6lilemm@uni-bonn.de}}
+    Martin Ueding \\
+    \small{\href{mailto:mu@martin-ueding.de}{mu@martin-ueding.de}}
+    \and
+    Lino Lemmer \\
+    \small{\href{mailto:s6lilemm@uni-bonn.de}{s6lilemm@uni-bonn.de}}
 }
 
 %\setcounter{tocdepth}{2}
@@ -32,15 +34,15 @@ Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
 \ref{it:github/template} generiert.
 
 \begin{enumerate}
-	\item
-		\label{it:mu}
-		\url{http://martin-ueding.de/de/university/physik313/}
-	\item
-		\label{it:github/alles}
-		\url{https://github.com/martin-ueding/physik313-8/}
-	\item
-		\label{it:github/template}
-		\url{https://github.com/martin-ueding/physik313-8/blob/master/Template.tex}
+    \item
+        \label{it:mu}
+        \url{http://martin-ueding.de/de/university/physik412/}
+    \item
+        \label{it:github/alles}
+        \url{https://github.com/martin-ueding/physik412-Protokolle/}
+    \item
+        \label{it:github/template}
+        \url{https://github.com/martin-ueding/physik412-Protokolle/blob/master/\versuchsnummer/Template.tex}
 \end{enumerate}
 
 
@@ -55,9 +57,9 @@ Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
 
 \FloatBarrier
 \IfFileExists{\bibliographyfile}{
-	\bibliography{\bibliographyfile}
+    \bibliography{\bibliographyfile}
 }{}
 
 \end{document}
 
-% vim: spell spelllang=de tw=79
+% vim: et spell spelllang=de tw=79
