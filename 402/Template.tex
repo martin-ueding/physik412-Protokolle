@@ -29,10 +29,10 @@
 
 \begin{abstract}
     In diesem Versuch wird im ersten Teil mit Hilfe des Photoeffektes das
-    Placksche Wirkungsquantum $h$ abgeschätzt. Im zweiten Teil wird die
+    Placksche Wirkungsquantum abgeschätzt. Im zweiten Teil wird die
     Balmer-Serie von Wasserstoff und Deuterium untersucht und durch diese
     ebenfalls das Plancksche Wirkungsquantum bestimmt. Die so erhaltenen Werte
-    für $h$ werden verglichen.
+    für das Wirkungsquantum werden verglichen.
 \end{abstract}
 
 \tableofcontents
@@ -43,6 +43,52 @@
 
 \FloatBarrier
 \section{Theorie}
+
+Symbole:
+
+\begin{itemize}
+
+    \item Bankwinkel $\omega_\text B$
+    \item Brennweite $f$
+    \item Gitterkonstante $g$
+    \item Gitterwinkel $\omega_\text G$
+    \item Linienaufspaltung $d$
+    \item Wellenlänge $\lambda$
+    \item Wirkungsquantum $h$
+
+\end{itemize}
+
+\subsection{Gittergleichung}
+
+Für die Bestimmung der Gitterkonstante im zweiten Versuchsteil wird eine
+Gittergleichung benötigt, die nicht in der Anleitung gegeben ist. Diese muss
+eine Gleichung sein, die die Abhängigkeit $(\omega_\text B, \omega_\text G,
+\lambda) \mapsto g$ liefert.
+
+Der Gangunterschied $\Delta$ bei einem Einfallswinkel $\alpha_0$ und einem
+Austrittswinkel $\alpha_m$ für das Interferenzbild der Ordnung $m$ ist gegeben
+durch: \cite[Formel~368.16]{physik312-Anleitung}
+\begin{equation}
+    \label{eq:368.16}
+    \Delta = g \cdot \del{\sin(\alpha_0) + \sin(-\alpha_m)} = m \lambda
+\end{equation}
+
+In diesem Versuch haben wir ein Reflexionsgitter, außerdem sind die Messwerte
+$\omega_\text B$ und $\omega_\text G$. Die Umrechnung ist wie folgt:
+\[
+    \alpha_0 = \omega_\text G
+    \eqnsep
+    \alpha_m = \omega_\text B + \omega_\text G - \piup
+\]
+
+Dies setzen wir in \eqref{eq:368.16} ein und erhalte:
+\begin{equation}
+    \label{eq:gittergleichung}
+    g = \frac{m \lambda}{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+\end{equation}
+
+Sollte $\omega_\text B = \piup$ sein, darf es keinen Gangunterschied geben.
+$\Delta$ wird 0. Die Vorzeichen sind also korrekt.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Bestimmung des Planckschen Wirkungsquantums                 %
@@ -127,6 +173,7 @@ ein Teleskop beobachten können.
 
 \FloatBarrier
 \subsubsection{Bestimmung der Gitterkonstanten}
+\label{sec:gitterkonstante/durchführung}
 
 Wir bestimmen die Gitterkonstante des Gitters durch eine Messung mit einer
 Quecksilberdampflampe. Dazu lösen wir die Rändelscchraube der Gittersäule und
@@ -230,6 +277,25 @@ Tabelle~\ref{tab:messdaten:balmer-ccd}.
 
 \FloatBarrier
 \subsubsection{Bestimmung der Gitterkonstanten}
+
+Mithilfe der Gittergleichung \eqref{eq:gittergleichung} können wir die
+Gitterkonstante bestimmen.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS|S}
+        {$\lambda / \si{\nano\meter}$} & {Winkel $\omega_\text B / \si\radian$}  & {Winkel
+    $\omega_\text G / \si\radian$} & {$g / \si{\meter}$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Berechnete Gitterkonstanten aus den Messwerten aus
+        Abschnitt~\ref{sec:gitterkonstante/durchführung},
+        Tabelle~\ref{tab:messdaten:gitterkonstante}.
+    }
+    \label{tab:gitterkonstanten}
+\end{table}
 
 \FloatBarrier
 \subsubsection{Bestimmung der Balmerlinien}
