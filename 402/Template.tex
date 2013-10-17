@@ -333,6 +333,34 @@ $m = 1$.
     g \cdot \del{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
 \]
 
+Hier berechnet sich der Fehler wie folgt:
+\[
+    \Deltaup \lambda
+    =
+    \sqrt{
+        \del{\frac{\lambda}g \Deltaup g}^2
+        +
+        \del{g \del{\cos(\omegaG) + \cos(\omegaB + \omegaG)} \Deltaup
+        \omegaG}^2
+        +
+        \del{g \cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
+    \si\degree$} & {$\lambda/\si{\nano\meter}$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Messdaten für die Ballmer-Lampe, bestimmt mit einer CCD-Zeile.
+    }
+    \label{tab:messdaten:balmer-wellenlängen}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
