@@ -96,6 +96,31 @@ Verlauf dieses Teilversuchs wird noch eine CCD-Kamera angebracht.
 \FloatBarrier
 \subsubsection{Justierung}
 
+Zuerst müssen wir den Aufbau justieren. Dazu benutzen wir die helle
+Quecksilberlampe. Diese wird an das Ende des einen Arms gestzt. Mit der ersten
+Linse bilden wir die Lampe auf den Spalt ab. Der Spalt ist so angebracht, dass
+die schrängen Flanken zur Lichtquelle ausgerichtet sind, und dass der Spalt
+senkrecht ist.
+
+Wir setzen das Objektiv zwischen Spalt und Gitter ein und drehen das Gitter so,
+dass die Reflexion des Gitters wieder durch das Objektiv fällt und auf den
+Spalt trifft. Der Abstand von Objektiv und Spalt ist grob dessen Brennweite $f
+= \SI{150}{\milli\meter}$. Mit Hilfe dieser Autokollimationsanordnung stellen
+wir die Position des Objektivs so ein, dass das Bild des Spaltes scharf ist.
+Dadurch ist der Strahlengang nach dem Objektiv auf unendlich fokussiert.
+
+Nun ist das Bild scharf eingestellt, liegt aber noch ein wenig neben dem Spalt.
+Daher drehen wir jetzt das Gitter mit den Rändelschrauben so, dass das Bild
+exakt in den Spalt fällt.
+
+Die optische Bank klappen wir nun so zu, dass der Winkel $\omega_\text B$ im
+Bereich von \SIrange{130}{170}{\degree} liegt.
+
+Das Okular wird ans Ende des anderen Armes gestellt und so justiert, dass einer
+von uns die Skala gut ablesen kann. Zuletzt setzen wir die Linse mit $f =
+\SI{300}{\milli\meter}$ ein, damit wir im zweiten Arm die Spektrallinien durch
+ein Teleskop beobachten können.
+
 \FloatBarrier
 \subsection{Durchführung}
 
@@ -108,16 +133,20 @@ drehen so lange, bis die erste Linie sichtbar wird. Um die Linie einfacher
 erkennen zu können, weiten wir den Spalt auf und stellen ihn anschließend auf
 \SI{0.1}{\milli\meter} zurück.
 
+Mit der Objektivlinse des Beobachtungsteleskops können wir die Linien
+scharfstellen, wir justieren so lange, bis diese es sind. Dann lesen wir den
+Winkel zwischen den Armen $\omega_\text B$ sowie den Winkel des Gitters
+$\omega_\text G$ ab. Die gemessenen Winkel sind in
+Tabelle~\ref{tab:messdaten:gitterkonstante}.
+
 Im Anhang der Praktikumsanleitung ist das Spektrum der Quecksilberlampe
 angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
 
-Die gemessenen Winkel sind in Tabelle~\ref{tab:messdaten:gitterkonstante}.
-
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SS}
+    \begin{tabular}{SSS}
         {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B /
-    \si\radian$} \\
+    \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} \\
         \hline
         % TODO Messdaten aus Datei laden.
     \end{tabular}
