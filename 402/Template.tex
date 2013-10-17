@@ -23,6 +23,9 @@
 
 %\setcounter{tocdepth}{2}
 
+\newcommand\omegaG{\omega_\text G}
+\newcommand\omegaB{\omega_\text B}
+
 \begin{document}
 
 \maketitle
@@ -287,7 +290,17 @@ Tabelle~\ref{tab:messdaten:balmer-ccd}.
 \subsubsection{Bestimmung der Gitterkonstanten}
 
 Mithilfe der Gittergleichung \eqref{eq:gittergleichung} können wir die
-Gitterkonstante bestimmen.
+Gitterkonstante bestimmen. Dabei bestimmen wir noch den Fehler mit der
+Gaußschen Fehlerfortplanzung:
+\[
+    \Deltaup g
+    = \frac{g^2}{m\lambda} \sqrt{
+        \del{\del{\cos(\omegaG) + \cos(\omegaB +
+        \omegaG)} \Deltaup \omegaG}^2
+        +
+        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
 
 \begin{table}[htbp]
     \centering
@@ -310,6 +323,14 @@ Gitterkonstante bestimmen.
 
 \FloatBarrier
 \subsubsection{Bestimmung der Balmerlinien}
+
+Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
+Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
+$m = 1$.
+\[
+    \lambda =
+    g \cdot \del{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
