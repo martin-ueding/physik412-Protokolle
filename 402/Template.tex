@@ -2,6 +2,7 @@
 
 \input{../../header.tex}
 
+\usepackage{keystroke}
 \usepackage{placeins}
 
 \newcommand\versuchsnummer{402}
@@ -189,6 +190,19 @@ Tabelle~\ref{tab:messdaten:balmer-okular}.
 
 \FloatBarrier
 \subsubsection{Untersuchung der Ballmer-Linien mit einer CCD-Kamera}
+
+Jetzt wird das Okular durch eine CCD-Kamera ersetzt. Wir starten das Programm
+„VideoCom“ und stellen im Menü „Kalibrierung / Theorievergleich“
+(\keystroke{F5}) im Register „Beugungswinkel“ die Brennweite $f =
+\SI{300}{\milli\meter}$ der Objektivlinse ein. Die Belichtungszeit stellen wir
+auf Stufe 8. Wir aktivieren die Messung mit \keystroke{F9}.
+
+Die roten Balmer-Linien müssen auf die Mitte der CCD-Zeile abgebildet werden,
+daher drehen wir das Gitter entsprechend. Mit der Objektivlinse stellen wir die
+Linien scharf, das Ergebnis kontrollieren wir auf dem Monitor.
+
+Mit \Alt\keystroke{Z} vergrößern wir den Bereich und können die Aufspaltung so
+besser erkennen.
 
 \FloatBarrier
 \subsection{Auswertung}
