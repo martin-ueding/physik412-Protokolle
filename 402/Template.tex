@@ -2,6 +2,7 @@
 
 \input{../../header.tex}
 
+\usepackage{keystroke}
 \usepackage{placeins}
 
 \newcommand\versuchsnummer{402}
@@ -22,26 +23,43 @@
 
 %\setcounter{tocdepth}{2}
 
+\newcommand\omegaG{\omega_\text G}
+\newcommand\omegaB{\omega_\text B}
+
 \begin{document}
 
 \maketitle
 
-\newpage
+\begin{abstract}
+    In diesem Versuch wird im ersten Teil mit Hilfe des Photoeffektes das
+    Placksche Wirkungsquantum abgeschätzt. Im zweiten Teil wird die
+    Balmer-Serie von Wasserstoff und Deuterium untersucht und durch diese
+    ebenfalls das Plancksche Wirkungsquantum bestimmt. Die so erhaltenen Werte
+    für das Wirkungsquantum werden verglichen.
+\end{abstract}
+
 \tableofcontents
-\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                 Einleitung                                  %
+%                                   Theorie                                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Einleitung}
-
-In diesem Versuch wird im ersten Teil mit Hilfe des Photoeffektes das Placksche
-Wirkungsquantum abgeschätzt. Im zweiten Teil wird die Balmer-Serie von
-Wasserstoff und Deuterium untersucht und durch diese ebenfalls das Plancksche
-Wirkungsquantum bestimmt. Die so erhaltenen Werte werden verglichen.
-
+\FloatBarrier
 \section{Theorie}
+
+Symbole:
+
+\begin{itemize}
+
+    \item Bankwinkel $\omega_\text B$
+    \item Brennweite $f$
+    \item Gitterkonstante $g$
+    \item Gitterwinkel $\omega_\text G$
+    \item Linienaufspaltung $d$
+    \item Wellenlänge $\lambda$
+    \item Wirkungsquantum $h$
+
+\end{itemize}
 
 \subsection{Photoeffekt}
 
@@ -60,21 +78,362 @@ Der Aufbau einer Fotozelle ist in Abbildung~\ref{fig:Photozelle} zu sehen.
 
 \subsection{Spektroskopie}
 
-\section{Versuchsdurchführung}
+\subsubsection{Gittergleichung}
 
-\section{Messung}
+Für die Bestimmung der Gitterkonstante im zweiten Versuchsteil wird eine
+Gittergleichung benötigt, die nicht in der Anleitung gegeben ist. Diese muss
+eine Gleichung sein, die die Abhängigkeit $(\omega_\text B, \omega_\text G,
+\lambda) \mapsto g$ liefert.
 
-\section{Auswertung}
+Der Gangunterschied $\Delta$ bei einem Einfallswinkel $\alpha_0$ und einem
+Austrittswinkel $\alpha_m$ für das Interferenzbild der Ordnung $m$ ist gegeben
+durch: \cite[Formel~368.16]{physik312-Anleitung}
+\begin{equation}
+    \label{eq:368.16}
+    \Delta = g \cdot \del{\sin(\alpha_0) + \sin(-\alpha_m)} = m \lambda
+\end{equation}
 
-\section{Ergebnisse/Diskussion}
+In diesem Versuch haben wir ein Reflexionsgitter, außerdem sind die Messwerte
+$\omega_\text B$ und $\omega_\text G$. Die Umrechnung ist wie folgt:
+\[
+    \alpha_0 = \omega_\text G
+    \eqnsep
+    \alpha_m = \omega_\text B + \omega_\text G - \piup
+\]
 
+Dies setzen wir in \eqref{eq:368.16} ein und erhalten:
+\begin{equation}
+    \label{eq:gittergleichung}
+    g = \frac{m \lambda}{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+\end{equation}
+
+Sollte $\omega_\text B = \piup$ sein, darf es keinen Gangunterschied geben.
+$\Delta$ wird 0. Die Vorzeichen sind also korrekt.
+
+\subsubsection{CCD-Kamera}
+
+Die CCD-Kamera misst die Intensität für verschiedene Pixel. Aus den Pixeln
+berechnet sie den Winkel bei der Objektivbrennweite $f$ und Pixelnummer $p \in
+[0, 2047]$ mit folgender Formel:
+\[
+    \beta = \arctan\del{\frac{(1024 - p) \cdot \SI{0.014}{\milli\meter}}f}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 Bestimmung des Planckschen Wirkungsquantums                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\section{Bestimmung des Planckschen Wirkungsquantums}
+
+\FloatBarrier
+\subsection{Aufbau}
+
+\begin{figure}[htbp]
+    \centering
+    %\includegraphics[width=\linewidth]{}
+    \caption{%
+        \cite[Abbildung~P402.1]{physik412-Anleitung}
+    }
+    \label{fig:P402.1}
+\end{figure}
+
+\FloatBarrier
+\subsection{Durchführung}
+
+\FloatBarrier
+\subsection{Auswertung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                Balmer-Serie                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\section{Balmer-Serie}
+
+In diesem Versuchsteil untersuchen wir die Balmer-Serie einer
+Wasserstoff-Deuterium-Lampe mit einem Reflexionsgitter.
+
+\FloatBarrier
+\subsection{Aufbau}
+
+Auf einer optischen Bank mit zwei Armen, deren gegenseitige Lage mit einer
+Winkelskala bestimmt werden kann, werden die Komponenten aufgebaut. Dabei wird
+auf dem ersten Arm die Lampe, eine Linse mit $f = \SI{50}{\milli\meter}$, ein
+einstellbarer Spalt sowie ein Objektiv mit $f = \SI{150}{\milli\meter}$
+aufgebaut.
+
+In die Mitte wird das holographische Reflexionsgitter angebracht.
+
+Auf dem zweiten Arm wird von der Mitte aus eine Linse mit $f =
+\SI{300}{\milli\meter}$ und ein Okular mit Strichskala angebracht. Im weiteren
+Verlauf dieses Teilversuchs wird noch eine CCD-Kamera angebracht.
+
+\FloatBarrier
+\subsubsection{Justierung}
+
+Zuerst müssen wir den Aufbau justieren. Dazu benutzen wir die helle
+Quecksilberlampe. Diese wird an das Ende des einen Arms gestzt. Mit der ersten
+Linse bilden wir die Lampe auf den Spalt ab. Der Spalt ist so angebracht, dass
+die schrängen Flanken zur Lichtquelle ausgerichtet sind, und dass der Spalt
+senkrecht ist.
+
+Wir setzen das Objektiv zwischen Spalt und Gitter ein und drehen das Gitter so,
+dass die Reflexion des Gitters wieder durch das Objektiv fällt und auf den
+Spalt trifft. Der Abstand von Objektiv und Spalt ist grob dessen Brennweite $f
+= \SI{150}{\milli\meter}$. Mit Hilfe dieser Autokollimationsanordnung stellen
+wir die Position des Objektivs so ein, dass das Bild des Spaltes scharf ist.
+Dadurch ist der Strahlengang nach dem Objektiv auf unendlich fokussiert.
+
+Nun ist das Bild scharf eingestellt, liegt aber noch ein wenig neben dem Spalt.
+Daher drehen wir jetzt das Gitter mit den Rändelschrauben so, dass das Bild
+exakt in den Spalt fällt.
+
+Die optische Bank klappen wir nun so zu, dass der Winkel $\omega_\text B$ im
+Bereich von \SIrange{130}{170}{\degree} liegt.
+
+Das Okular wird ans Ende des anderen Armes gestellt und so justiert, dass einer
+von uns die Skala gut ablesen kann. Zuletzt setzen wir die Linse mit $f =
+\SI{300}{\milli\meter}$ ein, damit wir im zweiten Arm die Spektrallinien durch
+ein Teleskop beobachten können.
+
+\FloatBarrier
+\subsection{Durchführung}
+
+\FloatBarrier
+\subsubsection{Bestimmung der Gitterkonstanten}
+\label{sec:gitterkonstante/durchführung}
+
+Wir bestimmen die Gitterkonstante des Gitters durch eine Messung mit einer
+Quecksilberdampflampe. Dazu lösen wir die Rändelscchraube der Gittersäule und
+drehen so lange, bis die erste Linie sichtbar wird. Um die Linie einfacher
+erkennen zu können, weiten wir den Spalt auf und stellen ihn anschließend auf
+\SI{0.1}{\milli\meter} zurück.
+
+Mit der Objektivlinse des Beobachtungsteleskops können wir die Linien
+scharfstellen, wir justieren so lange, bis diese es sind. Dann lesen wir den
+Winkel zwischen den Armen $\omega_\text B$ sowie den Winkel des Gitters
+$\omega_\text G$ ab. Die gemessenen Winkel sind in
+Tabelle~\ref{tab:messdaten:gitterkonstante}.
+
+Im Anhang der Praktikumsanleitung ist das Spektrum der Quecksilberlampe
+angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B /
+    \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Messdaten für die Bestimmung der Gitterkonstanten mit der
+        Quecksilberlampe.
+    }
+    \label{tab:messdaten:gitterkonstante}
+\end{table}
+
+\FloatBarrier
+\subsubsection{Untersuchung der Ballmer-Linien mit einem Okular}
+
+Jetzt wiederholen wir diese Messung, jedoch mit der Ballmer-Lampe. Dazu
+entfernen wir die Quecksilberlampe und setzen die Wasserstofflampe ein. Mit der
+ersten Linie bilden wir wieder die Lampe auf den Spalt ab. Dann führen die
+gleiche Autokollimation wie im vorherigen Teil durch.
+
+Die Rändelschraube an der Gittersäule wird gelöst und so weit gedreht, bis die
+rote $\mathrm H_\alpha$-Linie zu sehen ist. Mit der Objektivlinse bilden wir
+die Linie scharf ab.
+
+Anschließend lesen wir die beiden Winkel ab. Außerdem schätzen wir den Abstand
+$d$ der aufgespaltenen Linien mit Hilfe der Skala im Okular ab. Dann
+wiederholen wir dies für alle anderen Linien. Unsere Messdaten sind in
+Tabelle~\ref{tab:messdaten:balmer-okular}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B / \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} & {Aufspaltung $d / \si{\milli\meter}$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Messdaten für die Ballmer-Lampe, bestimmt mit einem Okular
+    }
+    \label{tab:messdaten:balmer-okular}
+\end{table}
+
+\FloatBarrier
+\subsubsection{Untersuchung der Ballmer-Linien mit einer CCD-Kamera}
+
+Jetzt wird das Okular durch eine CCD-Kamera ersetzt. Wir starten das Programm
+„VideoCom“ und stellen im Menü „Kalibrierung / Theorievergleich“
+(\keystroke{F5}) im Register „Beugungswinkel“ die Brennweite $f =
+\SI{300}{\milli\meter}$ der Objektivlinse ein. Die Belichtungszeit stellen wir
+auf Stufe 8. Wir aktivieren die Messung mit \keystroke{F9}.
+
+Die roten Balmer-Linien müssen auf die Mitte der CCD-Zeile abgebildet werden,
+daher drehen wir das Gitter entsprechend. Mit der Objektivlinse stellen wir die
+Linien scharf, das Ergebnis kontrollieren wir auf dem Monitor.
+
+Mit \Alt\keystroke{Z} vergrößern wir den Bereich und können die Aufspaltung so
+besser erkennen.
+
+Mit der Schaltfläche „$\sum_1$“ starten wir die Mittelwertsbildung. Sobald wir
+mit dem Ergebnis zufrieden sind, stoppen wir die Messung mit \keystroke{F9}.
+Die Messdatentabelle speichern wir mit „Tabelle Kopieren“ in einer Textdatei.
+Zuletzt notieren wir die Winkel.
+
+Diesen Vorgang wiederholen wir für alle Linien. Unsere Messdaten sind in
+Tabelle~\ref{tab:messdaten:balmer-ccd}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
+    \si\degree$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Messdaten für die Ballmer-Lampe, bestimmt mit einer CCD-Zeile.
+    }
+    \label{tab:messdaten:balmer-ccd}
+\end{table}
+
+\FloatBarrier
+\subsection{Auswertung}
+
+\FloatBarrier
+\subsubsection{Bestimmung der Gitterkonstanten}
+
+Mithilfe der Gittergleichung \eqref{eq:gittergleichung} können wir die
+Gitterkonstante bestimmen. Dabei bestimmen wir noch den Fehler mit der
+Gaußschen Fehlerfortplanzung:
+\[
+    \Deltaup g
+    = \frac{g^2}{m\lambda} \sqrt{
+        \del{\del{\cos(\omegaG) + \cos(\omegaB +
+        \omegaG)} \Deltaup \omegaG}^2
+        +
+        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS|S}
+        {$\lambda / \si{\nano\meter}$} & {Winkel $\omegaB / \si\degree$}  & {Winkel
+    $\omegaG / \si\degree$} & {$g / \si{\meter}$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Berechnete Gitterkonstanten aus den Messwerten aus
+        Abschnitt~\ref{sec:gitterkonstante/durchführung},
+        Tabelle~\ref{tab:messdaten:gitterkonstante}.
+    }
+    \label{tab:gitterkonstanten}
+\end{table}
+
+% TODO Alle Werte zu einem Wert kombinieren. Mit einem einfachen arithmetischen
+% Mittel?
+
+\FloatBarrier
+\subsubsection{Bestimmung der Balmerlinien}
+
+Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
+Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
+$m = 1$.
+\[
+    \lambda =
+    g \cdot \del{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+\]
+
+Hier berechnet sich der Fehler wie folgt:
+\[
+    \Deltaup \lambda
+    =
+    \sqrt{
+        \del{\frac{\lambda}g \Deltaup g}^2
+        +
+        \del{g \del{\cos(\omegaG) + \cos(\omegaB + \omegaG)} \Deltaup
+        \omegaG}^2
+        +
+        \del{g \cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
+    \si\degree$} & {$\lambda/\si{\nano\meter}$} \\
+        \hline
+        % TODO Messdaten aus Datei laden.
+    \end{tabular}
+    \caption{%
+        Messdaten für die Ballmer-Lampe, bestimmt mit einer CCD-Zeile.
+    }
+    \label{tab:messdaten:balmer-wellenlängen}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                 Diskussion                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\section{Diskussion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                               Zusammenfassung                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\section{Zusammenfassung}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                   Anhang                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
 \begin{appendix}
+    \section{Spektrum der Quecksilberlampe}
+    \label{sec:spektrum}
+
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{lSS}
+            Farbe & {$\lambda_\text{Hg} / \si{\nano\meter}$} & {rel. Int.} \\
+            \hline
+            violett & 404.656 & 1800 \\
+                    & 407.783 & 150 \\
+                    & 410.805 & 40 \\
+                    & 433.922 & 250 \\
+                    & 434.749 & 500 \\
+            blau & 435.833 & 4000 \\
+            türkis & 491.607 & 80 \\
+            grün & 546.074 & 1100 \\
+            gelb & 576.960 & 240 \\
+                 & 579.066 & 280 \\
+            rot & 623.440 & 30 \\
+                & 672.643 & 160 \\
+                & 690.752 & 250
+        \end{tabular}
+        \caption{%
+            Spektrum der Quecksilberlampe.
+            \cite[P402.6.1]{physik412-Anleitung}
+        }
+        \label{tab:messdaten:gitterkonstante}
+    \end{table}
+
     \section{\LaTeX-Quelltext}
 
     Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
-    \ref{it:mu} eingesehen werden. Die Quellen für dieses Protokoll können auf
-    \ref{it:github/alles} eingesehen werden. Die \LaTeX-Datei wird aus
-    \ref{it:github/template} generiert.
+    \ref{it:mu} eingesehen werden. Die Quellen für alle Protokolle in diesem
+    Praktikum können auf \ref{it:github/alles} eingesehen werden. Die
+    \LaTeX-Datei wird aus \ref{it:github/template} generiert.
 
     \begin{enumerate}
         \item
@@ -88,7 +447,6 @@ Der Aufbau einer Fotozelle ist in Abbildung~\ref{fig:Photozelle} zu sehen.
             \url{https://github.com/martin-ueding/physik412-Protokolle/blob/master/\versuchsnummer/Template.tex}
     \end{enumerate}
 \end{appendix}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                  Literatur                                  %
