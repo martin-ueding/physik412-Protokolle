@@ -137,13 +137,13 @@ $\omega_\text B$ und $\omega_\text G$. Die Umrechnung ist wie folgt:
 \[
     \alpha_0 = \omega_\text G
     \eqnsep
-    \alpha_m = \omega_\text B + \omega_\text G - \piup
+    \alpha_m = \piup - \del{ \omega_\text B + \omega_\text G }
 \]
 
 Dies setzen wir in \eqref{eq:368.16} ein und erhalten:
 \begin{equation}
     \label{eq:gittergleichung}
-    g = \frac{m \lambda}{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+    g = \frac{m \lambda}{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
 \end{equation}
 
 Sollte $\omega_\text B = \piup$ sein, darf es keinen Gangunterschied geben.
@@ -403,7 +403,7 @@ Gaußschen Fehlerfortplanzung:
 \[
     \Deltaup g
     = \frac{g^2}{m\lambda} \sqrt{
-        \del{\del{\cos(\omegaG) + \cos(\omegaB +
+        \del{\del{\cos(\omegaG) - \cos(\omegaB +
         \omegaG)} \Deltaup \omegaG}^2
         +
         \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
