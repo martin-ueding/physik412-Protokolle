@@ -437,7 +437,7 @@ Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
 $m = 1$.
 \[
     \lambda =
-    g \cdot \del{\sin(\omega_\text G) + \sin(\omega_\text B + \omega_\text G)}
+    g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
 \]
 
 Hier berechnet sich der Fehler wie folgt:
@@ -447,7 +447,7 @@ Hier berechnet sich der Fehler wie folgt:
     \sqrt{
         \del{\frac{\lambda}g \Deltaup g}^2
         +
-        \del{g \del{\cos(\omegaG) + \cos(\omegaB + \omegaG)} \Deltaup
+        \del{g \del{\cos(\omegaG) - \cos(\omegaB + \omegaG)} \Deltaup
         \omegaG}^2
         +
         \del{g \cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
