@@ -14,6 +14,33 @@ import scipy.optimize as op
 import sys
 import unitprint
 
+def Stromkennlinie(T, filename, wavelength, I_0, dI_0, color, label):
+    # Daten einlesen.
+    data = np.genfromtxt(filename)
+    data = data[data[:,0].argsort()]
+
+    # Daten berechnen.
+    U = data[:,0]
+    dU = data[:,2]
+    I = data[:,1]
+    dI = data[:,3]
+    sqrt_I = sqrt(I-I_0)
+    dsqrt_I = sqrt((dI/(2*sqrt(I-I_0)))**2+(dI_0/(2*sqrt(I-I_0)))**2)
+
+    #Messwerte interpolieren
+    inter = scipy.interpolate.interpld(U, y, kind="linear")
+    x = np.linspace(np.min(U), np.max(U), 100)
+    y = inter(x)
+
+    # Messwerte plotten
+    pl.plot(U, sqrt_I, label=label, linestyle="none", marker="x", color=color)
+    pl.plot(x, y, color=color)
+    pl.xlabel(r"$U / \mathrm{V}$")
+    pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{nA}}$")
+    pl.grid(True)
+    pl.savefig("Plots/Plot-"wavelength".pdf")
+    pl.clf()
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
