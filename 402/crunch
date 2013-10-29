@@ -9,6 +9,7 @@ import logging
 import math
 import matplotlib.pyplot as pl
 import numpy as np
+import os.path
 import scipy.interpolate
 import scipy.optimize as op
 import sys
@@ -87,6 +88,28 @@ def wavelength_U0(T):
 
     pl.plot(wavelength, U_0, linestyle="none", marker="x")
 
+def pc_aufnahme(T):
+    sets = [
+        ('blau'),
+        ('cyan2'),
+        ('cyan'),
+        ('rot'),
+        ('rot2'),
+    ]
+
+    for filename in sets:
+        data = np.genfromtxt(os.path.join('Messwerte', filename+'.txt'))
+        alpha = data[:, 0]
+        intens = data[:, 1]
+
+        pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4)
+        pl.grid(True)
+        pl.title(filename)
+        pl.xlabel(r'$\alpha / ^{\circ}$')
+        pl.ylabel(r'relative Intensität')
+        pl.savefig(os.path.join('_build', filename+'.pdf'))
+        pl.clf()
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -109,6 +132,8 @@ def main():
     logging.basicConfig(level=logging.INFO)
 
     #kennlinien(T)
+
+    pc_aufnahme(T)
 
     render_template(T, sys.argv[1])
 
