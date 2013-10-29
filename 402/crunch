@@ -108,9 +108,9 @@ def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    kennlinien(T)
+    #kennlinien(T)
 
-    #render_template(T, sys.argv[1])
+    render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
     main()
