@@ -90,11 +90,11 @@ def wavelength_U0(T):
 
 def pc_aufnahme(T):
     sets = [
-        ('blau'),
-        ('cyan2'),
-        ('cyan'),
         ('rot'),
         ('rot2'),
+        ('cyan'),
+        ('cyan2'),
+        ('blau'),
     ]
 
     for filename in sets:
@@ -109,6 +109,8 @@ def pc_aufnahme(T):
         pl.ylabel(r'relative Intensität')
         pl.savefig(os.path.join('_build', filename+'.pdf'))
         pl.clf()
+
+        T["pc_"+filename] = list(zip(alpha, intens))
 
 def render_template(T, filename):
     # Setting up Jinja
