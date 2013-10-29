@@ -92,6 +92,7 @@ def pc_aufnahme(T):
     sets = [
         ('rot'),
         ('rot2'),
+        ('gruen'),
         ('cyan'),
         ('cyan2'),
         ('blau'),
