@@ -37,18 +37,18 @@ def Stromkennlinie(T, filename, I_0, dI_0):
 
     p_err = np.sqrt(pconv.diagonal())
 
-    # Nullstelle Berechnen
-    def nullstelle(x):
-        return lin_fit(x, *popt)
-
-    return op.fsolve(nullstelle, 0)
-
     # Messwerte plotten
     pl.errorbar(U, sqrt_I, xerr=dU, yerr=dsqrt_I, linestyle="none", marker="x")
     pl.plot(x, y)
     pl.xlabel(r"$U / \mathrm{V}$")
     pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{nA}}$")
     pl.grid(True)
+
+    # Nullstelle Berechnen
+    def nullstelle(x):
+        return lin_fit(x, *popt)
+
+    return op.fsolve(nullstelle, 0)
 
 def kennlinien(T):
 
