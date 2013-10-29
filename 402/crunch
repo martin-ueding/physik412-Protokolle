@@ -52,35 +52,35 @@ def kennlinien(T):
     I_0 = -2.03
     dI_0 = 0.02
     Stromkennlinie(T, "Messwerte/Kennlinie_365.txt", I_0, dI_0)
-    pl.savefig("Plots/Plot-365.pdf")
+    pl.savefig("_build/Plot-365.pdf")
     pl.clf()
 
     wavelength.append(405e-9)
     I_0 = -2.03
     dI_0 = 0.02
     Stromkennlinie(T, "Messwerte/Kennlinie_405.txt", I_0, dI_0)
-    pl.savefig("Plots/Plot-405.pdf")
+    pl.savefig("_build/Plot-405.pdf")
     pl.clf()
 
     wavelength.append(435e-9)
     I_0 = -2.03
     dI_0 = 0.02
     Stromkennlinie(T, "Messwerte/Kennlinie_435.txt", I_0, dI_0)
-    pl.savefig("Plots/Plot-435.pdf")
+    pl.savefig("_build/Plot-435.pdf")
     pl.clf()
 
     wavelength.append(545-9)
     I_0 = -2.03
     dI_0 = 0.02
     Stromkennlinie(T, "Messwerte/Kennlinie_545.txt", I_0, dI_0)
-    pl.savefig("Plots/Plot-545.pdf")
+    pl.savefig("_build/Plot-545.pdf")
     pl.clf()
 
     wavelength.append(578-9)
     I_0 = -2.03
     dI_0 = 0.02
     Stromkennlinie(T, "Messwerte/Kennlinie_578.txt", I_0, dI_0)
-    pl.savefig("Plots/Plot-578.pdf")
+    pl.savefig("_build/Plot-578.pdf")
     pl.clf()
 
 def wavelength_U0(T):
