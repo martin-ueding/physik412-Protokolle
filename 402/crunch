@@ -14,6 +14,79 @@ import scipy.optimize as op
 import sys
 import unitprint
 
+def lin_fit(x, a, b):
+    return a * x + b
+
+def Stromkennlinie(T, filename, I_0, dI_0):
+    # Daten einlesen.
+    data = np.genfromtxt(filename)
+    data = data[data[:,0].argsort()]
+
+    # Daten berechnen.
+    U = data[:,0]
+    dU = data[:,2]
+    I = data[:,1]
+    dI = data[:,3]
+    sqrt_I = np.sqrt(I-I_0)
+    dsqrt_I = np.sqrt((dI/(2*np.sqrt(I-I_0)))**2+(dI_0/(2*np.sqrt(I-I_0)))**2)
+
+    # Messwerte interpolieren
+    popt, pconv = op.curve_fit(lin_fit, U, sqrt_I)
+    x = np.linspace(np.min(U), np.max(U), 100)
+    y = lin_fit(x, *popt)
+
+    p_err = np.sqrt(pconv.diagonal())
+
+    #TODO Nullstelle berechnen
+
+    # Messwerte plotten
+    pl.errorbar(U, sqrt_I, xerr=dU, yerr=dsqrt_I, linestyle="none", marker="x")
+    pl.plot(x, y)
+    pl.xlabel(r"$U / \mathrm{V}$")
+    pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{nA}}$")
+    pl.grid(True)
+
+def kennlinien(T):
+
+    wavelength = [375e-9]
+    I_0 = -2.03
+    dI_0 = 0.02
+    Stromkennlinie(T, "Messwerte/Kennlinie_365.txt", I_0, dI_0)
+    pl.savefig("Plots/Plot-365.pdf")
+    pl.clf()
+
+    wavelength.append(405e-9)
+    I_0 = -2.03
+    dI_0 = 0.02
+    Stromkennlinie(T, "Messwerte/Kennlinie_405.txt", I_0, dI_0)
+    pl.savefig("Plots/Plot-405.pdf")
+    pl.clf()
+
+    wavelength.append(435e-9)
+    I_0 = -2.03
+    dI_0 = 0.02
+    Stromkennlinie(T, "Messwerte/Kennlinie_435.txt", I_0, dI_0)
+    pl.savefig("Plots/Plot-435.pdf")
+    pl.clf()
+
+    wavelength.append(545-9)
+    I_0 = -2.03
+    dI_0 = 0.02
+    Stromkennlinie(T, "Messwerte/Kennlinie_545.txt", I_0, dI_0)
+    pl.savefig("Plots/Plot-545.pdf")
+    pl.clf()
+
+    wavelength.append(578-9)
+    I_0 = -2.03
+    dI_0 = 0.02
+    Stromkennlinie(T, "Messwerte/Kennlinie_578.txt", I_0, dI_0)
+    pl.savefig("Plots/Plot-578.pdf")
+    pl.clf()
+
+def wavelength_U0(T):
+
+    pl.plot(wavelength, U_0, linestyle="none", marker="x")
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -35,7 +108,9 @@ def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    render_template(T, sys.argv[1])
+    kennlinien(T)
+
+    #render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
     main()
