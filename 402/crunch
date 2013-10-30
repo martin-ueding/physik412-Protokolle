@@ -218,6 +218,8 @@ def rot(T):
     alpha = data[:, 0]
     intens = data[:, 1] - underground
     pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['rot_lower'] = 712
+    T['rot_upper'] = 806
 
     lower = -20
     upper = -10
@@ -232,6 +234,8 @@ def rot(T):
     rot_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
     T['rot_secondary_center'] = unitprint.siunitx(rot_neben_mitte_val, rot_neben_mitte_err)
     T['rot_secondary_fwhm'] = unitprint.siunitx(rot_neben_fwhm_val, rot_neben_fwhm_err)
+    T['rot_secondary_lower'] = lower
+    T['rot_secondary_upper'] = upper
 
     lower = 32
     upper = -42
@@ -246,6 +250,8 @@ def rot(T):
     rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
     T['rot_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
     T['rot_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['rot_primary_lower'] = lower
+    T['rot_primary_upper'] = upper
 
     pl.grid(True)
     pl.title("Erste Rote Linie")
@@ -254,7 +260,7 @@ def rot(T):
     pl.savefig(os.path.join('_build', 'rot.pdf'))
     pl.clf()
 
-    differenz_val = np.abs(rot_haupt_mitte_val - rot_neben_mitte_val)
+    differenz_val = abs(rot_haupt_mitte_val - rot_neben_mitte_val)
     differenz_err = np.sqrt(rot_haupt_mitte_err**2 + rot_neben_mitte_err**2)
     T['rot_differenz'] = unitprint.siunitx(differenz_val, differenz_err)
 
@@ -268,7 +274,7 @@ def rot(T):
 
     T['rot_lambda'] = unitprint.siunitx(lambda_val[7], lambda_err[7])
 
-    Delta_lambda_val = g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_val
+    Delta_lambda_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_val
     Delta_lambda_err = np.sqrt(
         (np.cos(omega_B_val + omega_G_val) * differenz_val * g_average_err)**2
         + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_B_err)**2

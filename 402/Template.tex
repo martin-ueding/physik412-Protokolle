@@ -530,7 +530,8 @@ Die davon sichtbaren sind: \SIlist{
 
 Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar.
 
-An einen ausgewählten Bereich passen wir eine Gaußfunktion an:
+An einen ausgewählten Bereich (im Plot markiert) passen wir eine Gaußfunktion
+an:
 \[
     I(\alpha) = a \exp\del{- \frac{(\alpha - \alpha_0)^2}{2 \sigma}}
 \]
@@ -546,6 +547,16 @@ als:\footnote{\url{https://en.wikipedia.org/wiki/Gaussian_function} 2013-10-30
 
 Die erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
 Isotopieaufspaltung beobachten.
+
+Wir benutzen im Graph die Datenpunkte \numrange{<< rot_lower >>}{<< rot_upper
+>>}. Für das Hauptmaximum beziehen wir aus der Menge der gezeigten Punkte die
+Punkte \numrange{<< rot_primary_lower >>}{<< rot_primary_upper >>} ein. Für das
+Nebenmaximum die Punkte \numrange{<< rot_secondary_lower >>}{<<
+rot_secondary_upper >>}. Negative Indizes zählen vom Ende aus.
+
+Es wurde ein konstantes Untergrundsignal von \num{<< rot_underground >>}
+abgezogen. An die markierten Datenpunkte wurde jeweils eine Gaußfunktion
+angepasst. 
 
 Für das Hauptmaximum erhalten wir einen Winkel
 von \SI{<< rot_primary_center >>}{\degree} und eine Halbwertsbreite von
@@ -574,14 +585,13 @@ Die relative Aufspaltung ist:
     \centering
     \includegraphics[width=\linewidth]{rot.pdf}
     \caption{%
-        Graph der Daten zur ersten roten Linie. Es wurde ein konstantes
-        Untergrundsignal von \num{<< rot_underground >>} abgezogen. An die
-        markierten Datenpunkte wurde jeweils eine Gaussfunktion angepasst. Der
-        Mittelwert des Hauptmaximums liegt bei \SI{<< rot_primary_center
-        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< rot_primary_fwhm
-        >>}{\degree}. Das Nebenmaximum liegt bei \SI{<< rot_secondary_center
-        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< rot_secondary_fwhm
-        >>}{\degree}.
+        Graph der Daten zur ersten roten Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< rot_lower >>} bis \num{<< rot_upper >>}
+        (Arrayindex). Der Mittelwert des Hauptmaximums liegt bei \SI{<<
+        rot_primary_center >>}{\degree} und hat eine Halbwertsbreite von \SI{<<
+            rot_primary_fwhm >>}{\degree}. Das Nebenmaximum liegt bei \SI{<<
+            rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von
+            \SI{<< rot_secondary_fwhm >>}{\degree}.
     }
     \label{fig:rot}
 \end{figure}
