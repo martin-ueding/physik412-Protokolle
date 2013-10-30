@@ -1,12 +1,12 @@
 # Farbe, ω_G, rel. Int.
+rot 68.8   1
+rot 68.1   1
+rot 70.0   1
+gelb    64.5  3
 gelb    64.8    3
-grün    -61.4   5
-türkis  -56.8   1
-türkis  -56.3   2
-blau    -51.2   5
-lila    -48.9   1
-lila    -48.5   3
-rot -70.0   1
-rot -68.8   1
-rot -68.1   1
-gelb    -64.5  3
+grün    61.4   5
+türkis  56.8   1
+türkis  56.3   2
+blau    51.2   5
+lila    48.9   1
+lila    48.5   3

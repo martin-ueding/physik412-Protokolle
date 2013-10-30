@@ -310,7 +310,7 @@ erkennen zu können, weiten wir den Spalt auf und stellen ihn anschließend auf
 
 Mit der Objektivlinse des Beobachtungsteleskops können wir die Linien
 scharfstellen, wir justieren so lange, bis diese es sind. Dann lesen wir den
-Winkel zwischen den Armen $\omega_\text B$ sowie den Winkel des Gitters
+Winkel des Gitters
 $\omega_\text G$ ab. Die gemessenen Winkel sind in
 Tabelle~\ref{tab:messdaten:gitterkonstante}.
 
@@ -319,15 +319,21 @@ angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS}
-        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B /
-    \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} \\
+    \begin{tabular}{lSS|S}
+        Farbe &
+        {Winkel $\omega_\text G / \si\degree$} &
+        {rel. Int.} &
+        {Wellenlänge $\lambda / \si{\nano\meter}$} \\
         \hline
-        % TODO Messdaten aus Datei laden.
+        %< for farbe, omega_G, rel_int, lambda in messdaten_gitterkonstante: ->%
+        << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> & <<
+        lambda >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Messdaten für die Bestimmung der Gitterkonstanten mit der
-        Quecksilberlampe.
+        Quecksilberlampe. Hinter der senkrechten Linie sind die Wellenlängen,
+        die wir anhand der Tabelle aus Anhang~\ref{sec:spektrum} annehmen.
     }
     \label{tab:messdaten:gitterkonstante}
 \end{table}
@@ -421,18 +427,21 @@ Gaußschen Fehlerfortplanzung:
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS|S}
-        {$\lambda / \si{\nano\meter}$} & {Winkel $\omegaB / \si\degree$}  & {Winkel
-    $\omegaG / \si\degree$} & {$g / \si{\meter}$} \\
+    \begin{tabular}{SS|S}
+        {$\omegaG / \si{\radian}$} &
+        {$\lambda / \si{\nano\meter}$} &
+        {$g / \si{\meter}$} \\
         \hline
-        % TODO Messdaten aus Datei laden.
+        %< for omega_G_val, lambda, g in tabelle_gitterkonstante: ->%
+        << omega_G_val >> & << lambda >>  & << g >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Berechnete Gitterkonstanten aus den Messwerten aus
         Abschnitt~\ref{sec:gitterkonstante/durchführung},
         Tabelle~\ref{tab:messdaten:gitterkonstante}.
     }
-    \label{tab:gitterkonstanten}
+    \label{tab:gitterkonstante}
 \end{table}
 
 % TODO Alle Werte zu einem Wert kombinieren. Mit einem einfachen arithmetischen

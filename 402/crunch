@@ -91,7 +91,50 @@ def wavelength_U0(T):
 def balmer_serie(T):
     omega_B_val = 145
     omega_B_err = .1
+
     T["omega_B"] = "145.0 +- .1"
+
+    farbe = []
+    omega_G = []
+    rel_int = []
+
+    with open("Messwerte/Quecksilber.txt") as f:
+        for line in f:
+            if line.startswith("#"):
+                continue
+            x = line.split()
+            farbe.append(x[0])
+            omega_G.append(float(x[1]))
+            rel_int.append(float(x[2]))
+
+    lambda_ = np.array([
+        690.752,
+        671.643,
+        623.440,
+        579.066,
+        576.960,
+        546.074,
+        491.607,
+        491.607,
+        435.833,
+        433.922,
+        404.656,
+    ])
+
+    T["omega_G_err"] = .2
+    T["messdaten_gitterkonstante"] = np.column_stack([farbe, omega_G, rel_int, lambda_])
+
+    omega_G_val = np.radians(omega_G)
+    lambda_ *= 1e-9
+
+    g = lambda_ / (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val))
+
+    T["tabelle_gitterkonstante"] = np.column_stack([
+        unitprint.siunitx(omega_G_val),
+        unitprint.siunitx(lambda_),
+        unitprint.siunitx(g),
+    ])
+
 
 def pc_aufnahme(T):
     sets = [
