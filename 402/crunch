@@ -192,8 +192,8 @@ def balmer_serie(T):
 
     T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 2)
 
-def gauss(x, mean, std, scale, underground):
-    return scale * np.exp(- (x - mean)**2 / (2 * std)) + underground
+def gauss(x, mean, std, scale):
+    return scale * np.exp(- (x - mean)**2 / (2 * std))
 
 def pc_aufnahme(T):
     sets = [
@@ -206,31 +206,31 @@ def pc_aufnahme(T):
     ]
 
     data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
+    underground = 6.0
+    T['red_underground'] = underground
     alpha = data[:, 0]
-    intens = data[:, 1]
+    intens = data[:, 1] - underground
     pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
 
     lower = -20
     upper = -10
     popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
-    x = np.linspace(alpha[lower], alpha[upper], 100)
+    x = np.linspace(alpha[0], alpha[-1], 100)
     y = gauss(x, *popt)
     pl.plot(x, y)
     pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
-    center = popt[0]
-    fwhm = 2 * np.sqrt(2 * np.log(2)) * popt[1]
-    print(center, fwhm)
+    T['red_secondary_center'] = unitprint.siunitx(popt[0], np.sqrt(pconv.diagonal())[0])
+    T['red_secondary_fwhm'] = unitprint.siunitx(2 * np.sqrt(2 * np.log(2)) * popt[1], 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1])
 
     lower = 32
     upper = -42
     popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
-    x = np.linspace(alpha[lower], alpha[upper], 100)
+    x = np.linspace(alpha[0], alpha[-1], 100)
     y = gauss(x, *popt)
     pl.plot(x, y, label='Gausskurve für Hauptmaximum')
     pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
-    center = popt[0]
-    fwhm = 2 * np.sqrt(2 * np.log(2)) * popt[1]
-    print(center, fwhm)
+    T['red_primary_center'] = unitprint.siunitx(popt[0], np.sqrt(pconv.diagonal())[0])
+    T['red_primary_fwhm'] = unitprint.siunitx(2 * np.sqrt(2 * np.log(2)) * popt[1], 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1])
 
 
     pl.grid(True)
