@@ -182,10 +182,15 @@ def balmer_serie(T):
 
     T["tabelle_balmer"] = zip(farbe, unitprint.siunitx(omega_G_val, omega_G_err), rel_int, unitprint.siunitx(lambda_val, lambda_err))
 
-    lambda_erwartet = np.array([3e8 * 6.626e-34 / (13.6*1.609e-19) * (1/4 - 1/n**2) for n in range(3, 10)])
+    lambda_erwartet = np.array([
+        3e8 * 6.626e-34 / (13.6*1.609e-19) / (1/2**2 - 1/n**2) * 10**9
+        for n in range(3, 10)
+    ])
+
+    lambda_erwartet_sorted = [x for x in sorted(lambda_erwartet) if 400 <= x <= 800]
     print(lambda_erwartet)
 
-    T["balmer_berechnet"] = np.round(lambda_erwartet * 10**9, 1)
+    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 1)
 
 def pc_aufnahme(T):
     sets = [

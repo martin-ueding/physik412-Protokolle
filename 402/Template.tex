@@ -519,11 +519,16 @@ Hier berechnet sich der Fehler wie folgt:
     \label{tab:balmer-okular}
 \end{table}
 
-Die zu erwartenden Wellenlängen sind: \SIlist{
+Die zu erwartenden Wellenlängen berechnen sich nach:
+\[
+    \lambda = \frac{c h}{E_\text{Ryd}} \del{\frac 14 - \frac 1{n^2}}^{-1}
+\]
+
+Die sichtbaren sind: \SIlist{
 %<- for lambda in balmer_berechnet: ->%
 << lambda >>;
 %<- endfor ->%
-}{\nano\meter}
+}{\nano\meter}.
 
 
 \begin{table}[htbp]
