@@ -190,7 +190,7 @@ def balmer_serie(T):
     lambda_erwartet_sorted = [x for x in sorted(lambda_erwartet) if 400 <= x <= 800]
     print(lambda_erwartet)
 
-    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 1)
+    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 2)
 
 def pc_aufnahme(T):
     sets = [
