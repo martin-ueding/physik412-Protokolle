@@ -97,7 +97,6 @@ def balmer_serie(T):
     farbe = []
     omega_G = []
     rel_int = []
-
     with open("Messwerte/Quecksilber.txt") as f:
         for line in f:
             if line.startswith("#"):
@@ -127,7 +126,7 @@ def balmer_serie(T):
     omega_B_val = np.radians(omega_B_val)
     omega_B_err = np.radians(omega_B_err)
     omega_G_val = np.radians(omega_G)
-    omega_G_err = np.radians(.2)
+    omega_G_err = np.ones(omega_G_val.size) * np.radians(.2)
     lambda_ *= 1e-9
 
     g_val = lambda_ / (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val))
@@ -158,6 +157,35 @@ def balmer_serie(T):
     pl.savefig('_build/g.pdf')
     pl.clf()
 
+    farbe = []
+    omega_G = []
+    rel_int = []
+    with open("Messwerte/Ballmer.txt") as f:
+        for line in f:
+            if line.startswith("#"):
+                continue
+            x = line.split()
+            farbe.append(x[0])
+            omega_G.append(float(x[1]))
+            rel_int.append(float(x[2]))
+
+    T["messdaten_balmer"] = np.column_stack([farbe, omega_G, rel_int])
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.ones(omega_G_val.size) * np.radians(.2)
+
+    lambda_val = np.abs(g_average_val * (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val)))
+    lambda_err = np.sqrt(
+        (lambda_val / g_average_val * g_average_err)**2
+        + (g_average_val * (np.cos(omega_G_val) - np.cos(omega_B_val + omega_G_val)) * omega_G_err)**2
+        + (g_average_val * np.cos(omega_G_val + omega_B_val) * omega_B_err)**2
+    )
+
+    T["tabelle_balmer"] = zip(farbe, unitprint.siunitx(omega_G_val, omega_G_err), rel_int, unitprint.siunitx(lambda_val, lambda_err))
+
+    lambda_erwartet = np.array([3e8 * 6.626e-34 / (13.6*1.609e-19) * (1/4 - 1/n**2) for n in range(3, 10)])
+    print(lambda_erwartet)
+
+    T["balmer_berechnet"] = np.round(lambda_erwartet * 10**9, 1)
 
 def pc_aufnahme(T):
     sets = [

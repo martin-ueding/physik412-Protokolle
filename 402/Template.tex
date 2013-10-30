@@ -357,10 +357,14 @@ Tabelle~\ref{tab:messdaten:balmer-okular}.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS}
-        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B / \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} & {Aufspaltung $d / \si{\milli\meter}$} \\
+    \begin{tabular}{lSS}
+        Farbe &
+        {$\omega_\text G / \si\degree$} &
+        {rel. Int.} \\
         \hline
-        % TODO Messdaten aus Datei laden.
+        %< for farbe, omega_G, rel_int in messdaten_balmer: ->%
+        << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Messdaten für die Balmer-Lampe, bestimmt mit einem Okular
@@ -478,7 +482,8 @@ Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
 $m = 1$.
 \[
     \lambda =
-    g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
+    \abs{g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text
+    G)}}
 \]
 
 Hier berechnet sich der Fehler wie folgt:
@@ -497,9 +502,35 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{table}[htbp]
     \centering
+    \begin{tabular}{lSS|S}
+        Farbe &
+        {$\omega_\text G / \si\radian$} &
+        {rel. Int.} &
+        {$\lambda / \si{\meter}$} \\
+        \hline
+        %< for farbe, omega_G, rel_int, lambda_ in tabelle_balmer: ->%
+        << farbe >> & << omega_G >> & << rel_int >> & <<
+        lambda_ >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Wellenlängen zu den Balmerlinien.
+    }
+    \label{tab:balmer-okular}
+\end{table}
+
+Die zu erwartenden Wellenlängen sind: \SIlist{
+%<- for lambda in balmer_berechnet: ->%
+<< lambda >>;
+%<- endfor ->%
+}{\nano\meter}
+
+
+\begin{table}[htbp]
+    \centering
     \begin{tabular}{SSSS}
         {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
-    \si\degree$} & {$\lambda/\si{\nano\meter}$} \\
+    \si\degree$} & {$\lambda/\si{\meter}$} \\
         \hline
         % TODO Messdaten aus Datei laden.
     \end{tabular}
@@ -511,7 +542,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{rot.pdf}
+    \includegraphics[width=.4\textheight]{rot.pdf}
     \caption{%
         rot
     }
@@ -520,7 +551,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{rot2.pdf}
+    \includegraphics[width=.4\textheight]{rot2.pdf}
     \caption{%
         rot2
     }
@@ -529,7 +560,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{gruen.pdf}
+    \includegraphics[width=.4\textheight]{gruen.pdf}
     \caption{%
         gruen
     }
@@ -538,7 +569,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{cyan.pdf}
+    \includegraphics[width=.4\textheight]{cyan.pdf}
     \caption{%
         cyan
     }
@@ -547,7 +578,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{cyan2.pdf}
+    \includegraphics[width=.4\textheight]{cyan2.pdf}
     \caption{%
         cyan2
     }
@@ -556,7 +587,7 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{blau.pdf}
+    \includegraphics[width=.4\textheight]{blau.pdf}
     \caption{%
         blau
     }
