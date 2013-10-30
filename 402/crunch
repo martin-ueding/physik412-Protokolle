@@ -124,16 +124,28 @@ def balmer_serie(T):
     T["omega_G_err"] = .2
     T["messdaten_gitterkonstante"] = np.column_stack([farbe, omega_G, rel_int, lambda_])
 
+    omega_B_val = np.radians(omega_B_val)
+    omega_B_err = np.radians(omega_B_err)
     omega_G_val = np.radians(omega_G)
+    omega_G_err = np.radians(.2)
     lambda_ *= 1e-9
 
-    g = lambda_ / (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val))
+    g_val = lambda_ / (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val))
+    g_err = g_val**2 / lambda_ * np.sqrt(
+        ((np.cos(omega_G_val) - np.cos(omega_B_val + omega_G_val)) * omega_G_err)**2
+        + (np.cos(omega_B_val + omega_G_val) * omega_B_err)**2
+    )
 
     T["tabelle_gitterkonstante"] = np.column_stack([
-        unitprint.siunitx(omega_G_val),
+        unitprint.siunitx(omega_G_val, np.ones(omega_G_val.size) * omega_G_err),
         unitprint.siunitx(lambda_),
-        unitprint.siunitx(g),
+        unitprint.siunitx(g_val, g_err),
     ])
+
+    g_mean_val = np.mean(g_val)
+    g_mean_err = np.std(g_val)
+
+    T["g"] = unitprint.siunitx(g_mean_val, g_mean_err)
 
 
 def pc_aufnahme(T):
