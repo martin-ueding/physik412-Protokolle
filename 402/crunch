@@ -88,6 +88,11 @@ def wavelength_U0(T):
 
     pl.plot(wavelength, U_0, linestyle="none", marker="x")
 
+def balmer_serie(T):
+    omega_B_val = 145
+    omega_B_err = .1
+    T["omega_B"] = "145.0 +- .1"
+
 def pc_aufnahme(T):
     sets = [
         ('rot'),
@@ -136,6 +141,7 @@ def main():
 
     #kennlinien(T)
 
+    balmer_serie(T)
     pc_aufnahme(T)
 
     render_template(T, sys.argv[1])
