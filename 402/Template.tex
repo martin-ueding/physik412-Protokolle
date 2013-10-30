@@ -516,6 +516,18 @@ Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar. Die
 erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
 Isotopieaufspaltung beobachten. 
 
+An einen ausgewählten Bereich passen wir eine Gaußfunktion an:
+\[
+    I(\alpha) = a \exp\del{- \frac{(\alpha - \alpha_0)^2}{2 \sigma}}
+\]
+
+Die Halbwertsbreite $H$ ist gegeben
+als:\footnote{\url{https://en.wikipedia.org/wiki/Gaussian_function} 2013-10-30
+17:32}
+\[
+    H = 2 \sqrt{2 \ln(2)} \sigma
+\]
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{rot.pdf}
