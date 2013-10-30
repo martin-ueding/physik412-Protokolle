@@ -164,6 +164,21 @@ berechnet sie den Winkel bei der Objektivbrennweite $f$ und Pixelnummer $p \in
     \beta = \arctan\del{\frac{(1024 - p) \cdot \SI{0.014}{\milli\meter}}f}
 \]
 
+Um nachher aus der Winkeldifferenz $\Deltaup \alpha$ auf eine
+Wellenlängendifferenz schließen zu können, müssen wir \eqref{eq:lambda} nach
+dem Bankwinkel $\omegaB$ ableiten:
+\begin{equation}
+    \label{eq:d_Lambda_d_beta}
+    \dpd\lambda\omegaB = - g \cos(\omegaB + \omegaG)
+\end{equation}
+
+Mit diesem Ausdruck kann nun die Isotopieaufspaltung $\Deltaup \lambda$ (nicht
+der Fehler von $\lambda$) berechnet werden mit:
+\begin{equation}
+    \label{eq:Delta_lambda}
+    \Deltaup\lambda = \eval{\dpd\lambda\omegaB}_{\omegaB} \Deltaup\beta
+\end{equation}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Bestimmung des Planckschen Wirkungsquantums                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -460,11 +475,12 @@ Mittelwert und teilen noch durch $\sqrt n$.
 Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
 Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
 $m = 1$.
-\[
+\begin{equation}
+    \label{eq:lambda}
     \lambda =
     \abs{g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text
     G)}}
-\]
+\end{equation}
 
 Hier berechnet sich der Fehler wie folgt:
 \[
@@ -512,9 +528,7 @@ Die davon sichtbaren sind: \SIlist{
 
 \paragraph{Mit CCD-Zeile}
 
-Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar. Die
-erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
-Isotopieaufspaltung beobachten. 
+Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar.
 
 An einen ausgewählten Bereich passen wir eine Gaußfunktion an:
 \[
@@ -528,17 +542,45 @@ als:\footnote{\url{https://en.wikipedia.org/wiki/Gaussian_function} 2013-10-30
     H = 2 \sqrt{2 \ln(2)} \sigma
 \]
 
+\subparagraph{Erste rote Linie}
+
+Die erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
+Isotopieaufspaltung beobachten.
+
+Für das Hauptmaximum erhalten wir einen Winkel
+von \SI{<< rot_primary_center >>}{\degree} und eine Halbwertsbreite von
+\SI{<< rot_primary_fwhm >>}{\degree}. Das Nebenmaximum liegt bei \SI{<<
+rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von \SI{<<
+rot_secondary_fwhm >>}{\degree}.
+
+Daraus erhalten wir eine Winkeldifferenz von \SI{<< rot_differenz >>}{\degree}.
+Nach \eqref{eq:d_Lambda_d_beta} ist dies eine Wellenlängendifferenz von
+$\Deltaup \lambda = \SI{<<
+rot_Delta_lambda >>}{\meter}$. Das $\omegaG$, das wir dort eingesetzt haben,
+hatten wir bei der Messung mit der CCD-Zeile nicht notiert. Jedoch haben wir
+den Bankwinkel nicht verändert, so dass wir hier für den Gitterwinkel den Wert
+von $\omegaG = \SI{<< rot_omega_G >>}{\degree}$ benutzen, den wir vorher für
+die hellste rote Linie erhalten haben.
+
+Die relative Aufspaltung ist:
+\[
+    \frac{\Deltaup \lambda}{\lambda}
+    = \frac{\SI{<< rot_Delta_lambda >>}\meter}{\SI{<< rot_lambda >>}\meter}
+    =  \num{<< rot_rel_aufspaltung >>}
+\]
+
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{rot.pdf}
     \caption{%
         Graph der Daten zur ersten roten Linie. Es wurde ein konstantes
-        Untergrundsignal von \num{<< red_underground >>} abgezogen. An die
+        Untergrundsignal von \num{<< rot_underground >>} abgezogen. An die
         markierten Datenpunkte wurde jeweils eine Gaussfunktion angepasst. Der
-        Mittelwert des Hauptmaximums liegt bei \SI{<< red_primary_center
-        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< red_primary_fwhm
-        >>}{\degree}. Das Nebenmaximum liegt bei \SI{<< red_secondary_center
-        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< red_secondary_fwhm
+        Mittelwert des Hauptmaximums liegt bei \SI{<< rot_primary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< rot_primary_fwhm
+        >>}{\degree}. Das Nebenmaximum liegt bei \SI{<< rot_secondary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< rot_secondary_fwhm
         >>}{\degree}.
     }
     \label{fig:rot}
