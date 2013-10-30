@@ -425,6 +425,10 @@ Gaußschen Fehlerfortplanzung:
     }
 \]
 
+Die errechneten Werte sind in Tabelle~\ref{tab:gitterkonstante}. Die gleichen
+Daten haben wir in Abbildung~\ref{fig:gitterkonstanten} dargestellt, um einfach
+erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
@@ -450,17 +454,21 @@ Gaußschen Fehlerfortplanzung:
     \caption{%
         Gitterkonstanten
     }
-    \label{fig:}
+    \label{fig:gitterkonstanten}
 \end{figure}
 
 % TODO Alle Werte zu einem Wert kombinieren. Mit einem einfachen arithmetischen
 % Mittel?
 
-Wir kombinieren die verschiedenen Werte von $g$ mit einem einfachen
-arithmetischen Mittel und erhalten:
+Wir kombinieren die verschiedenen Werte von $g$ mit einem gewichteten
+arithmetischen Mittel, wobei wir als Gewicht $1/\Deltaup g$
+verwenden.\footnote{Ein einfacher Mittelwert hätte $g = \SI{<< g_mean
+>>}{\meter}$ ergeben.} Die Fehler kombinieren wir quadratisch mit dem gleichen
+Mittelwert und teilen noch durch $\sqrt n$.
 \[
-    g = \SI{<< g >>}{\meter}
+    g = \SI{<< g_average >>}{\meter}
 \]
+
 
 \FloatBarrier
 \subsubsection{Bestimmung der Balmerlinien}
