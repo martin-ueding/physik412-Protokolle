@@ -385,30 +385,12 @@ Die roten Balmer-Linien müssen auf die Mitte der CCD-Zeile abgebildet werden,
 daher drehen wir das Gitter entsprechend. Mit der Objektivlinse stellen wir die
 Linien scharf, das Ergebnis kontrollieren wir auf dem Monitor.
 
-Mit \Alt\keystroke{Z} vergrößern wir den Bereich und können die Aufspaltung so
-besser erkennen.
-
 Mit der Schaltfläche „$\sum_1$“ starten wir die Mittelwertsbildung. Sobald wir
 mit dem Ergebnis zufrieden sind, stoppen wir die Messung mit \keystroke{F9}.
 Die Messdatentabelle speichern wir mit „Tabelle Kopieren“ in einer Textdatei.
-Zuletzt notieren wir die Winkel.
 
 Diesen Vorgang wiederholen wir für alle Linien. Unsere Messdaten sind in
-Tabelle~\ref{tab:messdaten:balmer-ccd}.
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{SSS}
-        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
-    \si\degree$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
-    \end{tabular}
-    \caption{%
-        Messdaten für die Balmer-Lampe, bestimmt mit einer CCD-Zeile.
-    }
-    \label{tab:messdaten:balmer-ccd}
-\end{table}
+im Anhang~\ref{sec:pc_messwerte}.
 
 \FloatBarrier
 \subsection{Auswertung}
@@ -461,9 +443,6 @@ erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
     \label{fig:gitterkonstanten}
 \end{figure}
 
-% TODO Alle Werte zu einem Wert kombinieren. Mit einem einfachen arithmetischen
-% Mittel?
-
 Wir kombinieren die verschiedenen Werte von $g$ mit einem gewichteten
 arithmetischen Mittel, wobei wir als Gewicht $1/\Deltaup g$
 verwenden.\footnote{Ein einfacher Mittelwert hätte $g = \SI{<< g_mean
@@ -473,9 +452,10 @@ Mittelwert und teilen noch durch $\sqrt n$.
     g = \SI{<< g_average >>}{\meter}
 \]
 
-
 \FloatBarrier
 \subsubsection{Bestimmung der Balmerlinien}
+
+\paragraph{Mit Okular}
 
 Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
 Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
@@ -530,24 +510,11 @@ Die sichtbaren sind: \SIlist{
 %<- endfor ->%
 }{\nano\meter}.
 
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{SSSS}
-        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
-    \si\degree$} & {$\lambda/\si{\meter}$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
-    \end{tabular}
-    \caption{%
-        Messdaten für die Balmer-Lampe, bestimmt mit einer CCD-Zeile.
-    }
-    \label{tab:messdaten:balmer-wellenlängen}
-\end{table}
+\paragraph{Mit CCD-Zeile}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{rot.pdf}
+    \includegraphics[width=\linewidth]{rot.pdf}
     \caption{%
         rot
     }
@@ -556,7 +523,7 @@ Die sichtbaren sind: \SIlist{
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{rot2.pdf}
+    \includegraphics[width=\linewidth]{rot2.pdf}
     \caption{%
         rot2
     }
@@ -565,7 +532,7 @@ Die sichtbaren sind: \SIlist{
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{gruen.pdf}
+    \includegraphics[width=\linewidth]{gruen.pdf}
     \caption{%
         gruen
     }
@@ -574,7 +541,7 @@ Die sichtbaren sind: \SIlist{
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{cyan.pdf}
+    \includegraphics[width=\linewidth]{cyan.pdf}
     \caption{%
         cyan
     }
@@ -583,7 +550,7 @@ Die sichtbaren sind: \SIlist{
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{cyan2.pdf}
+    \includegraphics[width=\linewidth]{cyan2.pdf}
     \caption{%
         cyan2
     }
@@ -592,7 +559,7 @@ Die sichtbaren sind: \SIlist{
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.4\textheight]{blau.pdf}
+    \includegraphics[width=\linewidth]{blau.pdf}
     \caption{%
         blau
     }
@@ -620,6 +587,7 @@ Die sichtbaren sind: \SIlist{
 \FloatBarrier
 \begin{appendix}
     \section{PC Messwerte}
+    \label{sec:pc_messwerte}
 
 %    \subsection{rot.txt}
 %    \begin{multicols}{3}
