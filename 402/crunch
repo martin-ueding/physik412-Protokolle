@@ -192,6 +192,9 @@ def balmer_serie(T):
 
     T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 2)
 
+def gauss(x, mean, std, scale, underground):
+    return scale * np.exp(- (x - mean)**2 / (2 * std)) + underground
+
 def pc_aufnahme(T):
     sets = [
         ('rot'),
@@ -202,20 +205,40 @@ def pc_aufnahme(T):
         ('blau'),
     ]
 
-    for filename in sets:
-        data = np.genfromtxt(os.path.join('Messwerte', filename+'.txt'))
-        alpha = data[:, 0]
-        intens = data[:, 1]
+    data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
+    alpha = data[:, 0]
+    intens = data[:, 1]
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
 
-        pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4)
-        pl.grid(True)
-        pl.title(filename)
-        pl.xlabel(r'$\alpha / ^{\circ}$')
-        pl.ylabel(r'relative Intensität')
-        pl.savefig(os.path.join('_build', filename+'.pdf'))
-        pl.clf()
+    lower = -20
+    upper = -10
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[lower], alpha[upper], 100)
+    y = gauss(x, *popt)
+    pl.plot(x, y)
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
+    center = popt[0]
+    fwhm = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    print(center, fwhm)
 
-        T["pc_"+filename] = list(zip(alpha, intens))
+    lower = 32
+    upper = -42
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[lower], alpha[upper], 100)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    center = popt[0]
+    fwhm = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    print(center, fwhm)
+
+
+    pl.grid(True)
+    pl.title("Erste Rote Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'rot.pdf'))
+    pl.clf()
 
 def render_template(T, filename):
     # Setting up Jinja
