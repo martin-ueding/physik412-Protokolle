@@ -54,14 +54,33 @@ def Stromkennlinie(T, filename, save):
 
     return op.fsolve(nullstelle, 0)
 
-def kennlinien(T):
+def U_0_gegen_nu(T, wavelength, U_0):
 
-    wavelength = (365e-9, 405e-9, 436e-9, 546e-9, 578e-9)
-    U_0 = (Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"),  Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf"))
-
-    print(U_0)
+    nu = 3e8/wavelength
 
     # Kennlinie U_0 gegen Frequenz
+    # Fit
+    popt, pconv = op.curve_fit(lin_fit, nu, U_0)
+    x = np.linspace(np.min(U_0), np.max(U_0), 100)
+    y = lin_fit(x, *popt)
+
+    p_err = np.sqrt(pconv.diagonal())
+
+    pl.plot(nu, U_0, linestyle="none", marker="o")
+    pl.plot(x, y)
+    pl.xlabel(r"$nu/\mathrm{s}^{-1}$")
+    pl.ylabel(r"$U_0/\mathrm{V}$")
+    pl.grid(True)
+    pl.savefig("_build/Plot_nu.pdf")
+    pl.clf()
+
+def kennlinien(T):
+
+    wavelength = [365e-9, 405e-9, 436e-9, 546e-9, 578e-9]
+
+    U_0 = [Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"),  Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")]
+
+    U_0_gegen_nu(T, wavelength, U_0)
 
 def render_template(T, filename):
     # Setting up Jinja
