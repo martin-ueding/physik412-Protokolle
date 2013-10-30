@@ -147,6 +147,13 @@ def balmer_serie(T):
 
     T["g"] = unitprint.siunitx(g_mean_val, g_mean_err)
 
+    pl.errorbar(lambda_, g_val, yerr=g_err, linestyle='none', marker='+')
+    pl.xlabel(r'$\lambda / \mathrm{m}$')
+    pl.ylabel(r'$g / \mathrm{m}$')
+    pl.grid(True)
+    pl.savefig('_build/g.pdf')
+    pl.clf()
+
 
 def pc_aufnahme(T):
     sets = [
