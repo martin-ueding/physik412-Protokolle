@@ -259,7 +259,7 @@ def rot(T):
     T['rot_secondary_upper'] = upper
 
     pl.grid(True)
-    pl.title("Erste Rote Linie")
+    pl.title("Erste rote Linie")
     pl.xlabel(r'$\alpha / ^{\circ}$')
     pl.ylabel(r'relative Intensität')
     pl.savefig(os.path.join('_build', 'rot.pdf'))
@@ -325,7 +325,7 @@ def rot2(T):
     T['rot2_primary_upper'] = upper
 
     pl.grid(True)
-    pl.title("Zweite Rote Linie")
+    pl.title("Zweite rote Linie")
     pl.xlabel(r'$\alpha / ^{\circ}$')
     pl.ylabel(r'relative Intensität')
     pl.savefig(os.path.join('_build', 'rot2.pdf'))

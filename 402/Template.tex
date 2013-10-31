@@ -586,7 +586,8 @@ Die relative Aufspaltung ist:
     \caption{%
         Graph der Daten zur ersten roten Linie. Gezeigt werden nur die
         Datenpunkte \num{<< rot_lower >>} bis \num{<< rot_upper >>}
-        (Arrayindex). An die Punkte \numrange{<< rot_primary_lower >>}{<<
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< rot_underground
+        >>} abgezogen. An die Punkte \numrange{<< rot_primary_lower >>}{<<
         rot_primary_upper >>} aus der gezeigten Punktmenge wurde eine
         Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
         \SI{<< rot_primary_center >>}{\degree} und hat eine Halbwertsbreite von
@@ -599,47 +600,127 @@ Die relative Aufspaltung ist:
     \label{fig:rot}
 \end{figure}
 
+\subparagraph{Zweite rote Linie}
+
+Hier gehen wir analog vor, siehe Abbildung~\ref{fig:rot2}. Da wir hier keine
+Aufspaltung erkennen konnten, entfällt die Anpassung einer weiteren Gaußkurve
+und die Bestimmung der Aufspaltung.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{rot2.pdf}
     \caption{%
-        rot2
+        Graph der Daten zur zweiten roten Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< rot2_lower >>} bis \num{<< rot2_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< rot2_underground
+        >>} abgezogen. An die Punkte \numrange{<< rot2_primary_lower >>}{<<
+        rot2_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< rot2_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot2_primary_fwhm >>}{\degree}.
     }
     \label{fig:rot2}
 \end{figure}
+
+\subparagraph{Grüne Linie}
+
+In Abbildung~\ref{fig:gruen} ist die grüne Linie zu erkennen, wieder ohne
+Aufspaltung.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{gruen.pdf}
     \caption{%
-        gruen
+        Graph der Daten zur grünen Linie. Gezeigt werden nur die Datenpunkte
+        \num{<< gruen_lower >>} bis \num{<< gruen_upper >>} (Arrayindex). Es
+        wurde ein Untergrundsignal von \num{<< gruen_underground >>} abgezogen.  An die
+        Punkte \numrange{<< gruen_primary_lower >>}{<< gruen_primary_upper >>} aus
+        der gezeigten Punktmenge wurde eine Gaußfunktion angepasst. Der
+        Mittelwert dieses Hauptmaximums liegt bei \SI{<< gruen_primary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< gruen_primary_fwhm
+        >>}{\degree}.
     }
     \label{fig:gruen}
 \end{figure}
+
+\subparagraph{Erste cyane Linie}
+
+In Abbildung~\ref{fig:cyan} ist die erste cyane Linie, auch wieder ohne
+Aufspaltung.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{cyan.pdf}
     \caption{%
-        cyan
+        Graph der Daten zur ersten cyanen Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< cyan_lower >>} bis \num{<< cyan_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< cyan_underground
+        >>} abgezogen. An die Punkte \numrange{<< cyan_primary_lower >>}{<<
+        cyan_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< cyan_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< cyan_primary_fwhm >>}{\degree}.
     }
     \label{fig:cyan}
 \end{figure}
+
+\subparagraph{Zweite cyane Linie}
+
+In Abbildung~\ref{fig:cyan2} ist die zweite cyane Linie, auch wieder ohne
+Aufspaltung.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{cyan2.pdf}
     \caption{%
-        cyan2
+        Graph der Daten zur zweiten cyanen Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< cyan2_lower >>} bis \num{<< cyan2_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< cyan2_underground
+        >>} abgezogen. An die Punkte \numrange{<< cyan2_primary_lower >>}{<<
+        cyan2_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< cyan2_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< cyan2_primary_fwhm >>}{\degree}.
     }
     \label{fig:cyan2}
 \end{figure}
+
+\subparagraph{Blaue Linie}
+
+In Abbildung~\ref{fig:blau} ist die blaue Linie. Hier ist eine Aufspaltung zu
+erkennen. Wir passen wie bei der ersten roten Linie zwei Gaußfunktionen an.
+
+Daraus erhalten wir eine Winkeldifferenz von \SI{<< blau_differenz >>}{\degree}.
+Nach \eqref{eq:d_Lambda_d_beta} ist dies eine Wellenlängendifferenz von
+$\Deltaup \lambda = \SI{<<
+blau_Delta_lambda >>}{\meter}$. Das $\omegaG$, das wir dort eingesetzt haben,
+hatten wir bei der Messung mit der CCD-Zeile nicht notiert. Jedoch haben wir
+den Bankwinkel nicht verändert, so dass wir hier für den Gitterwinkel den Wert
+von $\omegaG = \SI{<< blau_omega_G >>}{\degree}$ benutzen, den wir vorher für
+die blaue Linie erhalten haben.
+
+Die relative Aufspaltung ist:
+\[
+    \frac{\Deltaup \lambda}{\lambda}
+    = \frac{\SI{<< blau_Delta_lambda >>}\meter}{\SI{<< blau_lambda >>}\meter}
+    =  \num{<< blau_rel_aufspaltung >>}
+\]
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{blau.pdf}
     \caption{%
-        blau
+        Graph der Daten zur blauen Linie. Gezeigt werden nur die Datenpunkte
+        \num{<< blau_lower >>} bis \num{<< blau_upper >>} (Arrayindex). Es
+        wurde ein Untergrundsignal von \num{<< blau_underground >>} abgezogen.  An die
+        Punkte \numrange{<< blau_primary_lower >>}{<< blau_primary_upper >>}
+        aus der gezeigten Punktmenge wurde eine Gaußfunktion angepasst. Der
+        Mittelwert dieses Hauptmaximums liegt bei \SI{<< blau_primary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< blau_primary_fwhm
+        >>}{\degree}. An die Punkte \numrange{<< blau_secondary_lower >>}{<<
+        blau_secondary_upper >>} wurde die gleiche Funktion angepasst. Dieses
+        Nebenmaximum liegt bei \SI{<< blau_secondary_center >>}{\degree} und
+        hat eine Halbwertsbreite von \SI{<< blau_secondary_fwhm >>}{\degree}.
     }
     \label{fig:blau}
 \end{figure}
