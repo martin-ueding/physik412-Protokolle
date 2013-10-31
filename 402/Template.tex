@@ -4,6 +4,7 @@
 
 \usepackage{keystroke}
 \usepackage{placeins}
+\usepackage{pdflscape}
 \usepackage{minted}
 \usepackage{multicol}
 
@@ -148,6 +149,22 @@ hat:
     = \frac{\gamma}{\Deltaup \omega}
     \approx \num{e-8}
 \]
+
+Die Bewegung der Atome verursacht auch noch eine Dopplerverschiebung der
+Frequenz, also auch der Wellenlänge. Diese Stärke dieser Verbreiterung ist
+gegeben durch: \parencite{chemgapedia/spektrallinien/dopplerverbreiterung}
+\[
+    \Delta \nu_{1/2} = \num{7.16e-7} \cdot \nu_0
+    \sqrt{\frac{T/\si\kelvin}{m/\si\atomicmassunit}}
+\]
+
+Interessant ist die relative Verbreiterung der Wellenlänge, daher teilen wir
+durch $\nu_0$ erhalten
+\begin{equation}
+    \label{eq:dopplerverbreiterung}
+    \frac{\Delta\lambda}\lambda = \num{7.16e-7} \cdot
+    \sqrt{\frac{T/\si\kelvin}{m/\si\atomicmassunit}}
+\end{equation}
 
 \subsection{Spektroskopie}
 
@@ -760,17 +777,26 @@ umgewandelt haben, wandeln wir die Breite in eine Wellenländendifferenz um.
 Dabei benutzen wir als Bankwinkel $\omegaB$ den Winkel, den wir für diese Linie
 mit dem Okular erhalten hatten.
 
+\begin{landscape}
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{lSS}
-        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda / \si\meter$} \\
+    \begin{tabular}{lSSS}
+        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
+    \si\meter$} & {Aufspaltung} \\
         \hline
-        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> \\
-        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> \\
-        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> \\
-        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> \\
-        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> \\
-        blau & << blau_primary_fwhm >> & << blau_linienbreite >> \\
+        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> & <<
+        rot_gamma >> \\
+        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> & <<
+        rot2_gamma >> \\
+        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> & <<
+        gruen_gamma >> \\
+        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> & <<
+        cyan_gamma >> \\
+        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> & <<
+        cyan2_gamma >> \\
+        blau & << blau_primary_fwhm >> & << blau_linienbreite >> & <<
+        blau_gamma >> \\
     \end{tabular}
     \caption{%
         Zusammenstellung der Linienbreiten, die wir aus den Daten der CCD-Zeile
@@ -778,6 +804,8 @@ mit dem Okular erhalten hatten.
     }
     \label{tab:linienbreiten}
 \end{table}
+
+\end{landscape}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
@@ -794,11 +822,13 @@ mit dem Okular erhalten hatten.
 
 \paragraph{Dopplerverbreiterung bei \SI{1000}{\kelvin}}
 
-\fehlt
+Nach \eqref{eq:dopplerverbreiterung} erhalten wir bei $T = \SI{1000}{\kelvin}$
+und $m = \SI{1}{\atomicmassunit}$ eine Verbreiterung von \num{<< doppler >>}.
 
 \paragraph{Natürliche Linienbreite}
 
-\fehlt
+Die natürliche Linienbreite mit ihren \num{e-8} ist deutlich geringer als die
+Dopplerverbreiterung und kann hier vernachlässigt werden.
 
 \paragraph{Vergleich mit aufgenommenen Linien}
 
@@ -811,9 +841,17 @@ größer als bei der ersten roten Linie. Daher gehen wir davon aus, dass das
 Nebenmaximum nicht von der Aufspaltung stammt, sondern eine Linie eines anderen
 Übergangs ist.
 
+\fehlt
+
 \subsubsection{Auflösungsvermögen des Gitters}
 
-\fehlt
+Wir haben in erster Ordnung betrachtet und wahrscheinlich das ganze Gitter
+ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}. Mit der
+Gitterkonstante entspricht dies \num{<< aufl >>} ausgeleuchteten Strichen.
+Daher erhalten wir ein Auflösungsvermögen von:
+\[
+    \frac{\Deltaup \lambda}{\lambda} = \num{<< aufl >>}
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %

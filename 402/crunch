@@ -304,6 +304,12 @@ def rot(T):
     )
     T['rot_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[7]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[7] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[7]**2 * lambda_err[7])**2
+    )
+    T['rot_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def rot2(T):
     lower = 750
@@ -354,6 +360,12 @@ def rot2(T):
     )
     T['rot2_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[5]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[5] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[5]**2 * lambda_err[5])**2
+    )
+    T['rot2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def gruen(T):
     lower = 700
@@ -404,6 +416,12 @@ def gruen(T):
     )
     T['gruen_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[3]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[3] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[3]**2 * lambda_err[3])**2
+    )
+    T['gruen_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def cyan(T):
     lower = 861
@@ -454,6 +472,12 @@ def cyan(T):
     )
     T['cyan_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[2]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[2] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[2]**2 * lambda_err[2])**2
+    )
+    T['cyan_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def cyan2(T):
     lower = 979
@@ -504,6 +528,12 @@ def cyan2(T):
     )
     T['cyan2_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[2]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[2] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[2]**2 * lambda_err[2])**2
+    )
+    T['cyan2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def blau(T):
     lower = 730
@@ -591,7 +621,6 @@ def blau(T):
     )
     T['blau_rel_aufspaltung'] = unitprint.siunitx(rel_val, rel_err)
 
-
     linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * blau_haupt_fwhm_val
     linienbreite_err = np.sqrt(
         (np.cos(omega_B_val + omega_G_val) * blau_haupt_fwhm_val * g_average_err)**2
@@ -601,6 +630,31 @@ def blau(T):
     )
     T['blau_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
 
+    gamma_val = linienbreite_val / lambda_val[0]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[0] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[0]**2 * lambda_err[0])**2
+    )
+    T['blau_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def aufloesungsvermoegen_gitter(T):
+    d_val = 25e-3
+    d_err = 5e-3
+
+    aufl_val = d_val / g_average_val
+    aufl_err = np.sqrt(
+        (d_val / g_average_val**2 * g_average_err)**2
+        + (1 / g_average_val * d_err)**2
+    )
+
+    T['d'] = unitprint.siunitx(d_val, d_err)
+    T['aufl'] = unitprint.siunitx(aufl_val, aufl_err)
+
+def dopplerverbreiterung(T):
+    t = 1000
+    m = 1
+
+    T['doppler'] = unitprint.siunitx(7.16e-7 * np.sqrt(1000))
 
 def render_template(T, filename):
     # Setting up Jinja
@@ -627,6 +681,8 @@ def main():
 
     balmer_serie(T)
     pc_aufnahme(T)
+    aufloesungsvermoegen_gitter(T)
+    dopplerverbreiterung(T)
 
     render_template(T, sys.argv[1])
 
