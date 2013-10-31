@@ -188,13 +188,51 @@ def balmer_serie(T):
 
     lambda_erwartet = np.array([
         3e8 * 6.626e-34 / (13.6*1.609e-19) / (1/2**2 - 1/n**2) * 10**9
-        for n in range(3, 10)
+        for n in range(3, 9)
     ])
 
-    lambda_erwartet_sorted = [x for x in sorted(lambda_erwartet) if 400 <= x <= 800]
-    print(lambda_erwartet)
+    lambda_erwartet_sorted = np.array([x for x in sorted(lambda_erwartet) if 400 <= x <= 800])
 
-    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted, 2)
+    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted)
+
+    T['balmer_lambda'] = unitprint.siunitx(lambda_val, lambda_err)
+    T['balmer_berechnet'] = unitprint.siunitx(lambda_erwartet_sorted * 1e-9)
+
+    T['balmer_lambda_nm'] = ';'.join(unitprint.siunitx(lambda_val, lambda_err))
+    T['balmer_berechnet_nm'] = ';'.join(unitprint.siunitx(lambda_erwartet_sorted * 1e-9))
+
+
+    balmer_daten = np.array([
+        [5, lambda_val[0], lambda_err[0]],
+        [4, lambda_val[2], lambda_err[2]],
+        [3, lambda_val[6], lambda_err[6]],
+    ])
+
+    print(balmer_daten)
+
+    def fit(n, C):
+        return C / (1/2**2 - 1/n**2)
+
+    n = balmer_daten[:, 0]
+    l = balmer_daten[:, 1]
+    err = balmer_daten[:, 2]
+
+    pl.errorbar(n, l, yerr=err, linestyle='none', marker='+')
+
+    popt, pconv = op.curve_fit(fit, n, l)
+    x = np.linspace(2.9, 5.1, 100)
+    y = fit(x, *popt)
+    pl.plot(x, y)
+    pl.title('Ausgesuchte Balmerlinien')
+    pl.xlabel('$n$')
+    pl.ylabel(r'$\lambda/\mathrm{m}$')
+    pl.savefig('_build/balmer_ausgesucht.pdf')
+    pl.clf()
+
+    e_ryd_val = popt[0]
+    e_ryd_err = np.sqrt(pconv.diagonal())[0]
+
+    T['e_ryd'] = unitprint.siunitx(e_ryd_val, e_ryd_err)
 
 def gauss(x, mean, std, scale):
     return scale * np.exp(- (x - mean)**2 / (2 * std))

@@ -514,9 +514,7 @@ Mittelwert und teilen noch durch $\sqrt n$.
 \]
 
 \FloatBarrier
-\subsubsection{Bestimmung der Balmerlinien}
-
-\paragraph{Mit Okular}
+\subsubsection{Bestimmung der Balmerlinien mit Okular}
 
 Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
 Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
@@ -572,7 +570,7 @@ Die davon sichtbaren sind: \SIlist{
 %<- endfor ->%
 }{\nano\meter}.
 
-\paragraph{Mit CCD-Zeile}
+\paragraph{Bestimmung der Ballmerlinien mit CCD-Zeile}
 
 Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar.
 
@@ -587,7 +585,7 @@ Die Halbwertsbreite $H$ ist gegeben als: \parencite{wikipedia/gaussian_function}
     H = 2 \sqrt{2 \ln(2)} \sigma
 \]
 
-\subparagraph{Erste rote Linie}
+\paragraph{Erste rote Linie}
 
 Die erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
 Isotopieaufspaltung beobachten.
@@ -644,7 +642,7 @@ Die relative Aufspaltung ist:
     \label{fig:rot}
 \end{figure}
 
-\subparagraph{Zweite rote Linie}
+\paragraph{Zweite rote Linie}
 
 Hier gehen wir analog vor, siehe Abbildung~\ref{fig:rot2}. Da wir hier keine
 Aufspaltung erkennen konnten, entfällt die Anpassung einer weiteren Gaußkurve
@@ -666,7 +664,7 @@ und die Bestimmung der Aufspaltung.
     \label{fig:rot2}
 \end{figure}
 
-\subparagraph{Grüne Linie}
+\paragraph{Grüne Linie}
 
 In Abbildung~\ref{fig:gruen} ist die grüne Linie zu erkennen, wieder ohne
 Aufspaltung.
@@ -687,7 +685,7 @@ Aufspaltung.
     \label{fig:gruen}
 \end{figure}
 
-\subparagraph{Erste cyane Linie}
+\paragraph{Erste cyane Linie}
 
 In Abbildung~\ref{fig:cyan} ist die erste cyane Linie, auch wieder ohne
 Aufspaltung.
@@ -708,7 +706,7 @@ Aufspaltung.
     \label{fig:cyan}
 \end{figure}
 
-\subparagraph{Zweite cyane Linie}
+\paragraph{Zweite cyane Linie}
 
 In Abbildung~\ref{fig:cyan2} ist die zweite cyane Linie, auch wieder ohne
 Aufspaltung.
@@ -729,7 +727,7 @@ Aufspaltung.
     \label{fig:cyan2}
 \end{figure}
 
-\subparagraph{Blaue Linie}
+\paragraph{Blaue Linie}
 
 In Abbildung~\ref{fig:blau} ist die blaue Linie. Hier ist eine Aufspaltung zu
 erkennen. Wir passen wie bei der ersten roten Linie zwei Gaußfunktionen an.
@@ -769,7 +767,7 @@ Die relative Aufspaltung ist:
     \label{fig:blau}
 \end{figure}
 
-\subparagraph{Linienbreiten}
+\paragraph{Linienbreiten}
 
 In Tabelle~\ref{tab:linienbreiten} haben wir die Linienbreiten noch einmal
 zusammengestellt. Mit der Formel, mit der wir auch die Isotopieaufspaltung
@@ -807,6 +805,70 @@ mit dem Okular erhalten hatten.
 \end{table}
 
 \end{landscape}
+
+\subsubsection{Bestimmung der Rydbergkonstanten}
+
+Die Rydbergkonstante ist definiert als: \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    R_\infty = \frac{\alpha^2 m_\text e c}{2 h}
+\]
+
+Zusammen mit der Feinstrukturkonstante $\alpha = e^2/(4\piup \varepsilon_0
+\hbar c)$: \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    R_\infty = \frac{e^4 m_\text e}{8 \varepsilon_0^2 c h^3}
+\]
+
+Dies deckt sich mit \cite{wikipedia/Rydbergkonstante}.
+
+Die Rydbergkonstante erhalten wir, in dem wir aus den Wellenlängen die
+Energiedifferenzen der Übergänge errechnen und das passende Energieniveau
+finden, von dem der Übergang gestartet ist.
+
+Die von uns gemessenen Wellenlängen waren: \SIlist{<< balmer_lambda_nm >>}{\meter}.
+
+Zu erwartende Wellenlängen sind für die Übergänge $n \to 2$: \SIlist{<<
+balmer_berechnet_nm >>}{\meter}.
+
+Die ehesten Kandidaten sind:
+\begin{itemize}
+    \item $\SI{<< balmer_lambda[0] >>}\meter \approx \SI{<<
+        balmer_berechnet[1] >>}\meter$, $5 \to 2$.
+
+    \item $\SI{<< balmer_lambda[2] >>}\meter \approx \SI{<<
+        balmer_berechnet[2] >>}\meter$, $4 \to 2$.
+
+    \item $\SI{<< balmer_lambda[6] >>}\meter \approx \SI{<<
+        balmer_berechnet[3] >>}\meter$, $3 \to 2$.
+\end{itemize}
+
+Diese drei Punkte stellen wir in Abbildung~\ref{fig:balmer_ausgesucht}
+graphisch dar. An die Punkte passen wir folgende Funktion an:
+\[
+    \lambda(n) = C \del{\frac{1}{2^2} - \frac{1}{n^2}}^{-1}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{balmer_ausgesucht.pdf}
+    \caption{%
+        Ausgesuchte Balmerlinien.
+    }
+    \label{fig:balmer_ausgesucht}
+\end{figure}
+
+Wobei
+\[
+    C = \frac{c h}{R_\infty}
+    = \frac{8 \varepsilon_0^2 c^2 h^4}{e^4 m_\text e}
+\]
+
+Dies lösen wir nach dem gesuchten $h$ auf:
+\[
+    h = \sqrt
+\]
+
+\SI{<< e_ryd >>}{\electronvolt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
@@ -860,6 +922,9 @@ Daher erhalten wir ein Auflösungsvermögen von:
 \[
     \frac{\Deltaup \lambda}{\lambda} = \num{<< aufl >>}
 \]
+
+Dies würde für die Isotopieaufspaltung reichen, jedoch waren unsere
+Linsensysteme nicht entsprechend genau.
 
 \subsection{Isotopieaufspaltung}
 
