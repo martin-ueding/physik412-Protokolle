@@ -25,7 +25,7 @@ def Stromkennlinie(T, filename, save):
     # Daten berechnen.
     I_0 = data[0,1]*1e-10
     dI_0 = data[0,3]*1e-10
-    U = -data[1:,0]
+    U = data[1:,0]
     dU = data[1:,2]
     I = data[1:,1]*1e-10
     dI = data[1:,3]*1e-10
@@ -57,6 +57,7 @@ def Stromkennlinie(T, filename, save):
 def U_0_gegen_nu(T, wavelength, U_0):
 
     nu = 3e8/wavelength
+    print(nu)
 
     # Kennlinie U_0 gegen Frequenz
     # Fit
@@ -76,9 +77,12 @@ def U_0_gegen_nu(T, wavelength, U_0):
 
 def kennlinien(T):
 
-    wavelength = [365e-9, 405e-9, 436e-9, 546e-9, 578e-9]
+    wavelength = np.array([365e-9, 405e-9, 436e-9, 546e-9, 578e-9])
 
-    U_0 = [Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"),  Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")]
+    print(wavelength)
+
+    U_0 = np.array([Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"),  Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")])
+    print(U_0)
 
     U_0_gegen_nu(T, wavelength, U_0)
 
@@ -103,9 +107,9 @@ def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    #kennlinien(T)
+    kennlinien(T)
 
-    render_template(T, sys.argv[1])
+    #render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
     main()
