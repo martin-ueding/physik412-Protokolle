@@ -203,8 +203,26 @@
 %                            Bibliography (BibTeX)                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage[
+backend=bibtex,
+style=authoryear-icomp,
+isbn=false,
+pagetracker=false,
+maxbibnames=50,
+maxcitenames=2,
+autocite=inline,
+block=space,
+backref=false,
+backrefstyle=three+,
+date=short,
+hyperref=true
+]{biblatex}
+
 \newcommand{\bibliographyfile}{../../central-bibtex/Central}
-\bibliographystyle{apalike2}
+
+\IfFileExists{\bibliographyfile}{
+    \bibliography{\bibliographyfile}
+}{\bibliographyfile existiert nicht.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                Abbreviations                                %
