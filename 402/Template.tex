@@ -5,6 +5,7 @@
 \usepackage{keystroke}
 \usepackage{placeins}
 \usepackage{pdflscape}
+\usepackage{booktabs}
 \usepackage{minted}
 \usepackage{multicol}
 
@@ -384,7 +385,7 @@ angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
         {Winkel $\omega_\text G / \si\degree$} &
         {rel. Int.} &
         {Wellenlänge $\lambda / \si{\nano\meter}$} \\
-        \hline
+        \midrule
         %< for farbe, omega_G, rel_int, lambda in messdaten_gitterkonstante: ->%
         << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> & <<
         lambda >> \\
@@ -421,7 +422,7 @@ Tabelle~\ref{tab:messdaten:balmer-okular}.
         Farbe &
         {$\omega_\text G / \si\degree$} &
         {rel. Int.} \\
-        \hline
+        \midrule
         %< for farbe, omega_G, rel_int in messdaten_balmer: ->%
         << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> \\
         %< endfor ->%
@@ -481,7 +482,7 @@ erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
         {$\omegaG / \si{\radian}$} &
         {$\lambda / \si{\nano\meter}$} &
         {$g / \si{\meter}$} \\
-        \hline
+        \midrule
         %< for omega_G_val, lambda, g in tabelle_gitterkonstante: ->%
         << omega_G_val >> & << lambda >>  & << g >> \\
         %< endfor ->%
@@ -548,7 +549,7 @@ Hier berechnet sich der Fehler wie folgt:
         {$\omega_\text G / \si\radian$} &
         {rel. Int.} &
         {$\lambda / \si{\meter}$} \\
-        \hline
+        \midrule
         %< for farbe, omega_G, rel_int, lambda_ in tabelle_balmer: ->%
         << farbe >> & << omega_G >> & << rel_int >> & <<
         lambda_ >> \\
@@ -784,7 +785,7 @@ mit dem Okular erhalten hatten.
     \begin{tabular}{lSSS}
         Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
     \si\meter$} & {Aufspaltung} \\
-        \hline
+        \midrule
         erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> & <<
         rot_gamma >> \\
         zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> & <<
@@ -858,8 +859,7 @@ Isotopieaufspaltung nichts zu tun.
 \subsubsection{Auflösungsvermögen des Gitters}
 
 Wir haben in erster Ordnung betrachtet und wahrscheinlich das ganze Gitter
-ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}. Mit der
-Gitterkonstante entspricht dies \num{<< aufl >>} ausgeleuchteten Strichen.
+ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}.
 Daher erhalten wir ein Auflösungsvermögen von:
 \[
     \frac{\Deltaup \lambda}{\lambda} = \num{<< aufl >>}
@@ -944,7 +944,7 @@ Daher erhalten wir ein Auflösungsvermögen von:
         \centering
         \begin{tabular}{lSS}
             Farbe & {$\lambda_\text{Hg} / \si{\nano\meter}$} & {rel. Int.} \\
-            \hline
+            \midrule
             violett & 404.656 & 1800 \\
                     & 407.783 & 150 \\
                     & 410.805 & 40 \\

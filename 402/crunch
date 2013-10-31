@@ -641,10 +641,10 @@ def aufloesungsvermoegen_gitter(T):
     d_val = 25e-3
     d_err = 5e-3
 
-    aufl_val = d_val / g_average_val
+    aufl_val = g_average_val / d_val 
     aufl_err = np.sqrt(
-        (d_val / g_average_val**2 * g_average_err)**2
-        + (1 / g_average_val * d_err)**2
+        (g_average_val / d_val**2 * d_err)**2
+        + (1 / d_val * g_average_err)**2
     )
 
     T['d'] = unitprint.siunitx(d_val, d_err)
