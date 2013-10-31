@@ -725,12 +725,47 @@ Die relative Aufspaltung ist:
     \label{fig:blau}
 \end{figure}
 
+\subparagraph{Linienbreiten}
+
+In Tabelle~\ref{tab:linienbreiten} haben wir die Linienbreiten noch einmal
+zusammengestellt. Mit der Formel, mit der wir auch die Isotopieaufspaltung
+$\Deltaup \alpha$ in Grad in eine Wellenlängendifferenz $\Deltaup \lambda$
+umgewandelt haben, wandeln wir die Breite in eine Wellenländendifferenz um.
+Dabei benutzen wir als Bankwinkel $\omegaB$ den Winkel, den wir für diese Linie
+mit dem Okular erhalten hatten.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lSS}
+        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda / \si\meter$} \\
+        \hline
+        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> \\
+        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> \\
+        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> \\
+        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> \\
+        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> \\
+        blau & << blau_primary_fwhm >> & << blau_linienbreite >> \\
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Linienbreiten, die wir aus den Daten der CCD-Zeile
+        bestimmt haben.
+    }
+    \label{tab:linienbreiten}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \FloatBarrier
 \section{Diskussion}
+
+\subsection{Isotopieaufspaltung}
+
+Die Aufspaltung bei der blauen Linie ist sehr groß, gut einen Faktor zehn
+größer als bei der ersten roten Linie. Daher gehen wir davon aus, dass das
+Nebenmaximum nicht von der Aufspaltung stammt, sondern eine Linie eines anderen
+Übergangs ist.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %
