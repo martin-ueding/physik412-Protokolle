@@ -580,18 +580,21 @@ Die relative Aufspaltung ist:
     =  \num{<< rot_rel_aufspaltung >>}
 \]
 
-
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{rot.pdf}
     \caption{%
         Graph der Daten zur ersten roten Linie. Gezeigt werden nur die
         Datenpunkte \num{<< rot_lower >>} bis \num{<< rot_upper >>}
-        (Arrayindex). Der Mittelwert des Hauptmaximums liegt bei \SI{<<
-        rot_primary_center >>}{\degree} und hat eine Halbwertsbreite von \SI{<<
-            rot_primary_fwhm >>}{\degree}. Das Nebenmaximum liegt bei \SI{<<
-            rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von
-            \SI{<< rot_secondary_fwhm >>}{\degree}.
+        (Arrayindex). An die Punkte \numrange{<< rot_primary_lower >>}{<<
+        rot_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< rot_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot_primary_fwhm >>}{\degree}. An die Punkte \numrange{<<
+        rot_secondary_lower >>}{<< rot_secondary_upper >>} wurde die gleiche
+        Funktion angepasst. Dieses Nebenmaximum liegt bei \SI{<<
+        rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot_secondary_fwhm >>}{\degree}.
     }
     \label{fig:rot}
 \end{figure}
@@ -664,35 +667,59 @@ Die relative Aufspaltung ist:
     \section{PC Messwerte}
     \label{sec:pc_messwerte}
 
-%    \subsection{rot.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/rot.txt}
-%    \end{multicols}
-%
-%    \subsection{rot2.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/rot2.txt}
-%    \end{multicols}
-%
-%    \subsection{gruen.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/gruen.txt}
-%    \end{multicols}
-%
-%    \subsection{cyan.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/cyan.txt}
-%    \end{multicols}
-%
-%    \subsection{cyan2.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/cyan2.txt}
-%    \end{multicols}
-%
-%    \subsection{blau.txt}
-%    \begin{multicols}{3}
-%        \inputminted{text}{../Messwerte/blau.txt}
-%    \end{multicols}
+    Dies sind die von „VideoCom“ erzeugten Daten. Hier abgedruckt sind nur die
+    Datenpunkte, die auch im Plot verwendet worden sind. Unter jeder Tabelle
+    ist eine URL zur vollständigen Datei angegeben. In der ersten Spalte ist
+    der Winkel $\alpha$ in $\si\degree$, in der zweiten Spalte die relative
+    Intensität.
+
+    \subsection{Erste rote Linie (rot.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< rot_lower >>, lastline=<< rot_upper >>, fontsize=\footnotesize]{text}{../Messwerte/rot.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/rot.txt}
+
+    \subsection{Zweite rote Linie (rot2.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< rot2_lower >>, lastline=<< rot2_upper >>, fontsize=\footnotesize]{text}{../Messwerte/rot2.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/rot2.txt}
+
+    \subsection{Grüne Linie (gruen.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< gruen_lower >>, lastline=<< gruen_upper >>, fontsize=\footnotesize]{text}{../Messwerte/gruen.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/gruen.txt}
+
+    \subsection{Erste cyane Linie (cyan.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< cyan_lower >>, lastline=<< cyan_upper >>, fontsize=\footnotesize]{text}{../Messwerte/cyan.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/cyan.txt}
+
+    \subsection{Zweite cyane Linie (cyan2.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< cyan2_lower >>, lastline=<< cyan2_upper >>, fontsize=\footnotesize]{text}{../Messwerte/cyan2.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/cyan2.txt}
+
+    \subsection{Blaue Linie (blau.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< blau_lower >>, lastline=<< blau_upper >>, fontsize=\footnotesize]{text}{../Messwerte/blau.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/blau.txt}
 
     \section{Spektrum der Quecksilberlampe}
     \label{sec:spektrum}

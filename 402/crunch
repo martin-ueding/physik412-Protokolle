@@ -210,6 +210,11 @@ def pc_aufnahme(T):
     ]
 
     rot(T)
+    rot2(T)
+    gruen(T)
+    cyan(T)
+    cyan2(T)
+    blau(T)
 
 def rot(T):
     data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
@@ -221,26 +226,10 @@ def rot(T):
     T['rot_lower'] = 712
     T['rot_upper'] = 806
 
-    lower = -20
-    upper = -10
-    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
-    x = np.linspace(alpha[0], alpha[-1], 100)
-    y = gauss(x, *popt)
-    pl.plot(x, y)
-    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
-    rot_neben_mitte_val = popt[0]
-    rot_neben_mitte_err = np.sqrt(pconv.diagonal())[0]
-    rot_neben_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
-    rot_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
-    T['rot_secondary_center'] = unitprint.siunitx(rot_neben_mitte_val, rot_neben_mitte_err)
-    T['rot_secondary_fwhm'] = unitprint.siunitx(rot_neben_fwhm_val, rot_neben_fwhm_err)
-    T['rot_secondary_lower'] = lower
-    T['rot_secondary_upper'] = upper
-
     lower = 32
     upper = -42
     popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
-    x = np.linspace(alpha[0], alpha[-1], 100)
+    x = np.linspace(alpha[0], alpha[-1], 1000)
     y = gauss(x, *popt)
     pl.plot(x, y, label='Gausskurve für Hauptmaximum')
     pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
@@ -252,6 +241,22 @@ def rot(T):
     T['rot_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
     T['rot_primary_lower'] = lower
     T['rot_primary_upper'] = upper
+
+    lower = -20
+    upper = -10
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y)
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
+    rot_neben_mitte_val = popt[0]
+    rot_neben_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_neben_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['rot_secondary_center'] = unitprint.siunitx(rot_neben_mitte_val, rot_neben_mitte_err)
+    T['rot_secondary_fwhm'] = unitprint.siunitx(rot_neben_fwhm_val, rot_neben_fwhm_err)
+    T['rot_secondary_lower'] = lower
+    T['rot_secondary_upper'] = upper
 
     pl.grid(True)
     pl.title("Erste Rote Linie")
@@ -289,6 +294,229 @@ def rot(T):
         + (Delta_lambda_val / lambda_val[7]**2 * lambda_err[7])**2
     )
     T['rot_rel_aufspaltung'] = unitprint.siunitx(rel_val, rel_err)
+
+
+def rot2(T):
+    lower = 750
+    upper = 1559
+    data = np.genfromtxt(os.path.join('Messwerte', 'rot2.txt'))[lower:upper, :]
+    underground = 4.9
+    T['rot2_underground'] = underground
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['rot2_lower'] = lower
+    T['rot2_upper'] = upper
+
+    lower = 160
+    upper = -160
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot_haupt_mitte_val = popt[0]
+    rot_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['rot2_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
+    T['rot2_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['rot2_primary_lower'] = lower
+    T['rot2_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Zweite Rote Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'rot2.pdf'))
+    pl.clf()
+
+def gruen(T):
+    lower = 700
+    upper = 1242
+    data = np.genfromtxt(os.path.join('Messwerte', 'gruen.txt'))[lower:upper, :]
+    underground = 4.8
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['gruen_underground'] = underground
+    T['gruen_lower'] = lower
+    T['gruen_upper'] = upper
+
+    lower = 130
+    upper = -80
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot_haupt_mitte_val = popt[0]
+    rot_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['gruen_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
+    T['gruen_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['gruen_primary_lower'] = lower
+    T['gruen_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Grüne Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'gruen.pdf'))
+    pl.clf()
+
+def cyan(T):
+    lower = 861
+    upper = 962
+    data = np.genfromtxt(os.path.join('Messwerte', 'cyan.txt'))[lower:upper, :]
+    underground = 6.0
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['cyan_underground'] = underground
+    T['cyan_lower'] = lower
+    T['cyan_upper'] = upper
+
+    lower = 30
+    upper = -30
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot_haupt_mitte_val = popt[0]
+    rot_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['cyan_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
+    T['cyan_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['cyan_primary_lower'] = lower
+    T['cyan_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Erste cyane Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'cyan.pdf'))
+    pl.clf()
+
+def cyan2(T):
+    lower = 979
+    upper = 1110
+    data = np.genfromtxt(os.path.join('Messwerte', 'cyan2.txt'))[lower:upper, :]
+    underground = 6.0
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['cyan2_underground'] = underground
+    T['cyan2_lower'] = lower
+    T['cyan2_upper'] = upper
+
+    lower = 30
+    upper = -30
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot_haupt_mitte_val = popt[0]
+    rot_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['cyan2_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
+    T['cyan2_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['cyan2_primary_lower'] = lower
+    T['cyan2_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Zweite cyane Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'cyan2.pdf'))
+    pl.clf()
+
+def blau(T):
+    lower = 730
+    upper = 1200
+    data = np.genfromtxt(os.path.join('Messwerte', 'blau.txt'))[lower:upper, :]
+    underground = 5.5
+    T['blau_underground'] = underground
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['blau_lower'] = lower
+    T['blau_upper'] = upper
+
+    lower = 230
+    upper = -100
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    blau_haupt_mitte_val = popt[0]
+    blau_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    blau_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    blau_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['blau_primary_center'] = unitprint.siunitx(blau_haupt_mitte_val, blau_haupt_mitte_err)
+    T['blau_primary_fwhm'] = unitprint.siunitx(blau_haupt_fwhm_val, blau_haupt_fwhm_err)
+    T['blau_primary_lower'] = lower
+    T['blau_primary_upper'] = upper
+
+    lower = 60
+    upper = 100
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y)
+    blau_neben_mitte_val = popt[0]
+    blau_neben_mitte_err = np.sqrt(pconv.diagonal())[0]
+    blau_neben_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    blau_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['blau_secondary_center'] = unitprint.siunitx(blau_neben_mitte_val, blau_neben_mitte_err)
+    T['blau_secondary_fwhm'] = unitprint.siunitx(blau_neben_fwhm_val, blau_neben_fwhm_err)
+    T['blau_secondary_lower'] = lower
+    T['blau_secondary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Blaue Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'blau.pdf'))
+    pl.clf()
+
+    differenz_val = abs(blau_haupt_mitte_val - blau_neben_mitte_val)
+    differenz_err = np.sqrt(blau_haupt_mitte_err**2 + blau_neben_mitte_err**2)
+    T['blau_differenz'] = unitprint.siunitx(differenz_val, differenz_err)
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+
+    omega_G = -38.1
+    T['blau_omega_G'] = omega_G
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.radians(0.2)
+
+    T['blau_lambda'] = unitprint.siunitx(lambda_val[0], lambda_err[0])
+
+    Delta_lambda_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_val
+    Delta_lambda_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * differenz_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_err)**2
+    )
+    T['blau_Delta_lambda'] = unitprint.siunitx(Delta_lambda_val, Delta_lambda_err)
+
+    rel_val = Delta_lambda_val / lambda_val[0]
+    rel_err = np.sqrt(
+        (1 / lambda_val[0] * Delta_lambda_err)**2
+        + (Delta_lambda_val / lambda_val[0]**2 * lambda_err[0])**2
+    )
+    T['blau_rel_aufspaltung'] = unitprint.siunitx(rel_val, rel_err)
+
 
 def render_template(T, filename):
     # Setting up Jinja
