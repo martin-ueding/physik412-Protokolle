@@ -1,0 +1,9 @@
+# Farbe, ω_G, rel. Int.
+blau    -15.5    3
+blau    -15.7    1
+türkis  -20.1    3.5
+grün    -24.6    2
+grün    -25.5    1
+rot -33.1    2
+rot -36.8    0
+rot -38.1    4

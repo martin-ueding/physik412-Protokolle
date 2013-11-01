@@ -4,6 +4,10 @@
 
 \usepackage{keystroke}
 \usepackage{placeins}
+\usepackage{pdflscape}
+\usepackage{booktabs}
+\usepackage{minted}
+\usepackage{multicol}
 
 \newcommand\versuchsnummer{402}
 
@@ -119,6 +123,50 @@ Austrittsarbeit (Achsenabschnitt) auf.
 
 \subsection{Aufbau der Atomhülle}
 
+\subsubsection{Linienbreite}
+
+Die Spektrallinien werden mit einer gewissen Breite wahrgenommen. Dies hat
+verschiedene Effekte, beginnend mit der natürlichen Linienbreite:
+
+\begin{quote}
+    Absolut scharfe Spektrallinien gibt es nicht. Selbst ein völlig isoliertes
+    Atom könnte nur dann Licht einer absolut scharfen Frequenz aussenden, wenn
+    es ununterbrochen Strahlen wüëde. Unabhängig vom speziellen Atommodell muss
+    die emittierte Welle irgendwann aufhören. Jeder solche Abbruch verletzt
+    aber die absolute Periodizität, und das Ergebnis ist nur noch als ein
+    Kontinuum von Frequenzen darstellbar.
+    \parencite[Abschnitt~14.3.2]{meschede-gerthsen_24}
+\end{quote}
+
+Die Verstimmung $\gamma$ ist der Kehrwert der Lebensdauer $\tau$ des Zustandes.
+Für völlig isolierte Atome gilt $\gamma / \omega \approx \num{e-8}$.
+\parencite[Abschnitt~14.3.2]{meschede-gerthsen_24}
+
+Daraus folgt auch, dass die relative Verbreiterung der Wellenlängen diese Größe
+hat:
+\[
+    \frac{\Deltaup \lambda}{\lambda}
+    = \frac{\omega}{\Deltaup \omega}
+    = \frac{\gamma}{\Deltaup \omega}
+    \approx \num{e-8}
+\]
+
+Die Bewegung der Atome verursacht auch noch eine Dopplerverschiebung der
+Frequenz, also auch der Wellenlänge. Diese Stärke dieser Verbreiterung ist
+gegeben durch: \parencite{chemgapedia/spektrallinien/dopplerverbreiterung}
+\[
+    \Delta \nu_{1/2} = \num{7.16e-7} \cdot \nu_0
+    \sqrt{\frac{T/\si\kelvin}{m/\si\atomicmassunit}}
+\]
+
+Interessant ist die relative Verbreiterung der Wellenlänge, daher teilen wir
+durch $\nu_0$ erhalten
+\begin{equation}
+    \label{eq:dopplerverbreiterung}
+    \frac{\Delta\lambda}\lambda = \num{7.16e-7} \cdot
+    \sqrt{\frac{T/\si\kelvin}{m/\si\atomicmassunit}}
+\end{equation}
+
 \subsection{Spektroskopie}
 
 \subsubsection{Gittergleichung}
@@ -130,7 +178,7 @@ eine Gleichung sein, die die Abhängigkeit $(\omega_\text B, \omega_\text G,
 
 Der Gangunterschied $\Delta$ bei einem Einfallswinkel $\alpha_0$ und einem
 Austrittswinkel $\alpha_m$ für das Interferenzbild der Ordnung $m$ ist gegeben
-durch: \cite[Formel~368.16]{physik312-Anleitung}
+durch: \parencite[Formel~368.16]{physik312-Anleitung}
 \begin{equation}
     \label{eq:368.16}
     \Delta = g \cdot \del{\sin(\alpha_0) + \sin(-\alpha_m)} = m \lambda
@@ -162,6 +210,21 @@ berechnet sie den Winkel bei der Objektivbrennweite $f$ und Pixelnummer $p \in
     \beta = \arctan\del{\frac{(1024 - p) \cdot \SI{0.014}{\milli\meter}}f}
 \]
 
+Um nachher aus der Winkeldifferenz $\Deltaup \alpha$ auf eine
+Wellenlängendifferenz schließen zu können, müssen wir \eqref{eq:lambda} nach
+dem Bankwinkel $\omegaB$ ableiten:
+\begin{equation}
+    \label{eq:d_Lambda_d_beta}
+    \dpd\lambda\omegaB = - g \cos(\omegaB + \omegaG)
+\end{equation}
+
+Mit diesem Ausdruck kann nun die Isotopieaufspaltung $\Deltaup \lambda$ (nicht
+der Fehler von $\lambda$) berechnet werden mit:
+\begin{equation}
+    \label{eq:Delta_lambda}
+    \Deltaup\lambda = \eval{\dpd\lambda\omegaB}_{\omegaB} \Deltaup\beta
+\end{equation}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                 Bestimmung des Planckschen Wirkungsquantums                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -174,9 +237,9 @@ berechnet sie den Winkel bei der Objektivbrennweite $f$ und Pixelnummer $p \in
 
 \begin{figure}[htbp]
     \centering
-    %\includegraphics[width=\linewidth]{}
+    \includegraphics[width=\linewidth]{../Zeichnungen/P402-1.pdf}
     \caption{%
-        \cite[Abbildung~P402.1]{physik412-Anleitung}
+        \parencite[Abbildung~P402.1]{physik412-Anleitung}
     }
     \label{fig:P402.1}
 \end{figure}
@@ -283,7 +346,8 @@ Daher drehen wir jetzt das Gitter mit den Rändelschrauben so, dass das Bild
 exakt in den Spalt fällt.
 
 Die optische Bank klappen wir nun so zu, dass der Winkel $\omega_\text B$ im
-Bereich von \SIrange{130}{170}{\degree} liegt.
+Bereich von \SIrange{130}{170}{\degree} liegt. Wir lesen \SI{<< omega_B
+>>}{\degree} ab.
 
 Das Okular wird ans Ende des anderen Armes gestellt und so justiert, dass einer
 von uns die Skala gut ablesen kann. Zuletzt setzen wir die Linse mit $f =
@@ -305,7 +369,7 @@ erkennen zu können, weiten wir den Spalt auf und stellen ihn anschließend auf
 
 Mit der Objektivlinse des Beobachtungsteleskops können wir die Linien
 scharfstellen, wir justieren so lange, bis diese es sind. Dann lesen wir den
-Winkel zwischen den Armen $\omega_\text B$ sowie den Winkel des Gitters
+Winkel des Gitters
 $\omega_\text G$ ab. Die gemessenen Winkel sind in
 Tabelle~\ref{tab:messdaten:gitterkonstante}.
 
@@ -314,15 +378,21 @@ angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS}
-        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B /
-    \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
+    \begin{tabular}{lSS|S}
+        Farbe &
+        {Winkel $\omega_\text G / \si\degree$} &
+        {rel. Int.} &
+        {Wellenlänge $\lambda / \si{\nano\meter}$} \\
+        \midrule
+        %< for farbe, omega_G, rel_int, lambda in messdaten_gitterkonstante: ->%
+        << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> & <<
+        lambda >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Messdaten für die Bestimmung der Gitterkonstanten mit der
-        Quecksilberlampe.
+        Quecksilberlampe. Hinter der senkrechten Linie sind die Wellenlängen,
+        die wir anhand der Tabelle aus Anhang~\ref{sec:spektrum} annehmen.
     }
     \label{tab:messdaten:gitterkonstante}
 \end{table}
@@ -346,10 +416,14 @@ Tabelle~\ref{tab:messdaten:balmer-okular}.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS}
-        {Wellenlänge $\lambda / \si\meter$} & {Winkel $\omega_\text B / \si\radian$}  & {Winkel $\omega_\text G / \si\radian$} & {Aufspaltung $d / \si{\milli\meter}$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
+    \begin{tabular}{lSS}
+        Farbe &
+        {$\omega_\text G / \si\degree$} &
+        {rel. Int.} \\
+        \midrule
+        %< for farbe, omega_G, rel_int in messdaten_balmer: ->%
+        << farbe >> & << omega_G >> +- << omega_G_err>> & << rel_int >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Messdaten für die Balmer-Lampe, bestimmt mit einem Okular
@@ -370,30 +444,12 @@ Die roten Balmer-Linien müssen auf die Mitte der CCD-Zeile abgebildet werden,
 daher drehen wir das Gitter entsprechend. Mit der Objektivlinse stellen wir die
 Linien scharf, das Ergebnis kontrollieren wir auf dem Monitor.
 
-Mit \Alt\keystroke{Z} vergrößern wir den Bereich und können die Aufspaltung so
-besser erkennen.
-
 Mit der Schaltfläche „$\sum_1$“ starten wir die Mittelwertsbildung. Sobald wir
 mit dem Ergebnis zufrieden sind, stoppen wir die Messung mit \keystroke{F9}.
 Die Messdatentabelle speichern wir mit „Tabelle Kopieren“ in einer Textdatei.
-Zuletzt notieren wir die Winkel.
 
 Diesen Vorgang wiederholen wir für alle Linien. Unsere Messdaten sind in
-Tabelle~\ref{tab:messdaten:balmer-ccd}.
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{SSS}
-        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
-    \si\degree$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
-    \end{tabular}
-    \caption{%
-        Messdaten für die Balmer-Lampe, bestimmt mit einer CCD-Zeile.
-    }
-    \label{tab:messdaten:balmer-ccd}
-\end{table}
+im Anhang~\ref{sec:pc_messwerte}.
 
 \FloatBarrier
 \subsection{Auswertung}
@@ -414,35 +470,59 @@ Gaußschen Fehlerfortplanzung:
     }
 \]
 
+Die errechneten Werte sind in Tabelle~\ref{tab:gitterkonstante}. Die gleichen
+Daten haben wir in Abbildung~\ref{fig:gitterkonstanten} dargestellt, um einfach
+erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS|S}
-        {$\lambda / \si{\nano\meter}$} & {Winkel $\omegaB / \si\degree$}  & {Winkel
-    $\omegaG / \si\degree$} & {$g / \si{\meter}$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
+    \begin{tabular}{SS|S}
+        {$\omegaG / \si{\radian}$} &
+        {$\lambda / \si{\nano\meter}$} &
+        {$g / \si{\meter}$} \\
+        \midrule
+        %< for omega_G_val, lambda, g in tabelle_gitterkonstante: ->%
+        << omega_G_val >> & << lambda >>  & << g >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
         Berechnete Gitterkonstanten aus den Messwerten aus
         Abschnitt~\ref{sec:gitterkonstante/durchführung},
         Tabelle~\ref{tab:messdaten:gitterkonstante}.
     }
-    \label{tab:gitterkonstanten}
+    \label{tab:gitterkonstante}
 \end{table}
 
-% TODO Alle Werte zu einem Wert kombinieren. Mit einem einfachen arithmetischen
-% Mittel?
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{g.pdf}
+    \caption{%
+        Gitterkonstanten
+    }
+    \label{fig:gitterkonstanten}
+\end{figure}
+
+Wir kombinieren die verschiedenen Werte von $g$ mit einem gewichteten
+arithmetischen Mittel, wobei wir als Gewicht $1/\Deltaup g$
+verwenden.\footnote{Ein einfacher Mittelwert hätte $g = \SI{<< g_mean
+>>}{\meter}$ ergeben.} Die Fehler kombinieren wir quadratisch mit dem gleichen
+Mittelwert und teilen noch durch $\sqrt n$.
+\[
+    g = \SI{<< g_average >>}{\meter}
+\]
 
 \FloatBarrier
-\subsubsection{Bestimmung der Balmerlinien}
+\subsubsection{Bestimmung der Balmerlinien mit Okular}
 
 Jetzt haben wir die Gitterkonstante und können die Gittergleichung zur
 Wellenlängenbestimmung nutzen. Da wir nur die erste Ordnung benutzt haben, ist
 $m = 1$.
-\[
+\begin{equation}
+    \label{eq:lambda}
     \lambda =
-    g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
-\]
+    \abs{g \cdot \del{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text
+    G)}}
+\end{equation}
 
 Hier berechnet sich der Fehler wie folgt:
 \[
@@ -460,17 +540,336 @@ Hier berechnet sich der Fehler wie folgt:
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS}
-        {Messreihe} & {Winkel $\omegaB / \si\degree$}  & {Winkel $\omegaG /
-    \si\degree$} & {$\lambda/\si{\nano\meter}$} \\
-        \hline
-        % TODO Messdaten aus Datei laden.
+    \begin{tabular}{lSS|S}
+        Farbe &
+        {$\omega_\text G / \si\radian$} &
+        {rel. Int.} &
+        {$\lambda / \si{\meter}$} \\
+        \midrule
+        %< for farbe, omega_G, rel_int, lambda_ in tabelle_balmer: ->%
+        << farbe >> & << omega_G >> & << rel_int >> & <<
+        lambda_ >> \\
+        %< endfor ->%
     \end{tabular}
     \caption{%
-        Messdaten für die Balmer-Lampe, bestimmt mit einer CCD-Zeile.
+        Wellenlängen zu den Balmerlinien.
     }
-    \label{tab:messdaten:balmer-wellenlängen}
+    \label{tab:balmer-okular}
 \end{table}
+
+Die zu erwartenden Wellenlängen berechnen sich nach:
+\[
+    \lambda = \frac{c h}{E_\text{Ryd}} \del{\frac 14 - \frac 1{n^2}}^{-1}
+\]
+
+Die davon sichtbaren sind: \SIlist{
+%<- for lambda in balmer_berechnet: ->%
+<< lambda >>;
+%<- endfor ->%
+}{\nano\meter}.
+
+\paragraph{Bestimmung der Ballmerlinien mit CCD-Zeile}
+
+Die Daten, die wir mit dem PC aufgenommen haben, stellen wir graphisch dar.
+
+An einen ausgewählten Bereich (im Plot markiert) passen wir eine Gaußfunktion
+an:
+\[
+    I(\alpha) = a \exp\del{- \frac{(\alpha - \alpha_0)^2}{2 \sigma}}
+\]
+
+Die Halbwertsbreite $H$ ist gegeben als: \parencite{wikipedia/gaussian_function}
+\[
+    H = 2 \sqrt{2 \ln(2)} \sigma
+\]
+
+\paragraph{Erste rote Linie}
+
+Die erste rote Linie (Abbildung~\ref{fig:rot}) konnten wir gut abbilden und die
+Isotopieaufspaltung beobachten.
+
+Wir benutzen im Graph die Datenpunkte \numrange{<< rot_lower >>}{<< rot_upper
+>>}. Für das Hauptmaximum beziehen wir aus der Menge der gezeigten Punkte die
+Punkte \numrange{<< rot_primary_lower >>}{<< rot_primary_upper >>} ein. Für das
+Nebenmaximum die Punkte \numrange{<< rot_secondary_lower >>}{<<
+rot_secondary_upper >>}. Negative Indizes zählen vom Ende aus.
+
+Es wurde ein konstantes Untergrundsignal von \num{<< rot_underground >>}
+abgezogen. An die markierten Datenpunkte wurde jeweils eine Gaußfunktion
+angepasst. 
+
+Für das Hauptmaximum erhalten wir einen Winkel
+von \SI{<< rot_primary_center >>}{\degree} und eine Halbwertsbreite von
+\SI{<< rot_primary_fwhm >>}{\degree}. Das Nebenmaximum liegt bei \SI{<<
+rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von \SI{<<
+rot_secondary_fwhm >>}{\degree}.
+
+Daraus erhalten wir eine Winkeldifferenz von \SI{<< rot_differenz >>}{\degree}.
+Nach \eqref{eq:d_Lambda_d_beta} ist dies eine Wellenlängendifferenz von
+$\Deltaup \lambda = \SI{<<
+rot_Delta_lambda >>}{\meter}$. Das $\omegaG$, das wir dort eingesetzt haben,
+hatten wir bei der Messung mit der CCD-Zeile nicht notiert. Jedoch haben wir
+den Bankwinkel nicht verändert, so dass wir hier für den Gitterwinkel den Wert
+von $\omegaG = \SI{<< rot_omega_G >>}{\degree}$ benutzen, den wir vorher für
+die hellste rote Linie erhalten haben.
+
+Die relative Aufspaltung ist:
+\[
+    \frac{\Deltaup \lambda}{\lambda}
+    = \frac{\SI{<< rot_Delta_lambda >>}\meter}{\SI{<< rot_lambda >>}\meter}
+    =  \num{<< rot_rel_aufspaltung >>}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{rot.pdf}
+    \caption{%
+        Graph der Daten zur ersten roten Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< rot_lower >>} bis \num{<< rot_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< rot_underground
+        >>} abgezogen. An die Punkte \numrange{<< rot_primary_lower >>}{<<
+        rot_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< rot_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot_primary_fwhm >>}{\degree}. An die Punkte \numrange{<<
+        rot_secondary_lower >>}{<< rot_secondary_upper >>} wurde die gleiche
+        Funktion angepasst. Dieses Nebenmaximum liegt bei \SI{<<
+        rot_secondary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot_secondary_fwhm >>}{\degree}.
+    }
+    \label{fig:rot}
+\end{figure}
+
+\paragraph{Zweite rote Linie}
+
+Hier gehen wir analog vor, siehe Abbildung~\ref{fig:rot2}. Da wir hier keine
+Aufspaltung erkennen konnten, entfällt die Anpassung einer weiteren Gaußkurve
+und die Bestimmung der Aufspaltung.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{rot2.pdf}
+    \caption{%
+        Graph der Daten zur zweiten roten Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< rot2_lower >>} bis \num{<< rot2_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< rot2_underground
+        >>} abgezogen. An die Punkte \numrange{<< rot2_primary_lower >>}{<<
+        rot2_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< rot2_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< rot2_primary_fwhm >>}{\degree}.
+    }
+    \label{fig:rot2}
+\end{figure}
+
+\paragraph{Grüne Linie}
+
+In Abbildung~\ref{fig:gruen} ist die grüne Linie zu erkennen, wieder ohne
+Aufspaltung.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{gruen.pdf}
+    \caption{%
+        Graph der Daten zur grünen Linie. Gezeigt werden nur die Datenpunkte
+        \num{<< gruen_lower >>} bis \num{<< gruen_upper >>} (Arrayindex). Es
+        wurde ein Untergrundsignal von \num{<< gruen_underground >>} abgezogen.  An die
+        Punkte \numrange{<< gruen_primary_lower >>}{<< gruen_primary_upper >>} aus
+        der gezeigten Punktmenge wurde eine Gaußfunktion angepasst. Der
+        Mittelwert dieses Hauptmaximums liegt bei \SI{<< gruen_primary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< gruen_primary_fwhm
+        >>}{\degree}.
+    }
+    \label{fig:gruen}
+\end{figure}
+
+\paragraph{Erste cyane Linie}
+
+In Abbildung~\ref{fig:cyan} ist die erste cyane Linie, auch wieder ohne
+Aufspaltung.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{cyan.pdf}
+    \caption{%
+        Graph der Daten zur ersten cyanen Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< cyan_lower >>} bis \num{<< cyan_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< cyan_underground
+        >>} abgezogen. An die Punkte \numrange{<< cyan_primary_lower >>}{<<
+        cyan_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< cyan_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< cyan_primary_fwhm >>}{\degree}.
+    }
+    \label{fig:cyan}
+\end{figure}
+
+\paragraph{Zweite cyane Linie}
+
+In Abbildung~\ref{fig:cyan2} ist die zweite cyane Linie, auch wieder ohne
+Aufspaltung.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{cyan2.pdf}
+    \caption{%
+        Graph der Daten zur zweiten cyanen Linie. Gezeigt werden nur die
+        Datenpunkte \num{<< cyan2_lower >>} bis \num{<< cyan2_upper >>}
+        (Arrayindex). Es wurde ein Untergrundsignal von \num{<< cyan2_underground
+        >>} abgezogen. An die Punkte \numrange{<< cyan2_primary_lower >>}{<<
+        cyan2_primary_upper >>} aus der gezeigten Punktmenge wurde eine
+        Gaußfunktion angepasst. Der Mittelwert dieses Hauptmaximums liegt bei
+        \SI{<< cyan2_primary_center >>}{\degree} und hat eine Halbwertsbreite von
+        \SI{<< cyan2_primary_fwhm >>}{\degree}.
+    }
+    \label{fig:cyan2}
+\end{figure}
+
+\paragraph{Blaue Linie}
+
+In Abbildung~\ref{fig:blau} ist die blaue Linie. Hier ist eine Aufspaltung zu
+erkennen. Wir passen wie bei der ersten roten Linie zwei Gaußfunktionen an.
+
+Daraus erhalten wir eine Winkeldifferenz von \SI{<< blau_differenz >>}{\degree}.
+Nach \eqref{eq:d_Lambda_d_beta} ist dies eine Wellenlängendifferenz von
+$\Deltaup \lambda = \SI{<<
+blau_Delta_lambda >>}{\meter}$. Das $\omegaG$, das wir dort eingesetzt haben,
+hatten wir bei der Messung mit der CCD-Zeile nicht notiert. Jedoch haben wir
+den Bankwinkel nicht verändert, so dass wir hier für den Gitterwinkel den Wert
+von $\omegaG = \SI{<< blau_omega_G >>}{\degree}$ benutzen, den wir vorher für
+die blaue Linie erhalten haben.
+
+Die relative Aufspaltung ist:
+\[
+    \frac{\Deltaup \lambda}{\lambda}
+    = \frac{\SI{<< blau_Delta_lambda >>}\meter}{\SI{<< blau_lambda >>}\meter}
+    =  \num{<< blau_rel_aufspaltung >>}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{blau.pdf}
+    \caption{%
+        Graph der Daten zur blauen Linie. Gezeigt werden nur die Datenpunkte
+        \num{<< blau_lower >>} bis \num{<< blau_upper >>} (Arrayindex). Es
+        wurde ein Untergrundsignal von \num{<< blau_underground >>} abgezogen.  An die
+        Punkte \numrange{<< blau_primary_lower >>}{<< blau_primary_upper >>}
+        aus der gezeigten Punktmenge wurde eine Gaußfunktion angepasst. Der
+        Mittelwert dieses Hauptmaximums liegt bei \SI{<< blau_primary_center
+        >>}{\degree} und hat eine Halbwertsbreite von \SI{<< blau_primary_fwhm
+        >>}{\degree}. An die Punkte \numrange{<< blau_secondary_lower >>}{<<
+        blau_secondary_upper >>} wurde die gleiche Funktion angepasst. Dieses
+        Nebenmaximum liegt bei \SI{<< blau_secondary_center >>}{\degree} und
+        hat eine Halbwertsbreite von \SI{<< blau_secondary_fwhm >>}{\degree}.
+    }
+    \label{fig:blau}
+\end{figure}
+
+\paragraph{Linienbreiten}
+
+In Tabelle~\ref{tab:linienbreiten} haben wir die Linienbreiten noch einmal
+zusammengestellt. Mit der Formel, mit der wir auch die Isotopieaufspaltung
+$\Deltaup \alpha$ in Grad in eine Wellenlängendifferenz $\Deltaup \lambda$
+umgewandelt haben, wandeln wir die Breite in eine Wellenländendifferenz um.
+Dabei benutzen wir als Bankwinkel $\omegaB$ den Winkel, den wir für diese Linie
+mit dem Okular erhalten hatten.
+
+\begin{landscape}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lSSS}
+        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
+    \si\meter$} & {Aufspaltung} \\
+        \midrule
+        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> & <<
+        rot_gamma >> \\
+        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> & <<
+        rot2_gamma >> \\
+        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> & <<
+        gruen_gamma >> \\
+        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> & <<
+        cyan_gamma >> \\
+        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> & <<
+        cyan2_gamma >> \\
+        blau & << blau_primary_fwhm >> & << blau_linienbreite >> & <<
+        blau_gamma >> \\
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Linienbreiten, die wir aus den Daten der CCD-Zeile
+        bestimmt haben.
+    }
+    \label{tab:linienbreiten}
+\end{table}
+
+\end{landscape}
+
+\subsubsection{Bestimmung der Rydbergkonstanten}
+
+Die Rydbergkonstante ist definiert als: \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    R_\infty = \frac{\alpha^2 m_\text e c}{2 h}
+\]
+
+Zusammen mit der Feinstrukturkonstante $\alpha = e^2/(4\piup \varepsilon_0
+\hbar c)$: \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    R_\infty = \frac{e^4 m_\text e}{8 \varepsilon_0^2 c h^3}
+\]
+
+Dies deckt sich mit \cite{wikipedia/Rydbergkonstante}.
+
+Die Rydbergkonstante erhalten wir, in dem wir aus den Wellenlängen die
+Energiedifferenzen der Übergänge errechnen und das passende Energieniveau
+finden, von dem der Übergang gestartet ist.
+
+Die von uns gemessenen Wellenlängen waren: \SIlist{<< balmer_lambda_nm >>}{\meter}.
+
+Zu erwartende Wellenlängen sind für die Übergänge $n \to 2$: \SIlist{<<
+balmer_berechnet_nm >>}{\meter}.
+
+Die ehesten Kandidaten sind:
+\begin{itemize}
+    \item $\SI{<< balmer_lambda[0] >>}\meter \approx \SI{<<
+        balmer_berechnet[1] >>}\meter$, $5 \to 2$.
+
+    \item $\SI{<< balmer_lambda[2] >>}\meter \approx \SI{<<
+        balmer_berechnet[2] >>}\meter$, $4 \to 2$.
+
+    \item $\SI{<< balmer_lambda[6] >>}\meter \approx \SI{<<
+        balmer_berechnet[3] >>}\meter$, $3 \to 2$.
+\end{itemize}
+
+Diese drei Punkte stellen wir in Abbildung~\ref{fig:balmer_ausgesucht}
+graphisch dar. An die Punkte passen wir folgende Funktion an:
+\[
+    \lambda(n) = C \del{\frac{1}{2^2} - \frac{1}{n^2}}^{-1}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{balmer_ausgesucht.pdf}
+    \caption{%
+        Ausgesuchte Balmerlinien.
+    }
+    \label{fig:balmer_ausgesucht}
+\end{figure}
+
+Wobei
+\[
+    C = \frac{1}{R_\infty}
+    = \frac{8 \varepsilon_0^2 c h^3}{e^4 m_\text e}
+\]
+
+Dies lösen wir nach dem gesuchten $h$ auf:
+\[
+    h = \del{\frac{e^4 m_\text e C}{8 \varepsilon_0^2 c}}^{1/3}
+\]
+
+Und erhalten für $h$:
+\[
+    h = \SI{<< h >>}{\joule\second}
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
@@ -479,6 +878,71 @@ Hier berechnet sich der Fehler wie folgt:
 \FloatBarrier
 \section{Diskussion}
 
+\subsection{Weitere Spektrallinien}
+
+Wasserstoff und Deuterium liegen in der Gasentladungslampe nicht als Atome vor,
+da diese freien Radikale sich direkt zu Wasserstoffgas verbinden würden. Als
+Molekül hätte es jedoch ein Spektrum mit Banden und Linien, nicht
+ausschließlich Linien. Siehe zum Beispiel
+\cite[Abbildung~14.15]{meschede-gerthsen_24}.
+
+In einer solchen Wasserstofflampe ist Wasserdampf, in dem sich hin und wieder
+ein Wasserstoffatom löst. Dadurch erscheint das Spektrum ohne Banden.
+\parencite[Abschnitt~2.1]{leybold/balmer_lampe}
+\parencite{wikipedia/gas_discharge_lamp}
+
+Allerdings könnte der $\mathrm{\mathsf{HO}}$-Rumpf auch noch schwingen und eine
+grüne Linie erzeugen.
+
+\subsubsection{Linienbreite}
+
+\paragraph{Dopplerverbreiterung}
+
+Nach \eqref{eq:dopplerverbreiterung} erhalten wir bei $T = \SI{1000}{\kelvin}$
+und $m = \SI{1}{\atomicmassunit}$ eine Verbreiterung von \num{<< doppler >>}.
+
+\paragraph{Natürliche Linienbreite}
+
+Die natürliche Linienbreite mit ihren \num{e-8} ist deutlich geringer als die
+Dopplerverbreiterung und kann hier vernachlässigt werden.
+
+\paragraph{Vergleich mit aufgenommenen Linien}
+
+Für die erste rote und die blaue Linie ist die Verbreiterung recht klein,
+allerdings immer noch mehr als eine Größenordnung größer als die
+Dopplerverbreiterung. Die anderen Linien sind deutlich breiter, dort wurde
+anscheinend schlecht fokussiert.
+
+Somit ist unsere Linienbreite durch die Abbildung in unserem Aufbau begrenzt.
+
+\subsubsection{Auflösungsvermögen des Gitters}
+
+Wir haben in erster Ordnung betrachtet und wahrscheinlich das ganze Gitter
+ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}.
+Daher erhalten wir ein Auflösungsvermögen von:
+\[
+    \frac{\Deltaup \lambda}{\lambda} = \num{<< aufl >>}
+\]
+
+Dies würde für die Isotopieaufspaltung reichen, jedoch waren unsere
+Linsensysteme nicht entsprechend genau.
+
+\subsection{Isotopieaufspaltung}
+
+Die Aufspaltung bei der blauen Linie ist sehr groß, gut einen Faktor zehn
+größer als bei der ersten roten Linie. Daher gehen wir davon aus, dass das
+Nebenmaximum nicht von der Aufspaltung stammt, sondern eine Linie eines anderen
+Übergangs ist. Somit bleibt uns nur die Aufspaltung der roten Linie.
+
+Dennis~P. sagte uns nach dem Versuch, dass in diesem Versuch auch nur die
+Aufspaltung der roten Linie sinnvoll zu erkennen ist.
+
+Zu erwarten ist laut \cite{PHManual/atomic} eine Aufspaltung in der
+Größenordnung \SI{0.25}{\percent}, also \num{2.5e-4}. Beobachtet haben wir
+jedoch \num{<< rot_rel_aufspaltung >>}, das zwei Größenordnungen größer ist.
+Entweder haben wir falsch gerechnet, oder das Nebenmaximum hat mit der
+Isotopieaufspaltung nichts zu tun.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -486,12 +950,71 @@ Hier berechnet sich der Fehler wie folgt:
 \FloatBarrier
 \section{Zusammenfassung}
 
+\fehlt
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \FloatBarrier
 \begin{appendix}
+    \section{PC Messwerte}
+    \label{sec:pc_messwerte}
+
+    Dies sind die von „VideoCom“ erzeugten Daten. Hier abgedruckt sind nur die
+    Datenpunkte, die auch im Plot verwendet worden sind. Unter jeder Tabelle
+    ist eine URL zur vollständigen Datei angegeben. In der ersten Spalte ist
+    der Winkel $\alpha$ in $\si\degree$, in der zweiten Spalte die relative
+    Intensität.
+
+    \subsection{Erste rote Linie (rot.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< rot_lower >>, lastline=<< rot_upper >>, fontsize=\footnotesize]{text}{../Messwerte/rot.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/rot.txt}
+
+    \subsection{Zweite rote Linie (rot2.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< rot2_lower >>, lastline=<< rot2_upper >>, fontsize=\footnotesize]{text}{../Messwerte/rot2.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/rot2.txt}
+
+    \subsection{Grüne Linie (gruen.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< gruen_lower >>, lastline=<< gruen_upper >>, fontsize=\footnotesize]{text}{../Messwerte/gruen.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/gruen.txt}
+
+    \subsection{Erste cyane Linie (cyan.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< cyan_lower >>, lastline=<< cyan_upper >>, fontsize=\footnotesize]{text}{../Messwerte/cyan.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/cyan.txt}
+
+    \subsection{Zweite cyane Linie (cyan2.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< cyan2_lower >>, lastline=<< cyan2_upper >>, fontsize=\footnotesize]{text}{../Messwerte/cyan2.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/cyan2.txt}
+
+    \subsection{Blaue Linie (blau.txt)}
+    \begin{multicols}{5}
+        \inputminted[tabsize=4, firstline=<< blau_lower >>, lastline=<< blau_upper >>, fontsize=\footnotesize]{text}{../Messwerte/blau.txt}
+    \end{multicols}
+
+    Die vollständige Datei gibt es hier: \\
+    \url{https://raw.github.com/martin-ueding/physik412-Protokolle/master/402/Messwerte/blau.txt}
+
     \section{Spektrum der Quecksilberlampe}
     \label{sec:spektrum}
 
@@ -499,7 +1022,7 @@ Hier berechnet sich der Fehler wie folgt:
         \centering
         \begin{tabular}{lSS}
             Farbe & {$\lambda_\text{Hg} / \si{\nano\meter}$} & {rel. Int.} \\
-            \hline
+            \midrule
             violett & 404.656 & 1800 \\
                     & 407.783 & 150 \\
                     & 410.805 & 40 \\
@@ -516,7 +1039,7 @@ Hier berechnet sich der Fehler wie folgt:
         \end{tabular}
         \caption{%
             Spektrum der Quecksilberlampe.
-            \cite[P402.6.1]{physik412-Anleitung}
+            \parencite[P402.6.1]{physik412-Anleitung}
         }
         \label{tab:messdaten:gitterkonstante}
     \end{table}
@@ -547,9 +1070,7 @@ Hier berechnet sich der Fehler wie folgt:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \FloatBarrier
-\IfFileExists{\bibliographyfile}{
-    \bibliography{\bibliographyfile}
-}{}
+\printbibliography
 
 \end{document}
 

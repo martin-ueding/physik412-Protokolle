@@ -9,6 +9,7 @@ import logging
 import math
 import matplotlib.pyplot as pl
 import numpy as np
+import os.path
 import scipy.interpolate
 import scipy.optimize as op
 import sys
@@ -86,6 +87,616 @@ def kennlinien(T):
 
     U_0_gegen_nu(T, wavelength, U_0)
 
+def balmer_serie(T):
+    omega_B_val = 145
+    omega_B_err = .1
+
+    T["omega_B"] = "145.0 +- .1"
+
+    farbe = []
+    omega_G = []
+    rel_int = []
+    with open("Messwerte/Quecksilber.txt") as f:
+        for line in f:
+            if line.startswith("#"):
+                continue
+            x = line.split()
+            farbe.append(x[0])
+            omega_G.append(float(x[1]))
+            rel_int.append(float(x[2]))
+
+    lambda_ = np.array([
+        690.752,
+        671.643,
+        623.440,
+        579.066,
+        576.960,
+        546.074,
+        491.607,
+        491.607,
+        435.833,
+        433.922,
+        404.656,
+    ])
+
+    T["omega_G_err"] = .2
+    T["messdaten_gitterkonstante"] = np.column_stack([farbe, omega_G, rel_int, lambda_])
+
+    omega_B_val = np.radians(omega_B_val)
+    omega_B_err = np.radians(omega_B_err)
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.ones(omega_G_val.size) * np.radians(.2)
+    lambda_ *= 1e-9
+
+    g_val = lambda_ / (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val))
+    g_err = g_val**2 / lambda_ * np.sqrt(
+        ((np.cos(omega_G_val) - np.cos(omega_B_val + omega_G_val)) * omega_G_err)**2
+        + (np.cos(omega_B_val + omega_G_val) * omega_B_err)**2
+    )
+
+    T["tabelle_gitterkonstante"] = np.column_stack([
+        unitprint.siunitx(omega_G_val, np.ones(omega_G_val.size) * omega_G_err),
+        unitprint.siunitx(lambda_),
+        unitprint.siunitx(g_val, g_err),
+    ])
+
+    g_mean_val = np.mean(g_val)
+    g_mean_err = np.sqrt(np.average(g_err**2)) / np.sqrt(len(g_val))
+
+    global g_average_val
+    global g_average_err
+    g_average_val = np.average(g_val, weights=1/g_err)
+    g_average_err = np.sqrt(np.average(g_err**2, weights=1/g_err)) / np.sqrt(len(g_val))
+
+    T["g_mean"] = unitprint.siunitx(g_mean_val, g_mean_err)
+    T["g_average"] = unitprint.siunitx(g_average_val, g_average_err)
+
+    pl.errorbar(lambda_, g_val, yerr=g_err, linestyle='none', marker='+')
+    pl.xlabel(r'$\lambda / \mathrm{m}$')
+    pl.ylabel(r'$g / \mathrm{m}$')
+    pl.grid(True)
+    pl.savefig('_build/g.pdf')
+    pl.clf()
+
+    farbe = []
+    omega_G = []
+    rel_int = []
+    with open("Messwerte/Ballmer.txt") as f:
+        for line in f:
+            if line.startswith("#"):
+                continue
+            x = line.split()
+            farbe.append(x[0])
+            omega_G.append(float(x[1]))
+            rel_int.append(float(x[2]))
+
+    T["messdaten_balmer"] = np.column_stack([farbe, omega_G, rel_int])
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.ones(omega_G_val.size) * np.radians(.2)
+
+    global lambda_val
+    global lambda_err
+    lambda_val = np.abs(g_average_val * (np.sin(omega_G_val) - np.sin(omega_B_val + omega_G_val)))
+    lambda_err = np.sqrt(
+        (lambda_val / g_average_val * g_average_err)**2
+        + (g_average_val * (np.cos(omega_G_val) - np.cos(omega_B_val + omega_G_val)) * omega_G_err)**2
+        + (g_average_val * np.cos(omega_G_val + omega_B_val) * omega_B_err)**2
+    )
+
+    T["tabelle_balmer"] = zip(farbe, unitprint.siunitx(omega_G_val, omega_G_err), rel_int, unitprint.siunitx(lambda_val, lambda_err))
+
+    lambda_erwartet = np.array([
+        3e8 * 6.626e-34 / (13.6*1.609e-19) / (1/2**2 - 1/n**2) * 10**9
+        for n in range(3, 9)
+    ])
+
+    lambda_erwartet_sorted = np.array([x for x in sorted(lambda_erwartet) if 400 <= x <= 800])
+
+    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted)
+
+    T['balmer_lambda'] = unitprint.siunitx(lambda_val, lambda_err)
+    T['balmer_berechnet'] = unitprint.siunitx(lambda_erwartet_sorted * 1e-9)
+
+    T['balmer_lambda_nm'] = ';'.join(unitprint.siunitx(lambda_val, lambda_err))
+    T['balmer_berechnet_nm'] = ';'.join(unitprint.siunitx(lambda_erwartet_sorted * 1e-9))
+
+
+    balmer_daten = np.array([
+        [5, lambda_val[0], lambda_err[0]],
+        [4, lambda_val[2], lambda_err[2]],
+        [3, lambda_val[6], lambda_err[6]],
+    ])
+
+    print(balmer_daten)
+
+    def fit(n, C):
+        return C / (1/2**2 - 1/n**2)
+
+    n = balmer_daten[:, 0]
+    l = balmer_daten[:, 1]
+    err = balmer_daten[:, 2]
+
+    pl.errorbar(n, l, yerr=err, linestyle='none', marker='+')
+
+    popt, pconv = op.curve_fit(fit, n, l)
+    x = np.linspace(2.9, 5.1, 100)
+    y = fit(x, *popt)
+    pl.plot(x, y)
+    pl.title('Ausgesuchte Balmerlinien')
+    pl.xlabel('$n$')
+    pl.ylabel(r'$\lambda/\mathrm{m}$')
+    pl.savefig('_build/balmer_ausgesucht.pdf')
+    pl.clf()
+
+    C_val = popt[0]
+    C_err = np.sqrt(pconv.diagonal())[0]
+
+    h_val = (1.609e-19**4 * 9.109e-31 * C_val / (8 * 8.854e-12**2 * 2.998e8))**(1/3)
+    h_err = 1/3 * (1.609e-19**4 * 9.109e-31 * C_val / (8 * 8.854e-12**2 * 2.998e8))**(1/3-1) * 1.609e-19**4 * 9.109e-31 / (8 * 8.854e-12**2 * 2.998e8) * C_err
+
+    T['h'] = unitprint.siunitx(h_val, h_err)
+    print(T['h'])
+
+def gauss(x, mean, std, scale):
+    return scale * np.exp(- (x - mean)**2 / (2 * std))
+
+def pc_aufnahme(T):
+    sets = [
+        ('rot'),
+        ('rot2'),
+        ('gruen'),
+        ('cyan'),
+        ('cyan2'),
+        ('blau'),
+    ]
+
+    rot(T)
+    rot2(T)
+    gruen(T)
+    cyan(T)
+    cyan2(T)
+    blau(T)
+
+def rot(T):
+    data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
+    underground = 6.0
+    T['rot_underground'] = underground
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['rot_lower'] = 712
+    T['rot_upper'] = 806
+
+    lower = 32
+    upper = -42
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot_haupt_mitte_val = popt[0]
+    rot_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['rot_primary_center'] = unitprint.siunitx(rot_haupt_mitte_val, rot_haupt_mitte_err)
+    T['rot_primary_fwhm'] = unitprint.siunitx(rot_haupt_fwhm_val, rot_haupt_fwhm_err)
+    T['rot_primary_lower'] = lower
+    T['rot_primary_upper'] = upper
+
+    lower = -20
+    upper = -10
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y)
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
+    rot_neben_mitte_val = popt[0]
+    rot_neben_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot_neben_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['rot_secondary_center'] = unitprint.siunitx(rot_neben_mitte_val, rot_neben_mitte_err)
+    T['rot_secondary_fwhm'] = unitprint.siunitx(rot_neben_fwhm_val, rot_neben_fwhm_err)
+    T['rot_secondary_lower'] = lower
+    T['rot_secondary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Erste rote Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'rot.pdf'))
+    pl.clf()
+
+    differenz_val = abs(rot_haupt_mitte_val - rot_neben_mitte_val)
+    differenz_err = np.sqrt(rot_haupt_mitte_err**2 + rot_neben_mitte_err**2)
+    T['rot_differenz'] = unitprint.siunitx(differenz_val, differenz_err)
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+
+    omega_G = -38.1
+    T['rot_omega_G'] = omega_G
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.radians(0.2)
+
+    T['rot_lambda'] = unitprint.siunitx(lambda_val[7], lambda_err[7])
+
+    Delta_lambda_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_val
+    Delta_lambda_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * differenz_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_err)**2
+    )
+    T['rot_Delta_lambda'] = unitprint.siunitx(Delta_lambda_val, Delta_lambda_err)
+
+    rel_val = Delta_lambda_val / lambda_val[7]
+    rel_err = np.sqrt(
+        (1 / lambda_val[7] * Delta_lambda_err)**2
+        + (Delta_lambda_val / lambda_val[7]**2 * lambda_err[7])**2
+    )
+    T['rot_rel_aufspaltung'] = unitprint.siunitx(rel_val, rel_err)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * rot_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * rot_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * rot_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * rot_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * rot_haupt_fwhm_err)**2
+    )
+    T['rot_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[7]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[7] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[7]**2 * lambda_err[7])**2
+    )
+    T['rot_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def rot2(T):
+    lower = 750
+    upper = 1559
+    data = np.genfromtxt(os.path.join('Messwerte', 'rot2.txt'))[lower:upper, :]
+    underground = 4.9
+    T['rot2_underground'] = underground
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['rot2_lower'] = lower
+    T['rot2_upper'] = upper
+
+    lower = 160
+    upper = -160
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    rot2_haupt_mitte_val = popt[0]
+    rot2_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    rot2_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    rot2_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['rot2_primary_center'] = unitprint.siunitx(rot2_haupt_mitte_val, rot2_haupt_mitte_err)
+    T['rot2_primary_fwhm'] = unitprint.siunitx(rot2_haupt_fwhm_val, rot2_haupt_fwhm_err)
+    T['rot2_primary_lower'] = lower
+    T['rot2_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Zweite rote Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'rot2.pdf'))
+    pl.clf()
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+    omega_G_val = np.radians(33.1)
+    omega_G_err = np.radians(0.2)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * rot2_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * rot2_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * rot2_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * rot2_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * rot2_haupt_fwhm_err)**2
+    )
+    T['rot2_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[5]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[5] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[5]**2 * lambda_err[5])**2
+    )
+    T['rot2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def gruen(T):
+    lower = 700
+    upper = 1242
+    data = np.genfromtxt(os.path.join('Messwerte', 'gruen.txt'))[lower:upper, :]
+    underground = 4.8
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['gruen_underground'] = underground
+    T['gruen_lower'] = lower
+    T['gruen_upper'] = upper
+
+    lower = 130
+    upper = -80
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    gruen_haupt_mitte_val = popt[0]
+    gruen_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    gruen_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    gruen_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['gruen_primary_center'] = unitprint.siunitx(gruen_haupt_mitte_val, gruen_haupt_mitte_err)
+    T['gruen_primary_fwhm'] = unitprint.siunitx(gruen_haupt_fwhm_val, gruen_haupt_fwhm_err)
+    T['gruen_primary_lower'] = lower
+    T['gruen_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Grüne Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'gruen.pdf'))
+    pl.clf()
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+    omega_G_val = np.radians(24.6)
+    omega_G_err = np.radians(0.2)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * gruen_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * gruen_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * gruen_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * gruen_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * gruen_haupt_fwhm_err)**2
+    )
+    T['gruen_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[3]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[3] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[3]**2 * lambda_err[3])**2
+    )
+    T['gruen_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def cyan(T):
+    lower = 861
+    upper = 962
+    data = np.genfromtxt(os.path.join('Messwerte', 'cyan.txt'))[lower:upper, :]
+    underground = 6.0
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['cyan_underground'] = underground
+    T['cyan_lower'] = lower
+    T['cyan_upper'] = upper
+
+    lower = 30
+    upper = -30
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    cyan_haupt_mitte_val = popt[0]
+    cyan_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    cyan_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    cyan_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['cyan_primary_center'] = unitprint.siunitx(cyan_haupt_mitte_val, cyan_haupt_mitte_err)
+    T['cyan_primary_fwhm'] = unitprint.siunitx(cyan_haupt_fwhm_val, cyan_haupt_fwhm_err)
+    T['cyan_primary_lower'] = lower
+    T['cyan_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Erste cyane Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'cyan.pdf'))
+    pl.clf()
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+    omega_G_val = np.radians(20.1)
+    omega_G_err = np.radians(0.2)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * cyan_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * cyan_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * cyan_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * cyan_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * cyan_haupt_fwhm_err)**2
+    )
+    T['cyan_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[2]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[2] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[2]**2 * lambda_err[2])**2
+    )
+    T['cyan_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def cyan2(T):
+    lower = 979
+    upper = 1110
+    data = np.genfromtxt(os.path.join('Messwerte', 'cyan2.txt'))[lower:upper, :]
+    underground = 6.0
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['cyan2_underground'] = underground
+    T['cyan2_lower'] = lower
+    T['cyan2_upper'] = upper
+
+    lower = 30
+    upper = -30
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    cyan2_haupt_mitte_val = popt[0]
+    cyan2_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    cyan2_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    cyan2_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['cyan2_primary_center'] = unitprint.siunitx(cyan2_haupt_mitte_val, cyan2_haupt_mitte_err)
+    T['cyan2_primary_fwhm'] = unitprint.siunitx(cyan2_haupt_fwhm_val, cyan2_haupt_fwhm_err)
+    T['cyan2_primary_lower'] = lower
+    T['cyan2_primary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Zweite cyane Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'cyan2.pdf'))
+    pl.clf()
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+    omega_G_val = np.radians(20.1)
+    omega_G_err = np.radians(0.2)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * cyan2_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * cyan2_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * cyan2_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * cyan2_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * cyan2_haupt_fwhm_err)**2
+    )
+    T['cyan2_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[2]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[2] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[2]**2 * lambda_err[2])**2
+    )
+    T['cyan2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def blau(T):
+    lower = 730
+    upper = 1200
+    data = np.genfromtxt(os.path.join('Messwerte', 'blau.txt'))[lower:upper, :]
+    underground = 5.5
+    T['blau_underground'] = underground
+    alpha = data[:, 0]
+    intens = data[:, 1] - underground
+    pl.plot(alpha, intens, linestyle='none', marker='.', markersize=4, label='Alle Daten')
+    T['blau_lower'] = lower
+    T['blau_upper'] = upper
+
+    lower = 230
+    upper = -100
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Hauptmaximum')
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y, label='Gausskurve für Hauptmaximum')
+    blau_haupt_mitte_val = popt[0]
+    blau_haupt_mitte_err = np.sqrt(pconv.diagonal())[0]
+    blau_haupt_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    blau_haupt_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['blau_primary_center'] = unitprint.siunitx(blau_haupt_mitte_val, blau_haupt_mitte_err)
+    T['blau_primary_fwhm'] = unitprint.siunitx(blau_haupt_fwhm_val, blau_haupt_fwhm_err)
+    T['blau_primary_lower'] = lower
+    T['blau_primary_upper'] = upper
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+    omega_G_val = np.radians(15.5)
+    omega_G_err = np.radians(0.2)
+
+    lower = 60
+    upper = 100
+    pl.plot(alpha[lower:upper], intens[lower:upper], linestyle='none', marker='.', markersize=4, label='Daten für Nebenmaximum')
+    popt, pconv = op.curve_fit(gauss, alpha[lower:upper], intens[lower:upper])
+    x = np.linspace(alpha[0], alpha[-1], 1000)
+    y = gauss(x, *popt)
+    pl.plot(x, y)
+    blau_neben_mitte_val = popt[0]
+    blau_neben_mitte_err = np.sqrt(pconv.diagonal())[0]
+    blau_neben_fwhm_val = 2 * np.sqrt(2 * np.log(2)) * popt[1]
+    blau_neben_fwhm_err = 2 * np.sqrt(2 * np.log(2)) * np.sqrt(pconv.diagonal())[1]
+    T['blau_secondary_center'] = unitprint.siunitx(blau_neben_mitte_val, blau_neben_mitte_err)
+    T['blau_secondary_fwhm'] = unitprint.siunitx(blau_neben_fwhm_val, blau_neben_fwhm_err)
+    T['blau_secondary_lower'] = lower
+    T['blau_secondary_upper'] = upper
+
+    pl.grid(True)
+    pl.title("Blaue Linie")
+    pl.xlabel(r'$\alpha / ^{\circ}$')
+    pl.ylabel(r'relative Intensität')
+    pl.savefig(os.path.join('_build', 'blau.pdf'))
+    pl.clf()
+
+    differenz_val = abs(blau_haupt_mitte_val - blau_neben_mitte_val)
+    differenz_err = np.sqrt(blau_haupt_mitte_err**2 + blau_neben_mitte_err**2)
+    T['blau_differenz'] = unitprint.siunitx(differenz_val, differenz_err)
+
+    omega_B_val = np.radians(145)
+    omega_B_err = np.radians(0.2)
+
+    omega_G = -38.1
+    T['blau_omega_G'] = omega_G
+    omega_G_val = np.radians(omega_G)
+    omega_G_err = np.radians(0.2)
+
+    T['blau_lambda'] = unitprint.siunitx(lambda_val[0], lambda_err[0])
+
+    Delta_lambda_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_val
+    Delta_lambda_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * differenz_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * differenz_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * differenz_err)**2
+    )
+    T['blau_Delta_lambda'] = unitprint.siunitx(Delta_lambda_val, Delta_lambda_err)
+
+    rel_val = Delta_lambda_val / lambda_val[0]
+    rel_err = np.sqrt(
+        (1 / lambda_val[0] * Delta_lambda_err)**2
+        + (Delta_lambda_val / lambda_val[0]**2 * lambda_err[0])**2
+    )
+    T['blau_rel_aufspaltung'] = unitprint.siunitx(rel_val, rel_err)
+
+    linienbreite_val = - g_average_val * np.cos(omega_B_val + omega_G_val) * blau_haupt_fwhm_val
+    linienbreite_err = np.sqrt(
+        (np.cos(omega_B_val + omega_G_val) * blau_haupt_fwhm_val * g_average_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * blau_haupt_fwhm_val * omega_B_err)**2
+        + (g_average_val * np.sin(omega_B_val + omega_G_val) * blau_haupt_fwhm_val * omega_G_err)**2
+        + (g_average_val * np.cos(omega_B_val + omega_G_val) * blau_haupt_fwhm_err)**2
+    )
+    T['blau_linienbreite'] = unitprint.siunitx(linienbreite_val, linienbreite_err)
+
+    gamma_val = linienbreite_val / lambda_val[0]
+    gamma_err = np.sqrt(
+        (1 / lambda_val[0] * linienbreite_err)**2
+        + (linienbreite_val / lambda_val[0]**2 * lambda_err[0])**2
+    )
+    T['blau_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+def aufloesungsvermoegen_gitter(T):
+    d_val = 25e-3
+    d_err = 5e-3
+
+    aufl_val = g_average_val / d_val 
+    aufl_err = np.sqrt(
+        (g_average_val / d_val**2 * d_err)**2
+        + (1 / d_val * g_average_err)**2
+    )
+
+    T['d'] = unitprint.siunitx(d_val, d_err)
+    T['aufl'] = unitprint.siunitx(aufl_val, aufl_err)
+
+def dopplerverbreiterung(T):
+    t = 1000
+    m = 1
+
+    T['doppler'] = unitprint.siunitx(7.16e-7 * np.sqrt(1000))
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -107,9 +718,14 @@ def main():
 
     logging.basicConfig(level=logging.INFO)
 
-    kennlinien(T)
+    #kennlinien(T)
 
-    #render_template(T, sys.argv[1])
+    balmer_serie(T)
+    pc_aufnahme(T)
+    aufloesungsvermoegen_gitter(T)
+    dopplerverbreiterung(T)
+
+    render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
     main()
