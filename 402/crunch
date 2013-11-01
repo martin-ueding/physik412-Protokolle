@@ -78,11 +78,24 @@ def U_0_gegen_nu(T, wavelength, U_0):
 
 def kennlinien(T):
 
-    wavelength = np.array([365e-9, 405e-9, 436e-9, 546e-9, 578e-9])
+    wavelength = np.array([
+        365e-9,
+        405e-9,
+        436e-9,
+        546e-9,
+        578e-9
+    ])
 
     print(wavelength)
 
-    U_0 = np.array([Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"),  Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")])
+    U_0 = np.array([
+        Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), 
+        Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), 
+        Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), 
+        Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"), 
+        Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")
+    ], dtype=float)
+
     print(U_0)
 
     U_0_gegen_nu(T, wavelength, U_0)
