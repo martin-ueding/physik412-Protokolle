@@ -70,7 +70,7 @@ def U_0_gegen_nu(T, wavelength, U_0):
 
     pl.plot(nu, U_0, linestyle="none", marker="o")
     pl.plot(x, y)
-    pl.xlabel(r"$nu/\mathrm{s}^{-1}$")
+    pl.xlabel(r"$\nu/\mathrm{Hz}$")
     pl.ylabel(r"$U_0/\mathrm{V}$")
     pl.grid(True)
     pl.savefig("_build/Plot_nu.pdf")
