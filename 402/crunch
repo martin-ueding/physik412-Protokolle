@@ -241,6 +241,7 @@ def balmer_serie(T):
     x = np.linspace(2.9, 5.1, 100)
     y = fit(x, *popt)
     pl.plot(x, y)
+    pl.grid(True)
     pl.title('Ausgesuchte Balmerlinien')
     pl.xlabel('$n$')
     pl.ylabel(r'$\lambda/\mathrm{m}$')
