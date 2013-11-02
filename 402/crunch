@@ -739,12 +739,12 @@ def main():
 
     kennlinien(T)
 
-    #balmer_serie(T)
-    #pc_aufnahme(T)
-    #aufloesungsvermoegen_gitter(T)
-    #dopplerverbreiterung(T)
-#
-#    render_template(T, sys.argv[1])
+    balmer_serie(T)
+    pc_aufnahme(T)
+    aufloesungsvermoegen_gitter(T)
+    dopplerverbreiterung(T)
+
+    render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
     main()
