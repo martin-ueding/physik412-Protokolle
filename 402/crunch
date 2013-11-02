@@ -15,6 +15,8 @@ import scipy.optimize as op
 import sys
 import unitprint
 
+unitprint.digits = 1
+
 def lin_fit(x, a, b):
     return a * x + b
 
@@ -135,11 +137,11 @@ def balmer_serie(T):
         + (np.cos(omega_B_val + omega_G_val) * omega_B_err)**2
     )
 
-    T["tabelle_gitterkonstante"] = np.column_stack([
+    T["tabelle_gitterkonstante"] = zip(
         unitprint.siunitx(omega_G_val, np.ones(omega_G_val.size) * omega_G_err),
-        unitprint.siunitx(lambda_),
+        np.round(lambda_ * 10**9),
         unitprint.siunitx(g_val, g_err),
-    ])
+    )
 
     g_mean_val = np.mean(g_val)
     g_mean_err = np.sqrt(np.average(g_err**2)) / np.sqrt(len(g_val))
@@ -193,13 +195,14 @@ def balmer_serie(T):
 
     lambda_erwartet_sorted = np.array([x for x in sorted(lambda_erwartet) if 400 <= x <= 800])
 
-    T["balmer_berechnet"] = np.round(lambda_erwartet_sorted)
-
     T['balmer_lambda'] = unitprint.siunitx(lambda_val, lambda_err)
-    T['balmer_berechnet'] = unitprint.siunitx(lambda_erwartet_sorted * 1e-9)
+    print(lambda_erwartet_sorted)
+    unitprint.digits = 3
+    T['balmer_berechnet'] = unitprint.siunitx(lambda_erwartet_sorted * 10**-9)
+    unitprint.digits = 1
 
     T['balmer_lambda_nm'] = ';'.join(unitprint.siunitx(lambda_val, lambda_err))
-    T['balmer_berechnet_nm'] = ';'.join(unitprint.siunitx(lambda_erwartet_sorted * 1e-9))
+    T['balmer_berechnet_nm'] = ';'.join(["{:3.0f}".format(x) for x in lambda_erwartet_sorted])
 
 
     balmer_daten = np.array([
