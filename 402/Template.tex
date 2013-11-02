@@ -253,9 +253,9 @@ erreicht hat, können die Reflektionen auf Irisblende, Linse und
 Interferenzfilter genutzt werden, um die Bauteile senkrecht und auf gleiche
 Höhe auszurichten. Nun wird die Irisblende am Filterrad vollständig geöffnet
 und die an der Lampe soweit geschlossen, dass der Lichtfleck auf der
-Photokathode \SI{5}{\milli\meter} - \SI{10}{\milli\meter} Durchmesser hat.
-Dabei soll die Ringanode nicht beleuchtet werden. Die Linse wird so verschoben,
-dass der Lichfleck scharf abgebildet wird.
+Photokathode \SIrange{5}{10}{\milli\meter} Durchmesser hat. Dabei soll die
+Ringanode nicht beleuchtet werden. Die Linse wird so verschoben, dass der
+Lichfleck scharf abgebildet wird.
 
 Im Anschluss wird die Schutzkappe so über die Photozelle gestülpt, dass
 die Öffnung im Strahlengang liegt und die Irisblenden werden so weit
@@ -371,10 +371,8 @@ Mit der Objektivlinse des Beobachtungsteleskops können wir die Linien
 scharfstellen, wir justieren so lange, bis diese es sind. Dann lesen wir den
 Winkel des Gitters
 $\omega_\text G$ ab. Die gemessenen Winkel sind in
-Tabelle~\ref{tab:messdaten:gitterkonstante}.
-
-Im Anhang der Praktikumsanleitung ist das Spektrum der Quecksilberlampe
-angegeben. Diese Tabelle zitieren wir im Anhang~\ref{sec:spektrum}.
+Tabelle~\ref{tab:messdaten:gitterkonstante}. Anhand des Spektrums der Lampe
+nehmen wir Wellenlängen an, siehe Tabelle.
 
 \begin{table}[htbp]
     \centering
@@ -409,10 +407,14 @@ Die Rändelschraube an der Gittersäule wird gelöst und so weit gedreht, bis di
 rote $\mathrm H_\alpha$-Linie zu sehen ist. Mit der Objektivlinse bilden wir
 die Linie scharf ab.
 
-Anschließend lesen wir die beiden Winkel ab. Außerdem schätzen wir den Abstand
-$d$ der aufgespaltenen Linien mit Hilfe der Skala im Okular ab. Dann
-wiederholen wir dies für alle anderen Linien. Unsere Messdaten sind in
-Tabelle~\ref{tab:messdaten:balmer-okular}.
+Anschließend lesen wir den Gitterwinkel ab, den Bankwinkel haben wir
+unverändert gelassen. Wir wiederholen dies für alle anderen Linien. Unsere
+Messdaten sind in Tabelle~\ref{tab:messdaten:balmer-okular}.
+
+\begin{small}
+    Der Anleitung nach hätten wir hier die Aufspaltung $d$ der Linien
+    mit der Skala im Okular abschätzen sollen. Dies haben wir leider versäumt.
+\end{small}
 
 \begin{table}[htbp]
     \centering
@@ -497,7 +499,15 @@ erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
     \centering
     \includegraphics[width=\linewidth]{g.pdf}
     \caption{%
-        Gitterkonstanten
+        Berechnete Gitterkonstanten für die einzelnen Wellenlängen. Bei einer
+        idealen Messung sollte eine horizontale Gerade bei einem festen Wert
+        für $g$ herauskommen. Abweichungen nach oben oder unten bedeuten, dass
+        die Wellenlänge über- oder unterschätzt worden ist. Die Wellenlängen im
+        blauen Bereich konnten wir anscheinend relativ gut zuordnen. Die beiden
+        roten Wellenlängen sind im Vergleich viel zu groß. Jedoch gibt es keine
+        kleineren Wellenlängen im angegeben Spektrum, die wir benutzen könnten.
+        Die beiden roten Wellenlängen im Spektrum haben wir den beiden
+        Messungen zugeordnet.
     }
     \label{fig:gitterkonstanten}
 \end{figure}
@@ -562,11 +572,7 @@ Die zu erwartenden Wellenlängen berechnen sich nach:
     \lambda = \frac{c h}{E_\text{Ryd}} \del{\frac 14 - \frac 1{n^2}}^{-1}
 \]
 
-Die davon sichtbaren sind: \SIlist{
-%<- for lambda in balmer_berechnet: ->%
-<< lambda >>;
-%<- endfor ->%
-}{\nano\meter}.
+Die davon sichtbaren sind: \SIlist{<< balmer_berechnet_nm >>}{\nano\meter}.
 
 \paragraph{Bestimmung der Ballmerlinien mit CCD-Zeile}
 
@@ -826,7 +832,7 @@ finden, von dem der Übergang gestartet ist.
 Die von uns gemessenen Wellenlängen waren: \SIlist{<< balmer_lambda_nm >>}{\meter}.
 
 Zu erwartende Wellenlängen sind für die Übergänge $n \to 2$: \SIlist{<<
-balmer_berechnet_nm >>}{\meter}.
+balmer_berechnet_nm >>}{\nano\meter}.
 
 Die ehesten Kandidaten sind:
 \begin{itemize}
@@ -877,6 +883,25 @@ Und erhalten für $h$:
 
 \FloatBarrier
 \section{Diskussion}
+
+\subsection{Messfehler}
+
+Bei der Bestimmung der Gitterkonstanten ist es nicht möglich, eine horizontale
+Gerade durch die einzelnen Gitterkonstanten zu legen, so dass diese innerhalb
+der Fehlerbereiche ist. Es ist schwer, den Fehler durch die Wahl der falschen
+Wellenlänge im Spektrum zu quantifizieren, jedoch ist die Unsicherheit dort
+größer als durch die Messung von $\omegaG$ allein.
+
+Wir konnten die Aufspaltung im Okular nicht erkennen, mit der CCD-Zeile nur für
+die helle rote Linie. Da das Auflösungsvermögen des Gitters eigentlich
+ausreichen sollte, um die Aufspaltung auch bei anderen Spektrallinien sehen zu
+können, muss etwas anderes die Auflösung begrenzt haben. Wahrscheinlich ist
+viel Auflösungsvermögen bei der Justage der Linsen verloren gegangen, weil
+diese nicht alle auf höhe der optischen Achse waren.
+
+Der Literaturwert für $h$ liegt nicht mehr im Fehlerbereich des Wertes, den wir
+im zweiten Teil mit der Balmer-Lampe erhalten haben. Hier haben wir
+offensichtlich die Fehler unterschätzt.
 
 \subsection{Weitere Spektrallinien}
 
@@ -1041,7 +1066,7 @@ Isotopieaufspaltung nichts zu tun.
             Spektrum der Quecksilberlampe.
             \parencite[P402.6.1]{physik412-Anleitung}
         }
-        \label{tab:messdaten:gitterkonstante}
+        \label{tab:spektrum_quecksilberlampe}
     \end{table}
 
     \FloatBarrier
