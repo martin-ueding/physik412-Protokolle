@@ -25,7 +25,7 @@ def Stromkennlinie(T, filename, save):
     data = data[data[:,1].argsort()]
 
     # Daten berechnen.
-    I_0 = data[0,1]*1e-10
+    I_0 = (data[0,1]-1e-8)*1e-10
     dI_0 = data[0,3]*1e-10
     U = data[1:,0]
     dU = data[1:,2]
@@ -54,12 +54,15 @@ def Stromkennlinie(T, filename, save):
     def nullstelle(x):
         return lin_fit(x, *popt)
 
-    return op.fsolve(nullstelle, 0)
+    U_0 = op.fsolve(nullstelle, 0)[0]
+    a, b = popt
+    dU_0 = ((pconv[0,0]*b/a**2)**2+(pconv[1,1]/a)**2)**0.5
 
-def U_0_gegen_nu(T, wavelength, U_0):
+    return (U_0, dU_0)
+
+def U_0_gegen_nu(T, wavelength, U_0, dU_0):
 
     nu = 3e8/wavelength
-    print(nu)
 
     # Kennlinie U_0 gegen Frequenz
     # Fit
@@ -69,13 +72,22 @@ def U_0_gegen_nu(T, wavelength, U_0):
 
     p_err = np.sqrt(pconv.diagonal())
 
-    pl.plot(nu, U_0, linestyle="none", marker="o")
+    pl.errorbar(nu, U_0, yerr=dU_0, linestyle="none", marker="o")
     pl.plot(x, y)
     pl.xlabel(r"$\nu/\mathrm{Hz}$")
     pl.ylabel(r"$U_0/\mathrm{V}$")
     pl.grid(True)
     pl.savefig("_build/Plot_nu.pdf")
     pl.clf()
+
+    a, b = popt
+
+    e = 1.602e-19
+
+    h = a * e
+    dh = pconv[0, 0] * e
+
+    print(h, dh)
 
 def kennlinien(T):
 
@@ -87,21 +99,29 @@ def kennlinien(T):
         578e-9
     ])
 
-    print(wavelength)
+    U_0_1, dU_0_1 = Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf")
+    U_0_2, dU_0_2 = Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf")
+    U_0_3, dU_0_3 = Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf")
+    U_0_4, dU_0_4 = Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf")
+    U_0_5, dU_0_5 = Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")
 
     U_0 = np.array([
-        Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf"), 
-        Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf"), 
-        Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf"), 
-        Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf"), 
-        Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")
+        U_0_1,
+        U_0_2,
+        U_0_3,
+        U_0_4,
+        U_0_5
     ])
 
-    U_0 = list(itertools.chain.from_iterable(U_0))
+    dU_0 = np.array([
+        dU_0_1,
+        dU_0_2,
+        dU_0_3,
+        dU_0_4,
+        dU_0_5
+    ])
 
-    print(U_0)
-
-    U_0_gegen_nu(T, wavelength, U_0)
+    U_0_gegen_nu(T, wavelength, U_0, dU_0)
 
 def balmer_serie(T):
     omega_B_val = 145
