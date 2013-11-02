@@ -89,6 +89,11 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
 
     print(h, dh)
 
+    W_A = -b * e
+    dW_A = pconv[1,1] * e
+
+    print(W_A, dW_A)
+
 def kennlinien(T):
 
     wavelength = np.array([
