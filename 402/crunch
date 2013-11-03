@@ -169,8 +169,14 @@ def kennlinien(T):
     #        unitprint.siunitx(I, dI)
     #        )
 
+    U_G = np.delete(U_G, 0)
+    dU_G = np.delete(dU_G, 0)
+    U = np.delete(U, 0)
+    dU = np.delete(dU, 0)
+    I = np.delete(I, 0)
+    dI = np.delete(dI, 0)
 
-    I_0 = (data[0,1]-1e-8)*1e-10
+    I_0 = (data[0,1])*1e-10
     dI_0 = data[0,3]*1e-10
     sqrt_I = np.sqrt(I-I_0)
     dsqrt_I = np.sqrt((dI/(2*np.sqrt(I-I_0)))**2+(dI_0/(2*np.sqrt(I-I_0)))**2)
