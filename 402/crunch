@@ -45,6 +45,9 @@ def stromkennlinie(T, filename, save, referenz):
 
     # Messwerte in T schreiben
 
+    print(U_G)
+    print(dU_G)
+
     T[referenz] = zip(
             unitprint.siunitx(U_G, dU_G),
             unitprint.siunitx(U, dU),
@@ -834,7 +837,7 @@ def render_template(T, filename):
 def main():
     T = {}
 
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     logging.debug('main()')
 
     kennlinien(T)
