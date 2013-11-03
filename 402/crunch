@@ -1,7 +1,10 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
 # Licensed under The GNU Public License Version 2 (or later)
+
+print('Vor importen')
 
 import itertools
 import jinja2
@@ -14,7 +17,11 @@ import scipy.interpolate
 import scipy.optimize as op
 import sys
 
+print('Nach globalen importen')
+
 import unitprint
+
+print('Nach importen')
 
 unitprint.digits = 1
 
@@ -69,8 +76,8 @@ def stromkennlinie(T, filename, save, referenz):
     pl.grid(True)
     pl.savefig(save)
     pl.clf()
-#
-#    # Nullstelle Berechnen
+
+    # Nullstelle Berechnen
     def nullstelle(x):
         logging.debug('nullstelle()')
         return lin_fit(x, *popt)
@@ -183,9 +190,6 @@ def kennlinien(T):
     pl.grid(True)
     pl.savefig("_build/Plot-365_Int-Hoch.pdf")
     pl.clf()
-#
-#    # Nullstelle Berechnen
-
 
 def balmer_serie(T):
     logging.debug('balmer_serie()')
@@ -830,8 +834,10 @@ def render_template(T, filename):
 def main():
     T = {}
 
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logging.debug('main()')
+
+    sys.exit(0)
 
     kennlinien(T)
 
@@ -843,4 +849,5 @@ def main():
     render_template(T, sys.argv[1])
 
 if __name__ == "__main__":
+    print("ifmain")
     main()
