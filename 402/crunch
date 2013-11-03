@@ -3,6 +3,7 @@
 # Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
 # Licensed under The GNU Public License Version 2 (or later)
 
+import itertools
 import jinja2
 import logging
 import math
@@ -12,8 +13,8 @@ import os.path
 import scipy.interpolate
 import scipy.optimize as op
 import sys
+
 import unitprint
-import itertools
 
 unitprint.digits = 1
 
