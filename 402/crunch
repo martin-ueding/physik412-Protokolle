@@ -68,8 +68,9 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
 
     # Kennlinie U_0 gegen Frequenz
     # Fit
+
     popt, pconv = op.curve_fit(lin_fit, nu, U_0)
-    x = np.linspace(np.min(U_0), np.max(U_0), 100)
+    x = np.linspace(np.min(nu), np.max(nu), 100)
     y = lin_fit(x, *popt)
 
     p_err = np.sqrt(pconv.diagonal())
