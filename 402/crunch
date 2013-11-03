@@ -19,9 +19,11 @@ import unitprint
 unitprint.digits = 1
 
 def lin_fit(x, a, b):
+    logging.debug('lin_fit()')
     return a * x + b
 
-def Stromkennlinie(T, filename, save, referenz):
+def stromkennlinie(T, filename, save, referenz):
+    logging.debug('stromkennlinie()')
     # Daten einlesen.
     data = np.genfromtxt(filename)
     data = data[data[:,1].argsort()]
@@ -70,6 +72,7 @@ def Stromkennlinie(T, filename, save, referenz):
 #
 #    # Nullstelle Berechnen
     def nullstelle(x):
+        logging.debug('nullstelle()')
         return lin_fit(x, *popt)
 
     U_0 = op.fsolve(nullstelle, 0)[0]
@@ -79,6 +82,7 @@ def Stromkennlinie(T, filename, save, referenz):
     return (U_0, dU_0)
 
 def U_0_gegen_nu(T, wavelength, U_0, dU_0):
+    logging.debug('U_0_gegen_nu()')
 
     nu = 3e8/wavelength
 
@@ -110,6 +114,7 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
     dW_A = pconv[1,1] * e
 
 def kennlinien(T):
+    logging.debug('kennlinien()')
 
     wavelength = np.array([
         365e-9,
@@ -119,11 +124,11 @@ def kennlinien(T):
         578e-9
     ])
 
-    U_0_1, dU_0_1 = Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf", "messwerte_365")
-    U_0_2, dU_0_2 = Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf", "messwerte_405")
-    U_0_3, dU_0_3 = Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf", "messwerte_436")
-    U_0_4, dU_0_4 = Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf", "messwerte_546")
-    U_0_5, dU_0_5 = Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf", "messwerte_578")
+    U_0_1, dU_0_1 = stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf", "messwerte_365")
+    U_0_2, dU_0_2 = stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf", "messwerte_405")
+    U_0_3, dU_0_3 = stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf", "messwerte_436")
+    U_0_4, dU_0_4 = stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf", "messwerte_546")
+    U_0_5, dU_0_5 = stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf", "messwerte_578")
 
     U_0 = np.array([
         U_0_1,
@@ -183,6 +188,7 @@ def kennlinien(T):
 
 
 def balmer_serie(T):
+    logging.debug('balmer_serie()')
     omega_B_val = 145
     omega_B_err = .1
 
@@ -335,9 +341,11 @@ def balmer_serie(T):
     print(T['h'])
 
 def gauss(x, mean, std, scale):
+    logging.debug('gauss()')
     return scale * np.exp(- (x - mean)**2 / (2 * std))
 
 def pc_aufnahme(T):
+    logging.debug('pc_aufnahme()')
     sets = [
         ('rot'),
         ('rot2'),
@@ -355,6 +363,7 @@ def pc_aufnahme(T):
     blau(T)
 
 def rot(T):
+    logging.debug('rot()')
     data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
     underground = 6.0
     T['rot_underground'] = underground
@@ -450,6 +459,7 @@ def rot(T):
     T['rot_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def rot2(T):
+    logging.debug('rot2()')
     lower = 750
     upper = 1559
     data = np.genfromtxt(os.path.join('Messwerte', 'rot2.txt'))[lower:upper, :]
@@ -506,6 +516,7 @@ def rot2(T):
     T['rot2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def gruen(T):
+    logging.debug('gruen()')
     lower = 700
     upper = 1242
     data = np.genfromtxt(os.path.join('Messwerte', 'gruen.txt'))[lower:upper, :]
@@ -562,6 +573,7 @@ def gruen(T):
     T['gruen_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def cyan(T):
+    logging.debug('cyan()')
     lower = 861
     upper = 962
     data = np.genfromtxt(os.path.join('Messwerte', 'cyan.txt'))[lower:upper, :]
@@ -618,6 +630,7 @@ def cyan(T):
     T['cyan_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def cyan2(T):
+    logging.debug('cyan2()')
     lower = 979
     upper = 1110
     data = np.genfromtxt(os.path.join('Messwerte', 'cyan2.txt'))[lower:upper, :]
@@ -674,6 +687,7 @@ def cyan2(T):
     T['cyan2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def blau(T):
+    logging.debug('blau()')
     lower = 730
     upper = 1200
     data = np.genfromtxt(os.path.join('Messwerte', 'blau.txt'))[lower:upper, :]
@@ -776,6 +790,7 @@ def blau(T):
     T['blau_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
 def aufloesungsvermoegen_gitter(T):
+    logging.debug('aufloesungsvermoegen_gitter()')
     d_val = 25e-3
     d_err = 5e-3
 
@@ -789,12 +804,14 @@ def aufloesungsvermoegen_gitter(T):
     T['aufl'] = unitprint.siunitx(aufl_val, aufl_err)
 
 def dopplerverbreiterung(T):
+    logging.debug('dopplerverbreiterung()')
     t = 1000
     m = 1
 
     T['doppler'] = unitprint.siunitx(7.16e-7 * np.sqrt(1000))
 
 def render_template(T, filename):
+    logging.debug('render_template()')
     # Setting up Jinja
     env = jinja2.Environment(
         "%<", ">%",
@@ -813,7 +830,8 @@ def render_template(T, filename):
 def main():
     T = {}
 
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
+    logging.debug('main()')
 
     kennlinien(T)
 
