@@ -36,21 +36,23 @@ def Stromkennlinie(T, filename, save, referenz):
 
     # Messwerte in T schreiben
 
-    T[referenz] = zip(
-            unitprint.siunitx(U_G, dU_G),
-            unitprint.siunitx(U, dU),
-            unitprint.siunitx(I, dI)
-            )
+    #T[referenz] = zip(
+    #        unitprint.siunitx(U_G, dU_G),
+    #        unitprint.siunitx(U, dU),
+    #        unitprint.siunitx(I, dI)
+    #        )
 
-    del U_G[0]
-    del U[0]
-    del I[0]
+    U_G = np.delete(U_G, 0)
+    dU_G = np.delete(dU_G, 0)
+    U = np.delete(U, 0)
+    dU = np.delete(dU, 0)
+    I = np.delete(I, 0)
+    dI = np.delete(dI, 0)
 
     I_0 = (data[0,1])*1e-10
     dI_0 = data[0,3]*1e-10
     sqrt_I = np.sqrt(I-I_0)
     dsqrt_I = np.sqrt((dI/(2*np.sqrt(I-I_0)))**2+(dI_0/(2*np.sqrt(I-I_0)))**2)
-
 
     # Messwerte interpolieren
     popt, pconv = op.curve_fit(lin_fit, U_G, sqrt_I)
@@ -74,7 +76,7 @@ def Stromkennlinie(T, filename, save, referenz):
 
     U_0 = op.fsolve(nullstelle, 0)[0]
     a, b = popt
-    dU_0 = ((pconv[0,0]*b/a**2)**2+(pconv[1,1]/a)**2)**0.5
+    dU_0 = (pconv[0,0]*(b/a**2)**2+pconv[1,1]/a**2)**0.5
 
     return (U_0, dU_0)
 
@@ -104,10 +106,14 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
     e = 1.602e-19
 
     h = a * e
-    dh = pconv[0, 0] * e
+    dh = pconv[0, 0] ** 0.5 * e
+
+    print(h, dh)
 
     W_A = -b * e
-    dW_A = pconv[1,1] * e
+    dW_A = pconv[1,1] ** 0.5 * e
+
+    print(W_A, dW_A)
 
 def kennlinien(T):
 
@@ -157,15 +163,12 @@ def kennlinien(T):
 
     # Messwerte in T schreiben
 
-    T["messwerte_365_hoch"] = zip(
-            unitprint.siunitx(U_G, dU_G),
-            unitprint.siunitx(U, dU),
-            unitprint.siunitx(I, dI)
-            )
+    #T["messwerte_365_hoch"] = zip(
+    #        unitprint.siunitx(U_G, dU_G),
+    #        unitprint.siunitx(U, dU),
+    #        unitprint.siunitx(I, dI)
+    #        )
 
-    del U_G[0]
-    del U[0]
-    del I[0]
 
     I_0 = (data[0,1]-1e-8)*1e-10
     dI_0 = data[0,3]*1e-10
@@ -178,8 +181,6 @@ def kennlinien(T):
     pl.grid(True)
     pl.savefig("_build/Plot-365_Int-Hoch.pdf")
     pl.clf()
-#
-#    # Nullstelle Berechnen
 
 
 def balmer_serie(T):
