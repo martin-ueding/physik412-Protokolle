@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
@@ -21,33 +20,49 @@ unitprint.digits = 1
 def lin_fit(x, a, b):
     return a * x + b
 
-def Stromkennlinie(T, filename, save):
+def Stromkennlinie(T, filename, save, referenz):
     # Daten einlesen.
     data = np.genfromtxt(filename)
     data = data[data[:,1].argsort()]
 
     # Daten berechnen.
-    I_0 = (data[0,1]-1e-8)*1e-10
+    U_G = data[:,0]
+    dU_G = data[:,2]
+    U = data[:,1]
+    dU = data[:,3]
+    I = U*1e-10
+    dI = dU*1e-10
+
+    # Messwerte in T schreiben
+
+    T[referenz] = zip(
+            unitprint.siunitx(U_G, dU_G),
+            unitprint.siunitx(U, dU),
+            unitprint.siunitx(I, dI)
+            )
+
+    del U_G[0]
+    del U[0]
+    del I[0]
+
+    I_0 = (data[0,1])*1e-10
     dI_0 = data[0,3]*1e-10
-    U = data[1:,0]
-    dU = data[1:,2]
-    I = data[1:,1]*1e-10
-    dI = data[1:,3]*1e-10
     sqrt_I = np.sqrt(I-I_0)
     dsqrt_I = np.sqrt((dI/(2*np.sqrt(I-I_0)))**2+(dI_0/(2*np.sqrt(I-I_0)))**2)
 
+
     # Messwerte interpolieren
-    popt, pconv = op.curve_fit(lin_fit, U, sqrt_I)
-    x = np.linspace(np.min(U), np.max(U), 100)
+    popt, pconv = op.curve_fit(lin_fit, U_G, sqrt_I)
+    x = np.linspace(np.min(U_G), np.max(U_G), 100)
     y = lin_fit(x, *popt)
 
     p_err = np.sqrt(pconv.diagonal())
 
     # Messwerte plotten
-    pl.errorbar(U, sqrt_I, xerr=dU, yerr=dsqrt_I, linestyle="none", marker="x")
+    pl.errorbar(U_G, sqrt_I, xerr=dU_G, yerr=dsqrt_I, linestyle="none", marker="x")
     pl.plot(x, y)
     pl.xlabel(r"$U / \mathrm{V}$")
-    pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{nA}}$")
+    pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{A}}$")
     pl.grid(True)
     pl.savefig(save)
     pl.clf()
@@ -103,11 +118,11 @@ def kennlinien(T):
         578e-9
     ])
 
-    U_0_1, dU_0_1 = Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf")
-    U_0_2, dU_0_2 = Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf")
-    U_0_3, dU_0_3 = Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf")
-    U_0_4, dU_0_4 = Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf")
-    U_0_5, dU_0_5 = Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf")
+    U_0_1, dU_0_1 = Stromkennlinie(T, "Messwerte/Kennlinie_365.txt","_build/Plot-365.pdf", "messwerte_365")
+    U_0_2, dU_0_2 = Stromkennlinie(T, "Messwerte/Kennlinie_405.txt","_build/Plot-405.pdf", "messwerte_405")
+    U_0_3, dU_0_3 = Stromkennlinie(T, "Messwerte/Kennlinie_436.txt","_build/Plot-436.pdf", "messwerte_436")
+    U_0_4, dU_0_4 = Stromkennlinie(T, "Messwerte/Kennlinie_546.txt","_build/Plot-546.pdf", "messwerte_546")
+    U_0_5, dU_0_5 = Stromkennlinie(T, "Messwerte/Kennlinie_578.txt","_build/Plot-578.pdf", "messwerte_578")
 
     U_0 = np.array([
         U_0_1,
@@ -126,6 +141,45 @@ def kennlinien(T):
     ])
 
     U_0_gegen_nu(T, wavelength, U_0, dU_0)
+
+    # Kennlinie für höhere Intensität
+    data = np.genfromtxt("Messwerte/Kennlinie_365_Int_Hoch.txt")
+    data = data[data[:,1].argsort()]
+
+    # Daten berechnen.
+    U_G = data[:,0]
+    dU_G = data[:,2]
+    U = data[:,1]
+    dU = data[:,3]
+    I = U*1e-10
+    dI = dU*1e-10
+
+    # Messwerte in T schreiben
+
+    T["messwerte_365_hoch"] = zip(
+            unitprint.siunitx(U_G, dU_G),
+            unitprint.siunitx(U, dU),
+            unitprint.siunitx(I, dI)
+            )
+
+    del U_G[0]
+    del U[0]
+    del I[0]
+
+    I_0 = (data[0,1]-1e-8)*1e-10
+    dI_0 = data[0,3]*1e-10
+    sqrt_I = np.sqrt(I-I_0)
+    dsqrt_I = np.sqrt((dI/(2*np.sqrt(I-I_0)))**2+(dI_0/(2*np.sqrt(I-I_0)))**2)
+
+    pl.errorbar(U_G, sqrt_I, xerr=dU_G, yerr=dsqrt_I, linestyle="none", marker="x")
+    pl.xlabel(r"$U / \mathrm{V}$")
+    pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{A}}$")
+    pl.grid(True)
+    pl.savefig("_build/Plot-365_Int-Hoch.pdf")
+    pl.clf()
+#
+#    # Nullstelle Berechnen
+
 
 def balmer_serie(T):
     omega_B_val = 145
