@@ -837,8 +837,6 @@ def main():
     logging.basicConfig(level=logging.INFO)
     logging.debug('main()')
 
-    sys.exit(0)
-
     kennlinien(T)
 
     balmer_serie(T)
