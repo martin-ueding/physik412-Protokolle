@@ -295,6 +295,10 @@ Zuletzt wird mit veränderter Lichtintensität, bei deutlicher Vergrößerung bz
 deutlicher Verringerung des Photostroms die Kennlinie der Wellenlänge $\lambda
 = \SI{365}{\nano\meter}$ aufgenommem.
 
+Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
+\ref{tab:messwerte_365_hoch}. In Abbildung~\ref{fig:Plot_365} bis
+\ref{fig:Plot_365_hoch} sind diese graphisch dargestellt.
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
@@ -384,6 +388,84 @@ deutlicher Verringerung des Photostroms die Kennlinie der Wellenlänge $\lambda
     }
     \label{tab:messwerte_578}
 \end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SS|S}
+        {$U_G / \si{\volt}$} &
+        {$U / \si{\volt}$} &
+        {$I / \si{\ampere}$} \\
+        \midrule
+        %< for U_G, U, I in messwerte_365_hoch: ->%
+        << U_G >> & << U >>  & << I >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Messwerte und mit der Verstärkung errechneter Photostrom, bei höherer
+        Intensität. Wellenlänge \SI{365}{\nano\meter}.
+    }
+    \label{tab:messwerte_365_hoch}
+\end{table}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-365.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{365}{\nano\meter}$,
+        einschließlich Anpassungsgerade nach der Least-Squares-Methode
+    }
+    \label{fig:Plot_365}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-405.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{405}{\nano\meter}$,
+        einschließlich Anpassungsgerade nach der Least-Squares-Methode
+    }
+    \label{fig:Plot_405}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-436.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{436}{\nano\meter}$,
+        einschließlich Anpassungsgerade nach der Least-Squares-Methode
+    }
+    \label{fig:Plot_436}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-546.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{546}{\nano\meter}$,
+        einschließlich Anpassungsgerade nach der Least-Squares-Methode
+    }
+    \label{fig:Plot_546}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-578.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{578}{\nano\meter}$,
+        einschließlich Anpassungsgerade nach der Least-Squares-Methode
+    }
+    \label{fig:Plot_578}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Plot-365_hoch.pdf}
+    \caption{%
+        Schaubild zur Messung bei $\lambda = \SI{365}{\nano\meter}$ mit höherer
+        Intensität. Es fällt auf, dass
+    }
+    \label{fig:Plot_365_hoch}
+\end{figure}
 
 \FloatBarrier
 \subsection{Auswertung}

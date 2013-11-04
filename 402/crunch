@@ -207,7 +207,7 @@ def kennlinien(T):
     pl.xlabel(r"$U / \mathrm{V}$")
     pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{A}}$")
     pl.grid(True)
-    pl.savefig("_build/Plot-365_Int-Hoch.pdf")
+    pl.savefig("_build/Plot-365_hoch.pdf")
     pl.clf()
 
 def balmer_serie(T):
