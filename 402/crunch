@@ -45,12 +45,6 @@ def stromkennlinie(T, filename, save, referenz):
 
     # Messwerte in T schreiben
 
-    #T[referenz] = zip(
-    #        unitprint.siunitx(U_G, dU_G),
-    #        unitprint.siunitx(U, dU),
-    #        unitprint.siunitx(I, dI)
-    #        )
-
     T[referenz] = zip(
             unitprint.siunitx(U_G, dU_G),
             unitprint.siunitx(U, dU),
@@ -132,6 +126,16 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
 
     print(W_A, dW_A)
 
+    # In T schreiben
+
+    T["Tabelle_U_0"] = zip(
+            unitprint.siunitx(U_0, dU_0),
+            wavelength,
+            nu
+            )
+    T["h_photo"] = unitprint.siunitx(h, dh)
+    T["W_A"] = unitprint.siunitx(W_A, dW_A)
+
 def kennlinien(T):
     logging.debug('kennlinien()')
 
@@ -181,11 +185,11 @@ def kennlinien(T):
 
     # Messwerte in T schreiben
 
-    #T["messwerte_365_hoch"] = zip(
-    #        unitprint.siunitx(U_G, dU_G),
-    #        unitprint.siunitx(U, dU),
-    #        unitprint.siunitx(I, dI)
-    #        )
+    T["messwerte_365_hoch"] = zip(
+            unitprint.siunitx(U_G, dU_G),
+            unitprint.siunitx(U, dU),
+            unitprint.siunitx(I, dI)
+            )
 
     U_G = np.delete(U_G, 0)
     dU_G = np.delete(dU_G, 0)
