@@ -76,6 +76,7 @@ def stromkennlinie(T, filename, save, referenz):
     pl.xlabel(r"$U / \mathrm{V}$")
     pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{A}}$")
     pl.grid(True)
+    pl.subplots_adjust(left=0.16)
     pl.savefig(save)
     pl.clf()
 
@@ -207,6 +208,7 @@ def kennlinien(T):
     pl.xlabel(r"$U / \mathrm{V}$")
     pl.ylabel(r"$\sqrt{I-I_0} / \sqrt{\mathrm{A}}$")
     pl.grid(True)
+    pl.subplots_adjust(left=0.145)
     pl.savefig("_build/Plot-365_hoch.pdf")
     pl.clf()
 
