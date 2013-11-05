@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+# Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
+# Licensed under The GNU Public License Version 2 (or later)
+
+import jinja2
+import matplotlib.pyplot as pl
+import numpy as np
+import scipy.interpolate
+import scipy.optimize as op
+import sys
+
+import unitprint
+
+def render_template(T, filename):
+    # Setting up Jinja
+    env = jinja2.Environment(
+        "%<", ">%",
+        "<<", ">>",
+        "%§", "§%",
+        loader=jinja2.FileSystemLoader(".")
+    )
+    template = env.get_template("Template.tex")
+
+    # Rendering LaTeX document with values.
+    with open(filename, "w") as f:
+        f.write(template.render(**T))
+
+def main():
+    T = {}
+
+    render_template(T, sys.argv[1])
+
+if __name__ == "__main__":
+    main()
