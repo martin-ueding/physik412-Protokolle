@@ -379,14 +379,33 @@ def pc_aufnahme(T):
         ('blau'),
     ]
 
-    rot(T)
-    rot2(T)
-    gruen(T)
-    cyan(T)
-    cyan2(T)
-    blau(T)
+    zusammenfassung = []
 
-def rot(T):
+    rot(T, zusammenfassung)
+    rot2(T, zusammenfassung)
+    gruen(T, zusammenfassung)
+    cyan(T, zusammenfassung)
+    cyan2(T, zusammenfassung)
+    blau(T, zusammenfassung)
+
+    farben = [
+        'erste rote',
+        'zweite rote',
+        'grüne',
+        'erste cyane',
+        'zweite cyane',
+        'blau',
+    ]
+
+    z = np.array(zusammenfassung)
+
+    fwhm = unitprint.siunitx(z[:, 0], z[:, 1])
+    linienbreite = unitprint.siunitx(z[:, 2], z[:, 3])
+    gamma = unitprint.siunitx(z[:, 4], z[:, 5])
+
+    T['zusammenfassung'] = zip(farben, fwhm, linienbreite, gamma)
+
+def rot(T, zusammenfassung):
     logging.debug('rot()')
     data = np.genfromtxt(os.path.join('Messwerte', 'rot.txt'))[712:806, :]
     underground = 6.0
@@ -482,7 +501,13 @@ def rot(T):
     )
     T['rot_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
-def rot2(T):
+    zusammenfassung.append([
+        rot_haupt_fwhm_val, rot_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
+
+def rot2(T, zusammenfassung):
     logging.debug('rot2()')
     lower = 750
     upper = 1559
@@ -539,7 +564,13 @@ def rot2(T):
     )
     T['rot2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
-def gruen(T):
+    zusammenfassung.append([
+        rot2_haupt_fwhm_val, rot2_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
+
+def gruen(T, zusammenfassung):
     logging.debug('gruen()')
     lower = 700
     upper = 1242
@@ -596,7 +627,13 @@ def gruen(T):
     )
     T['gruen_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
-def cyan(T):
+    zusammenfassung.append([
+        gruen_haupt_fwhm_val, gruen_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
+
+def cyan(T, zusammenfassung):
     logging.debug('cyan()')
     lower = 861
     upper = 962
@@ -653,7 +690,13 @@ def cyan(T):
     )
     T['cyan_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
-def cyan2(T):
+    zusammenfassung.append([
+        cyan_haupt_fwhm_val, cyan_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
+
+def cyan2(T, zusammenfassung):
     logging.debug('cyan2()')
     lower = 979
     upper = 1110
@@ -710,7 +753,13 @@ def cyan2(T):
     )
     T['cyan2_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
 
-def blau(T):
+    zusammenfassung.append([
+        cyan2_haupt_fwhm_val, cyan2_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
+
+def blau(T, zusammenfassung):
     logging.debug('blau()')
     lower = 730
     upper = 1200
@@ -812,6 +861,12 @@ def blau(T):
         + (linienbreite_val / lambda_val[0]**2 * lambda_err[0])**2
     )
     T['blau_gamma'] = unitprint.siunitx(gamma_val, gamma_err)
+
+    zusammenfassung.append([
+        blau_haupt_fwhm_val, blau_haupt_fwhm_err,
+        linienbreite_val, linienbreite_err,
+        gamma_val, gamma_err,
+    ])
 
 def aufloesungsvermoegen_gitter(T):
     logging.debug('aufloesungsvermoegen_gitter()')

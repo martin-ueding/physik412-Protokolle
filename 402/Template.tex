@@ -1008,18 +1008,9 @@ mit dem Okular erhalten hatten.
         Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
     \si\meter$} & {Aufspaltung} \\
         \midrule
-        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> & <<
-        rot_gamma >> \\
-        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> & <<
-        rot2_gamma >> \\
-        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> & <<
-        gruen_gamma >> \\
-        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> & <<
-        cyan_gamma >> \\
-        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> & <<
-        cyan2_gamma >> \\
-        blau & << blau_primary_fwhm >> & << blau_linienbreite >> & <<
-        blau_gamma >> \\
+        %< for farbe, fwhm, linienbreite, gamma in zusammenfassung: >%
+        << farbe >> & << fwhm >> & << linienbreite >> & << gamma >> \\
+        %< endfor >%
     \end{tabular}
     \caption{%
         Zusammenstellung der Linienbreiten, die wir aus den Daten der CCD-Zeile
