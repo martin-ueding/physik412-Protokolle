@@ -4,7 +4,6 @@
 
 \usepackage{keystroke}
 \usepackage{placeins}
-\usepackage{pdflscape}
 \usepackage{booktabs}
 \usepackage{minted}
 \usepackage{multicol}
@@ -1000,13 +999,11 @@ umgewandelt haben, wandeln wir die Breite in eine Wellenländendifferenz um.
 Dabei benutzen wir als Bankwinkel $\omegaB$ den Winkel, den wir für diese Linie
 mit dem Okular erhalten hatten.
 
-\begin{landscape}
-
 \begin{table}[htbp]
     \centering
     \begin{tabular}{lSSS}
-        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
-    \si\meter$} & {Aufspaltung} \\
+        Linie & {$\Deltaup\alpha / \si{\micro\degree}$} & {$\Deltaup\lambda /
+    \si{\nano\meter}$} & {Aufspaltung / $10^{-3}$} \\
         \midrule
         %< for farbe, fwhm, linienbreite, gamma in zusammenfassung: >%
         << farbe >> & << fwhm >> & << linienbreite >> & << gamma >> \\
@@ -1018,8 +1015,6 @@ mit dem Okular erhalten hatten.
     }
     \label{tab:linienbreiten}
 \end{table}
-
-\end{landscape}
 
 \subsection{Bestimmung der Rydbergkonstanten}
 
