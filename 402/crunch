@@ -124,8 +124,8 @@ def U_0_gegen_nu(T, wavelength, U_0, dU_0):
     # In T schreiben
 
     T["Tabelle_U_0"] = zip(
-            wavelength,
-            unitprint.siunitx(nu),
+            unitprint.siunitx(wavelength * 10**9),
+            unitprint.siunitx(nu / 10**12),
             unitprint.siunitx(U_0, dU_0)
             )
     T["h_photo"] = unitprint.siunitx(h, dh)
