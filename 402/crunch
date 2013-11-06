@@ -256,8 +256,8 @@ def balmer_serie(T):
 
     T["tabelle_gitterkonstante"] = zip(
         unitprint.siunitx(omega_G_val, np.ones(omega_G_val.size) * omega_G_err),
-        np.round(lambda_ * 10**9),
-        unitprint.siunitx(g_val, g_err),
+        unitprint.siunitx(lambda_ * 10**9),
+        unitprint.siunitx(g_val * 10**9, g_err * 10**9),
     )
 
     g_mean_val = np.mean(g_val)
@@ -303,7 +303,12 @@ def balmer_serie(T):
         + (g_average_val * np.cos(omega_G_val + omega_B_val) * omega_B_err)**2
     )
 
-    T["tabelle_balmer"] = zip(farbe, unitprint.siunitx(omega_G_val, omega_G_err), rel_int, unitprint.siunitx(lambda_val, lambda_err))
+    T["tabelle_balmer"] = zip(
+        farbe,
+        unitprint.siunitx(omega_G_val * 1000, omega_G_err * 1000),
+        rel_int,
+        unitprint.siunitx(lambda_val * 10**9, lambda_err * 10**9),
+    )
 
     lambda_erwartet = np.array([
         3e8 * 6.626e-34 / (13.6*1.609e-19) / (1/2**2 - 1/n**2) * 10**9
