@@ -13,6 +13,32 @@ import sys
 
 import unitprint
 
+def rabi(T):
+    data = np.genfromtxt("Messdaten/Rabi.txt")
+
+    f = data[:, 0]
+    A_len = data[:, 1]
+    gelb_val = data[:, 2]
+    gelb_err = data[:, 3]
+    gruen_val = data[:, 4]
+    gruen_err = data[:, 5]
+
+    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label='Gelb')
+    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label='Grün')
+    pl.grid(True)
+    pl.legend(loc='best')
+    pl.title('Rabi-Oszillation')
+    pl.xlabel(r'A_len / s')
+    pl.ylabel(r'Signal / V')
+    pl.savefig('_build/Rabi.pdf')
+
+    T['rabi_messdaten'] = zip(
+        unitprint.siunitx(f),
+        unitprint.siunitx(A_len),
+        unitprint.siunitx(gelb_val, gelb_err),
+        unitprint.siunitx(gruen_val, gruen_err),
+    )
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -29,6 +55,8 @@ def render_template(T, filename):
 
 def main():
     T = {}
+
+    rabi(T)
 
     render_template(T, sys.argv[1])
 

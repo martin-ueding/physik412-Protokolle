@@ -4,7 +4,6 @@
 
 \usepackage{keystroke}
 \usepackage{placeins}
-\usepackage{pdflscape}
 \usepackage{booktabs}
 \usepackage{minted}
 \usepackage{multicol}
@@ -99,19 +98,16 @@ Sind Kathode und Anode anders herum beschaltet, werden ausgelöste Elektronen in
 Richtung Kathode beschleunigt, also abgebremst. Mit Hilfe der Spannung $U_0$,
 bei der der Anodenstrom verschwindet, kann nun die kinetische Energie der
 ausgelösten Elektronen bestimmt werden:
-
 \[eU_0 = E_\text{kin}\]
 
 Da die kinetische Energie die Differenz aus der Energie des Photons und der
 Austrittsarbeit ist, gilt:
-
 \[eU_0 = h\nu-W_\text{A}\]
 
 Da man ein Auslösen von Elektronen aus der Anode verhindern möchte, wählt man
 hier meist ein Material mit höherer Austrittsarbeit. Da so zwei Materialien mit
 unterschiedlicher Austrittsarbeit verbunden sind, entsteht ein
 Kontaktpotenzial, welches die Energiegleichung noch einmal verändert:
-
 \begin{equation}
     U_0 = \frac he\nu - \frac{W_\text{A}}e - U_\text{K}
     \label{eq:Energiebilanz}
@@ -197,6 +193,17 @@ Dies setzen wir in \eqref{eq:368.16} ein und erhalten:
     \label{eq:gittergleichung}
     g = \frac{m \lambda}{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
 \end{equation}
+
+Dabei bestimmen wir noch den Fehler mit der Gaußschen Fehlerfortplanzung:
+\[
+    \Deltaup g
+    = \frac{g^2}{m\lambda} \sqrt{
+        \del{\del{\cos(\omegaG) - \cos(\omegaB +
+        \omegaG)} \Deltaup \omegaG}^2
+        +
+        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
 
 Sollte $\omega_\text B = \piup$ sein, darf es keinen Gangunterschied geben.
 $\Delta$ wird 0. Die Vorzeichen sind also korrekt.
@@ -304,7 +311,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_365: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -322,7 +329,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_405: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -340,7 +347,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_436: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -358,7 +365,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_546: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -376,7 +383,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_578: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -394,7 +401,7 @@ Unsere Messwerte befinden sich in Tabelle~\ref{tab:messwerte_365} bis
     \begin{tabular}{SS|S}
         {$U_G / \si{\volt}$} &
         {$U / \si{\volt}$} &
-        {$I / \si{\ampere}$} \\
+        {$I / \si{\pico\ampere}$} \\
         \midrule
         %< for U_G, U, I in messwerte_365_hoch: ->%
         << U_G >> & << U >>  & << I >> \\
@@ -479,8 +486,8 @@ gefundenen Werte sind in Tabelle~\ref{tab:U_0} zu sehen.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{S|S|S}
-        {$\lambda / \si{\meter}$} &
-        {$\nu / \si{\hertz}$} &
+        {$\lambda / \si{\nano\meter}$} &
+        {$\nu / \si{\tera\hertz}$} &
         {$U_0 / \si{\volt}$} \\
         \midrule
         %< for wavelength, nu, U_0 in Tabelle_U_0 ->%
@@ -508,13 +515,11 @@ Achsenabschnitt ist $\frac{W_A}{e}+U_K$.
 \end{figure}
 
 Aus der Steigung der Anpassungsgeraden erhalten wir
-
 \[
     h = \SI{<< h_photo >>}{\joule\second}
 \]
 
 Aus dem Achsenabschnitt erhalten wir
-
 \[
     W_A \approx \SI{<< W_A >>}{\joule}
 \]
@@ -680,17 +685,7 @@ im Anhang~\ref{sec:pc_messwerte}.
 \subsection{Bestimmung der Gitterkonstanten}
 
 Mithilfe der Gittergleichung \eqref{eq:gittergleichung} können wir die
-Gitterkonstante bestimmen. Dabei bestimmen wir noch den Fehler mit der
-Gaußschen Fehlerfortplanzung:
-\[
-    \Deltaup g
-    = \frac{g^2}{m\lambda} \sqrt{
-        \del{\del{\cos(\omegaG) - \cos(\omegaB +
-        \omegaG)} \Deltaup \omegaG}^2
-        +
-        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
-    }
-\]
+Gitterkonstante bestimmen.
 
 Die errechneten Werte sind in Tabelle~\ref{tab:gitterkonstante}. Die gleichen
 Daten haben wir in Abbildung~\ref{fig:gitterkonstanten} dargestellt, um einfach
@@ -701,7 +696,7 @@ erkennen zu können, ob einzelne Wellenlängen falsch abgeschätzt worden sind.
     \begin{tabular}{SS|S}
         {$\omegaG / \si{\radian}$} &
         {$\lambda / \si{\nano\meter}$} &
-        {$g / \si{\meter}$} \\
+        {$g / \si{\nano\meter}$} \\
         \midrule
         %< for omega_G_val, lambda, g in tabelle_gitterkonstante: ->%
         << omega_G_val >> & << lambda >>  & << g >> \\
@@ -772,9 +767,9 @@ Hier berechnet sich der Fehler wie folgt:
     \centering
     \begin{tabular}{lSS|S}
         Farbe &
-        {$\omega_\text G / \si\radian$} &
+        {$\omega_\text G / \si{\milli\radian}$} &
         {rel. Int.} &
-        {$\lambda / \si{\meter}$} \\
+        {$\lambda / \si{\nano\meter}$} \\
         \midrule
         %< for farbe, omega_G, rel_int, lambda_ in tabelle_balmer: ->%
         << farbe >> & << omega_G >> & << rel_int >> & <<
@@ -1000,26 +995,15 @@ umgewandelt haben, wandeln wir die Breite in eine Wellenländendifferenz um.
 Dabei benutzen wir als Bankwinkel $\omegaB$ den Winkel, den wir für diese Linie
 mit dem Okular erhalten hatten.
 
-\begin{landscape}
-
 \begin{table}[htbp]
     \centering
     \begin{tabular}{lSSS}
-        Linie & {$\Deltaup\alpha / \si\degree$} & {$\Deltaup\lambda /
-    \si\meter$} & {Aufspaltung} \\
+        Linie & {$\Deltaup\alpha / \si{\micro\degree}$} & {$\Deltaup\lambda /
+    \si{\nano\meter}$} & {Aufspaltung / $10^{-3}$} \\
         \midrule
-        erste rote & << rot_primary_fwhm >> & << rot_linienbreite >> & <<
-        rot_gamma >> \\
-        zweite rote & << rot2_primary_fwhm >> & << rot2_linienbreite >> & <<
-        rot2_gamma >> \\
-        grüne & << gruen_primary_fwhm >> & << gruen_linienbreite >> & <<
-        gruen_gamma >> \\
-        erste cyane & << cyan_primary_fwhm >> & << cyan_linienbreite >> & <<
-        cyan_gamma >> \\
-        zweite cyane & << cyan2_primary_fwhm >> & << cyan2_linienbreite >> & <<
-        cyan2_gamma >> \\
-        blau & << blau_primary_fwhm >> & << blau_linienbreite >> & <<
-        blau_gamma >> \\
+        %< for farbe, fwhm, linienbreite, gamma in zusammenfassung: >%
+        << farbe >> & << fwhm >> & << linienbreite >> & << gamma >> \\
+        %< endfor >%
     \end{tabular}
     \caption{%
         Zusammenstellung der Linienbreiten, die wir aus den Daten der CCD-Zeile
@@ -1027,8 +1011,6 @@ mit dem Okular erhalten hatten.
     }
     \label{tab:linienbreiten}
 \end{table}
-
-\end{landscape}
 
 \subsection{Bestimmung der Rydbergkonstanten}
 
@@ -1104,7 +1086,30 @@ Und erhalten für $h$:
 \FloatBarrier
 \chapter{Diskussion}
 
-\section{Messfehler}
+\section{Messfehler im ersten Teil}
+
+Im ersten Teil des Versuches konnten wir durch die Abschirmung das meiste
+Streulicht heraushalten und somit wahrscheinlich relativ fehlerarm messen.
+Steulicht würde jedoch dazu führen, dass alle Daten eine konstante Erhöhung
+haben und die Nullstellen somit falsch herauskommen.
+
+Durch die große Verstärkung könnte es sein, dass bereits kleine statische
+Ladungen das Ergebnis kurzzeitig verfälscht haben. Jedoch sollte sich das im
+Mittel ausgleichen.
+
+Bei der Messung haben die Ausgangsspannung teilweise sehr stark geschwankt.
+Dies haben wir beim Ablesen direkt im Messfehler festgehalten.
+
+\section{Bestimmung der Nullstellen}
+
+Wir haben die Nullstellen der Anpassungsgeraden numerisch bestimmen lassen. Für
+die Anpassungsgerade haben wir zwar Parameter mit Fehlerangaben erhalten,
+jedoch sind die Koordinaten miteinander korreliert, wodurch wir nicht sicher
+sein können, ob der Fehler der Nullstelle bereits dadurch abgedeckt wird.
+Eventuell verstärkt sich der Fehler bei unserem Verfahren deutlich stärker, als
+wir das erwartet haben.
+
+\section{Messfehler im zweiten Teil}
 
 Bei der Bestimmung der Gitterkonstanten ist es nicht möglich, eine horizontale
 Gerade durch die einzelnen Gitterkonstanten zu legen, so dass diese innerhalb
@@ -1139,19 +1144,19 @@ ein Wasserstoffatom löst. Dadurch erscheint das Spektrum ohne Banden.
 Allerdings könnte der $\mathrm{\mathsf{HO}}$-Rumpf auch noch schwingen und eine
 grüne Linie erzeugen.
 
-\subsection{Linienbreite}
+\section{Linienbreite}
 
-\subsubsection{Dopplerverbreiterung}
+\subsection{Dopplerverbreiterung}
 
 Nach \eqref{eq:dopplerverbreiterung} erhalten wir bei $T = \SI{1000}{\kelvin}$
 und $m = \SI{1}{\atomicmassunit}$ eine Verbreiterung von \num{<< doppler >>}.
 
-\subsubsection{Natürliche Linienbreite}
+\subsection{Natürliche Linienbreite}
 
 Die natürliche Linienbreite mit ihren \num{e-8} ist deutlich geringer als die
 Dopplerverbreiterung und kann hier vernachlässigt werden.
 
-\subsubsection{Vergleich mit aufgenommenen Linien}
+\subsection{Vergleich mit aufgenommenen Linien}
 
 Für die erste rote und die blaue Linie ist die Verbreiterung recht klein,
 allerdings immer noch mehr als eine Größenordnung größer als die
@@ -1160,7 +1165,7 @@ anscheinend schlecht fokussiert.
 
 Somit ist unsere Linienbreite durch die Abbildung in unserem Aufbau begrenzt.
 
-\subsection{Auflösungsvermögen des Gitters}
+\section{Auflösungsvermögen des Gitters}
 
 Wir haben in erster Ordnung betrachtet und wahrscheinlich das ganze Gitter
 ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}.
@@ -1195,7 +1200,25 @@ Isotopieaufspaltung nichts zu tun.
 \FloatBarrier
 \chapter{Zusammenfassung}
 
-\fehlt
+Wir haben das Planck'sche Wirkungsquantum durch zwei unabhängige Verfahren
+bestimmt. Zuerst haben wir den Photoeffekt ausgenutzt, in dem die verschiedenen
+Farben des Lichts verschiedene Energien pro Photon tragen. Im zweiten Teil
+haben wir die Energieniveaus des Wasserstoffs benutzt, in denen auch das
+Wirkungsquantum steckt.
+
+Der Wert, den wir durch den Photoeffekt erhalten haben, ist:
+\[
+    h_\text{Photo} = \SI{<< h_photo >>}{\joule\second}
+\]
+
+Der Wert für das Wirkungsquantum, den wir über die Balmer-Linien erhalten
+haben, ist:
+\[
+    h_\text{Balmer} = \SI{<< h >>}{\joule\second}
+\]
+
+Beide Werte liegen mehr als eine Standardabweichung vom Literaturwert
+\SI{6.626e-34}{\joule\second} entfernt, damit sind die Fehler zu klein.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
