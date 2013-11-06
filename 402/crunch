@@ -42,7 +42,7 @@ def stromkennlinie(T, filename, save, referenz):
     T[referenz] = zip(
             unitprint.siunitx(U_G, dU_G),
             unitprint.siunitx(U, dU),
-            unitprint.siunitx(I, dI)
+            unitprint.siunitx(I * 10**12, dI * 10**12)
             )
 
     U_G = np.delete(U_G, 0)
@@ -183,7 +183,7 @@ def kennlinien(T):
     T["messwerte_365_hoch"] = zip(
             unitprint.siunitx(U_G, dU_G),
             unitprint.siunitx(U, dU),
-            unitprint.siunitx(I, dI)
+            unitprint.siunitx(I * 10**12, dI * 10**12)
             )
 
     U_G = np.delete(U_G, 0)
