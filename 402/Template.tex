@@ -194,6 +194,17 @@ Dies setzen wir in \eqref{eq:368.16} ein und erhalten:
     g = \frac{m \lambda}{\sin(\omega_\text G) - \sin(\omega_\text B + \omega_\text G)}
 \end{equation}
 
+Dabei bestimmen wir noch den Fehler mit der Gaußschen Fehlerfortplanzung:
+\[
+    \Deltaup g
+    = \frac{g^2}{m\lambda} \sqrt{
+        \del{\del{\cos(\omegaG) - \cos(\omegaB +
+        \omegaG)} \Deltaup \omegaG}^2
+        +
+        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
+    }
+\]
+
 Sollte $\omega_\text B = \piup$ sein, darf es keinen Gangunterschied geben.
 $\Delta$ wird 0. Die Vorzeichen sind also korrekt.
 
@@ -674,17 +685,7 @@ im Anhang~\ref{sec:pc_messwerte}.
 \subsection{Bestimmung der Gitterkonstanten}
 
 Mithilfe der Gittergleichung \eqref{eq:gittergleichung} können wir die
-Gitterkonstante bestimmen. Dabei bestimmen wir noch den Fehler mit der
-Gaußschen Fehlerfortplanzung:
-\[
-    \Deltaup g
-    = \frac{g^2}{m\lambda} \sqrt{
-        \del{\del{\cos(\omegaG) - \cos(\omegaB +
-        \omegaG)} \Deltaup \omegaG}^2
-        +
-        \del{\cos(\omegaB + \omegaG) \Deltaup \omegaB}^2
-    }
-\]
+Gitterkonstante bestimmen.
 
 Die errechneten Werte sind in Tabelle~\ref{tab:gitterkonstante}. Die gleichen
 Daten haben wir in Abbildung~\ref{fig:gitterkonstanten} dargestellt, um einfach
