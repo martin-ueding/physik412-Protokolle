@@ -4,8 +4,6 @@
 # Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
 # Licensed under The GNU Public License Version 2 (or later)
 
-print('Vor importen')
-
 import itertools
 import jinja2
 import logging
@@ -17,11 +15,7 @@ import scipy.interpolate
 import scipy.optimize as op
 import sys
 
-print('Nach globalen importen')
-
 import unitprint
-
-print('Nach importen')
 
 unitprint.digits = 1
 
