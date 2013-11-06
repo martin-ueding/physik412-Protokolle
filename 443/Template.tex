@@ -51,14 +51,79 @@
 \cite{physik412-Anleitung}
 
 \section{Spin $1/2$ Teilchen im homogenen Magnetfeld}
+
+In diesem Versuch untersuchen wie die magnetische Resonanz von Protonen, die in
+Form von Wasserstoff in einer großen Form in der Probe aus leichtem Mineralöl
+vorliegen. Die Protonen zeichnen sich durch einen Spin $1/2$ aus.
+
+Dieser Spin wurde in „Experimentalphysik 4“ eingeführt und verhält sich wie ein
+Drehimpuls. Die Quantenzahl $s$ ist hier immer $1/2$. Es bleibt die
+$z$-Komponente $m_s$, die die Werte $-1/2$ und $1/2$ annehmen kann.
+
+Die Protonen besitzen ein magnetisches Moment $\vec\mu$, das immer parallel zum
+Spin ist und eine feste Magnitude besitzt:
+\[
+    \mu = \gamma \hbar s
+\]
+
+Der Faktor $\gamma$ ist das gyromagnetische Verhältnis und ist für verschiedene
+Teilchen (z.\,B. Protonen, Elektronen) unterschiedlich.
+
 \subsection{Aufspaltung in zwei Zustände}
+
+In einem homogenen Magnetfeld $\vec B_0$ erfährt das magnetische Moment
+$\vec\mu$ ein Drehmoment $\vec M = \vec \mu \times \vec B_0$, das zu einer
+Einstellenergie führt:
+\[
+    E = - \inner{\vec \mu}{\vec B_0}
+\]
+
+Da die magnetische Spinquantenzahl $m_s$ nur die Werte $-1/2$ und $1/2$ annehmen
+darf, gibt es nur zwei Zustände, $\ket\uparrow$ und $\ket\downarrow$, die
+aufgrund der Einstellenergie unterschiedliche Energie haben. Ohne das externe
+Magnetfeld wären diese Zustände entartet.
+
 \subsection{Besetzung, thermisches Gleichgewicht}
+
+Ohne das externe Feld liegen alle Spins in einem beliebigen Zustand vor, so
+dass es keine makroskopische Magnetisierung $\vec M$ gibt.
+
 \subsection{Longitudinale Relaxation (Relaxationszeit $T_1$)}
 \subsection{Zeeman–Effekt (nur kurz)}
 \subsection{Präzession um $z$–Achse}
 
+Da das magnetische Moment $\vec\mu$ wahrscheinlich nicht parallel zum
+magnetischen Feld ist, wird auf es konstant das Drehmoment durch das
+magnetische Feld wirken. Dies führt dazu, dass das magnetische Moment um die
+$z$-Achse präzessiert. Die Frequenz dieser Präzession ist die Larmorfrequenz:
+\[
+    \omega_\text L = \gamma B_0
+\]
+
+Die makroskopische Magnetisierung, die sich als Mittel aus allen magnetischen
+Momenten ergibt, wird daher auch um die $z$-Achse präzessieren, zumindest
+solange die einzelnen Spins mit der gleichen Frequenz präzessieren. Dazu später
+mehr.
+
 \section{Reaktion von Spin auf zusätzliches Feld}
+
+In diesem Experiment werden wir zusätzlich zum (möglichst) homogenen Feld $\vec
+B_0$ ein gepulstes, sich drehendes, Feld $B_\text{RF}$ verwenden, dessen
+Frequenz im Radiobereich (\si{\mega\hertz}) liegt.
+
 \subsection{Blochkugel}
+
+Die Spins haben im externen Feld die Basiszustände $\ket\uparrow$ und
+$\ket\downarrow$. Es können aber auch Zustände auftreten, die sich durch zwei
+Mischwinkel charakterisieren lassen:
+\[
+    \ket{\theta, \phi}
+    = \cos(\theta) \ket\uparrow + \eup^{\iup \phi} \sin(\theta) \ket\downarrow
+\]
+
+Durch diese Superposition ist es möglich, dass das magnetische Moment in jede
+beliebige Richtung liegen kann.
+
 \subsection{Rabioszillation}
 
 \cite[Abschnitt~15.9.5 „Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
@@ -67,6 +132,21 @@
 
 \subsection{Rotierendes Bezugssystem}
 \subsection{$\pi/2$–Puls}
+
+Ein Puls des rotierenden Magnetfeldes der richtigen Stärke und länge wird dazu
+führen, dass das magnetische Moment für den Augenblick nur um die mitgeführte
+$x$-Achse, also die $x^*$-Achse präzessiert und somit von der $z^*$ auf die
+$y^*$-Achse kippt. Ist dies erreicht, muss der Puls beendet sein, damit das
+Moment nicht noch weiter kippt.
+
+Das magnetische Moment einer überwiegenden Anzahl Teilchen liegt nun auf der
+$x^*$-Achse. Somit liegt auch die Magnetisierung $\vec M$ auf der $x^*$-Achse.
+Da sich das Bezugssystem um die $z$-Achse dreht, ist auf der (festen) $x$-Achse
+nun eine makroskopische Magnetisierung zu beobachten, die sich zeitlich
+sinusförmig verhält.
+
+Mit der Messspule ist nun die mit der Larmorfrequenz oszillierende
+Magnetisierung zu beobachten.
 
 Abbildung 15.55 aus Gerthsen Physik von Seite 765
 
@@ -103,12 +183,12 @@ Formel P443.4
 \section{Temperatureinstellung}
 \section{Tuning des RF-Resonanzkreises}
 
-Wir stellen \texttt{A_len} auf \SI{2.5}{\micro\second} und \texttt P auf
+Wir stellen \texttt{A\_len} auf \SI{2.5}{\micro\second} und \texttt P auf
 \SI{100}{\micro\second}.
 
-print_001
+\texttt{print\_001}
 
-\texttt{print_002.csv} zeigt die Antwort bei 10 ns/div
+\texttt{print\_002.csv} zeigt die Antwort bei 10 ns/div
 
 \SI{47.4}{\nano\second}
 
@@ -125,12 +205,21 @@ $Z^2 = 0.0$.
 
 \section{$\frac\pi2$- und $\pi$-Puls Justage}
 
-Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A_len}
+Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 = \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
 \SI{2.58}{\micro\second}.
 
 \chapter{Durchführung und Auswertung}
 \section{Rabi-Oszillationen}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Rabi.pdf}
+    \caption{%
+        Messdaten und angepasste Funktionen zur Rabi-Oszillation.
+    }
+    \label{fig:rabi}
+\end{figure}
 
 \section{Longitudinale Relaxationszeit $T_1$}
 \subsection{Sättigungs-Zurückgewinnung}
