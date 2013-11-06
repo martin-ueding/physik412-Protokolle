@@ -1086,7 +1086,30 @@ Und erhalten für $h$:
 \FloatBarrier
 \chapter{Diskussion}
 
-\section{Messfehler}
+\section{Messfehler im ersten Teil}
+
+Im ersten Teil des Versuches konnten wir durch die Abschirmung das meiste
+Streulicht heraushalten und somit wahrscheinlich relativ fehlerarm messen.
+Steulicht würde jedoch dazu führen, dass alle Daten eine konstante Erhöhung
+haben und die Nullstellen somit falsch herauskommen.
+
+Durch die große Verstärkung könnte es sein, dass bereits kleine statische
+Ladungen das Ergebnis kurzzeitig verfälscht haben. Jedoch sollte sich das im
+Mittel ausgleichen.
+
+Bei der Messung haben die Ausgangsspannung teilweise sehr stark geschwankt.
+Dies haben wir beim Ablesen direkt im Messfehler festgehalten.
+
+\section{Bestimmung der Nullstellen}
+
+Wir haben die Nullstellen der Anpassungsgeraden numerisch bestimmen lassen. Für
+die Anpassungsgerade haben wir zwar Parameter mit Fehlerangaben erhalten,
+jedoch sind die Koordinaten miteinander korreliert, wodurch wir nicht sicher
+sein können, ob der Fehler der Nullstelle bereits dadurch abgedeckt wird.
+Eventuell verstärkt sich der Fehler bei unserem Verfahren deutlich stärker, als
+wir das erwartet haben.
+
+\section{Messfehler im zweiten Teil}
 
 Bei der Bestimmung der Gitterkonstanten ist es nicht möglich, eine horizontale
 Gerade durch die einzelnen Gitterkonstanten zu legen, so dass diese innerhalb
@@ -1121,19 +1144,19 @@ ein Wasserstoffatom löst. Dadurch erscheint das Spektrum ohne Banden.
 Allerdings könnte der $\mathrm{\mathsf{HO}}$-Rumpf auch noch schwingen und eine
 grüne Linie erzeugen.
 
-\subsection{Linienbreite}
+\section{Linienbreite}
 
-\subsubsection{Dopplerverbreiterung}
+\subsection{Dopplerverbreiterung}
 
 Nach \eqref{eq:dopplerverbreiterung} erhalten wir bei $T = \SI{1000}{\kelvin}$
 und $m = \SI{1}{\atomicmassunit}$ eine Verbreiterung von \num{<< doppler >>}.
 
-\subsubsection{Natürliche Linienbreite}
+\subsection{Natürliche Linienbreite}
 
 Die natürliche Linienbreite mit ihren \num{e-8} ist deutlich geringer als die
 Dopplerverbreiterung und kann hier vernachlässigt werden.
 
-\subsubsection{Vergleich mit aufgenommenen Linien}
+\subsection{Vergleich mit aufgenommenen Linien}
 
 Für die erste rote und die blaue Linie ist die Verbreiterung recht klein,
 allerdings immer noch mehr als eine Größenordnung größer als die
@@ -1142,7 +1165,7 @@ anscheinend schlecht fokussiert.
 
 Somit ist unsere Linienbreite durch die Abbildung in unserem Aufbau begrenzt.
 
-\subsection{Auflösungsvermögen des Gitters}
+\section{Auflösungsvermögen des Gitters}
 
 Wir haben in erster Ordnung betrachtet und wahrscheinlich das ganze Gitter
 ausgeleuchtet, also eine Breite von \SI{<< d >>}{\meter}.
@@ -1177,7 +1200,25 @@ Isotopieaufspaltung nichts zu tun.
 \FloatBarrier
 \chapter{Zusammenfassung}
 
-\fehlt
+Wir haben das Planck'sche Wirkungsquantum durch zwei unabhängige Verfahren
+bestimmt. Zuerst haben wir den Photoeffekt ausgenutzt, in dem die verschiedenen
+Farben des Lichts verschiedene Energien pro Photon tragen. Im zweiten Teil
+haben wir die Energieniveaus des Wasserstoffs benutzt, in denen auch das
+Wirkungsquantum steckt.
+
+Der Wert, den wir durch den Photoeffekt erhalten haben, ist:
+\[
+    h_\text{Photo} = \SI{<< h_photo >>}{\joule\second}
+\]
+
+Der Wert für das Wirkungsquantum, den wir über die Balmer-Linien erhalten
+haben, ist:
+\[
+    h_\text{Balmer} = \SI{<< h >>}{\joule\second}
+\]
+
+Beide Werte liegen mehr als eine Standardabweichung vom Literaturwert
+\SI{6.626e-34}{\joule\second} entfernt, damit sind die Fehler zu klein.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
