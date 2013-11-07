@@ -121,6 +121,8 @@ def hahn(T):
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x, y)
     pl.title('Hahn-Spinecho')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Hahn.pdf')
     pl.clf()
