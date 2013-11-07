@@ -145,12 +145,6 @@ $\ket\uparrow$.
 Im weiteren Verlauf können wir uns die Orientierung des Spins als
 Einheitsvektor in der Kugel vorstellen.
 
-\subsection{Rabioszillation}
-
-\cite[Abschnitt~15.9.5 „Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
-
-\cite{wikipedia/Rabi_Oszillation}
-
 \subsection{Rotierendes Bezugssystem}
 
 Wie schon in \ref{subsec:Präzession} beschrieben, präzessiert das magnetische
@@ -209,14 +203,29 @@ Relaxationszeiten eingeführt.
 
 \subsubsection{Homogene Transversale Relaxationszeit $T_2$}
 
-\subsubsection{Effektive Transversale Relaxationszeit $T_2^*$}
-
 Durch einen $\piup/2$-Puls wird die makroskopische Magnetisierung in die
 $x$-$y$-Ebene gekippt und präzessiert dann mit der Larmorfrequenz um die
 $z$-Achse, jedoch zerläuft diese Magnetisierung aufgrund der leicht
-verschiedenen Larmorfrequenzen. Auch hier ist ein exponentieller Abfall zu
-beobachten, der jedoch schneller ist, als der Effekt durch die homogene
-Relaxation alleine. Daher ist $T_2^*$ kürzer als $T_2$.
+verschiedenen Larmorfrequenzen. Dies nennt man „freien Induktionszerfall“, kurz
+„FID“\footnote{„FID“ kommt von „free induction decay”.}.
+
+Wäre das Magnetfeld perfekt homogen, so basierte die Frequenzverschiebung nur
+auf dem Magnetfeld der anderen Spins. Diese homogene Relaxation ist die
+eigentlich interessante Zeitkonstante, da sie vom nur Material abhängt und
+nicht vom experimentellen Aufbau.
+
+Mit der Hahn-Spinecho-Sequenz können wir später diese Zeit unabhängig vom
+externen Magnetfeld messen.
+
+Hier ist ein exponentieller Abfall der Gesamtmagnetisierung zu erwarten, die
+wir mit der Zeitkonstante $T_2$ beschreiben werden.
+
+\subsubsection{Effektive Transversale Relaxationszeit $T_2^*$}
+
+Das inhomogene Magnetfeld verstärkt den freien Induktionszerfall. Auch hier ist
+ein exponentieller Abfall zu beobachten, der jedoch schneller ist, als der
+Effekt durch die homogene Relaxation alleine. Daher ist $T_2^*$ kürzer als
+$T_2$.
 
 Mit der inhomogenen transversalen Relaxationszeit $T_{2,\text{inhom}}$ hängen
 die anderen wie folgt zusammen: \parencite[Formel~P443.5]{physik412-Anleitung}
@@ -225,8 +234,31 @@ die anderen wie folgt zusammen: \parencite[Formel~P443.5]{physik412-Anleitung}
     \frac{1}{T_2^*} = \frac 1{T_2} + \frac{1}{T_{2,\text{inhom}}}
 \end{equation}
 
+\subsection{Rabi-Oszillation}
+
+Rabi-Oszillationen sind allgemein Oszillationen eines Zweizustandsystems durch
+eine externe Anregung. \cite{wikipedia/Rabi_Oszillation}
+
+Hier ist diese externe Anregung der RF-Puls, den wir durch die Spule schicken.
+Dabei legen wir die Frequenz des Pulses möglichst genau auf die Larmorfrequenz,
+und variieren hier die Pulslänge. Wir erwarten, dass sich bei einem sehr kurzen
+Puls die makroskopische Magnetisierung nicht verändert. Wenn der Puls länger
+wird, und in den Bereich des $\pi/2$-Puls kommt, ist ein maximales Signal zu
+erwarten. Wird der Puls länger, so dass er in der Nähe des $\piup$-Pulses
+kommt, ist wieder kein Signal zu erwarten. In der Größenordnung eines
+$3\piup/4$-Pulses sollte die Amplitude wieder maximal sein, jedoch die Phase
+umgekehrt sein.
+
+\cite[Abschnitt~15.9.5 „Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
+
 \section{Messmethoden}
-\subsection{Konstanter Spannungsoffset}
+
+\subsection{Konstante Grundspannung}
+
+Wir betreiben das Oszilloskop mit DC-Kopplung, so dass allen Messung ein
+konstante Grundspannung zugrundeliegen kann, die wir bei jeder Messung noch
+abziehen müssen.
+
 \subsection{Longitudinale Relaxationszeit $T_1$}
 \subsubsection{Sättigungs–Zurückgewinnung}
 
@@ -300,7 +332,6 @@ Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 \subsubsection{Hahn–Spinecho–Sequenz}
 \subsubsection{Carr–Purcell–Sequenz}
 \subsubsection{Meiboom–Gill–Sequenz}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %
