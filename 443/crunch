@@ -101,7 +101,7 @@ def effektiv(T):
     t = tM[:, 0]
     M = tM[:, 1]
 
-    pl.plot(t, M)
+    pl.plot(t, M, linestyle='none', marker='.')
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
 
