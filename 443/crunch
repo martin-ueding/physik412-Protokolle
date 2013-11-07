@@ -23,16 +23,26 @@ def rabi(T):
     data = np.genfromtxt("Messdaten/Rabi.txt")
 
     f = data[:, 0]*1e-6 # jetzt in MHz
-    A_len = data[:, 1]*1e6 # jetzt in ms
+    A_len = data[:, 1]*1e6 # jetzt in Microsekunden
     gelb_val = data[:, 2]
     gelb_err = data[:, 3]
     gruen_val = data[:, 4]
     gruen_err = data[:, 5]
 
+    T['rabi_messdaten'] = zip(
+        unitprint.siunitx(f),
+        unitprint.siunitx(A_len),
+        unitprint.siunitx(gelb_val, gelb_err),
+        unitprint.siunitx(gruen_val, gruen_err),
+    )
+
     # Fit
     popt_gelb, pconv_gelb = op.curve_fit(rabi_fit_gelb, A_len, gelb_val, (1., 3.1416/5.))
     popt_gruen, pconv_gruen = op.curve_fit(rabi_fit_gruen, A_len, gruen_val, (1., 3.1416/5.))
-    x = np.linspace(0., np.max(A_len), 100)
+    A_len = A_len * 1e-6 # wieder Sekunden
+    popt_gelb[1] = popt_gelb[1]*1e6
+    popt_gruen[1] = popt_gruen[1]*1e6
+    x = np.linspace(0., np.max(A_len), 200)
     y_gelb = rabi_fit_gelb(x, *popt_gelb)
     y_gruen = rabi_fit_gruen(x, *popt_gruen)
 
@@ -43,16 +53,9 @@ def rabi(T):
     pl.grid(True)
     pl.legend(loc='best')
     pl.title('Rabi-Oszillation')
-    pl.xlabel(r'A_len / ms')
+    pl.xlabel(r'A_len / s')
     pl.ylabel(r'Signal / V')
     pl.savefig('_build/Rabi.pdf')
-
-    T['rabi_messdaten'] = zip(
-        unitprint.siunitx(f),
-        unitprint.siunitx(A_len),
-        unitprint.siunitx(gelb_val, gelb_err),
-        unitprint.siunitx(gruen_val, gruen_err),
-    )
 
 def render_template(T, filename):
     # Setting up Jinja
