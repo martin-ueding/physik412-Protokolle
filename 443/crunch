@@ -64,6 +64,32 @@ def polarisation(T):
     pl.savefig('_build/Polarisation.pdf')
     pl.clf()
 
+def effektiv(T):
+    data = np.loadtxt(
+        open('Messdaten/print_004.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]
+    M = data[:, 1]
+
+    pl.plot(t, M)
+    pl.savefig('_build/effektiv.pdf')
+    pl.clf()
+
+def hahn(T):
+    data = np.genfromtxt('Messdaten/Hahn.txt')
+    tau = data[:, 0]
+    M_val = data[:, 1]
+    M_err = data[:, 2]
+
+    pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.title('Hahn-Spinecho')
+    pl.grid(True)
+    pl.savefig('_build/Hahn.pdf')
+    pl.clf()
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -84,6 +110,8 @@ def main():
     rabi(T)
     saettigung(T)
     polarisation(T)
+    effektiv(T)
+    hahn(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
