@@ -74,6 +74,7 @@ behält das Elektron in Form von kinetischer Energie. Die Menge der ausgelösten
 Elektronen hängt dabei von der Intensität des Lichtes ab.
 
 \section{Photozelle}
+\label{sec:Photozelle}
 
 Der Aufbau einer Photozelle ist in Abbildung~\ref{fig:Photozelle} zu sehen.
 
@@ -116,6 +117,26 @@ Kontaktpotenzial, welches die Energiegleichung noch einmal verändert:
 Wenn man die Abhängigkeit der Gegenspannung $U_0$ von der Lichtfrequenz $\nu$
 vermisst taucht das Konktaktpotenzial als Fehler bei der Bestimmung der
 Austrittsarbeit (Achsenabschnitt) auf.
+
+\section{Bestimmung von $U_0$}
+
+In der im Abschnitt \ref{sec:Photozelle} beschriebenen Photozelle wird die
+Abhängigkeit des Anodenstroms $I$ von der Gegenspannung $U_\text{G}$
+untersucht. Der kleinste messbare Strom ist dabei $I_0$. Trägt man hier
+$\sqrt{I-I_0}$ gegen $U_\text{G}$ auf erhält man einen linearen Zusammenhang.
+Passt man eine Gerade $\sqrt{I-I_0} = a U_\text{G} + b$ an die Messdaten an,
+erhält an den Strom $U_0$ aus der Nullstelle der geraden.
+
+\[
+    U_0 = -\frac ba
+\]
+
+Der Fehler ergibt sich aus der Unsicherheit der Anpassung:
+
+\[
+    \Delta U_0 = \sqrt{\del{\frac{b}{a^2}\Delta a}^2+\del{\frac{1}{a}\Delta
+    b}^2}
+\]
 
 \section{Aufbau der Atomhülle}
 
@@ -1108,6 +1129,18 @@ jedoch sind die Koordinaten miteinander korreliert, wodurch wir nicht sicher
 sein können, ob der Fehler der Nullstelle bereits dadurch abgedeckt wird.
 Eventuell verstärkt sich der Fehler bei unserem Verfahren deutlich stärker, als
 wir das erwartet haben.
+
+\section{Unterschiedliche Intensitäten}
+
+Die Messung der Kennlinien bei \SI{365}{\nano\meter} entspricht genau unserer
+Erwartung. Durch eine Erhöhung der Intensität werden mehr Elektronen aus der
+Kathode ausgelöst, aber nur so viel, wie vorhanden sind. Das heißt der
+Sättigungsstrom kann nicht überschritten werden. Letzterer wird auch länger
+beibehalten, da mehr Elektronen auf kürzeren Wegen zur Anode fliegen.
+
+Die Spannung $U_0$ bleibt hingegen gleich, da eine höhere Intensität nicht
+mehr Energie pro Photon und damit auch pro Elektron bedeutet, sondern nur mehr
+Photonen.
 
 \section{Messfehler im zweiten Teil}
 

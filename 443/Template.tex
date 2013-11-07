@@ -317,6 +317,28 @@ Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 \FloatBarrier
 \section{Rabi-Oszillationen}
 
+Unsere Messwerte befinden sich in Tabelle~\ref{tab:rabi}, eine graphische
+Darstellung einschließlich Anpassungsfunktionen ist in Abbildung~\ref{fig:rabi}
+zu sehen.
+
+\begin{table}
+    \centering
+    \begin{tabular}{SSSS}
+        {$f / \si{\mega\hertz}$} &
+        {A\_len$ / \si{\micro\second}$} &
+        {Signal Gelb$ / \si{\volt}$} &
+        {Signal Grün$ / \si{\volt}$} \\
+        \midrule
+        %< for f, A_len, gelb_val, gruen_val in rabi_messdaten: ->%
+        << f >> & << A_len >> & << gelb_val >> & << gruen_val >> \\
+        %< endfor >%
+    \end{tabular}
+    \caption{%
+        Messwerte zur Rabi-Oszillation
+    }
+    \label{tab:rabi}
+\end{table}
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Rabi.pdf}
