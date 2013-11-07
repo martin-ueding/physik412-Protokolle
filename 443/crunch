@@ -32,6 +32,9 @@ def rabi(T):
     pl.ylabel(r'Signal / V')
     pl.savefig('_build/Rabi.pdf')
 
+    # Transformiere für Tabelle
+    f = f*1e-6
+    A_len = A_len*1e6
     T['rabi_messdaten'] = zip(
         unitprint.siunitx(f),
         unitprint.siunitx(A_len),
