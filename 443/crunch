@@ -46,9 +46,9 @@ def rabi(T):
     y_gelb = rabi_fit_gelb(x, *popt_gelb)
     y_gruen = rabi_fit_gruen(x, *popt_gruen)
 
-    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label='Gelb', color='yellow')
-    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label='Grün', color='green')
-    pl.plot(x, y_gelb, color='yellow')
+    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label='Gelb', color='blue')
+    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label='In-Phase-Signal', color='green')
+    pl.plot(x, y_gelb, color='blue')
     pl.plot(x, y_gruen, color='green')
     pl.grid(True)
     pl.legend(loc='best')
