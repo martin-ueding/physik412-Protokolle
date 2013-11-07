@@ -19,6 +19,9 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
+def long_relaxation(tau, M_0, T, Off):
+    return M_0*(1-np.exp(-tau/T))+Off
+
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
 
