@@ -79,10 +79,10 @@ Einstellenergie führt:
     E = - \inner{\vec \mu}{\vec B_0}
 \]
 
-Da die magnetische Spinquantenzahl $m_s$ nur die Werte $-\sfrac12$ und $\sfrac12$ annehmen
-darf, gibt es nur zwei Zustände, $\ket\uparrow$ und $\ket\downarrow$, die
-aufgrund der Einstellenergie unterschiedliche Energie haben. Ohne das externe
-Magnetfeld wären diese Zustände entartet.
+Da die magnetische Spinquantenzahl $m_s$ nur die Werte $-\sfrac12$ und
+$\sfrac12$ annehmen darf, gibt es nur zwei Zustände, $\ket\uparrow$ und
+$\ket\downarrow$, die aufgrund der Einstellenergie unterschiedliche Energie
+haben. Ohne das externe Magnetfeld wären diese Zustände entartet.
 
 \subsection{Besetzung, thermisches Gleichgewicht}
 
@@ -95,9 +95,9 @@ Ist das System in einem beliebigen Zustand, so werden die Spins nach einiger
 Zeit in den Grundzustand wechseln. Die Rate, mit der die Spins wechseln ist
 proportional zur Anzahl, die noch nicht gewechselt sind. Aus diesem Ansatz
 lässt sich mit geeigneten Anfangsbedingungen folgende Zeitentwicklung
-herleiten:
+herleiten: \parencite[Formel~P443.2]{physik412-Anleitung}
 \begin{equation}
-    \label{eq:}
+    \label{eq:M/exp}
     \vec M(t) = \vec M_0 \del{1 - \exp\del{- \frac{t}{T_1}}}
 \end{equation}
 
@@ -254,6 +254,9 @@ umgekehrt sein.
 
 \section{Messmethoden}
 
+In diesem Abschnitt möchten wir die Grundlage der Messmethoden erläutern, die
+wir nachher bei der Durchführung gebrauchen werden.
+
 \subsection{Konstante Grundspannung}
 
 Wir betreiben das Oszilloskop mit DC-Kopplung, so dass allen Messung ein
@@ -261,22 +264,90 @@ konstante Grundspannung zugrundeliegen kann, die wir bei jeder Messung noch
 abziehen müssen.
 
 \subsection{Longitudinale Relaxationszeit $T_1$}
+
 \subsubsection{Sättigungs–Zurückgewinnung}
 
-Formel P443.1
+Hier geben wir einen $\pi/2$ Puls und nach einer Verzögerungszeit $\tau$ noch
+einen weiteren $\pi/2$-Puls. Die Magnetisierung kippt durch den ersten Puls in
+die transversale Ebene. Dort fällt die Magnetisierung gemäß der longitudinalen
+Relaxation wieder in den Grundzustand zurück. Bevor dies zu stark passiert,
+kippen wir um weitere $\pi/2$ und messen dann das Signal.
 
-Formel P443.2
+Für sehr kleine Verzögerungszeiten $\tau$ erwarten wir kein Signal, da die
+Magnetisierung dann um $\pi$ gekippt immer noch parallel zur $z$-Achse ist.
+Somit verschwindet der transversale Anteil. Je länger die Verzögerungszeit ist,
+desto mehr kann die Magnetisierung wieder zur $z$-Achse zurückkehren und nach
+dem letzten Puls als transversaler Anteil gemessen werden.
+
+Da während der Verzögerungszeit eine longitudinale Relaxation gemäß
+\eqref{eq:M/exp} stattfindet, erwarten wir genau diese Zeitentwicklung bei
+dieser Methode.
+
+Durch Anpassen der Funktion an unsere Messwerte erhalten wir $T_1$.
 
 \subsubsection{Polarisations–Zurückgewinnung}
 
-Formel P443.3
+Hier wird zuerst ein $\piup$-Puls geschickt, nach der Verzögerungszeit ein
+$\pi/2$-Puls. Für sehr kurze Zeiten $\tau$ entspricht dies einem
+$3\piup/4$-Puls, so dass wir hier die volle Magnetisierung messen, jedoch mit
+entgegengesetzter Phase.
 
-Formel P443.4
+Wenn die Verzögerungszeit $\tau$ gerade so bemessen ist, dass die Magnetisierung von
+antiparallel zu transversal relaxiert ist, wird der letzte Puls diese wieder
+antiparallel stellen, wir werden kein Signal messen.
+
+Für größere Verzögerungszeiten konnte die Magnetisierung wieder in Richtung der
+$z$-Achse wandern, so dass wir dann ein Signal messen können.
+
+Aufgrund dessen erwarten wir zwar auch eine exponenzielle Annäherung an den
+Maximalwert, jedoch beginnend beim negativen Maximalwert:
+\parencite[Formel~P443.4]{physik412-Anleitung}
+\begin{equation}
+    \label{eq:M/exp/2}
+    \vec M(t) = \vec M_0 \del{1 - 2 \exp\del{- \frac{t}{T_1}}}
+\end{equation}
 
 \subsection{Transversale Relaxationszeit $T_2$}
+
+Bei der transversalen Relaxationszeit müssen die Effektive und die Homogene
+unterschieden werden. Zuerst werden wir Effektive behandeln.
+
 \subsubsection{FID-Signal}
+
+Betrachten wir ein einzelnes FID-Signal nach einem $\pi/2$-Puls, so fällt dies
+näherungsweise exponenziell ab. An diesen Abfall können wir eine
+Exponentialfunktion anpassen. Aus der Anpassung erhalten wir dann die effektive
+transversale Relaxationszeit.
+
 \subsubsection{Hahn–Spinecho–Sequenz}
+
+Um die von der Zeit unabhängigen Inhomogenitäten eliminieren zu können, benutzt
+man das Hahn'sche Spinecho. Dazu wird mit einem $\piup/2$-Puls die
+Magnetisierung in die $x$-$y$-Ebene gedreht. Die Spins präzessieren nun mit
+unterschiedlichen Larmorfrequenzen.
+
+Nach einer Verzögerungszeit $\tau$ wird ein $\piup$-Puls geschickt, der alle
+Spins in der transversalen Ebene dreht. Die Windung, die die Spins bis zu
+dieser Stelle „aufgedreht“ haben, drehen sie jetzt wieder zurück. Auf diese
+Weise werden sie sich nach einer weiteren Periode der Länge $\tau$ alle in
+einem Winkel treffen, da sie mit der gleichen, lokal jedoch abweichenden,
+Larmorfrequenz präzessieren.
+
+Dies funktioniert jedoch nur mit der Verschiebung der Larmorfrequenz, die nicht
+von der Zeit abhängt, die also vom externen Magnetfeld kommt. Die
+Spin-Spin-Wechselwirkung kann dadurch nicht rückgängig gemacht werden. Hier
+sind wir allerdings auch nur an dieser interessiert, so dass wir den gesuchten
+Effekt isoliert haben.
+
+Aus der Stärke des Echos kann dann die homogene transversale Relaxationszeit
+$T_2$ bestimmt werden, in dem an den exponenziellen Abfall wieder eine
+Exponentialfunktion angepasst wird.
+
 \subsubsection{Carr–Purcell–Sequenz}
+
+Die Carr-Purcell-Sequenz wiederholt die Verzögerungszeit und den $\piup$-Puls
+$N$ Male, so dass mehrere Echos zu sehen sind.
+
 \subsubsection{Meiboom–Gill–Sequenz}
 
 \chapter{Aufbau und Kalibrierung}
