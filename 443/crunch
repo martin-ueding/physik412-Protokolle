@@ -52,6 +52,18 @@ def saettigung(T):
     pl.savefig('_build/Saettigung.pdf')
     pl.clf()
 
+def polarisation(T):
+    data = np.genfromtxt('Messdaten/Polarisation.txt')
+    tau = data[:, 0]
+    M_val = data[:, 1]
+    M_err = data[:, 2]
+
+    pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.title('Polarisations-Zurückgewinnung')
+    pl.grid(True)
+    pl.savefig('_build/Polarisation.pdf')
+    pl.clf()
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
@@ -71,6 +83,7 @@ def main():
 
     rabi(T)
     saettigung(T)
+    polarisation(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
