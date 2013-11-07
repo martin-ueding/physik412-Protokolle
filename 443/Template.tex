@@ -89,8 +89,22 @@ Ohne das externe Feld liegen alle Spins in einem beliebigen Zustand vor, so
 dass es keine makroskopische Magnetisierung $\vec M$ gibt.
 
 \subsection{Longitudinale Relaxation (Relaxationszeit $T_1$)}
-\subsection{Zeeman–Effekt (nur kurz)}
+
+Ist das System in einem beliebigen Zustand, so werden die Spins nach einiger
+Zeit in den Grundzustand wechseln. Die Rate, mit der die Spins wechseln ist
+proportional zur Anzahl, die noch nicht gewechselt sind. Aus diesem Ansatz
+lässt sich mit geeigneten Anfangsbedingungen folgende Zeitentwicklung
+herleiten:
+\begin{equation}
+    \label{eq:}
+    \vec M(t) = \vec M_0 \del{1 - \exp\del{- \frac{t}{T_1}}}
+\end{equation}
+
+Dabei haben wir die Zeitkonstante $T_1$ eingeführt, die beschreibt, wie schnell
+diese Relaxation vor sich geht. Diese Zeit ist relativ lang.
+
 \subsection{Präzession um $z$–Achse}
+\label{subsec:Präzession}
 
 Da das magnetische Moment $\vec\mu$ wahrscheinlich nicht parallel zum
 magnetischen Feld ist, wird auf es konstant das Drehmoment durch das
@@ -128,6 +142,9 @@ beliebige Richtung liegen kann. Die energetisch günstigste Variante ist jedoch,
 wenn der Spin möglichst parallel zum Magnetfeld $\vec B_0$ liegt, also
 $\ket\uparrow$.
 
+Im weiteren Verlauf können wir uns die Orientierung des Spins als
+Einheitsvektor in der Kugel vorstellen.
+
 \subsection{Rabioszillation}
 
 \cite[Abschnitt~15.9.5 „Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
@@ -135,7 +152,14 @@ $\ket\uparrow$.
 \cite{wikipedia/Rabi_Oszillation}
 
 \subsection{Rotierendes Bezugssystem}
-\subsection{$\pi/2$–Puls}
+
+Wie schon in \ref{subsec:Präzession} beschrieben, präzessiert das magnetische
+Moment und der Spin um die $z$-Achse um ruhenden Inertialsystem des Labors
+$\Sigma$. Es ist für die weiteren Überlegungen
+hilfreich, ein rotierendes Bezugssystem $\Sigma^*$ zu betrachten, in dem das
+magnetische Moment fest ist.
+
+\subsection{$\piup/2$–Puls}
 
 Ein Puls des rotierenden Magnetfeldes der richtigen Stärke und länge wird dazu
 führen, dass das magnetische Moment für den Augenblick nur um die mitgeführte
@@ -152,12 +176,54 @@ sinusförmig verhält.
 Mit der Messspule ist nun die mit der Larmorfrequenz oszillierende
 Magnetisierung zu beobachten.
 
-Abbildung 15.55 aus Gerthsen Physik von Seite 765
+An dieser Stelle ist \cite[Abbildung~15.55 auf Seite~765]{meschede-gerthsen_24}
+recht illustrativ.
 
-\subsection{$\pi$–Puls}
+\subsection{$\piup$–Puls}
+
+Ähnlich wie der $\piup/2$-Puls kippt der $\piup$-Puls das magnetische Moment,
+jedoch um den doppelten Winkel. Im thermalisierten Grundzustand des Systems
+invertiert dieser Puls $\ket\uparrow$ und $\ket\downarrow$. Geht dem
+$\piup$-Puls ein $\piup/2$-Puls voraus, so wird der Azimutwinkel $\phi$ des
+Zustandes verändert.
+
 \subsection{Transversale Relaxation}
+
+Die Larmorfrequenz an jeder Stelle fast gleich, jedoch nur fast. Dadurch
+präzessieren die einzelnen Spins mit einer lokal leicht verschiedenen
+Geschwindigkeit. Auch wenn die Unterschiede nur klein sind, reicht es aus, wenn
+die relative Verschiebung zwischen den Spins $\piup$ beträgt, dass keine
+makroskopische transversale Magnetisierung gemessen werden kann.
+
+Zum einen wird die Ortsabhängigkeit der Larmorfrequenz durch das leicht
+inhomogene Magnetfeld des großen äußeren Magneten verursacht. Diese Veränderung
+ist konstant und kann, wie wir später beschreiben werden, mit der
+Hahn-Spinecho-Sequenz rückgängig gemacht werden.
+
+Außerdem erzeugen die magnetischen Momente der einzelnen Spins für sich auch
+wieder Magnetfelder $\vec H$, die auch zu einer Verschiebung der Larmorfrequenz
+führen. Dieser Effekt ist stark zeitabhängig und kann nicht korrigiert werden.
+
+Da es diese verschiedenen Effekte gibt, werden zwei verschiedene
+Relaxationszeiten eingeführt.
+
 \subsubsection{Homogene Transversale Relaxationszeit $T_2$}
+
 \subsubsection{Effektive Transversale Relaxationszeit $T_2^*$}
+
+Durch einen $\piup/2$-Puls wird die makroskopische Magnetisierung in die
+$x$-$y$-Ebene gekippt und präzessiert dann mit der Larmorfrequenz um die
+$z$-Achse, jedoch zerläuft diese Magnetisierung aufgrund der leicht
+verschiedenen Larmorfrequenzen. Auch hier ist ein exponentieller Abfall zu
+beobachten, der jedoch schneller ist, als der Effekt durch die homogene
+Relaxation alleine. Daher ist $T_2^*$ kürzer als $T_2$.
+
+Mit der inhomogenen transversalen Relaxationszeit $T_{2,\text{inhom}}$ hängen
+die anderen wie folgt zusammen: \parencite[Formel~P443.5]{physik412-Anleitung}
+\begin{equation}
+    \label{eq:}
+    \frac{1}{T_2^*} = \frac 1{T_2} + \frac{1}{T_{2,\text{inhom}}}
+\end{equation}
 
 \section{Messmethoden}
 \subsection{Konstanter Spannungsoffset}
