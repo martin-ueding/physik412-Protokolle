@@ -70,7 +70,12 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
+    popt, pconv = op.curve_fit(long_relaxation, tau, M_val)
+    x = np.linspace(np.min(tau), np.max(tau), 500)
+    y = long_relaxation(x, *popt)
+
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x,y)
     pl.title('Sättigungs-Zurückgewinnung')
     pl.grid(True)
     pl.savefig('_build/Saettigung.pdf')
