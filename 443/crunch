@@ -102,6 +102,10 @@ def effektiv(T):
     M = tM[:, 1]
 
     pl.plot(t, M, linestyle='none', marker='.')
+    pl.title('Effektive transversale Relaxation')
+    pl.grid(True)
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
 
