@@ -92,6 +92,15 @@ def effektiv(T):
     t = data[:, 0]
     M = data[:, 1]
 
+    tM = np.array([
+        (t1, M1)
+        for t1, M1 in zip(t, M)
+        if M1 > 0.5
+    ])
+
+    t = tM[:, 0]
+    M = tM[:, 1]
+
     pl.plot(t, M)
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
