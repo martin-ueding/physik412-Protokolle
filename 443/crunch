@@ -118,6 +118,9 @@ def effektiv(T):
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
 
+    T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print(popt[1], np.sqrt(pconv[1,1]))
+
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
     tau = data[:, 0]
