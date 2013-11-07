@@ -19,8 +19,8 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def trans_relaxation(tau, M_0, T):
-    return M_0*(1-np.exp(-tau/T))
+def trans_relaxation(tau, M_0, T, Off):
+    return M_0*np.exp(-tau/T)+Off
 
 def rabi(T):
     data = np.genfromtxt("Messdaten/Rabi.txt")
@@ -114,9 +114,11 @@ def hahn(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt, pconv = op.curve_fit(trans_relaxation, tau, M_val)
-    x = np.linspace(np.min(tau), np.max(tau))
+    popt, pconv = op.curve_fit(trans_relaxation, tau, M_val, (8., 1., .5))
+    x = np.linspace(np.min(tau), np.max(tau),100)
     y = trans_relaxation(x, *popt)
+
+    print(popt)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x, y)
