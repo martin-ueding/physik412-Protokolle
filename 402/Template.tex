@@ -74,6 +74,7 @@ behält das Elektron in Form von kinetischer Energie. Die Menge der ausgelösten
 Elektronen hängt dabei von der Intensität des Lichtes ab.
 
 \section{Photozelle}
+\label{sec:Photozelle}
 
 Der Aufbau einer Photozelle ist in Abbildung~\ref{fig:Photozelle} zu sehen.
 
@@ -116,6 +117,26 @@ Kontaktpotenzial, welches die Energiegleichung noch einmal verändert:
 Wenn man die Abhängigkeit der Gegenspannung $U_0$ von der Lichtfrequenz $\nu$
 vermisst taucht das Konktaktpotenzial als Fehler bei der Bestimmung der
 Austrittsarbeit (Achsenabschnitt) auf.
+
+\section{Bestimmung von $U_0$}
+
+In der im Abschnitt \ref{sec:Photozelle} beschriebenen Photozelle wird die
+Abhängigkeit des Anodenstroms $I$ von der Gegenspannung $U_\text{G}$
+untersucht. Der kleinste messbare Strom ist dabei $I_0$. Trägt man hier
+$\sqrt{I-I_0}$ gegen $U_\text{G}$ auf erhält man einen linearen Zusammenhang.
+Passt man eine Gerade $\sqrt{I-I_0} = a U_\text{G} + b$ an die Messdaten an,
+erhält an den Strom $U_0$ aus der Nullstelle der geraden.
+
+\[
+    U_0 = -\frac ba
+\]
+
+Der Fehler ergibt sich aus der Unsicherheit der Anpassung:
+
+\[
+    \Delta U_0 = \sqrt{\del{\frac{b}{a^2}\Delta a}^2+\del{\frac{1}{a}\Delta
+    b}^2}
+\]
 
 \section{Aufbau der Atomhülle}
 
