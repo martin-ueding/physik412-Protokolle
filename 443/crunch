@@ -81,6 +81,9 @@ def saettigung(T):
     pl.savefig('_build/Saettigung.pdf')
     pl.clf()
 
+    T['T_1_sat'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print(popt[1], np.sqrt(pconv[1,1]))
+
 def polarisation(T):
     data = np.genfromtxt('Messdaten/Polarisation.txt')
     tau = data[:, 0]
