@@ -19,6 +19,9 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
+def trans_relaxation(tau, M_0, T, Off):
+    return M_0*np.exp(-tau/T)+Off
+
 def rabi(T):
     data = np.genfromtxt("Messdaten/Rabi.txt")
 
@@ -101,7 +104,12 @@ def effektiv(T):
     t = tM[:, 0]
     M = tM[:, 1]
 
-    pl.plot(t, M, linestyle='none', marker='.')
+    popt, pconv = op.curve_fit(trans_relaxation, t, M, (8., 1., .5))
+    x = np.linspace(np.min(t), np.max(t))
+    y = trans_relaxation(x, *popt)
+
+    pl.plot(t, M, linestyle='none', marker='.', label='Messdaten')
+    pl.plot(x,y, label='Anpassungsfunktion')
     pl.title('Effektive transversale Relaxation')
     pl.grid(True)
     pl.xlabel(r"$t / \mathrm{s}$")
