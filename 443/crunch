@@ -118,14 +118,16 @@ def hahn(T):
     x = np.linspace(np.min(tau), np.max(tau),100)
     y = trans_relaxation(x, *popt)
 
-    print(popt)
-
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x, y)
     pl.title('Hahn-Spinecho')
     pl.grid(True)
     pl.savefig('_build/Hahn.pdf')
     pl.clf()
+
+    T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+
+    print(popt[1], np.sqrt(pconv[1,1]))
 
 def render_template(T, filename):
     # Setting up Jinja
