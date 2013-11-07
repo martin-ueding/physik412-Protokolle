@@ -31,6 +31,7 @@ def rabi(T):
     pl.xlabel(r'A_len / s')
     pl.ylabel(r'Signal / V')
     pl.savefig('_build/Rabi.pdf')
+    pl.clf()
 
     T['rabi_messdaten'] = zip(
         unitprint.siunitx(f),
@@ -38,6 +39,18 @@ def rabi(T):
         unitprint.siunitx(gelb_val, gelb_err),
         unitprint.siunitx(gruen_val, gruen_err),
     )
+
+def saettigung(T):
+    data = np.genfromtxt('Messdaten/Saettigung.txt')
+    tau = data[:, 0]
+    M_val = data[:, 1]
+    M_err = data[:, 2]
+
+    pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.title('Sättigungs-Zurückgewinnung')
+    pl.grid(True)
+    pl.savefig('_build/Saettigung.pdf')
+    pl.clf()
 
 def render_template(T, filename):
     # Setting up Jinja
@@ -57,8 +70,12 @@ def main():
     T = {}
 
     rabi(T)
+    saettigung(T)
 
-    render_template(T, sys.argv[1])
+    if len(sys.argv) > 1:
+        render_template(T, sys.argv[1])
+    else:
+        print('Keine Ausgabe, da Dateiname fehlt.')
 
 if __name__ == "__main__":
     main()
