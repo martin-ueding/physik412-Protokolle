@@ -104,9 +104,22 @@ def effektiv(T):
     t = tM[:, 0]
     M = tM[:, 1]
 
-    pl.plot(t, M)
+    popt, pconv = op.curve_fit(trans_relaxation, t, M, (8., 1., .5))
+    x = np.linspace(np.min(t), np.max(t))
+    y = trans_relaxation(x, *popt)
+
+    pl.plot(t, M, linestyle='none', marker='.', label='Messpunkte')
+    pl.plot(x,y, label='Anpassungsfunktion')
+    pl.title('Effektive transversale Relaxation')
+    pl.grid(True)
+    pl.legend(loc='best')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
+
+    T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print(popt[1], np.sqrt(pconv[1,1]))
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
