@@ -97,7 +97,13 @@ def polarisation(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
+    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val)
+    x = np.linspace(np.min(tau), np.max(tau), 500)
+    y = long_relaxation_pol(x, *popt)
+
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x,y)
+    pl.title('Sättigungs-Zurückgewinnung')
     pl.title('Polarisations-Zurückgewinnung')
     pl.grid(True)
     pl.savefig('_build/Polarisation.pdf')
