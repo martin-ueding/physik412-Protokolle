@@ -377,17 +377,30 @@ wobei $M_0$ hier ebenfalls als Fitparameter gewählt wurde.
 Wir erhalten daraus
 
 \begin{align*}
-    M_0 &= \SI{<<M_0_sat>>}{\volt}
+    M_0 &= \SI{<< M_0_sat >>}{\volt}
     \intertext{und}
-    T_1 &= \SI{<<T_1_sat>>}{\second}
+    T_1 &= \SI{<< T_1_sat >>}{\second}
 \end{align*}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M_val in Tabelle_Saettigung: ->%
+        << tau >> & << M_val >> \\
+        %< endfor ->%
+    \end{tabular}
+    \label{tab:saet}
+    \caption{Messwerte zur Bestimmung der longitudinalen Relaxationszeit}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Saettigung.pdf}
     \caption{%
     }
-    \label{fig:sat}
+    \label{fig:saet}
 \end{figure}
 
 \FloatBarrier

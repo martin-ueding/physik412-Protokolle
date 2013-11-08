@@ -90,6 +90,10 @@ def saettigung(T):
     print('M_0_sat:', popt[0], np.sqrt(pconv[0,0]))
     T['T_1_sat'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_1_sat:', popt[1], np.sqrt(pconv[1,1]))
+    T['Tabelle_Saettigung'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
 
 def polarisation(T):
     data = np.genfromtxt('Messdaten/Polarisation.txt')
