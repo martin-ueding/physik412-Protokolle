@@ -110,6 +110,11 @@ def polarisation(T):
     pl.savefig('_build/Polarisation.pdf')
     pl.clf()
 
+    T['M_0_pol'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
+    print(popt[0], np.sqrt(pconv[0,0]))
+    T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print(popt[1], np.sqrt(pconv[1,1]))
+
 def effektiv(T):
     data = np.loadtxt(
         open('Messdaten/print_004.csv', "rb"),
