@@ -103,8 +103,9 @@ def polarisation(T):
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y)
-    pl.title('Sättigungs-Zurückgewinnung')
     pl.title('Polarisations-Zurückgewinnung')
+    pl.xlabel(r"$\tau / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Polarisation.pdf')
     pl.clf()
