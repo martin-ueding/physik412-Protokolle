@@ -359,16 +359,35 @@ $\texttt{A\_test} = \SI{5.56}{\micro\second}$
 \FloatBarrier
 \subsection{Sättigungs-Zurückgewinnung}
 
+Die abgelesene Gleichgewichtsmagnetisierung beträgt
+
 \[
     M_0 \hat = \SI{7.525}{\volt}
 \]
+
+Unsere Messwerte sind in Tabelle~\ref{tab:saet} einzusehen. In
+Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
+Anpassungsfunktion ist
+
+\[
+    M = M_0 \del{ 1 - \exp{ -\frac{t}{T_1} } } + M_\text{Offset}
+\]
+
+wobei $M_0$ hier ebenfalls als Fitparameter gewählt wurde.
+Wir erhalten daraus
+
+\begin{align*}
+    M_0 &= \SI{<<M_0_sat>>}{\volt}
+    \intertext{und}
+    T_1 &= \SI{<<T_1_sat>>}{\second}
+\end{align*}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Saettigung.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:sat}
 \end{figure}
 
 \FloatBarrier
