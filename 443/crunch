@@ -193,6 +193,14 @@ def carr(T):
     t = tM[:, 0]
     M = tm[:, 1]
 
+    pl.plot(t, M, linestyle='none', marker='x', label='Messpunkte')
+    pl.title('Carr-Purcell-Sequenz')
+    pl.xlabel(r'$t / \textrm{s}$')
+    pl.ylabel(r'$M / \textrm{V}$')
+    pl.grid(True)
+    pl.savefig('_build/Carr.pdf')
+    pl.clf()
+
 
 def render_template(T, filename):
     # Setting up Jinja
