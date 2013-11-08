@@ -22,6 +22,9 @@ def rabi_fit_gruen(x, a, b):
 def long_relaxation_sat(tau, M_0, T, Off):
     return M_0*(1-np.exp(-tau/T))+Off
 
+def long_relaxation_pol(tau, M_0, T, Off):
+    return M_0*(1-2*np.exp(-tau/T))+Off
+
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
 
