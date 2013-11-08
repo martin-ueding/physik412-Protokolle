@@ -175,6 +175,24 @@ def hahn(T):
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
 def carr(T):
+    data = np.loadtxt(
+        open('Messdaten/print_005.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]
+    M = data[:, 1]
+
+    tM = np.array([
+        (t1, M1)
+        for t1, M1 in zip(t, M)
+        if M1 > 0.5
+    ])
+
+    t = tM[:, 0]
+    M = tm[:, 1]
+
 
 def render_template(T, filename):
     # Setting up Jinja
