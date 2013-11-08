@@ -87,9 +87,9 @@ def saettigung(T):
     pl.clf()
 
     T['M_0_sat'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
-    print(popt[0], np.sqrt(pconv[0,0]))
+    print('M_0_sat:', popt[0], np.sqrt(pconv[0,0]))
     T['T_1_sat'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
-    print(popt[1], np.sqrt(pconv[1,1]))
+    print('T_1_sat:', popt[1], np.sqrt(pconv[1,1]))
 
 def polarisation(T):
     data = np.genfromtxt('Messdaten/Polarisation.txt')
@@ -111,9 +111,9 @@ def polarisation(T):
     pl.clf()
 
     T['M_0_pol'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
-    print(popt[0], np.sqrt(pconv[0,0]))
+    print('M_0_pol:', popt[0], np.sqrt(pconv[0,0]))
     T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
-    print(popt[1], np.sqrt(pconv[1,1]))
+    print('T_1_pol:', popt[1], np.sqrt(pconv[1,1]))
 
 def effektiv(T):
     data = np.loadtxt(
@@ -149,7 +149,7 @@ def effektiv(T):
     pl.clf()
 
     T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
-    print(popt[1], np.sqrt(pconv[1,1]))
+    print('T_eff:', popt[1], np.sqrt(pconv[1,1]))
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
@@ -172,7 +172,7 @@ def hahn(T):
 
     T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
 
-    print(popt[1], np.sqrt(pconv[1,1]))
+    print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
 def render_template(T, filename):
     # Setting up Jinja
