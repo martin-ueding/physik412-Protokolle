@@ -19,8 +19,11 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def long_relaxation_sat(tau, M_0, T, Off):
-    return M_0*(1-np.exp(-tau/T))+Off
+def long_relaxation_sat_mit(tau, M_0, T, Off):
+    return (M_0-Off)*(1-np.exp(-tau/T))+Off
+
+def long_relaxation_sat_ohne(tau,  T, Off):
+    return (7.525-Off)*(1-np.exp(-tau/T))
 
 def long_relaxation_pol(tau, M_0, T, Off):
     return M_0*(1-2*np.exp(-tau/T))+Off
@@ -73,23 +76,27 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt, pconv = op.curve_fit(long_relaxation_sat, tau, M_val)
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat_mit, tau, M_val, (7., .1, .5))
+    #popt_ohne, pconv_ohne = op.curve_fit(long_relaxation_sat_ohne, tau, M_val)
     x = np.linspace(np.min(tau), np.max(tau), 500)
-    y = long_relaxation_sat(x, *popt)
+    y_mit = long_relaxation_sat_mit(x, *popt_mit)
+    #y_ohne = long_relaxation_sat_ohne(x, *popt_ohne)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
-    pl.plot(x,y)
+    pl.plot(x,y_mit, label=r'mit $M_0$ als Fitparameter')
+    #pl.plot(x,y_ohne, label=r'ohne $M_0$ als Fitparameter')
     pl.title('Sättigungs-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
+    pl.legend(loc='best')
     pl.grid(True)
     pl.savefig('_build/Saettigung.pdf')
     pl.clf()
 
-    T['M_0_sat'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
-    print('M_0_sat:', popt[0], np.sqrt(pconv[0,0]))
-    T['T_1_sat'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
-    print('T_1_sat:', popt[1], np.sqrt(pconv[1,1]))
+    T['M_0_sat'] = unitprint.siunitx(popt_mit[0], np.sqrt(pconv_mit[0,0]))
+    print('M_0_sat:', popt_mit[0], np.sqrt(pconv_mit[0,0]))
+    T['T_1_sat'] = unitprint.siunitx(popt_mit[1], np.sqrt(pconv_mit[1,1]))
+    print('T_1_sat:', popt_mit[1], np.sqrt(pconv_mit[1,1]))
     T['Tabelle_Saettigung'] = zip(
             unitprint.siunitx(tau),
             unitprint.siunitx(M_val, M_err)
