@@ -457,10 +457,10 @@ Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
 Anpassungsfunktion ist
 
 \[
-    M = M_0 \del{ 1 - \exp{ -\frac{t}{T_1} } } + M_\text{Offset}
+    M = \del{M_0-M_\text{Offset} \del{ 1 - \exp\del{ -\frac{\tau}{T_1} } } + M_\text{Offset}
 \]
 
-wobei $M_0$ hier ebenfalls als Fitparameter gewählt wurde.
+sodass für $\tau \to \infty$ gilt $M \to M_0$.
 Wir erhalten daraus
 
 \begin{align*}
