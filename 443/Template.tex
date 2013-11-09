@@ -2,13 +2,10 @@
 
 \input{../../header.tex}
 
-\usepackage{keystroke}
-\usepackage{placeins}
-\usepackage{pdflscape}
 \usepackage{booktabs}
-\usepackage{xfrac}
 \usepackage{minted}
-\usepackage{multicol}
+\usepackage{placeins}
+\usepackage{xfrac}
 
 \newcommand\versuchsnummer{443}
 
@@ -45,8 +42,6 @@
 
 \chapter{Theorie}
 
-\cite{teach_spin_manual}
-
 \cite[Abschnitt~15.9.3 „Magnetische~Resonanz”]{meschede-gerthsen_24}
 
 \cite{physik412-Anleitung}
@@ -79,10 +74,10 @@ Einstellenergie führt:
     E = - \inner{\vec \mu}{\vec B_0}
 \]
 
-Da die magnetische Spinquantenzahl $m_s$ nur die Werte $-\sfrac12$ und $\sfrac12$ annehmen
-darf, gibt es nur zwei Zustände, $\ket\uparrow$ und $\ket\downarrow$, die
-aufgrund der Einstellenergie unterschiedliche Energie haben. Ohne das externe
-Magnetfeld wären diese Zustände entartet.
+Da die magnetische Spinquantenzahl $m_s$ nur die Werte $-\sfrac12$ und
+$\sfrac12$ annehmen darf, gibt es nur zwei Zustände, $\ket\uparrow$ und
+$\ket\downarrow$, die aufgrund der Einstellenergie unterschiedliche Energie
+haben. Ohne das externe Magnetfeld wären diese Zustände entartet.
 
 \subsection{Besetzung, thermisches Gleichgewicht}
 
@@ -95,9 +90,9 @@ Ist das System in einem beliebigen Zustand, so werden die Spins nach einiger
 Zeit in den Grundzustand wechseln. Die Rate, mit der die Spins wechseln ist
 proportional zur Anzahl, die noch nicht gewechselt sind. Aus diesem Ansatz
 lässt sich mit geeigneten Anfangsbedingungen folgende Zeitentwicklung
-herleiten:
+herleiten: \parencite[Formel~P443.2]{physik412-Anleitung}
 \begin{equation}
-    \label{eq:}
+    \label{eq:M/exp}
     \vec M(t) = \vec M_0 \del{1 - \exp\del{- \frac{t}{T_1}}}
 \end{equation}
 
@@ -150,13 +145,22 @@ Einheitsvektor in der Kugel vorstellen.
 
 Wie schon in \ref{subsec:Präzession} beschrieben, präzessiert das magnetische
 Moment und der Spin um die $z$-Achse um ruhenden Inertialsystem des Labors
-$\Sigma$. Es ist für die weiteren Überlegungen
-hilfreich, ein rotierendes Bezugssystem $\Sigma^*$ zu betrachten, in dem das
-magnetische Moment fest ist.
+$\Sigma$. Es ist für die weiteren Überlegungen hilfreich, ein rotierendes
+Bezugssystem $\Sigma^*$ zu betrachten, in dem das magnetische Moment fest ist.
+
+In einem solchen rotierenden Bezugssystem tritt noch eine weitere,
+transversales magnetische Flussdichte auf. Diese hat genau die Stärke, dass
+sich die resultierende Flussdichte genau in Richtung des magnetischen Momentes
+befindet. Diese präzessiert dann um sich selbst, es bleibt also stehen. Das
+Bezugssystem war gerade so konstruiert. \parencite{teach_spin_manual}
+
+Mit einer weiteren Spule können wir weitere transversale Magnetfelder erzeugen.
+Durch einen kurzen Puls kann die im System $\Sigma^*$ beobachtete magnetische
+Flussdichte so verändert werden, dass die parallel zur $x^*$-Achse liegt.
 
 \subsection{$\piup/2$–Puls}
 
-Ein Puls des rotierenden Magnetfeldes der richtigen Stärke und länge wird dazu
+Ein Puls des rotierenden Magnetfeldes der richtigen Stärke und Länge wird dazu
 führen, dass das magnetische Moment für den Augenblick nur um die mitgeführte
 $x$-Achse, also die $x^*$-Achse präzessiert und somit von der $z^*$ auf die
 $y^*$-Achse kippt. Ist dies erreicht, muss der Puls beendet sein, damit das
@@ -244,7 +248,7 @@ Hier ist diese externe Anregung der RF-Puls, den wir durch die Spule schicken.
 Dabei legen wir die Frequenz des Pulses möglichst genau auf die Larmorfrequenz,
 und variieren hier die Pulslänge. Wir erwarten, dass sich bei einem sehr kurzen
 Puls die makroskopische Magnetisierung nicht verändert. Wenn der Puls länger
-wird, und in den Bereich des $\pi/2$-Puls kommt, ist ein maximales Signal zu
+wird, und in den Bereich des $\piup/2$-Puls kommt, ist ein maximales Signal zu
 erwarten. Wird der Puls länger, so dass er in der Nähe des $\piup$-Pulses
 kommt, ist wieder kein Signal zu erwarten. In der Größenordnung eines
 $3\piup/4$-Pulses sollte die Amplitude wieder maximal sein, jedoch die Phase
@@ -254,6 +258,9 @@ umgekehrt sein.
 
 \section{Messmethoden}
 
+In diesem Abschnitt möchten wir die Grundlage der Messmethoden erläutern, die
+wir nachher bei der Durchführung gebrauchen werden.
+
 \subsection{Konstante Grundspannung}
 
 Wir betreiben das Oszilloskop mit DC-Kopplung, so dass allen Messung ein
@@ -261,23 +268,103 @@ konstante Grundspannung zugrundeliegen kann, die wir bei jeder Messung noch
 abziehen müssen.
 
 \subsection{Longitudinale Relaxationszeit $T_1$}
+
 \subsubsection{Sättigungs–Zurückgewinnung}
 
-Formel P443.1
+Hier geben wir einen $\piup/2$ Puls und nach einer Verzögerungszeit $\tau$ noch
+einen weiteren $\piup/2$-Puls. Die Magnetisierung kippt durch den ersten Puls in
+die transversale Ebene. Dort fällt die Magnetisierung gemäß der longitudinalen
+Relaxation wieder in den Grundzustand zurück. Bevor dies zu stark passiert,
+kippen wir um weitere $\piup/2$ und messen dann das Signal.
 
-Formel P443.2
+Für sehr kleine Verzögerungszeiten $\tau$ erwarten wir kein Signal, da die
+Magnetisierung dann um $\piup$ gekippt immer noch parallel zur $z$-Achse ist.
+Somit verschwindet der transversale Anteil. Je länger die Verzögerungszeit ist,
+desto mehr kann die Magnetisierung wieder zur $z$-Achse zurückkehren und nach
+dem letzten Puls als transversaler Anteil gemessen werden.
+
+Da während der Verzögerungszeit eine longitudinale Relaxation gemäß
+\eqref{eq:M/exp} stattfindet, erwarten wir genau diese Zeitentwicklung bei
+dieser Methode.
+
+Durch Anpassen der Funktion an unsere Messwerte erhalten wir $T_1$.
 
 \subsubsection{Polarisations–Zurückgewinnung}
 
-Formel P443.3
+Hier wird zuerst ein $\piup$-Puls geschickt, nach der Verzögerungszeit ein
+$\piup/2$-Puls. Für sehr kurze Zeiten $\tau$ entspricht dies einem
+$3\piup/4$-Puls, so dass wir hier die volle Magnetisierung messen, jedoch mit
+entgegengesetzter Phase.
 
-Formel P443.4
+Wenn die Verzögerungszeit $\tau$ gerade so bemessen ist, dass die Magnetisierung von
+antiparallel zu transversal relaxiert ist, wird der letzte Puls diese wieder
+antiparallel stellen, wir werden kein Signal messen.
+
+Für größere Verzögerungszeiten konnte die Magnetisierung wieder in Richtung der
+$z$-Achse wandern, so dass wir dann ein Signal messen können.
+
+Aufgrund dessen erwarten wir zwar auch eine exponenzielle Annäherung an den
+Maximalwert, jedoch beginnend beim negativen Maximalwert:
+\parencite[Formel~P443.4]{physik412-Anleitung}
+\begin{equation}
+    \label{eq:M/exp/2}
+    \vec M(t) = \vec M_0 \del{1 - 2 \exp\del{- \frac{t}{T_1}}}
+\end{equation}
 
 \subsection{Transversale Relaxationszeit $T_2$}
+
+Bei der transversalen Relaxationszeit müssen die Effektive und die Homogene
+unterschieden werden. Zuerst werden wir Effektive behandeln.
+
 \subsubsection{FID-Signal}
+
+Betrachten wir ein einzelnes FID-Signal nach einem $\piup/2$-Puls, so fällt dies
+näherungsweise exponenziell ab. An diesen Abfall können wir eine
+Exponentialfunktion anpassen. Aus der Anpassung erhalten wir dann die effektive
+transversale Relaxationszeit.
+
 \subsubsection{Hahn–Spinecho–Sequenz}
+
+Um die von der Zeit unabhängigen Inhomogenitäten eliminieren zu können, benutzt
+man das Hahn'sche Spinecho. Dazu wird mit einem $\piup/2$-Puls die
+Magnetisierung in die $x$-$y$-Ebene gedreht. Die Spins präzessieren nun mit
+unterschiedlichen Larmorfrequenzen.
+
+Nach einer Verzögerungszeit $\tau$ wird ein $\piup$-Puls geschickt, der alle
+Spins in der transversalen Ebene dreht. Die Windung, die die Spins bis zu
+dieser Stelle „aufgedreht“ haben, drehen sie jetzt wieder zurück. Auf diese
+Weise werden sie sich nach einer weiteren Periode der Länge $\tau$ alle in
+einem Winkel treffen, da sie mit der gleichen, lokal jedoch abweichenden,
+Larmorfrequenz präzessieren.
+
+Dies funktioniert jedoch nur mit der Verschiebung der Larmorfrequenz, die nicht
+von der Zeit abhängt, die also vom externen Magnetfeld kommt. Die
+Spin-Spin-Wechselwirkung kann dadurch nicht rückgängig gemacht werden. Hier
+sind wir allerdings auch nur an dieser interessiert, so dass wir den gesuchten
+Effekt isoliert haben.
+
+Aus der Stärke des Echos kann dann die homogene transversale Relaxationszeit
+$T_2$ bestimmt werden, in dem an den exponenziellen Abfall wieder eine
+Exponentialfunktion angepasst wird.
+
 \subsubsection{Carr–Purcell–Sequenz}
+
+Die Carr-Purcell-Sequenz wiederholt die Verzögerungszeit und den $\piup$-Puls
+$N$ Male, so dass mehrere Echos zu sehen sind.
+
+Auf diese Weise wird das System in relativ kurzen Abständen wieder in einen
+recht definierten Zustand gebracht – Magnetisierung in eine Richtung – und kann
+so deutlich länger beobachtet werden. Die Relaxationszeit erhalten wir hier
+durch anpassen einer Exponentialfunktion an die Maxima.
+
 \subsubsection{Meiboom–Gill–Sequenz}
+
+Analog zur Carr-Purcell-Sequenz wird hier der zweite Puls wiederholt, jedoch
+mit alternierendem Vorzeichen. Auf diese Weise addieren sich Fehler nicht mehr
+auf: Sollte der $\piup$-Puls nicht genau die richtige Länge haben, wird der
+Fehler, der bei der einen Wiederholung gemacht wird, in der nächsten
+korrigiert. Das Ausgangssignal hat zwar auf jedem ungraden Echo einen Fehler,
+jedoch sind die Geraden ohne diesen Fehler und höher.
 
 \chapter{Aufbau und Kalibrierung}
 \section{Magnet und PS2 Controller}
@@ -306,7 +393,7 @@ $Z^2 = 0.0$.
 
 003
 
-\section{$\frac\pi2$- und $\pi$-Puls Justage}
+\section{$\frac\piup2$- und $\piup$-Puls Justage}
 
 Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 = \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
