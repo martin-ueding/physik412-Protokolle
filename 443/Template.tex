@@ -457,10 +457,10 @@ Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
 Anpassungsfunktion ist
 
 \[
-    M = \del{M_0-M_\text{Offset}} \del{ 1 - \exp\del{ -\frac{\tau}{T_1} } } + M_\text{Offset}
+    M = M_0 - \del{M_0-M_\text{Offset}}\exp\del{ -\frac{\tau}{T_1} }
 \]
 
-sodass für $\tau \to \infty$ gilt $M \to M_0$.
+da wir nicht von einer Anfangsmagnetisierung von \num{0} ausgehen.
 Wir erhalten daraus
 
 \begin{align*}
