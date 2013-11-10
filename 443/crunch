@@ -20,7 +20,8 @@ def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
 def long_relaxation_sat_mit(tau, M_0, T, Off):
-    return (M_0-Off)*(1-np.exp(-tau/T))+Off
+    #return (M_0-Off)*(1-np.exp(-tau/T))+Off
+    return M_0-(M_0-Off)*np.exp(-tau/T)
 
 def long_relaxation_sat_ohne(tau,  T, Off):
     return (7.525-Off)*(1-np.exp(-tau/T))
@@ -83,7 +84,7 @@ def saettigung(T):
     #y_ohne = long_relaxation_sat_ohne(x, *popt_ohne)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
-    pl.plot(x,y_mit, label=r'mit $M_0$ als Fitparameter')
+    pl.plot(x,y_mit, label=r'Anpassungsfunktion')
     #pl.plot(x,y_ohne, label=r'ohne $M_0$ als Fitparameter')
     pl.title('Sättigungs-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
