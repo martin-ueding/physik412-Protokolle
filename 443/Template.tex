@@ -457,10 +457,10 @@ Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
 Anpassungsfunktion ist
 
 \[
-    M = M_0 - \del{M_0-M_\text{Offset}}\exp\del{ -\frac{\tau}{T_1} }
+    M(\tau) = M_0\del{1-\exp\del{ -\frac{\tau}{T_1} }}
 \]
 
-da wir nicht von einer Anfangsmagnetisierung von \num{0} ausgehen.
+da wir von einer Anfangsmagnetisierung von \num{0} ausgehen.
 Wir erhalten daraus
 
 \begin{align*}
@@ -497,7 +497,7 @@ Unsere Messwerte sind in Tabelle~\ref{tab:pol} einzusehen, eine graphische
 Darstellung in Abbildung~\ref{fig:pol}. Die Anpassungsfunktion ist hier
 
 \[
-    M_0-2\del{M_0-M_\text{Offset}}\exp\del{-\frac{\tau}{T_1}}
+    M(\tau) = M_0\del{ 1 - 2\exp\del{-\frac{\tau}{T_1}}}
 \]
 
 Für die longitudinale Relaxationszeit erhalten wir so
@@ -506,7 +506,7 @@ Für die longitudinale Relaxationszeit erhalten wir so
     T_1 = \SI{<< T_1_pol >>}{\second}
 \]
 
-Die Anfangsmagnetisierung ist
+Die Gleichgewichtsmagnetisierung ist
 
 \[
     M_0 = \SI{<< M_0_pol >>}{\volt}
