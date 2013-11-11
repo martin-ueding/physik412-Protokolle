@@ -585,12 +585,36 @@ gezeigt. Aus der Anpassungsfunktion
 \FloatBarrier
 \subsubsection{Hahn–Spinecho–Sequenz}
 
+Unsere Messergebnisse sind in Tabelle~\ref{tab:hahn} und
+Abbildung~\ref{fig:hahn} zu sehen. Aus der angepassten Funktion
+
+\begin{align*}
+    M(\tau) &= M_0\exp\del{-\frac{\tau}{T_2}}
+    \intertext{erhalten wir für die homogene transversale Relaxationszeit}
+    T_2 &= \SI{<< T_2_hahn >>}{\second}
+\end{align*}
+
+\begin{table}
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M in Tabelle_Hahn: ->%
+        << tau >> & << M >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Messwerte zur Hahn-Spinecho-Sequenz
+    }
+    \label{tab:hahn}
+\end{table}
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Hahn.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:hahn}
 \end{figure}
 
 \FloatBarrier

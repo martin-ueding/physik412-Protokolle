@@ -148,8 +148,8 @@ def effektiv(T):
     x = np.linspace(np.min(t), np.max(t))
     y = trans_relaxation(x, *popt)
 
-    pl.plot(t, M, linestyle='none', marker='.', label='Messpunkte')
-    pl.plot(x,y, label='Anpassungsfunktion')
+    pl.plot(t, M, linestyle='none', marker='x')
+    pl.plot(x,y)
     pl.title('Effektive transversale Relaxation')
     pl.grid(True)
     pl.legend(loc='best')
