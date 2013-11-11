@@ -19,14 +19,11 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def long_relaxation_sat_mit(tau, M_0, T, Off):
-    return M_0-(M_0-Off)*np.exp(-tau/T)
+def long_relaxation_sat_mit(tau, M_0, T):
+    return M_0*(1-np.exp(-tau/T))
 
-def long_relaxation_sat_ohne(tau,  T, Off):
-    return (7.525-Off)*(1-np.exp(-tau/T))
-
-def long_relaxation_pol(tau, M_0, T, Off):
-    return M_0-2*(M_0-Off)*np.exp(-tau/T)
+def long_relaxation_pol(tau, M_0, T):
+    return M_0*(1-2*np.exp(-tau/T))
 
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
@@ -76,15 +73,12 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat_mit, tau, M_val, (7., .1, .5))
-    #popt_ohne, pconv_ohne = op.curve_fit(long_relaxation_sat_ohne, tau, M_val)
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat_mit, tau, M_val, (7., .1))
     x = np.linspace(np.min(tau), np.max(tau), 500)
     y_mit = long_relaxation_sat_mit(x, *popt_mit)
-    #y_ohne = long_relaxation_sat_ohne(x, *popt_ohne)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y_mit, label=r'Anpassungsfunktion')
-    #pl.plot(x,y_ohne, label=r'ohne $M_0$ als Fitparameter')
     pl.title('Sättigungs-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
@@ -108,7 +102,7 @@ def polarisation(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1, -10.))
+    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1))
     x = np.linspace(np.min(tau), np.max(tau), 500)
     y = long_relaxation_pol(x, *popt)
 
