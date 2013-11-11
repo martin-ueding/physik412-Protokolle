@@ -493,12 +493,38 @@ Wir erhalten daraus
 \FloatBarrier
 \subsection{Polarisations-Zurückgewinnung}
 
+Unsere Messwerte sind in Tabelle~\ref{tab:pol} einzusehen, eine graphische
+Darstellung in Abbildung~\ref{fig:pol}. Die Anpassungsfunktion ist hier
+
+\[
+    M_0-2\del{M_0-M_\text{Offset}}\exp\del{-\frac{\tau}{T_1}}
+\]
+
+Für die longitudinale Relaxationszeit erhalten wir so
+
+\[
+    T_1 = \SI{<< T_1_pol >>}{\second}
+\]
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M_val in Tabelle_Polarisation: ->%
+        << tau >> & << M_val >> \\
+        %< endfor ->%
+    \end{tabular}
+    \label{tab:pol}
+    \caption{Messwerte zur Bestimmung der longitudinalen Relaxationszeit}
+\end{table}
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Polarisation.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:pol}
 \end{figure}
 
 \FloatBarrier

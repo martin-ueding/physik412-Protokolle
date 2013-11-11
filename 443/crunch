@@ -20,14 +20,13 @@ def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
 def long_relaxation_sat_mit(tau, M_0, T, Off):
-    #return (M_0-Off)*(1-np.exp(-tau/T))+Off
     return M_0-(M_0-Off)*np.exp(-tau/T)
 
 def long_relaxation_sat_ohne(tau,  T, Off):
     return (7.525-Off)*(1-np.exp(-tau/T))
 
 def long_relaxation_pol(tau, M_0, T, Off):
-    return M_0*(1-2*np.exp(-tau/T))+Off
+    return M_0-2*(M_0-Off)*np.exp(-tau/T)
 
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
@@ -126,6 +125,11 @@ def polarisation(T):
     print('M_0_pol:', popt[0], np.sqrt(pconv[0,0]))
     T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_1_pol:', popt[1], np.sqrt(pconv[1,1]))
+
+    T['Tabelle_Polarisation'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
 
 def effektiv(T):
     data = np.loadtxt(
