@@ -212,6 +212,11 @@ def hahn(T):
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
+    T['Tabelle_Hahn'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
+
 def render_template(T, filename):
     # Setting up Jinja
     env = jinja2.Environment(
