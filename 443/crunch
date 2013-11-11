@@ -161,6 +161,34 @@ def effektiv(T):
     T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_eff:', popt[1], np.sqrt(pconv[1,1]))
 
+    t1 = t[:len(t)/6]*1000
+    t2 = t[len(t)/6:2*len(t)/6]*1000
+    t3 = t[2*len(t)/6:3*len(t)/6]*1000
+    t4 = t[3*len(t)/6:4*len(t)/6]*1000
+    t5 = t[4*len(t)/6:5*len(t)/6]*1000
+    t6 = t[5*len(t)/6:]*1000
+    M1 = M[:len(M)/6]
+    M2 = M[len(M)/6:2*len(M)/6]
+    M3 = M[2*len(M)/6:3*len(M)/6]
+    M4 = M[3*len(M)/6:4*len(M)/6]
+    M5 = M[4*len(M)/6:5*len(t)/6]
+    M6 = M[5*len(M)/6:]
+
+    T['Tabelle_Effektiv'] = zip(
+            unitprint.siunitx(t1),
+            unitprint.siunitx(M1),
+            unitprint.siunitx(t2),
+            unitprint.siunitx(M2),
+            unitprint.siunitx(t3),
+            unitprint.siunitx(M3),
+            unitprint.siunitx(t4),
+            unitprint.siunitx(M4),
+            unitprint.siunitx(t5),
+            unitprint.siunitx(M5),
+            unitprint.siunitx(t6),
+            unitprint.siunitx(M6)
+            )
+
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
     tau = data[:, 0]
