@@ -152,7 +152,6 @@ def effektiv(T):
     pl.plot(x,y)
     pl.title('Effektive transversale Relaxation')
     pl.grid(True)
-    pl.legend(loc='best')
     pl.xlabel(r"$t / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.savefig('_build/effektiv.pdf')
