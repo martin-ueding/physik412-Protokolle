@@ -174,9 +174,9 @@ def hahn(T):
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
-def carr(T):
+def pickup(T):
     data = np.loadtxt(
-        open('Messdaten/print_005.csv', "rb"),
+        open('Messdaten/print_001.csv', "rb"),
         delimiter=",",
         skiprows=2
     )
@@ -184,21 +184,12 @@ def carr(T):
     t = data[:, 0]
     M = data[:, 1]
 
-    tM = np.array([
-        (t1, M1)
-        for t1, M1 in zip(t, M)
-        if M1 > 0.5
-    ])
-
-    t = tM[:, 0]
-    M = tm[:, 1]
-
-    pl.plot(t, M, linestyle='none', marker='x', label='Messpunkte')
-    pl.title('Carr-Purcell-Sequenz')
-    pl.xlabel(r'$t / \textrm{s}$')
-    pl.ylabel(r'$M / \textrm{V}$')
+    pl.plot(t, M, label='Messpunkte')
+    pl.title('Optimierte Pickup-Probe')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Carr.pdf')
+    pl.savefig('_build/Pickup.pdf')
     pl.clf()
 
 
@@ -224,7 +215,7 @@ def main():
     polarisation(T)
     effektiv(T)
     hahn(T)
-    carr(T)
+    pickup(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
