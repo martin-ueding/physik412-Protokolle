@@ -53,7 +53,7 @@ def punkte_aus_bild(dateiname):
 
     return final_x, final_y, final_y_err
 
-def peaks_aus_bild(pngdatei):
+def peaks_aus_bild(pngdatei, plot_ausgabe):
     x, y, y_err = punkte_aus_bild(pngdatei)
 
     peak_indizes = scipy.signal.find_peaks_cwt(y, np.array([10, ]))
@@ -74,8 +74,8 @@ def peaks_aus_bild(pngdatei):
     skala = tau_erwartet / tau_val
 
     popt, pconv = op.curve_fit(
-        exponentieller_abfall, x[peak_indizes], y[peak_indizes],
-        sigma=1/y_err[peak_indizes], p0=[700, 200],
+        exponentieller_abfall, x[peak_indizes[1:]], y[peak_indizes[1:]],
+        sigma=1/y_err[peak_indizes[1:]], p0=[700, 200],
     )
 
     T_val = popt[1]
@@ -86,7 +86,7 @@ def peaks_aus_bild(pngdatei):
     plot_x = np.linspace(x[0], x[-1], 1000)
     plot_y = exponentieller_abfall(plot_x, *popt)
 
-    pl.errorbar(x*skala*10**6, y, yerr=y_err, linestyle='none', marker='.',
+    pl.errorbar(x*skala*10**6, y, yerr=y_err, linestyle='none', marker='+',
                 label='Messdaten')
     pl.plot(x[peak_indizes]*skala*10**6, y[peak_indizes], color='red',
             marker='o', linestyle='none', label='lokale Maxima')
@@ -95,12 +95,22 @@ def peaks_aus_bild(pngdatei):
     pl.grid(True)
     pl.xlabel(r'$t / \mathrm{\mu s}$')
     pl.ylabel(r'Signal / V')
-    pl.show()
+    pl.savefig(plot_ausgabe)
+    pl.clf()
 
-    return T_val, T_err
+    return T_val, T_err, skala
 
 def exponentieller_abfall(x, scale, T):
     return scale * np.exp(- x / T)
+
+def sequenzen(T):
+    CP_T_val, CP_T_err, CP_skala = peaks_aus_bild(
+        'Messdaten/qfile_003.png', '_build/Carr-Purcell.pdf'
+    )
+
+    MG_T_val, MG_T_err, MG_skala = peaks_aus_bild(
+        'Messdaten/qfile_004.png', '_build/Meiboom-Gill.pdf'
+    )
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
@@ -214,14 +224,12 @@ def render_template(T, filename):
 def main():
     T = {}
 
-    peaks_aus_bild('Messdaten/qfile_004.png')
-    sys.exit(0)
-
     rabi(T)
     saettigung(T)
     polarisation(T)
     effektiv(T)
     hahn(T)
+    sequenzen(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
