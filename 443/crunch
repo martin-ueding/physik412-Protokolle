@@ -78,8 +78,8 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
         sigma=1/y_err[peak_indizes[1:]], p0=[700, 200],
     )
 
-    T_val = popt[1]
-    T_err = np.sqrt(pconv.diagonal()[1])
+    T_val = popt[1] * skala
+    T_err = np.sqrt(pconv.diagonal()[1]) * skala
 
     print("T", T_val, T_err)
 
@@ -94,7 +94,7 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
     pl.legend(loc='best')
     pl.grid(True)
     pl.xlabel(r'$t / \mathrm{\mu s}$')
-    pl.ylabel(r'Signal / V')
+    pl.ylabel(r'Signal')
     pl.savefig(plot_ausgabe)
     pl.clf()
 

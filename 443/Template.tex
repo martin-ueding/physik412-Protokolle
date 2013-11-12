@@ -509,10 +509,20 @@ umwandeln. Dazu haben wir alle Punkte zu einem gegebenen $x$-Wert genommen und
 die $y$-Werte gemittelt, die Standardabweichung als Fehler genommen.
 
 Da hier nur die lokalen Maxima interessant sind, haben wir mit der Python
-Funktion \texttt{scipy.signal.find\_peaks\_cwt} diese Maxima finden lassen.
-Die Funktion führt zuerst eine Faltung mit einer Ricker
-Welle\footnote{Siehe \cite{wikipedia/Mexican_hat_wavelet}.}.
+Funktion \texttt{scipy.\-signal.\-find\_peaks\_cwt} diese Maxima finden
+lassen. Die Funktion führt zuerst eine Faltung mit einer Ricker
+Welle\footnote{Siehe \cite{wikipedia/Mexican_hat_wavelet}.} mit einer
+vorgegebenen Breite, die wir aus den Originaldaten grob abgeschätzt haben,
+aus. Dann wird in den geglätteten Daten nach Maxima gesucht.
 \parencite{scipy.signal.find_peaks_cwt}
+
+Da wir nur das Bild haben, wissen wir nicht, wie die Achsen skaliert sind.
+
+An die Maxima haben wir wie schon im Theorieteil erwähnt, eine
+Exponentialfunktion angepasst und eine Relaxationszeit von
+\[
+    T_2 = \SI{<< CP_T >>}{\second}
+\]
 
 \begin{figure}[htbp]
     \centering
