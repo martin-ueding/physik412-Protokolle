@@ -63,7 +63,7 @@ def peaks_aus_bild(dateiname):
 
     pl.plot(x[peak_indizes], y[peak_indizes], color='red', marker='o')
     pl.grid(True)
-    pl.show()
+    pl.clf()
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))

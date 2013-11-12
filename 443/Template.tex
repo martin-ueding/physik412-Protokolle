@@ -367,10 +367,40 @@ korrigiert. Das Ausgangssignal hat zwar auf jedem ungraden Echo einen Fehler,
 jedoch sind die Geraden ohne diesen Fehler und höher.
 
 \chapter{Aufbau und Kalibrierung}
-\section{Magnet und PS2 Controller}
-\section{Mainframe und Oszilloskop}
+\section{Anschließen der Geräte}
+
+Im Aufbau des Experimentes verwenden wir vier Teile:
+
+\begin{itemize}
+    \item
+        Magnet mit RF-Messkopf
+    \item
+        PS2 Controller mit Regelung der Magnettemperatur und Steuerung der
+        Magnetfeldgradienten
+    \item
+        Mainframe mit Receiver, Synthesizer, Pulse Programmer, Lock-In /
+        Field-Sweep und der Stromversorgung
+    \item
+        digitales Oszilloskop
+\end{itemize}
+
+Zunächst werden \emph{Pulsed RF-Out} am Synthesizer mit \emph{Pulsed RF-In} am
+Receiver und der Magnet mit \emph{Sample} am Receiver verbunden. Nun werden an
+Pulse Programmer und Synthesizer jeweils \emph{Q} und \emph{I} mit einander
+verbunden, sowie \emph{Blanking Out} am Pulse Programmer mit \emph{Blanking In}
+am Receiver. Als nächstes verbinden wir das Oszilloskop: \emph{Sync Out} des
+Pulse Programmers wird an \emph{Input Trigger}, \emph{Env. Out}, \emph{Q} und
+\emph{I} des Receivers werden an den Kanälen 1, 2 und 3 des Oszilloskops
+angeschlossen.
+
+Im Anschluss werden die Temperaturregler des PS2 Controllers auf \emph{open},
+\emph{TC}, \emph{Gain} und \emph{Blanking} am Receiver auf \num{0.01}, 75\%
+und \emph{On}, \emph{Ref Out} und \emph{CW Out} des Synthesizers auf \emph{On}
+und \emph{Off} und \emph{MG}, \emph{Sync}, \emph{Pulse A} und \emph{Pulse B} am
+Pulse Programmer auf \emph{Off}, \emph{A}, \emph{On} und \emph{Off} gestellt.
 
 \section{Temperatureinstellung}
+
 \section{Tuning des RF-Resonanzkreises}
 
 Wir stellen \texttt{A\_len} auf \SI{2.5}{\micro\second} und \texttt P auf
