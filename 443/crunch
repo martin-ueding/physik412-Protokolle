@@ -11,24 +11,59 @@ import numpy as np
 import scipy.interpolate
 import scipy.optimize as op
 import sys
+import scipy.signal
 
 import unitprint
 
 def punkte_aus_bild(dateiname):
-    bild = pl.imread(datename)
+    bild = pl.imread(dateiname)
     schwarze_punkte = [
         (x, y)
-        for y, row in zip(itertools.count(), x)
+        for y, row in zip(itertools.count(), bild)
         for x, val in zip(itertools.count(), row)
         if val < 0.5
     ]
 
     a = np.array(schwarze_punkte)
-    x = a[:, 0]
+    x = a[:, 0] - a[:, 0].min()
     # In einem Bild sind die Achsen, anders, daher müssen diese noch umgekehrt
     # werden.
     y = a[:, 1].max() - a[:, 1]
-    return x, y
+
+    points = {}
+
+    for x_, y_ in zip(x, y):
+        if not x_ in points:
+            points[x_] = []
+        points[x_].append(y_)
+
+    final_x = []
+    final_y = []
+    final_y_err = []
+
+    for x_, y_list in sorted(points.items()):
+        final_x.append(x_)
+        final_y.append(np.mean(np.array(y_list)))
+        final_y_err.append(np.std(np.array(y_list)))
+
+    final_x = np.array(final_x)
+    final_y = np.array(final_y)
+    final_y_err = np.array(final_y_err)
+
+    pl.errorbar(final_x, final_y, yerr=final_y_err, linestyle='none', marker='.')
+
+    return final_x, final_y
+
+def peaks_aus_bild(dateiname):
+    x, y = punkte_aus_bild(dateiname)
+
+    peak_indizes = scipy.signal.find_peaks_cwt(y, np.array([10, ]))
+    peak_indizes = np.array(peak_indizes)
+    peak_indizes[0] = np.argmax(y)
+
+    pl.plot(x[peak_indizes], y[peak_indizes], color='red', marker='o')
+    pl.grid(True)
+    pl.show()
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
@@ -141,6 +176,9 @@ def render_template(T, filename):
 
 def main():
     T = {}
+
+    peaks_aus_bild('Messdaten/qfile_004.png')
+    sys.exit(0)
 
     rabi(T)
     saettigung(T)
