@@ -19,7 +19,7 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def long_relaxation_sat_mit(tau, M_0, T):
+def long_relaxation_sat(tau, M_0, T):
     return M_0*(1-np.exp(-tau/T))
 
 def long_relaxation_pol(tau, M_0, T):
@@ -73,9 +73,9 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat_mit, tau, M_val, (7., .1))
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat, tau, M_val, (7., .1))
     x = np.linspace(np.min(tau), np.max(tau), 500)
-    y_mit = long_relaxation_sat_mit(x, *popt_mit)
+    y_mit = long_relaxation_sat(x, *popt_mit)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y_mit, label=r'Anpassungsfunktion')
