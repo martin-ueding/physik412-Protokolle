@@ -19,15 +19,11 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def long_relaxation_sat_mit(tau, M_0, T, Off):
-    #return (M_0-Off)*(1-np.exp(-tau/T))+Off
-    return M_0-(M_0-Off)*np.exp(-tau/T)
+def long_relaxation_sat(tau, M_0, T):
+    return M_0*(1-np.exp(-tau/T))
 
-def long_relaxation_sat_ohne(tau,  T, Off):
-    return (7.525-Off)*(1-np.exp(-tau/T))
-
-def long_relaxation_pol(tau, M_0, T, Off):
-    return M_0*(1-2*np.exp(-tau/T))+Off
+def long_relaxation_pol(tau, M_0, T):
+    return M_0*(1-2*np.exp(-tau/T))
 
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
@@ -77,15 +73,12 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat_mit, tau, M_val, (7., .1, .5))
-    #popt_ohne, pconv_ohne = op.curve_fit(long_relaxation_sat_ohne, tau, M_val)
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat, tau, M_val, (7., .1))
     x = np.linspace(np.min(tau), np.max(tau), 500)
-    y_mit = long_relaxation_sat_mit(x, *popt_mit)
-    #y_ohne = long_relaxation_sat_ohne(x, *popt_ohne)
+    y_mit = long_relaxation_sat(x, *popt_mit)
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y_mit, label=r'Anpassungsfunktion')
-    #pl.plot(x,y_ohne, label=r'ohne $M_0$ als Fitparameter')
     pl.title('Sättigungs-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
@@ -109,7 +102,7 @@ def polarisation(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1, -10.))
+    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1))
     x = np.linspace(np.min(tau), np.max(tau), 500)
     y = long_relaxation_pol(x, *popt)
 
@@ -126,6 +119,11 @@ def polarisation(T):
     print('M_0_pol:', popt[0], np.sqrt(pconv[0,0]))
     T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_1_pol:', popt[1], np.sqrt(pconv[1,1]))
+
+    T['Tabelle_Polarisation'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
 
 def effektiv(T):
     data = np.loadtxt(
@@ -150,8 +148,8 @@ def effektiv(T):
     x = np.linspace(np.min(t), np.max(t))
     y = trans_relaxation(x, *popt)
 
-    pl.plot(t, M, linestyle='none', marker='.', label='Messpunkte')
-    pl.plot(x,y, label='Anpassungsfunktion')
+    pl.plot(t, M, linestyle='none', marker='x')
+    pl.plot(x,y)
     pl.title('Effektive transversale Relaxation')
     pl.grid(True)
     pl.legend(loc='best')
@@ -162,6 +160,34 @@ def effektiv(T):
 
     T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_eff:', popt[1], np.sqrt(pconv[1,1]))
+
+    t1 = t[:len(t)/6]*1000
+    t2 = t[len(t)/6:2*len(t)/6]*1000
+    t3 = t[2*len(t)/6:3*len(t)/6]*1000
+    t4 = t[3*len(t)/6:4*len(t)/6]*1000
+    t5 = t[4*len(t)/6:5*len(t)/6]*1000
+    t6 = t[5*len(t)/6:]*1000
+    M1 = M[:len(M)/6]
+    M2 = M[len(M)/6:2*len(M)/6]
+    M3 = M[2*len(M)/6:3*len(M)/6]
+    M4 = M[3*len(M)/6:4*len(M)/6]
+    M5 = M[4*len(M)/6:5*len(t)/6]
+    M6 = M[5*len(M)/6:]
+
+    T['Tabelle_Effektiv'] = zip(
+            unitprint.siunitx(t1),
+            unitprint.siunitx(M1),
+            unitprint.siunitx(t2),
+            unitprint.siunitx(M2),
+            unitprint.siunitx(t3),
+            unitprint.siunitx(M3),
+            unitprint.siunitx(t4),
+            unitprint.siunitx(M4),
+            unitprint.siunitx(t5),
+            unitprint.siunitx(M5),
+            unitprint.siunitx(t6),
+            unitprint.siunitx(M6)
+            )
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
@@ -186,6 +212,11 @@ def hahn(T):
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
+    T['Tabelle_Hahn'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
+
 def pickup(T):
     data = np.loadtxt(
         open('Messdaten/print_001.csv', "rb"),
@@ -203,7 +234,6 @@ def pickup(T):
     pl.grid(True)
     pl.savefig('_build/Pickup.pdf')
     pl.clf()
-
 
 def render_template(T, filename):
     # Setting up Jinja
