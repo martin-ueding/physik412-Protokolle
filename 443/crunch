@@ -50,20 +50,57 @@ def punkte_aus_bild(dateiname):
     final_y = np.array(final_y)
     final_y_err = np.array(final_y_err)
 
-    pl.errorbar(final_x, final_y, yerr=final_y_err, linestyle='none', marker='.')
 
-    return final_x, final_y
+    return final_x, final_y, final_y_err
 
-def peaks_aus_bild(dateiname):
-    x, y = punkte_aus_bild(dateiname)
+def peaks_aus_bild(pngdatei):
+    x, y, y_err = punkte_aus_bild(pngdatei)
 
     peak_indizes = scipy.signal.find_peaks_cwt(y, np.array([10, ]))
     peak_indizes = np.array(peak_indizes)
     peak_indizes[0] = np.argmax(y)
 
-    pl.plot(x[peak_indizes], y[peak_indizes], color='red', marker='o')
+    print(x[peak_indizes])
+
+    diffs = np.diff(x[peak_indizes[:5]])
+    tau_val = np.mean(diffs)
+    tau_err = np.std(diffs)
+
+    print('In diesem Diagram ist der Abstand der Peaks:')
+    print('τ_Bild', tau_val, tau_err)
+
+    tau_erwartet = 5e-6
+
+    skala = tau_erwartet / tau_val
+
+    popt, pconv = op.curve_fit(
+        exponentieller_abfall, x[peak_indizes], y[peak_indizes],
+        sigma=1/y_err[peak_indizes], p0=[700, 200],
+    )
+
+    T_val = popt[1]
+    T_err = np.sqrt(pconv.diagonal()[1])
+
+    print("T", T_val, T_err)
+
+    plot_x = np.linspace(x[0], x[-1], 1000)
+    plot_y = exponentieller_abfall(plot_x, *popt)
+
+    pl.errorbar(x*skala*10**6, y, yerr=y_err, linestyle='none', marker='.',
+                label='Messdaten')
+    pl.plot(x[peak_indizes]*skala*10**6, y[peak_indizes], color='red',
+            marker='o', linestyle='none', label='lokale Maxima')
+    pl.plot(plot_x*skala*10**6, plot_y, label='Anpassung')
+    pl.legend(loc='best')
     pl.grid(True)
+    pl.xlabel(r'$t / \mathrm{\mu s}$')
+    pl.ylabel(r'Signal / V')
     pl.show()
+
+    return T_val, T_err
+
+def exponentieller_abfall(x, scale, T):
+    return scale * np.exp(- x / T)
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
