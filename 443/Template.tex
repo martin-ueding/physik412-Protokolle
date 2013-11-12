@@ -651,7 +651,7 @@ Sekunden pro Pixel.
 An die Maxima haben wir wie schon im Theorieteil erwähnt, eine
 Exponentialfunktion angepasst und eine Relaxationszeit von
 \[
-    {T_2}_{CP} = \SI{<< CP_T >>}{\second}
+    T_{2,\text{CP}} = \SI{<< CP_T >>}{\second}
 \]
 
 \begin{figure}[htbp]
@@ -675,7 +675,7 @@ Hier gehen wir genauso vor, wie bei der Carr-Purcell-Sequenz. Wir erhalten
 eine Skala von \num{<< MG_skala >>} Sekunden pro Pixel, ein Untergrundsignal
 von \num{<< MG_offset >>} und eine Relaxationszeit von:
 \[
-    {T_2}_\text{MG} = \SI{<< MG_T >>}{\second}
+    T_{2,\text{MG}} = \SI{<< MG_T >>}{\second}
 \]
 
 \begin{figure}[htbp]
@@ -698,6 +698,19 @@ von \num{<< MG_offset >>} und eine Relaxationszeit von:
 
 \FloatBarrier
 \chapter{Zusammenfassung}
+
+Hier unsere Messgrößen zusammengestellt:
+
+\begin{tabular}{lS}
+    {Größe} & {Zeit in Sekunden} \\
+    \midrule
+    $T_{1,\text{pol}}$ & << T_1_pol >> \\
+    $T_{1,\text{sat}}$ & << T_1_sat >> \\
+    $T_2^*$ & << T_eff >> \\
+    $T_{2,\text{Hahn}}$ & << T_2_hahn >> \\
+    $T_{2,\text{CP}}$ & << CP_T >> \\
+    $T_{2,\text{MG}}$ & << MG_T >>
+\end{tabular}
 
 \fehlt
 
