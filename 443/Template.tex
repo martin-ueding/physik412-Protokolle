@@ -503,8 +503,36 @@ $\texttt{B\_len} = \SI{5.32}{\micro\second}$
 $\texttt{P} = \SI{580}{\milli\second}$
 $\texttt{N} = \num{20}$
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Carr-Purcell.pdf}
+    \caption{%
+        Messdaten und Anpassungen mit der Carr-Purcell-Sequenz. Die Messwerte
+        sind aus dem Bild des Oszilloskopen extrahiert und durch
+        Mittelwertbildung auf einen Wert pro Zeit reduziert worden. Die lokalen
+        Maxima sind mit \texttt{scipy.signal.find\_peaks\_cwt} gefunden worden.
+        An alle bis auf das erste Maximum wurde eine Exponentialfunktion
+        angepasst.
+    }
+    \label{fig:CP}
+\end{figure}
+
 \FloatBarrier
 \subsubsection{Meiboom–Gill–Sequenz}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Meiboom-Gill.pdf}
+    \caption{%
+        Messdaten und Anpassungen mit der Meiboom-Gill-Sequenz. Die Messwerte
+        sind aus dem Bild des Oszilloskopen extrahiert und durch
+        Mittelwertbildung auf einen Wert pro Zeit reduziert worden. Die lokalen
+        Maxima sind mit \texttt{scipy.signal.find\_peaks\_cwt} gefunden worden.
+        An alle bis auf das erste Maximum wurde eine Exponentialfunktion
+        angepasst.
+    }
+    \label{fig:MG}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %

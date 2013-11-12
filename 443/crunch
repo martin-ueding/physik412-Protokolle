@@ -104,13 +104,19 @@ def exponentieller_abfall(x, scale, T):
     return scale * np.exp(- x / T)
 
 def sequenzen(T):
-    CP_T_val, CP_T_err, CP_skala = peaks_aus_bild(
+    T_val, T_err, skala = peaks_aus_bild(
         'Messdaten/qfile_003.png', '_build/Carr-Purcell.pdf'
     )
 
-    MG_T_val, MG_T_err, MG_skala = peaks_aus_bild(
+    T['CP_T'] = unitprint.siunitx(T_val, T_err)
+    T['CP_skala'] = unitprint.siunitx(skala)
+
+    T_val, T_err, skala = peaks_aus_bild(
         'Messdaten/qfile_004.png', '_build/Meiboom-Gill.pdf'
     )
+
+    T['MG_T'] = unitprint.siunitx(T_val, T_err)
+    T['MG_skala'] = unitprint.siunitx(skala)
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
