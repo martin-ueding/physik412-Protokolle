@@ -56,6 +56,10 @@ def punkte_aus_bild(dateiname):
 def peaks_aus_bild(pngdatei, plot_ausgabe):
     x, y, y_err = punkte_aus_bild(pngdatei)
 
+    offset = np.mean(y[0:5])
+
+    y -= offset
+
     peak_indizes = scipy.signal.find_peaks_cwt(y, np.array([10, ]))
     peak_indizes = np.array(peak_indizes)
     peak_indizes[0] = np.argmax(y)
@@ -98,25 +102,27 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
     pl.savefig(plot_ausgabe)
     pl.clf()
 
-    return T_val, T_err, skala
+    return T_val, T_err, skala, offset
 
 def exponentieller_abfall(x, scale, T):
     return scale * np.exp(- x / T)
 
 def sequenzen(T):
-    T_val, T_err, skala = peaks_aus_bild(
-        'Messdaten/qfile_003.png', '_build/Carr-Purcell.pdf'
+    T_val, T_err, skala, offset = peaks_aus_bild(
+        'Messdaten/qfile_003.png', '_build/Carr-Purcell.pdf', 
     )
 
     T['CP_T'] = unitprint.siunitx(T_val, T_err)
     T['CP_skala'] = unitprint.siunitx(skala)
+    T['CP_offset'] = unitprint.siunitx(offset)
 
-    T_val, T_err, skala = peaks_aus_bild(
+    T_val, T_err, skala, offset = peaks_aus_bild(
         'Messdaten/qfile_004.png', '_build/Meiboom-Gill.pdf'
     )
 
     T['MG_T'] = unitprint.siunitx(T_val, T_err)
     T['MG_skala'] = unitprint.siunitx(skala)
+    T['MG_offset'] = unitprint.siunitx(offset)
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
