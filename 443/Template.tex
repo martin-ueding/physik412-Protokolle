@@ -497,11 +497,22 @@ $\texttt{A\_test} = \SI{5.56}{\micro\second}$
 \FloatBarrier
 \subsubsection{Carr–Purcell–Sequenz}
 
-$\tau = \SI{5.00}{\micro\second}$
-$\texttt{A\_len} = \SI{2.66}{\micro\second}$
-$\texttt{B\_len} = \SI{5.32}{\micro\second}$
-$\texttt{P} = \SI{580}{\milli\second}$
-$\texttt{N} = \num{20}$
+Nun stellen wir $N = \num{20}$, sowie die Zeiten auf: $\tau =
+\SI{5.00}{\micro\second}$, $A_\text{len} = \SI{2.66}{\micro\second}$,
+$B_\text{len} = \SI{5.32}{\micro\second}$, $P = \SI{580}{\milli\second}$.
+
+Wir sehen mehrere Spinechos, siehe Abbildung~\ref{fig:CP}.
+
+Wir hatten die Daten nur als Bilddatei gespeichert, nicht als CSV-Datei.
+Dadurch mussten wir das Bild einlesen und die Punkte sinngemäß in Messpunkte
+umwandeln. Dazu haben wir alle Punkte zu einem gegebenen $x$-Wert genommen und
+die $y$-Werte gemittelt, die Standardabweichung als Fehler genommen.
+
+Da hier nur die lokalen Maxima interessant sind, haben wir mit der Python
+Funktion \texttt{scipy.signal.find\_peaks\_cwt} diese Maxima finden lassen.
+Die Funktion führt zuerst eine Faltung mit einer Ricker
+Welle\footnote{Siehe \cite{wikipedia/Mexican_hat_wavelet}.}.
+\parencite{scipy.signal.find_peaks_cwt}
 
 \begin{figure}[htbp]
     \centering
