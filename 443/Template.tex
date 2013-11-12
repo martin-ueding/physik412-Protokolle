@@ -446,38 +446,137 @@ $\texttt{A\_test} = \SI{5.56}{\micro\second}$
 \FloatBarrier
 \subsection{Sättigungs-Zurückgewinnung}
 
+Die abgelesene Gleichgewichtsmagnetisierung beträgt
+
 \[
     M_0 \hat = \SI{7.525}{\volt}
 \]
+
+Unsere Messwerte sind in Tabelle~\ref{tab:saet} einzusehen. In
+Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
+Anpassungsfunktion ist
+
+\[
+    M(\tau) = M_0\del{1-\exp\del{ -\frac{\tau}{T_1} }}
+\]
+
+da wir von einer Anfangsmagnetisierung von \num{0} ausgehen.
+Wir erhalten daraus
+
+\begin{align*}
+    M_0 &= \SI{<< M_0_sat >>}{\volt}
+    \intertext{und}
+    T_1 &= \SI{<< T_1_sat >>}{\second}
+\end{align*}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M_val in Tabelle_Saettigung: ->%
+        << tau >> & << M_val >> \\
+        %< endfor ->%
+    \end{tabular}
+    \label{tab:saet}
+    \caption{Messwerte zur Bestimmung der longitudinalen Relaxationszeit}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Saettigung.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:saet}
 \end{figure}
 
 \FloatBarrier
 \subsection{Polarisations-Zurückgewinnung}
+
+Unsere Messwerte sind in Tabelle~\ref{tab:pol} einzusehen, eine graphische
+Darstellung in Abbildung~\ref{fig:pol}. Die Anpassungsfunktion ist hier
+
+\[
+    M(\tau) = M_0\del{ 1 - 2\exp\del{-\frac{\tau}{T_1}}}
+\]
+
+Für die longitudinale Relaxationszeit erhalten wir so
+
+\[
+    T_1 = \SI{<< T_1_pol >>}{\second}
+\]
+
+Die Gleichgewichtsmagnetisierung ist
+
+\[
+    M_0 = \SI{<< M_0_pol >>}{\volt}
+\]
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M_val in Tabelle_Polarisation: ->%
+        << tau >> & << M_val >> \\
+        %< endfor ->%
+    \end{tabular}
+    \label{tab:pol}
+    \caption{Messwerte zur Bestimmung der longitudinalen Relaxationszeit}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Polarisation.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:pol}
 \end{figure}
 
 \FloatBarrier
 \section{Effektive Transversale Relaxationszeit $T_2^*$}
+
+Unsere Messwerte sind in Tabelle~\ref{tab:eff} und Abbildung~\ref{fig:eff}
+gezeigt. Aus der Anpassungsfunktion
+
+\begin{align*}
+    M(t) = M_0\exp\del{-\frac{t}{T_2^*}}+M_\text{Offset}
+    \intertext{folgt für die effektive transversale Relaxationszeit:}
+    T_2^* &= \SI{<< T_eff >>}{\second}
+\end{align*}
+
+\begin{table}
+    \centering
+    \small
+    \tabcolsep=0.11cm
+    \begin{tabular}{SS|SS|SS|SS|SS|SS}
+        {$t / \si{\second}$} & {$M / \si{\volt}$} &
+        {$t / \si{\second}$} & {$M / \si{\volt}$} &
+        {$t / \si{\second}$} & {$M / \si{\volt}$} &
+        {$t / \si{\second}$} & {$M / \si{\volt}$} &
+        {$t / \si{\second}$} & {$M / \si{\volt}$} &
+        {$t / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for t1, M1, t2, M2, t3, M3, t4, M4, t5, M5, t6, M6 in Tabelle_Effektiv: ->%
+        << t1 >> & << M1 >> &
+        << t2 >> & << M2 >> &
+        << t3 >> & << M3 >> &
+        << t4 >> & << M4 >> &
+        << t5 >> & << M5 >> &
+        << t6 >> & << M6 >>  \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{Messdaten zur effektiven transversalen Relaxationszeit}
+    \label{tab:eff}
+\end{table}
+
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{effektiv.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:eff}
 \end{figure}
 
 \FloatBarrier
@@ -486,12 +585,36 @@ $\texttt{A\_test} = \SI{5.56}{\micro\second}$
 \FloatBarrier
 \subsubsection{Hahn–Spinecho–Sequenz}
 
+Unsere Messergebnisse sind in Tabelle~\ref{tab:hahn} und
+Abbildung~\ref{fig:hahn} zu sehen. Aus der angepassten Funktion
+
+\begin{align*}
+    M(\tau) &= M_0\exp\del{-\frac{\tau}{T_2}}
+    \intertext{erhalten wir für die homogene transversale Relaxationszeit}
+    T_2 &= \SI{<< T_2_hahn >>}{\second}
+\end{align*}
+
+\begin{table}
+    \centering
+    \begin{tabular}{S|S}
+        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        \midrule
+        %< for tau, M_val in Tabelle_Hahn: ->%
+        << tau >> & << M_val >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Messwerte zur Hahn-Spinecho-Sequenz
+    }
+    \label{tab:hahn}
+\end{table}
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Hahn.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:hahn}
 \end{figure}
 
 \FloatBarrier

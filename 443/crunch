@@ -124,6 +124,15 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
+def long_relaxation_sat(tau, M_0, T):
+    return M_0*(1-np.exp(-tau/T))
+
+def long_relaxation_pol(tau, M_0, T):
+    return M_0*(1-2*np.exp(-tau/T))
+
+def trans_relaxation(tau, M_0, T, Off):
+    return M_0*np.exp(-tau/T)+Off
+
 def rabi(T):
     data = np.genfromtxt("Messdaten/Rabi.txt")
 
@@ -169,11 +178,28 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat, tau, M_val, (7., .1))
+    x = np.linspace(np.min(tau), np.max(tau), 500)
+    y_mit = long_relaxation_sat(x, *popt_mit)
+
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x,y_mit, label=r'Anpassungsfunktion')
     pl.title('Sättigungs-Zurückgewinnung')
+    pl.xlabel(r"$\tau / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
+    pl.legend(loc='best')
     pl.grid(True)
     pl.savefig('_build/Saettigung.pdf')
     pl.clf()
+
+    T['M_0_sat'] = unitprint.siunitx(popt_mit[0], np.sqrt(pconv_mit[0,0]))
+    print('M_0_sat:', popt_mit[0], np.sqrt(pconv_mit[0,0]))
+    T['T_1_sat'] = unitprint.siunitx(popt_mit[1], np.sqrt(pconv_mit[1,1]))
+    print('T_1_sat:', popt_mit[1], np.sqrt(pconv_mit[1,1]))
+    T['Tabelle_Saettigung'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
 
 def polarisation(T):
     data = np.genfromtxt('Messdaten/Polarisation.txt')
@@ -181,11 +207,28 @@ def polarisation(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
+    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1))
+    x = np.linspace(np.min(tau), np.max(tau), 500)
+    y = long_relaxation_pol(x, *popt)
+
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x,y)
     pl.title('Polarisations-Zurückgewinnung')
+    pl.xlabel(r"$\tau / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Polarisation.pdf')
     pl.clf()
+
+    T['M_0_pol'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
+    print('M_0_pol:', popt[0], np.sqrt(pconv[0,0]))
+    T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print('T_1_pol:', popt[1], np.sqrt(pconv[1,1]))
+
+    T['Tabelle_Polarisation'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
 
 def effektiv(T):
     data = np.loadtxt(
@@ -197,9 +240,59 @@ def effektiv(T):
     t = data[:, 0]
     M = data[:, 1]
 
-    pl.plot(t, M)
+    tM = np.array([
+        (t1, M1)
+        for t1, M1 in zip(t, M)
+        if M1 > 0.5
+    ])
+
+    t = tM[:, 0]
+    M = tM[:, 1]
+
+    popt, pconv = op.curve_fit(trans_relaxation, t, M, (8., 1., .5))
+    x = np.linspace(np.min(t), np.max(t))
+    y = trans_relaxation(x, *popt)
+
+    pl.plot(t, M, linestyle='none', marker='x')
+    pl.plot(x,y)
+    pl.title('Effektive transversale Relaxation')
+    pl.grid(True)
+    pl.legend(loc='best')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.savefig('_build/effektiv.pdf')
     pl.clf()
+
+    T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    print('T_eff:', popt[1], np.sqrt(pconv[1,1]))
+
+    t1 = t[:len(t)/6]*1000
+    t2 = t[len(t)/6:2*len(t)/6]*1000
+    t3 = t[2*len(t)/6:3*len(t)/6]*1000
+    t4 = t[3*len(t)/6:4*len(t)/6]*1000
+    t5 = t[4*len(t)/6:5*len(t)/6]*1000
+    t6 = t[5*len(t)/6:]*1000
+    M1 = M[:len(M)/6]
+    M2 = M[len(M)/6:2*len(M)/6]
+    M3 = M[2*len(M)/6:3*len(M)/6]
+    M4 = M[3*len(M)/6:4*len(M)/6]
+    M5 = M[4*len(M)/6:5*len(t)/6]
+    M6 = M[5*len(M)/6:]
+
+    T['Tabelle_Effektiv'] = zip(
+            unitprint.siunitx(t1),
+            unitprint.siunitx(M1),
+            unitprint.siunitx(t2),
+            unitprint.siunitx(M2),
+            unitprint.siunitx(t3),
+            unitprint.siunitx(M3),
+            unitprint.siunitx(t4),
+            unitprint.siunitx(M4),
+            unitprint.siunitx(t5),
+            unitprint.siunitx(M5),
+            unitprint.siunitx(t6),
+            unitprint.siunitx(M6)
+            )
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
@@ -207,10 +300,44 @@ def hahn(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
+    popt, pconv = op.curve_fit(trans_relaxation, tau, M_val, (8., 1., .5))
+    x = np.linspace(np.min(tau), np.max(tau),100)
+    y = trans_relaxation(x, *popt)
+
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x, y)
     pl.title('Hahn-Spinecho')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Hahn.pdf')
+    pl.clf()
+
+    T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+
+    print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
+
+    T['Tabelle_Hahn'] = zip(
+            unitprint.siunitx(tau),
+            unitprint.siunitx(M_val, M_err)
+            )
+
+def pickup(T):
+    data = np.loadtxt(
+        open('Messdaten/print_001.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]
+    M = data[:, 1]
+
+    pl.plot(t, M, label='Messpunkte')
+    pl.title('Optimierte Pickup-Probe')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
+    pl.grid(True)
+    pl.savefig('_build/Pickup.pdf')
     pl.clf()
 
 def render_template(T, filename):
@@ -236,6 +363,7 @@ def main():
     effektiv(T)
     hahn(T)
     sequenzen(T)
+    pickup(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
