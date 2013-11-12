@@ -304,7 +304,6 @@ def main():
     T = {}
 
     peaks_aus_bild('Messdaten/qfile_004.png')
-    sys.exit(0)
 
     rabi(T)
     saettigung(T)
