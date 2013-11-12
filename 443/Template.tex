@@ -639,7 +639,12 @@ vorgegebenen Breite, die wir aus den Originaldaten grob abgeschätzt haben,
 aus. Dann wird in den geglätteten Daten nach Maxima gesucht.
 \parencite{scipy.signal.find_peaks_cwt}
 
-Da wir nur das Bild haben, wissen wir nicht, wie die Achsen skaliert sind.
+Da wir nur das Bild haben, wissen wir nicht direkt, wie die Achsen skaliert
+sind. Daher mussten wir unseren eingestellten Pulsabstand $\tau$ benutzen. Der
+Abstand der ersten fünf Maxima haben wir genommen, den Mittelwert berechnet
+und mit der Erwartung, dass die Maxima $\tau$ auseinander sind, die Skala
+entsprechend angepasst. Somit erhalten wir eine Skala von \num{<< CP_skala >>}
+Sekunden pro Pixel.
 
 An die Maxima haben wir wie schon im Theorieteil erwähnt, eine
 Exponentialfunktion angepasst und eine Relaxationszeit von
