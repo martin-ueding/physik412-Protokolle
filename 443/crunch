@@ -283,7 +283,7 @@ def pickup(T):
     pl.xlabel(r"$t / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Pickup.pdf')
+    pl.savefig('_build/Opt-Pickup.pdf')
     pl.clf()
 
 def render_template(T, filename):

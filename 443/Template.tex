@@ -411,14 +411,14 @@ umgelegt werden um die Regelung abzukoppeln.
 
 \section{Tuning des RF-Resonanzkreises}
 
-Wir stellen \texttt{A\_len} auf \SI{2.5}{\micro\second} und \texttt P auf
-\SI{100}{\micro\second}.
+Wir stellen am Pulse Programmer \texttt{A\_len} auf \SI{2.5}{\micro\second} und
+\texttt P auf \SI{100}{\micro\second} und am Oszilloskop den Trigger auf
+\texttt{Ext}, \texttt{Normal}, \texttt{Rising} und $> \SI{.1}{\volt}$, den
+Sweep auf \SI{2}{\micro\second\per\division} und Kanal 1 auf
+\SI{5}{\volt\per\division}, \texttt{DC} und \texttt{full bandwidth}.
 
-\texttt{print\_001}
-
-\texttt{print\_002.csv} zeigt die Antwort bei 10 ns/div
-
-\SI{47.4}{\nano\second}
+Nun wird die Pickup Probe eingesetzt. Die Tuning-Kondensatoren im Magneten
+werden nun so eingestellt, dass ein optimiertes Signal entsteht.
 
 \section{Optimierung des Free Induction Decay Signals}
 
@@ -438,6 +438,12 @@ Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 \SI{2.58}{\micro\second}.
 
 \chapter{Durchführung und Auswertung}
+
+\texttt{print\_001}
+
+\texttt{print\_002.csv} zeigt die Antwort bei 10 ns/div
+
+\SI{47.4}{\nano\second}
 
 \FloatBarrier
 \section{Rabi-Oszillationen}
