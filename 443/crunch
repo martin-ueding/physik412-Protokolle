@@ -275,11 +275,11 @@ def pickup(T):
         skiprows=2
     )
 
-    t = data[:, 0]
+    t = data[:, 0]*1e6
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Opt_Pickup_lang.pdf')
@@ -291,11 +291,11 @@ def pickup(T):
         skiprows=2
     )
 
-    t = data[:, 0]
+    t = data[:, 0]*1e6
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
     pl.savefig('_build/Opt_Pickup_kurz.pdf')
