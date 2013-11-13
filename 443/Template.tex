@@ -432,9 +432,10 @@ lassen. Die Nachschwingung soll möglichst gering sein.
 
 \section{$\frac\piup2$- und $\piup$-Puls Justage}
 
-Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
-= \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
-\SI{2.58}{\micro\second}.
+Nach der Theorie sollte sich bei Verdopplung von \texttt{A\_len} das Signal
+ganz auslöschen. Die Pulslänge soll jetzt so korrigiert werden, dass das
+Signal minimal wird. Die so gefundene Zeit ist die Länge des $\piup$- die
+Hälfte davon entsprechend die des $\frac{\piup}{2}$-Pulses.
 
 \chapter{Durchführung und Auswertung}
 
@@ -452,6 +453,10 @@ $Z^2 = 0.0$.
 21.16141
 
 003
+
+Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
+= \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
+\SI{2.58}{\micro\second}.
 \FloatBarrier
 \section{Rabi-Oszillationen}
 
