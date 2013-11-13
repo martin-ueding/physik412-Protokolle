@@ -279,14 +279,12 @@ def pickup(T):
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.title('Optimiertes Signal der Pickup-Probe')
     pl.xlabel(r"$t / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Opt_Pickup.pdf')
+    pl.savefig('_build/Opt_Pickup_lang.pdf')
     pl.clf()
 
-def FID(T):
     data = np.loadtxt(
         open('Messdaten/print_002.csv', "rb"),
         delimiter=",",
@@ -297,7 +295,24 @@ def FID(T):
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.title('Optimiertes Free Induction Signals')
+    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
+    pl.grid(True)
+    pl.savefig('_build/Opt_Pickup_kurz.pdf')
+    pl.clf()
+
+def FID(T):
+
+    data = np.loadtxt(
+        open('Messdaten/print_003.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]
+    M = data[:, 1]
+
+    pl.plot(t, M, label='Messpunkte')
     pl.xlabel(r"$t / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
@@ -329,6 +344,7 @@ def main():
     effektiv(T)
     hahn(T)
     pickup(T)
+    FID(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])

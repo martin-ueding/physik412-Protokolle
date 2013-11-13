@@ -441,31 +441,41 @@ Hälfte davon entsprechend die des $\frac{\piup}{2}$-Pulses.
 
 \section{Vorbereitung}
 
-Unser optimiertes Pickup-Signal ist in Abbildung~\ref{fig:pickup} zu sehen.
+Unser optimiertes Pickup-Signal ist in Abbildung~\ref{fig:pickup}
+zu sehen.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Opt_Pickup.pdf}
-    \caption{}
+    \includegraphics[width=\textwidth]{Opt_Pickup_lang.pdf}
+    \includegraphics[width=\textwidth]{Opt_Pickup_kurz.pdf}
+    \caption{%
+    Optimiertes Pickup-Signal
+    }
     \label{fig:pickup}
 \end{figure}
-
-\texttt{print\_002.csv} zeigt die Antwort bei 10 ns/div
 
 \SI{47.4}{\nano\second}
 
 Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
 
-Die Gradienten haben wir eingestellt auf: $X = 0.5$, $Y = 18.0$, $Z = 32.2$ und
-$Z^2 = 0.0$.
+Die Gradienten haben wir eingestellt auf $X = \num{0.5}$, $Y = \num{18.0}$, $Z
+= \num{32.2}$ und $Z^2 = \num{0.0}$, die gewählte Frequenz ist
+\SI{21.16141}{\mega\hertz}. Das entstandene Bild ist in Abbildung~\ref{fig:FID}
+zu sehen.
 
-21.16141
-
-003
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Opt_FID.pdf}
+    \caption{%
+    Optimiertes FID-Signal
+    }
+    \label{fig:FID}
+\end{figure}
 
 Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 = \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
 \SI{2.58}{\micro\second}.
+
 \FloatBarrier
 \section{Rabi-Oszillationen}
 
