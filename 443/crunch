@@ -270,7 +270,7 @@ def hahn(T):
 
 def pickup(T):
     data = np.loadtxt(
-        open('Messdaten/print_001.csv', "rb"),
+        open('Messdaten/print_004.csv', "rb"),
         delimiter=",",
         skiprows=2
     )
@@ -279,11 +279,11 @@ def pickup(T):
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.title('Optimierte Pickup-Probe')
+    pl.title('Optimiertes Signal der Pickup-Probe')
     pl.xlabel(r"$t / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Opt-Pickup.pdf')
+    pl.savefig('_build/Opt_Pickup.pdf')
     pl.clf()
 
 def render_template(T, filename):
