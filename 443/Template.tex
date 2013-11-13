@@ -417,19 +417,18 @@ Wir stellen am Pulse Programmer \texttt{A\_len} auf \SI{2.5}{\micro\second} und
 Sweep auf \SI{2}{\micro\second\per\division} und Kanal 1 auf
 \SI{5}{\volt\per\division}, \texttt{DC} und \texttt{full bandwidth}.
 
-Nun wird die Pickup Probe eingesetzt. Die Tuning-Kondensatoren im Magneten
-werden nun so eingestellt, dass ein optimiertes Signal entsteht.
+Nun wird die Pickup Probe eingesetzt und an Kanal 1 angeschlossen. Die
+Tuning-Kondensatoren im Magneten werden nun so eingestellt, dass ein
+optimiertes Signal entsteht.
 
 \section{Optimierung des Free Induction Decay Signals}
 
-Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
-
-Die Gradienten haben wir eingestellt auf: $X = 0.5$, $Y = 18.0$, $Z = 32.2$ und
-$Z^2 = 0.0$.
-
-21.16141
-
-003
+Die eigentliche Probe wird nun eingesetzt und \texttt{Env Out} des Receivers
+wieder an Kanal 1 angeschlossen. Das Signal soll nun möglichst hoch, langsam
+und exponentiell abfallend sein. Dazu werden die Magnetfeldgradienten am
+PS1~Controller und die Frequenz am Synthesizer verändert. Für ein Feintuning
+der Frequenz kann man sich das \texttt{Q}-Signal am Oszilloskop anzeigen
+lassen. Die Nachschwingung soll möglichst gering sein.
 
 \section{$\frac\piup2$- und $\piup$-Puls Justage}
 
@@ -445,6 +444,14 @@ Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
 
 \SI{47.4}{\nano\second}
 
+Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
+
+Die Gradienten haben wir eingestellt auf: $X = 0.5$, $Y = 18.0$, $Z = 32.2$ und
+$Z^2 = 0.0$.
+
+21.16141
+
+003
 \FloatBarrier
 \section{Rabi-Oszillationen}
 
