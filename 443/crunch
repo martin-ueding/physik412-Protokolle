@@ -296,6 +296,7 @@ def effektiv(T):
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
+    data = data[data[:,0].argsort()]
     tau = data[:, 0]
     M_val = data[:, 1]
     M_err = data[:, 2]
