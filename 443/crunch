@@ -245,13 +245,12 @@ def hahn(T):
     x = np.linspace(np.min(tau), np.max(tau),100)
     y = trans_relaxation(x, *popt)
 
-    pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
-    pl.plot(x, y)
-    pl.title('Hahn-Spinecho')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.errorbar(tau*1e3, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x*1e3, y)
+    pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Hahn.pdf')
+    pl.savefig('_build/Hahn.pdf', bbox_inches='tight')
     pl.clf()
 
     T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
@@ -259,7 +258,7 @@ def hahn(T):
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
     T['Tabelle_Hahn'] = zip(
-            unitprint.siunitx(tau),
+            unitprint.siunitx(tau*1e3),
             unitprint.siunitx(M_val, M_err)
             )
 
