@@ -256,7 +256,7 @@ def effektiv(T):
     y = trans_relaxation(x, *popt)
 
     pl.plot(t*1e3, M, linestyle='none', marker='x')
-    pl.plot(x,y)
+    pl.plot(x*1e3,y)
     pl.grid(True)
     pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
