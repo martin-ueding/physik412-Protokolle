@@ -100,23 +100,22 @@ def rabi(T):
     # Fit
     popt_gelb, pconv_gelb = op.curve_fit(rabi_fit_gelb, A_len, gelb_val, (1., 3.1416/5.))
     popt_gruen, pconv_gruen = op.curve_fit(rabi_fit_gruen, A_len, gruen_val, (1., 3.1416/5.))
-    A_len = A_len * 1e-6 # wieder Sekunden
-    popt_gelb[1] = popt_gelb[1]*1e6
-    popt_gruen[1] = popt_gruen[1]*1e6
+    #A_len = A_len * 1e-6 # wieder Sekunden
+    #popt_gelb[1] = popt_gelb[1]*1e6
+    #popt_gruen[1] = popt_gruen[1]*1e6
     x = np.linspace(0., np.max(A_len), 1000)
     y_gelb = rabi_fit_gelb(x, *popt_gelb)
     y_gruen = rabi_fit_gruen(x, *popt_gruen)
 
-    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label='Gelb', color='blue')
-    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label='In-Phase-Signal', color='green')
+    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label=r'$Q$-Signal', color='blue')
+    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label=r'$I$-Signal', color='green')
     pl.plot(x, y_gelb, color='blue')
     pl.plot(x, y_gruen, color='green')
     pl.grid(True)
     pl.legend(loc='best')
-    pl.title('Rabi-Oszillation')
-    pl.xlabel(r'A_len / s')
+    pl.xlabel(r'$A_\mathrm{len} / \mu\mathrm{s}$')
     pl.ylabel(r'Signal / V')
-    pl.savefig('_build/Rabi.pdf')
+    pl.savefig('_build/Rabi.pdf', bbox_inches='tight')
     pl.clf()
 
 def saettigung(T):
