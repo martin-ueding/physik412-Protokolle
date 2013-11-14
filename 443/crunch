@@ -282,7 +282,7 @@ def pickup(T):
     pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Opt_Pickup_lang.pdf')
+    pl.savefig('_build/Opt_Pickup_lang.pdf', bbox_inches='tight')
     pl.clf()
 
     data = np.loadtxt(
@@ -298,7 +298,7 @@ def pickup(T):
     pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Opt_Pickup_kurz.pdf')
+    pl.savefig('_build/Opt_Pickup_kurz.pdf', bbox_inches='tight')
     pl.clf()
 
 def FID(T):
