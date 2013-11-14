@@ -309,14 +309,14 @@ def FID(T):
         skiprows=2
     )
 
-    t = data[:, 0]
+    t = data[:, 0]*1e3
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Opt_FID.pdf')
+    pl.savefig('_build/Opt_FID.pdf', bbox_inches='tight')
     pl.clf()
 
 def render_template(T, filename):
