@@ -332,7 +332,7 @@ def pickup(T):
     t = data[:, 0]*1e6
     M = data[:, 1]
 
-    pl.plot(t, M, marker='.', linestyle='none', label='Messpunkte')
+    pl.plot(t, M, label='Messpunkte')
     pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
@@ -348,7 +348,7 @@ def pickup(T):
     t = data[:, 0]*1e6
     M = data[:, 1]
 
-    pl.plot(t, M, marker='.', linestyle='none', label='Messpunkte')
+    pl.plot(t, M, label='Messpunkte')
     pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
@@ -366,7 +366,7 @@ def FID(T):
     t = data[:, 0]*1e3
     M = data[:, 1]
 
-    pl.plot(t, M, linestyle='none', marker='.', label='Messpunkte')
+    pl.plot(t, M, label='Messpunkte')
     pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
