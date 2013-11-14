@@ -50,20 +50,79 @@ def punkte_aus_bild(dateiname):
     final_y = np.array(final_y)
     final_y_err = np.array(final_y_err)
 
-    pl.errorbar(final_x, final_y, yerr=final_y_err, linestyle='none', marker='.')
 
-    return final_x, final_y
+    return final_x, final_y, final_y_err
 
-def peaks_aus_bild(dateiname):
-    x, y = punkte_aus_bild(dateiname)
+def peaks_aus_bild(pngdatei, plot_ausgabe):
+    x, y, y_err = punkte_aus_bild(pngdatei)
+
+    offset = np.mean(y[0:5])
+
+    y -= offset
 
     peak_indizes = scipy.signal.find_peaks_cwt(y, np.array([10, ]))
     peak_indizes = np.array(peak_indizes)
     peak_indizes[0] = np.argmax(y)
 
-    pl.plot(x[peak_indizes], y[peak_indizes], color='red', marker='o')
+    print(x[peak_indizes])
+
+    diffs = np.diff(x[peak_indizes[:5]])
+    tau_val = np.mean(diffs)
+    tau_err = np.std(diffs)
+
+    print('In diesem Diagram ist der Abstand der Peaks:')
+    print('τ_Bild', tau_val, tau_err)
+
+    tau_erwartet = 10e-3
+
+    skala = tau_erwartet / tau_val
+
+    popt, pconv = op.curve_fit(
+        exponentieller_abfall, x[peak_indizes[1:]], y[peak_indizes[1:]],
+        sigma=1/y_err[peak_indizes[1:]], p0=[700, 200],
+    )
+
+    T_val = popt[1] * skala
+    T_err = np.sqrt(pconv.diagonal()[1]) * skala
+
+    print("T", T_val, T_err)
+
+    plot_x = np.linspace(x[0], x[-1], 1000)
+    plot_y = exponentieller_abfall(plot_x, *popt)
+
+    pl.errorbar(x*skala*10**6, y, yerr=y_err, linestyle='none', marker='+',
+                label='Messdaten')
+    pl.plot(x[peak_indizes]*skala*10**6, y[peak_indizes], color='red',
+            marker='o', linestyle='none', label='lokale Maxima')
+    pl.plot(plot_x*skala*10**6, plot_y, label='Anpassung')
+    pl.legend(loc='best')
     pl.grid(True)
+    pl.xlabel(r'$t / \mathrm{\mu s}$')
+    pl.ylabel(r'Signal')
+    pl.savefig(plot_ausgabe)
     pl.clf()
+
+    return T_val, T_err, skala, offset
+
+def exponentieller_abfall(x, scale, T):
+    return scale * np.exp(- x / T)
+
+def sequenzen(T):
+    T_val, T_err, skala, offset = peaks_aus_bild(
+        'Messdaten/qfile_003.png', '_build/Carr-Purcell.pdf', 
+    )
+
+    T['CP_T'] = unitprint.siunitx(T_val, T_err)
+    T['CP_skala'] = unitprint.siunitx(skala)
+    T['CP_offset'] = unitprint.siunitx(offset)
+
+    T_val, T_err, skala, offset = peaks_aus_bild(
+        'Messdaten/qfile_004.png', '_build/Meiboom-Gill.pdf'
+    )
+
+    T['MG_T'] = unitprint.siunitx(T_val, T_err)
+    T['MG_skala'] = unitprint.siunitx(skala)
+    T['MG_offset'] = unitprint.siunitx(offset)
 
 def rabi_fit_gelb(x, a, b):
     return a*np.abs(np.sin(b*x))
@@ -253,7 +312,7 @@ def hahn(T):
     pl.savefig('_build/Hahn.pdf', bbox_inches='tight')
     pl.clf()
 
-    T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    T['T_2_hahn'] = unitprint.siunitx(popt[1]*2, np.sqrt(pconv[1,1])*2)
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
@@ -330,13 +389,12 @@ def render_template(T, filename):
 def main():
     T = {}
 
-    peaks_aus_bild('Messdaten/qfile_004.png')
-
     rabi(T)
     saettigung(T)
     polarisation(T)
     effektiv(T)
     hahn(T)
+    sequenzen(T)
     pickup(T)
     FID(T)
 

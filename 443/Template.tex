@@ -62,7 +62,9 @@ Spin ist und eine feste Magnitude besitzt:
     \mu = \gamma \hbar s
 \]
 
-Der Faktor $\gamma$ ist das gyromagnetische Verhältnis und ist für verschiedene
+Der Faktor $\gamma$ "
+"
+ist das gyromagnetische Verhältnis und ist für verschiedene
 Teilchen (z.\,B. Protonen, Elektronen) unterschiedlich.
 
 \subsection{Aufspaltung in zwei Zustände}
@@ -206,6 +208,10 @@ führen. Dieser Effekt ist stark zeitabhängig und kann nicht korrigiert werden.
 Da es diese verschiedenen Effekte gibt, werden zwei verschiedene
 Relaxationszeiten eingeführt.
 
+Damit die transversale Relaxation deutlich zu sehen ist, muss sie schneller als
+die longitudinale Relaxation vor sich gehen. Daher erwarten wir, dass $T_1 \gg
+T_2$.
+
 \subsubsection{Homogene Transversale Relaxationszeit $T_2$}
 
 Durch einen $\piup/2$-Puls wird die makroskopische Magnetisierung in die
@@ -345,7 +351,8 @@ Effekt isoliert haben.
 
 Aus der Stärke des Echos kann dann die homogene transversale Relaxationszeit
 $T_2$ bestimmt werden, in dem an den exponenziellen Abfall wieder eine
-Exponentialfunktion angepasst wird.
+Exponentialfunktion angepasst wird. Dabei ist die verstrichene Zeit $2 \tau$,
+da zwischen erstem Puls und Echo zwei Wartezeiten $\tau$ liegen.
 
 \subsubsection{Carr–Purcell–Sequenz}
 
@@ -665,12 +672,13 @@ gezeigt. Aus der Anpassungsfunktion
 
 Unsere Messergebnisse sind in Tabelle~\ref{tab:hahn} und
 Abbildung~\ref{fig:hahn} zu sehen. Aus der angepassten Funktion
-
-\begin{align*}
-    M(\tau) &= M_0\exp\del{-\frac{\tau}{T_2}}
-    \intertext{erhalten wir für die homogene transversale Relaxationszeit}
-    T_2 &= \SI{<< T_2_hahn >>}{\second}
-\end{align*}
+\[
+    M(\tau) = M_0\exp\del{-\frac{2\tau}{T_2}}
+\]
+erhalten wir für die homogene transversale Relaxationszeit
+\[
+    T_2 = \SI{<< T_2_hahn >>}{\second}.
+\]
 
 \begin{table}
     \centering
@@ -700,14 +708,77 @@ Abbildung~\ref{fig:hahn} zu sehen. Aus der angepassten Funktion
 \FloatBarrier
 \subsubsection{Carr–Purcell–Sequenz}
 
-$\tau = \SI{5.00}{\micro\second}$
-$A_\text{len} = \SI{2.66}{\micro\second}$
-$B_\text{len} = \SI{5.32}{\micro\second}$
-$P = \SI{580}{\milli\second}$
-$N = \num{20}$
+Nun stellen wir $N = \num{20}$, sowie die Zeiten auf: $\tau =
+\SI{5.00}{\micro\second}$, $A_\text{len} = \SI{2.66}{\micro\second}$,
+$B_\text{len} = \SI{5.32}{\micro\second}$, $P = \SI{580}{\milli\second}$.
+
+Wir sehen mehrere Spinechos, siehe Abbildung~\ref{fig:CP}.
+
+Wir hatten die Daten nur als Bilddatei gespeichert, nicht als CSV-Datei.
+Dadurch mussten wir das Bild einlesen und die Punkte sinngemäß in Messpunkte
+umwandeln. Dazu haben wir alle Punkte zu einem gegebenen $x$-Wert genommen und
+die $y$-Werte gemittelt, die Standardabweichung als Fehler genommen. Die
+ersten fünf $y$-Werte haben wir gemittelt und als Untergrundsignal abgezogen.
+Hier waren es \num{<< CP_offset >>} Skalenteile.
+
+Da hier nur die lokalen Maxima interessant sind, haben wir mit der Python
+Funktion \texttt{scipy.\-signal.\-find\_peaks\_cwt} diese Maxima finden
+lassen. Die Funktion führt zuerst eine Faltung mit einer Ricker
+Welle\footnote{Siehe \cite{wikipedia/Mexican_hat_wavelet}.} mit einer
+vorgegebenen Breite, die wir aus den Originaldaten grob abgeschätzt haben,
+aus. Dann wird in den geglätteten Daten nach Maxima gesucht.
+\parencite{scipy.signal.find_peaks_cwt}
+
+Da wir nur das Bild haben, wissen wir nicht direkt, wie die Achsen skaliert
+sind. Daher mussten wir unseren eingestellten Pulsabstand $\tau$ benutzen. Der
+Abstand der ersten fünf Maxima haben wir genommen, den Mittelwert berechnet
+und mit der Erwartung, dass die Maxima $2\tau$ auseinander sind, die Skala
+entsprechend angepasst. Somit erhalten wir eine Skala von \num{<< CP_skala >>}
+Sekunden pro Pixel.
+
+An die Maxima haben wir wie schon im Theorieteil erwähnt, eine
+Exponentialfunktion angepasst und eine Relaxationszeit von
+\[
+    T_{2,\text{CP}} = \SI{<< CP_T >>}{\second}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Carr-Purcell.pdf}
+    \caption{%
+        Messdaten und Anpassungen mit der Carr-Purcell-Sequenz. Die Messwerte
+        sind aus dem Bild des Oszilloskopen extrahiert und durch
+        Mittelwertbildung auf einen Wert pro Zeit reduziert worden. Die lokalen
+        Maxima sind mit \texttt{scipy.signal.find\_peaks\_cwt} gefunden worden.
+        An alle bis auf das erste Maximum wurde eine Exponentialfunktion
+        angepasst.
+    }
+    \label{fig:CP}
+\end{figure}
 
 \FloatBarrier
 \subsubsection{Meiboom–Gill–Sequenz}
+
+Hier gehen wir genauso vor, wie bei der Carr-Purcell-Sequenz. Wir erhalten
+eine Skala von \num{<< MG_skala >>} Sekunden pro Pixel, ein Untergrundsignal
+von \num{<< MG_offset >>} und eine Relaxationszeit von:
+\[
+    T_{2,\text{MG}} = \SI{<< MG_T >>}{\second}
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Meiboom-Gill.pdf}
+    \caption{%
+        Messdaten und Anpassungen mit der Meiboom-Gill-Sequenz. Die Messwerte
+        sind aus dem Bild des Oszilloskopen extrahiert und durch
+        Mittelwertbildung auf einen Wert pro Zeit reduziert worden. Die lokalen
+        Maxima sind mit \texttt{scipy.signal.find\_peaks\_cwt} gefunden worden.
+        An alle bis auf das erste Maximum wurde eine Exponentialfunktion
+        angepasst.
+    }
+    \label{fig:MG}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                               Zusammenfassung                               %
@@ -716,7 +787,68 @@ $N = \num{20}$
 \FloatBarrier
 \chapter{Zusammenfassung}
 
+Hier unsere Messgrößen zusammengestellt:
+
+\begin{tabular}{llS}
+    Größe & Methode & {Zeit in Sekunden} \\
+    \midrule
+    $T_{1}$ & Polarisation & << T_1_pol >> \\
+    $T_{1}$ & Sättigung & << T_1_sat >> \\
+    $T_2^*$ & FID & << T_eff >> \\
+    $T_{2}$ & Hahn-Spinecho & << T_2_hahn >> \\
+    $T_{2}$ & Carr-Purcell & << CP_T >> \\
+    $T_{2}$ & Meiboom-Gill & << MG_T >>
+\end{tabular}
+
 \fehlt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                 Diskussion                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Diskussion}
+
+\section{Messergebnisse $T_1$}
+
+Die beiden Messergebnisse zur longitudinalen Relaxationszeit liegen nicht
+innerhalb des Fehlerbereiches der jeweiligen Messungen, jedoch ist die
+Abweichung der beiden Werte voneinander unter \SI{20}{\percent}. Da auf zwei
+verschiedene Methoden gemessen worden sind, und Störeffekte einen
+unterschiedlichen Einfluss auf die beiden Methoden haben können, ist eine
+gewisse Abweichung der Werte zu erwarten.
+
+\section{Messergebnisse $T_2$}
+
+Die sehr kurze Dauer des freien Induktionszerfalls $T_2^*$ im Vergleich den
+anderen $T_2$ entspricht den Erwartungen. Die Störeffekte wie ein inhomogenes
+Magnetfeld sind anscheinend recht stark.
+
+Die Relaxationszeit, die wir durch das Hahn-Spinecho gemessen haben, ist die
+kürzeste. Dies liegt wahrscheinlich daran, dass hier nur ein Echo betrachtet
+worden ist, und somit Störeffekte nicht so gut ausgeglichen werden wie bei den
+längeren Sequenzen.
+
+Die Relaxationszeit bei der Carr-Purcell Sequenz ist etwas kürzer als bei der
+Meiboom-Gill-Sequenz. Da sich die Fehler in der ersten Sequenz aufaddieren
+können, liegt es nahe, dass es weniger lange dauert, bis die einzelnen Spins
+auseinander laufen.
+
+\section{Vergleich $T_1$ und $T_2$}
+
+Im Theorieteil haben wir geschrieben, dass wir erwarten, dass $T_1$ deutlich
+größer als $T_2$ ist. Dies haben wir dadurch begründet, dass sich die Effekte
+sonst nicht isoliert betrachten lassen würden.
+
+Für die effektive transversale Relaxationszeit gilt dies in der Tat, $T_1 \gg
+T_2^*$. Jedoch sind $T_1$ und $T_2$ in der gleichen Größenordnung, $T_1$ ist
+nur um $\SI{50}{\percent}$ größer.
+
+Dies könnte bedeuten, dass die transversale Relaxation schon merklich von der
+longitudinalen Relaxation überlagert worden ist, und so unsere $T_2$ kürzer
+sind, als durch die transversale Relaxation alleine. Dies widerspricht der
+Annahme $T_1 \gg T_2$ jedoch noch mehr. Da bei der Messung von $T_1$ wurden
+auch $\sfrac\piup2$-Pulse benutzt, wodurch es auch sein kann, dass die
+transversalen Effekte 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
