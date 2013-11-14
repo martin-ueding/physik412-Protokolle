@@ -62,7 +62,9 @@ Spin ist und eine feste Magnitude besitzt:
     \mu = \gamma \hbar s
 \]
 
-Der Faktor $\gamma$ ist das gyromagnetische Verhältnis und ist für verschiedene
+Der Faktor $\gamma$ "
+"
+ist das gyromagnetische Verhältnis und ist für verschiedene
 Teilchen (z.\,B. Protonen, Elektronen) unterschiedlich.
 
 \subsection{Aufspaltung in zwei Zustände}
@@ -345,7 +347,8 @@ Effekt isoliert haben.
 
 Aus der Stärke des Echos kann dann die homogene transversale Relaxationszeit
 $T_2$ bestimmt werden, in dem an den exponenziellen Abfall wieder eine
-Exponentialfunktion angepasst wird.
+Exponentialfunktion angepasst wird. Dabei ist die verstrichene Zeit $2 \tau$,
+da zwischen erstem Puls und Echo zwei Wartezeiten $\tau$ liegen.
 
 \subsubsection{Carr–Purcell–Sequenz}
 
@@ -587,12 +590,13 @@ gezeigt. Aus der Anpassungsfunktion
 
 Unsere Messergebnisse sind in Tabelle~\ref{tab:hahn} und
 Abbildung~\ref{fig:hahn} zu sehen. Aus der angepassten Funktion
-
-\begin{align*}
-    M(\tau) &= M_0\exp\del{-\frac{\tau}{T_2}}
-    \intertext{erhalten wir für die homogene transversale Relaxationszeit}
-    T_2 &= \SI{<< T_2_hahn >>}{\second}
-\end{align*}
+\[
+    M(\tau) = M_0\exp\del{-\frac{2\tau}{T_2}}
+\]
+erhalten wir für die homogene transversale Relaxationszeit
+\[
+    T_2 = \SI{<< T_2_hahn >>}{\second}.
+\]
 
 \begin{table}
     \centering
