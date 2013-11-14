@@ -644,7 +644,7 @@ aus. Dann wird in den geglätteten Daten nach Maxima gesucht.
 Da wir nur das Bild haben, wissen wir nicht direkt, wie die Achsen skaliert
 sind. Daher mussten wir unseren eingestellten Pulsabstand $\tau$ benutzen. Der
 Abstand der ersten fünf Maxima haben wir genommen, den Mittelwert berechnet
-und mit der Erwartung, dass die Maxima $\tau$ auseinander sind, die Skala
+und mit der Erwartung, dass die Maxima $2\tau$ auseinander sind, die Skala
 entsprechend angepasst. Somit erhalten wir eine Skala von \num{<< CP_skala >>}
 Sekunden pro Pixel.
 
@@ -701,15 +701,15 @@ von \num{<< MG_offset >>} und eine Relaxationszeit von:
 
 Hier unsere Messgrößen zusammengestellt:
 
-\begin{tabular}{lS}
-    {Größe} & {Zeit in Sekunden} \\
+\begin{tabular}{llS}
+    Größe & Methode & {Zeit in Sekunden} \\
     \midrule
-    $T_{1,\text{pol}}$ & << T_1_pol >> \\
-    $T_{1,\text{sat}}$ & << T_1_sat >> \\
-    $T_2^*$ & << T_eff >> \\
-    $T_{2,\text{Hahn}}$ & << T_2_hahn >> \\
-    $T_{2,\text{CP}}$ & << CP_T >> \\
-    $T_{2,\text{MG}}$ & << MG_T >>
+    $T_{1}$ & Polarisation & << T_1_pol >> \\
+    $T_{1}$ & Sättigung & << T_1_sat >> \\
+    $T_2^*$ & FID & << T_eff >> \\
+    $T_{2}$ & Hahn-Spinecho & << T_2_hahn >> \\
+    $T_{2}$ & Carr-Purcell & << CP_T >> \\
+    $T_{2}$ & Meiboom-Gill & << MG_T >>
 \end{tabular}
 
 \fehlt

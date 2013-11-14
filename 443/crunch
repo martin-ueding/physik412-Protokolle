@@ -73,7 +73,7 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
     print('In diesem Diagram ist der Abstand der Peaks:')
     print('τ_Bild', tau_val, tau_err)
 
-    tau_erwartet = 5e-6
+    tau_erwartet = 10e-3
 
     skala = tau_erwartet / tau_val
 
@@ -319,7 +319,7 @@ def hahn(T):
     pl.savefig('_build/Hahn.pdf')
     pl.clf()
 
-    T['T_2_hahn'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
+    T['T_2_hahn'] = unitprint.siunitx(popt[1]*2, np.sqrt(pconv[1,1])*2)
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
