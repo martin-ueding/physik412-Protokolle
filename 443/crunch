@@ -196,13 +196,12 @@ def effektiv(T):
     x = np.linspace(np.min(t), np.max(t))
     y = trans_relaxation(x, *popt)
 
-    pl.plot(t, M, linestyle='none', marker='x')
+    pl.plot(t*1e3, M, linestyle='none', marker='x')
     pl.plot(x,y)
-    pl.title('Effektive transversale Relaxation')
     pl.grid(True)
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
-    pl.savefig('_build/effektiv.pdf')
+    pl.savefig('_build/effektiv.pdf', bbox_inches='tight')
     pl.clf()
 
     T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
