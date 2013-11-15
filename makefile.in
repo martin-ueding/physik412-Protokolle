@@ -11,9 +11,12 @@ all: $(out)
 $(out): $(tex)
 	cd _build && latexmk -pdflatex='pdflatex -halt-on-error -shell-escape $$O $$S' -pdf $$(basename $<)
 
-$(tex): crunch Template.tex
+_build/template.js: crunch
 	mkdir -p _build
-	./$< $@
+	./$<
+
+$(tex): _build/template.js Template.tex
+	./insert $@
 
 .PHONY: clean
 clean:

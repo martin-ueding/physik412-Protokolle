@@ -5,10 +5,10 @@
 # Licensed under The GNU Public License Version 2 (or later)
 
 import itertools
-import jinja2
 import matplotlib.pyplot as pl
 import numpy as np
 import scipy.interpolate
+import json
 import scipy.optimize as op
 import sys
 import scipy.signal
@@ -149,12 +149,12 @@ def rabi(T):
     gruen_val = data[:, 4]
     gruen_err = data[:, 5]
 
-    T['rabi_messdaten'] = zip(
+    T['rabi_messdaten'] = list(zip(
         unitprint.siunitx(f),
         unitprint.siunitx(A_len),
         unitprint.siunitx(gelb_val, gelb_err),
         unitprint.siunitx(gruen_val, gruen_err),
-    )
+    ))
 
     # Fit
     popt_gelb, pconv_gelb = op.curve_fit(rabi_fit_gelb, A_len, gelb_val, (1., 3.1416/5.))
@@ -199,10 +199,10 @@ def saettigung(T):
     print('M_0_sat:', popt_mit[0], np.sqrt(pconv_mit[0,0]))
     T['T_1_sat'] = unitprint.siunitx(popt_mit[1], np.sqrt(pconv_mit[1,1]))
     print('T_1_sat:', popt_mit[1], np.sqrt(pconv_mit[1,1]))
-    T['Tabelle_Saettigung'] = zip(
+    T['Tabelle_Saettigung'] = list(zip(
             unitprint.siunitx(tau),
             unitprint.siunitx(M_val, M_err)
-            )
+            ))
 
 def polarisation(T):
     data = np.genfromtxt('Messdaten/Polarisation.txt')
@@ -227,10 +227,10 @@ def polarisation(T):
     T['T_1_pol'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
     print('T_1_pol:', popt[1], np.sqrt(pconv[1,1]))
 
-    T['Tabelle_Polarisation'] = zip(
+    T['Tabelle_Polarisation'] = list(zip(
             unitprint.siunitx(tau),
             unitprint.siunitx(M_val, M_err)
-            )
+            ))
 
 def effektiv(T):
     data = np.loadtxt(
@@ -279,7 +279,7 @@ def effektiv(T):
     M5 = M[4*len(M)/6:5*len(t)/6]
     M6 = M[5*len(M)/6:]
 
-    T['Tabelle_Effektiv'] = zip(
+    T['Tabelle_Effektiv'] = list(zip(
             unitprint.siunitx(t1),
             unitprint.siunitx(M1),
             unitprint.siunitx(t2),
@@ -292,7 +292,7 @@ def effektiv(T):
             unitprint.siunitx(M5),
             unitprint.siunitx(t6),
             unitprint.siunitx(M6)
-            )
+            ))
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
@@ -317,10 +317,10 @@ def hahn(T):
 
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
-    T['Tabelle_Hahn'] = zip(
+    T['Tabelle_Hahn'] = list(zip(
             unitprint.siunitx(tau*1e3),
             unitprint.siunitx(M_val, M_err)
-            )
+            ))
 
 def pickup(T):
     data = np.loadtxt(
@@ -373,19 +373,6 @@ def FID(T):
     pl.savefig('_build/Opt_FID.pdf', bbox_inches='tight')
     pl.clf()
 
-def render_template(T, filename):
-    # Setting up Jinja
-    env = jinja2.Environment(
-        "%<", ">%",
-        "<<", ">>",
-        "%§", "§%",
-        loader=jinja2.FileSystemLoader(".")
-    )
-    template = env.get_template("Template.tex")
-
-    # Rendering LaTeX document with values.
-    with open(filename, "w") as f:
-        f.write(template.render(**T))
 
 def main():
     T = {}
@@ -399,10 +386,8 @@ def main():
     pickup(T)
     FID(T)
 
-    if len(sys.argv) > 1:
-        render_template(T, sys.argv[1])
-    else:
-        print('Keine Ausgabe, da Dateiname fehlt.')
+    with open('_build/template.js', 'w') as f:
+        json.dump(T, f, indent=4, sort_keys=True)
 
 if __name__ == "__main__":
     main()
