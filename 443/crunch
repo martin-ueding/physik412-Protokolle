@@ -150,7 +150,7 @@ def rabi(T):
     gruen_err = data[:, 5]
 
     T['rabi_messdaten'] = list(zip(
-        unitprint.siunitx(f),
+        unitprint.siunitx(f, digits=7),
         unitprint.siunitx(A_len),
         unitprint.siunitx(gelb_val, gelb_err),
         unitprint.siunitx(gruen_val, gruen_err),
