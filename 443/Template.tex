@@ -374,39 +374,112 @@ korrigiert. Das Ausgangssignal hat zwar auf jedem ungraden Echo einen Fehler,
 jedoch sind die Geraden ohne diesen Fehler und höher.
 
 \chapter{Aufbau und Kalibrierung}
-\section{Magnet und PS2 Controller}
-\section{Mainframe und Oszilloskop}
+\section{Anschließen der Geräte}
+
+Im Aufbau des Experimentes verwenden wir vier Teile:
+
+\begin{itemize}
+    \item
+        Magnet mit RF-Messkopf
+    \item
+        PS2 Controller mit Regelung der Magnettemperatur und Steuerung der
+        Magnetfeldgradienten
+    \item
+        Mainframe mit Receiver, Synthesizer, Pulse Programmer, Lock-In /
+        Field-Sweep und der Stromversorgung
+    \item
+        digitales Oszilloskop
+\end{itemize}
+
+Zunächst werden \texttt{Pulsed RF-Out} am Synthesizer mit \texttt{Pulsed
+RF-In} am Receiver und der Magnet mit \texttt{Sample} am Receiver verbunden.
+Nun werden an Pulse Programmer und Synthesizer jeweils \texttt{Q} und
+\texttt{I} mit einander verbunden, sowie \texttt{Blanking Out} am Pulse
+Programmer mit \texttt{Blanking In} am Receiver. Als nächstes verbinden wir
+das Oszilloskop: \texttt{Sync Out} des Pulse Programmers wird an
+\texttt{Input Trigger}, \texttt{Env. Out}, \texttt{Q} und \texttt{I} des
+Receivers werden an den Kanälen 1, 2 und 3 des Oszilloskops angeschlossen.
+
+Im Anschluss werden die Temperaturregler des PS2 Controllers auf
+\texttt{open}, \texttt{TC}, \texttt{Gain} am Receiver
+auf \num{0.01} bzw. 75\% und \texttt{Sync} am Pulse Programmer
+auf \texttt{A} gestellt.
+\texttt{Blanking}, \texttt{Ref Out} und \texttt{Pulse A} an
+Receiver, Sythesizer bzw. Pulse Programmer werden an-, \texttt{CW Out} am
+Synthesizer und \texttt{MG} und \texttt{Pulse B} am Pulse Programmer werden
+ausgeschaltet. 
 
 \section{Temperatureinstellung}
+
+Damit die Temperatur innerhalb des Magneten stabilisiert werden kann, muss
+diese zunächst über die Potentiometer auf Raumtemperatur geregelt werden.
+Sobald die LED-Anzeige erlischt, ist dies erreicht und der Kippschalter kann
+umgelegt werden um die Regelung abzukoppeln.
+
 \section{Tuning des RF-Resonanzkreises}
 
-Wir stellen \texttt{A\_len} auf \SI{2.5}{\micro\second} und \texttt P auf
-\SI{100}{\micro\second}.
+Wir stellen am Pulse Programmer $A_\text{len}$ auf \SI{2.5}{\micro\second} und
+\texttt P auf \SI{100}{\micro\second} und am Oszilloskop den Trigger auf
+\texttt{Ext}, \texttt{Normal}, \texttt{Rising} und $> \SI{.1}{\volt}$, den
+Sweep auf \SI{2}{\micro\second\per\division} und Kanal 1 auf
+\SI{5}{\volt\per\division}, \texttt{DC} und \texttt{full bandwidth}.
 
-\texttt{print\_001}
-
-\texttt{print\_002.csv} zeigt die Antwort bei 10 ns/div
-
-\SI{47.4}{\nano\second}
+Nun wird die Pickup Probe eingesetzt und an Kanal 1 angeschlossen. Die
+Tuning-Kondensatoren im Magneten werden nun so eingestellt, dass ein
+optimiertes Signal entsteht.
 
 \section{Optimierung des Free Induction Decay Signals}
 
-Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
-
-Die Gradienten haben wir eingestellt auf: $X = 0.5$, $Y = 18.0$, $Z = 32.2$ und
-$Z^2 = 0.0$.
-
-21.16141
-
-003
+Die eigentliche Probe wird nun eingesetzt und \texttt{Env Out} des Receivers
+wieder an Kanal 1 angeschlossen. Das Signal soll nun möglichst hoch, langsam
+und exponentiell abfallend sein. Dazu werden die Magnetfeldgradienten am
+PS1~Controller und die Frequenz am Synthesizer verändert. Für ein Feintuning
+der Frequenz kann man sich das \texttt{Q}-Signal am Oszilloskop anzeigen
+lassen. Die Nachschwingung soll möglichst gering sein.
 
 \section{$\frac\piup2$- und $\piup$-Puls Justage}
 
-Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei \texttt{A\_len}
-= \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
-\SI{2.58}{\micro\second}.
+Nach der Theorie sollte sich bei Verdopplung von $A_\text{len}$ das Signal
+ganz auslöschen. Die Pulslänge soll jetzt so korrigiert werden, dass das
+Signal minimal wird. Die so gefundene Zeit ist die Länge des $\piup$- die
+Hälfte davon entsprechend die des $\frac{\piup}{2}$-Pulses.
 
 \chapter{Durchführung und Auswertung}
+
+\section{Vorbereitung}
+
+Unser optimiertes Pickup-Signal ist in Abbildung~\ref{fig:pickup}
+zu sehen.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\textwidth]{Opt_Pickup_lang.pdf}
+    \includegraphics[width=.8\textwidth]{Opt_Pickup_kurz.pdf}
+    \caption{%
+    Optimiertes Pickup-Signal
+    }
+    \label{fig:pickup}
+\end{figure}
+
+Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
+
+Die Gradienten haben wir eingestellt auf $X = \num{0.5}$, $Y = \num{18.0}$, $Z
+= \num{32.2}$ und $Z^2 = \num{0.0}$, die gewählte Frequenz ist
+\SI{21.16141}{\mega\hertz}. Das entstandene Bild ist in Abbildung~\ref{fig:FID}
+zu sehen.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Opt_FID.pdf}
+    \caption{%
+    Optimiertes FID-Signal
+    }
+    \label{fig:FID}
+\end{figure}
+
+Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei $A_\text{len}$
+= \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
+\SI{2.58}{\micro\second}.
 
 \FloatBarrier
 \section{Rabi-Oszillationen}
@@ -419,9 +492,9 @@ zu sehen.
     \centering
     \begin{tabular}{SSSS}
         {$f / \si{\mega\hertz}$} &
-        {A\_len$ / \si{\micro\second}$} &
-        {Signal Gelb$ / \si{\volt}$} &
-        {Signal Grün$ / \si{\volt}$} \\
+        {$A_\text{len} / \si{\micro\second}$} &
+        {$Q\text{-Signal} / \si{\volt}$} &
+        {$I\text{-Signal} / \si{\volt}$} \\
         \midrule
         %< for f, A_len, gelb_val, gruen_val in rabi_messdaten: ->%
         << f >> & << A_len >> & << gelb_val >> & << gruen_val >> \\
@@ -446,9 +519,8 @@ zu sehen.
 \section{Longitudinale Relaxationszeit $T_1$}
 
 
-$\nu = \SI{21.1573}{\mega\hertz}$
-
-$\texttt{A\_test} = \SI{5.56}{\micro\second}$
+Da die folgenden Messungen am zweiten Versuchstag durchgeführt wurden,
+musste die Frequenz auf $\nu = \SI{21.1573}{\mega\hertz}$ angepasst werden.
 
 \FloatBarrier
 \subsection{Sättigungs-Zurückgewinnung}
@@ -493,6 +565,8 @@ Wir erhalten daraus
     \centering
     \includegraphics[width=\linewidth]{Saettigung.pdf}
     \caption{%
+        Messdaten und angepasste Funktion zur Bestimmung der longitudinalen
+        Relaxationszeit durch die Sättigungsmethode
     }
     \label{fig:saet}
 \end{figure}
@@ -536,6 +610,8 @@ Die Gleichgewichtsmagnetisierung ist
     \centering
     \includegraphics[width=\linewidth]{Polarisation.pdf}
     \caption{%
+        Messdaten und angepasste Funktion zur Bestimmung der longitudinalen
+        Relaxationszeit durch die Polarisationsmethode
     }
     \label{fig:pol}
 \end{figure}
@@ -582,6 +658,8 @@ gezeigt. Aus der Anpassungsfunktion
     \centering
     \includegraphics[width=\linewidth]{effektiv.pdf}
     \caption{%
+        Messdaten und angepasste Funktion zur Bestimmung der
+        effektiven transversalen Relaxationszeit
     }
     \label{fig:eff}
 \end{figure}
@@ -605,7 +683,7 @@ erhalten wir für die homogene transversale Relaxationszeit
 \begin{table}
     \centering
     \begin{tabular}{S|S}
-        {$\tau / \si{\second}$} & {$M / \si{\volt}$} \\
+        {$\tau / \si{\milli\second}$} & {$M / \si{\volt}$} \\
         \midrule
         %< for tau, M_val in Tabelle_Hahn: ->%
         << tau >> & << M_val >> \\
@@ -621,6 +699,8 @@ erhalten wir für die homogene transversale Relaxationszeit
     \centering
     \includegraphics[width=\linewidth]{Hahn.pdf}
     \caption{%
+        Messwerte und angepasste Funktion zur Bestimmung der homogenen
+        transversalen Relaxationszeit durch die Hahn-Spinecho-Sequenz
     }
     \label{fig:hahn}
 \end{figure}

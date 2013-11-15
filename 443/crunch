@@ -159,23 +159,22 @@ def rabi(T):
     # Fit
     popt_gelb, pconv_gelb = op.curve_fit(rabi_fit_gelb, A_len, gelb_val, (1., 3.1416/5.))
     popt_gruen, pconv_gruen = op.curve_fit(rabi_fit_gruen, A_len, gruen_val, (1., 3.1416/5.))
-    A_len = A_len * 1e-6 # wieder Sekunden
-    popt_gelb[1] = popt_gelb[1]*1e6
-    popt_gruen[1] = popt_gruen[1]*1e6
+    #A_len = A_len * 1e-6 # wieder Sekunden
+    #popt_gelb[1] = popt_gelb[1]*1e6
+    #popt_gruen[1] = popt_gruen[1]*1e6
     x = np.linspace(0., np.max(A_len), 1000)
     y_gelb = rabi_fit_gelb(x, *popt_gelb)
     y_gruen = rabi_fit_gruen(x, *popt_gruen)
 
-    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label='Gelb', color='blue')
-    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label='In-Phase-Signal', color='green')
+    pl.errorbar(A_len, gelb_val, yerr=gelb_err, marker='+', linestyle='none', label=r'$Q$-Signal', color='blue')
+    pl.errorbar(A_len, gruen_val, yerr=gruen_err, marker='+', linestyle='none', label=r'$I$-Signal', color='green')
     pl.plot(x, y_gelb, color='blue')
     pl.plot(x, y_gruen, color='green')
     pl.grid(True)
     pl.legend(loc='best')
-    pl.title('Rabi-Oszillation')
-    pl.xlabel(r'A_len / s')
+    pl.xlabel(r'$A_\mathrm{len} / \mu\mathrm{s}$')
     pl.ylabel(r'Signal / V')
-    pl.savefig('_build/Rabi.pdf')
+    pl.savefig('_build/Rabi.pdf', bbox_inches='tight')
     pl.clf()
 
 def saettigung(T):
@@ -190,12 +189,10 @@ def saettigung(T):
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y_mit, label=r'Anpassungsfunktion')
-    pl.title('Sättigungs-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
-    pl.legend(loc='best')
     pl.grid(True)
-    pl.savefig('_build/Saettigung.pdf')
+    pl.savefig('_build/Saettigung.pdf', bbox_inches='tight')
     pl.clf()
 
     T['M_0_sat'] = unitprint.siunitx(popt_mit[0], np.sqrt(pconv_mit[0,0]))
@@ -219,11 +216,10 @@ def polarisation(T):
 
     pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
     pl.plot(x,y)
-    pl.title('Polarisations-Zurückgewinnung')
     pl.xlabel(r"$\tau / \mathrm{s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Polarisation.pdf')
+    pl.savefig('_build/Polarisation.pdf', bbox_inches='tight')
     pl.clf()
 
     T['M_0_pol'] = unitprint.siunitx(popt[0], np.sqrt(pconv[0,0]))
@@ -259,14 +255,12 @@ def effektiv(T):
     x = np.linspace(np.min(t), np.max(t))
     y = trans_relaxation(x, *popt)
 
-    pl.plot(t, M, linestyle='none', marker='x')
-    pl.plot(x,y)
-    pl.title('Effektive transversale Relaxation')
+    pl.plot(t*1e3, M, linestyle='none', marker='.')
+    pl.plot(x*1e3,y)
     pl.grid(True)
-    pl.legend(loc='best')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
-    pl.savefig('_build/effektiv.pdf')
+    pl.savefig('_build/effektiv.pdf', bbox_inches='tight')
     pl.clf()
 
     T['T_eff'] = unitprint.siunitx(popt[1], np.sqrt(pconv[1,1]))
@@ -302,6 +296,7 @@ def effektiv(T):
 
 def hahn(T):
     data = np.genfromtxt('Messdaten/Hahn.txt')
+    data = data[data[:,0].argsort()]
     tau = data[:, 0]
     M_val = data[:, 1]
     M_err = data[:, 2]
@@ -310,13 +305,12 @@ def hahn(T):
     x = np.linspace(np.min(tau), np.max(tau),100)
     y = trans_relaxation(x, *popt)
 
-    pl.errorbar(tau, M_val, yerr=M_err, linestyle='none', marker='+')
-    pl.plot(x, y)
-    pl.title('Hahn-Spinecho')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.errorbar(tau*1e3, M_val, yerr=M_err, linestyle='none', marker='+')
+    pl.plot(x*1e3, y)
+    pl.xlabel(r"$t / \mathrm{ms}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Hahn.pdf')
+    pl.savefig('_build/Hahn.pdf', bbox_inches='tight')
     pl.clf()
 
     T['T_2_hahn'] = unitprint.siunitx(popt[1]*2, np.sqrt(pconv[1,1])*2)
@@ -324,7 +318,7 @@ def hahn(T):
     print('T_2_hahn:', popt[1], np.sqrt(pconv[1,1]))
 
     T['Tabelle_Hahn'] = zip(
-            unitprint.siunitx(tau),
+            unitprint.siunitx(tau*1e3),
             unitprint.siunitx(M_val, M_err)
             )
 
@@ -335,15 +329,48 @@ def pickup(T):
         skiprows=2
     )
 
-    t = data[:, 0]
+    t = data[:, 0]*1e6
     M = data[:, 1]
 
     pl.plot(t, M, label='Messpunkte')
-    pl.title('Optimierte Pickup-Probe')
-    pl.xlabel(r"$t / \mathrm{s}$")
+    pl.xlabel(r"$t / \mathrm{\mu s}$")
     pl.ylabel(r"$M / \mathrm{V}$")
     pl.grid(True)
-    pl.savefig('_build/Pickup.pdf')
+    pl.savefig('_build/Opt_Pickup_lang.pdf', bbox_inches='tight')
+    pl.clf()
+
+    data = np.loadtxt(
+        open('Messdaten/print_002.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]*1e6
+    M = data[:, 1]
+
+    pl.plot(t, M, label='Messpunkte')
+    pl.xlabel(r"$t / \mathrm{\mu s}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
+    pl.grid(True)
+    pl.savefig('_build/Opt_Pickup_kurz.pdf', bbox_inches='tight')
+    pl.clf()
+
+def FID(T):
+
+    data = np.loadtxt(
+        open('Messdaten/print_003.csv', "rb"),
+        delimiter=",",
+        skiprows=2
+    )
+
+    t = data[:, 0]*1e3
+    M = data[:, 1]
+
+    pl.plot(t, M, label='Messpunkte')
+    pl.xlabel(r"$t / \mathrm{ms}$")
+    pl.ylabel(r"$M / \mathrm{V}$")
+    pl.grid(True)
+    pl.savefig('_build/Opt_FID.pdf', bbox_inches='tight')
     pl.clf()
 
 def render_template(T, filename):
@@ -370,6 +397,7 @@ def main():
     hahn(T)
     sequenzen(T)
     pickup(T)
+    FID(T)
 
     if len(sys.argv) > 1:
         render_template(T, sys.argv[1])
