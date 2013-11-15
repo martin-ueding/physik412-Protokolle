@@ -353,7 +353,7 @@ einem Winkel treffen, da sie mit der gleichen, lokal jedoch abweichenden,
 Larmorfrequenz präzessieren.
 
 Dies funktioniert jedoch nur mit der Verschiebung der Larmorfrequenz, die nicht
-von der Zeit abhängt, die also vom externen Magnetfeld kommt. Die
+von der Zeit abhängt, die also von der externen Flussdichte kommt. Die
 Spin-Spin-Wechselwirkung kann dadurch nicht rückgängig gemacht werden. Hier
 sind wir allerdings auch nur an dieser interessiert, so dass wir den gesuchten
 Effekt isoliert haben.
@@ -400,58 +400,56 @@ Im Aufbau des Experimentes verwenden wir vier Teile:
         digitales Oszilloskop
 \end{itemize}
 
-Zunächst werden \texttt{Pulsed RF-Out} am Synthesizer mit \texttt{Pulsed
-RF-In} am Receiver und der Magnet mit \texttt{Sample} am Receiver verbunden.
-Nun werden an Pulse Programmer und Synthesizer jeweils \texttt{Q} und
-\texttt{I} mit einander verbunden, sowie \texttt{Blanking Out} am Pulse
-Programmer mit \texttt{Blanking In} am Receiver. Als nächstes verbinden wir
-das Oszilloskop: \texttt{Sync Out} des Pulse Programmers wird an
-\texttt{Input Trigger}, \texttt{Env. Out}, \texttt{Q} und \texttt{I} des
-Receivers werden an den Kanälen 1, 2 und 3 des Oszilloskops angeschlossen.
+Zunächst werden \emph{Pulsed RF-Out} am Synthesizer mit \emph{Pulsed RF-In} am
+Receiver und der Magnet mit \emph{Sample} am Receiver verbunden. Nun werden an
+Pulse Programmer und Synthesizer jeweils \emph{Q} und \emph{I} mit einander
+verbunden, sowie \emph{Blanking Out} am Pulse Programmer mit \emph{Blanking In}
+am Receiver. Als nächstes verbinden wir das Oszilloskop: \emph{Sync Out} des
+Pulse Programmers wird an \emph{Input Trigger}, \emph{Env. Out}, \emph{Q} und
+\emph{I} des Receivers werden an den Kanälen 1, 2 und 3 des Oszilloskops
+angeschlossen.
 
-Im Anschluss werden die Temperaturregler des PS2 Controllers auf
-\texttt{open}, \texttt{TC}, \texttt{Gain} am Receiver
-auf \num{0.01} bzw. 75\% und \texttt{Sync} am Pulse Programmer
-auf \texttt{A} gestellt.
-\texttt{Blanking}, \texttt{Ref Out} und \texttt{Pulse A} an
-Receiver, Sythesizer bzw. Pulse Programmer werden an-, \texttt{CW Out} am
-Synthesizer und \texttt{MG} und \texttt{Pulse B} am Pulse Programmer werden
-ausgeschaltet. 
+Im Anschluss werden die Temperaturregler des PS2 Controllers auf \emph{open},
+\emph{TC}, \emph{Gain} am Receiver auf \num{0.01} bzw. \SI{75}{\percent} und
+\emph{Sync} am Pulse Programmer auf \emph{A} gestellt. \emph{Blanking},
+\emph{Ref Out} und \emph{Pulse A} an Receiver, Sythesizer bzw. Pulse Programmer
+werden an-, \emph{CW Out} am Synthesizer und \emph{MG} und \emph{Pulse B} am
+Pulse Programmer werden ausgeschaltet. 
 
 \section{Temperatureinstellung}
 
 Damit die Temperatur innerhalb des Magneten stabilisiert werden kann, muss
 diese zunächst über die Potentiometer auf Raumtemperatur geregelt werden.
 Sobald die LED-Anzeige erlischt, ist dies erreicht und der Kippschalter kann
-umgelegt werden um die Regelung abzukoppeln.
+umgelegt werden, um die Regelung festzustellen.
 
 \section{Tuning des RF-Resonanzkreises}
 
-Wir stellen am Pulse Programmer $A_\text{len}$ auf \SI{2.5}{\micro\second} und
-\texttt P auf \SI{100}{\micro\second} und am Oszilloskop den Trigger auf
-\texttt{Ext}, \texttt{Normal}, \texttt{Rising} und $> \SI{.1}{\volt}$, den
-Sweep auf \SI{2}{\micro\second\per\division} und Kanal 1 auf
-\SI{5}{\volt\per\division}, \texttt{DC} und \texttt{full bandwidth}.
+Wir stellen am Pulse Programmer $A_\text{len}$ auf \SI{2.5}{\micro\second}, $P$
+auf \SI{100}{\micro\second} und am Oszilloskop den Trigger auf \emph{Ext},
+\emph{Normal}, \emph{Rising} und $> \SI{.1}{\volt}$. Den Sweep stellen wir auf
+\SI{2}{\micro\second\per\division} und Kanal~1 auf \SI{5}{\volt\per\division},
+\emph{DC} und \emph{full bandwidth}.
 
-Nun wird die Pickup Probe eingesetzt und an Kanal 1 angeschlossen. Die
-Tuning-Kondensatoren im Magneten werden nun so eingestellt, dass ein
+Nun wird die Pickup Probe eingesetzt und an Kanal~1 angeschlossen. Die
+Tuning-Kondensatoren im Magneten werden nun vom Tutor so eingestellt, dass ein
 optimiertes Signal entsteht.
 
 \section{Optimierung des Free Induction Decay Signals}
 
-Die eigentliche Probe wird nun eingesetzt und \texttt{Env Out} des Receivers
-wieder an Kanal 1 angeschlossen. Das Signal soll nun möglichst hoch, langsam
+Die eigentliche Probe wird nun eingesetzt und \emph{Env Out} des Receivers
+wieder an Kanal~1 angeschlossen. Das Signal soll nun möglichst hoch, langsam
 und exponentiell abfallend sein. Dazu werden die Magnetfeldgradienten am
-PS1~Controller und die Frequenz am Synthesizer verändert. Für ein Feintuning
-der Frequenz kann man sich das \texttt{Q}-Signal am Oszilloskop anzeigen
-lassen. Die Nachschwingung soll möglichst gering sein.
+PS1~Controller und die Frequenz am Synthesizer verändert. Für eine
+Feineinstellung der Frequenz kann man sich das \emph{Q}-Signal am Oszilloskop
+anzeigen lassen. Die Nachschwingung soll möglichst gering sein.
 
-\section{$\frac\piup2$- und $\piup$-Puls Justage}
+\section{$\sfrac\piup2$- und $\piup$-Puls Justage}
 
 Nach der Theorie sollte sich bei Verdopplung von $A_\text{len}$ das Signal
 ganz auslöschen. Die Pulslänge soll jetzt so korrigiert werden, dass das
 Signal minimal wird. Die so gefundene Zeit ist die Länge des $\piup$- die
-Hälfte davon entsprechend die des $\frac{\piup}{2}$-Pulses.
+Hälfte davon entsprechend die des $\sfrac{\piup}{2}$-Pulses.
 
 \chapter{Durchführung und Auswertung}
 
@@ -465,7 +463,8 @@ zu sehen.
     \includegraphics[width=.8\textwidth]{Opt_Pickup_lang.pdf}
     \includegraphics[width=.8\textwidth]{Opt_Pickup_kurz.pdf}
     \caption{%
-    Optimiertes Pickup-Signal
+    Optimiertes Pickup-Signal. Im unteren Bild ist eine starke Vergrößerung zu
+    sehen.
     }
     \label{fig:pickup}
 \end{figure}
@@ -473,9 +472,9 @@ zu sehen.
 Wir stellen das Oszilloskop so ein, dass wir das Signal gut sehen können.
 
 Die Gradienten haben wir eingestellt auf $X = \num{0.5}$, $Y = \num{18.0}$, $Z
-= \num{32.2}$ und $Z^2 = \num{0.0}$, die gewählte Frequenz ist
-\SI{21.16141}{\mega\hertz}. Das entstandene Bild ist in Abbildung~\ref{fig:FID}
-zu sehen.
+= \num{32.2}$ und $Z^2 = \num{0.0}$, bezogen auf 100 Skalenteile. Die gewählte
+Frequenz ist \SI{21.16141}{\mega\hertz}. Das entstandene Bild ist in
+Abbildung~\ref{fig:FID} zu sehen.
 
 \begin{figure}
     \centering
@@ -487,13 +486,13 @@ zu sehen.
 \end{figure}
 
 Die Pulsdauer, bei der das Signal minimal ist, erhalten wir bei $A_\text{len}$
-= \SI{5.16}{\micro\second}. Die Dauer für das $\piup/2$-Signal ist entsprechend
-\SI{2.58}{\micro\second}.
+= \SI{5.16}{\micro\second}. Die Dauer für das $\sfrac\piup2$-Signal ist
+entsprechend \SI{2.58}{\micro\second}.
 
 \FloatBarrier
 \section{Rabi-Oszillationen}
 
-Unsere Messwerte befinden sich in Tabelle~\ref{tab:rabi}, eine graphische
+Unsere Messwerte befinden sich in Tabelle~\ref{tab:rabi}. Eine graphische
 Darstellung einschließlich Anpassungsfunktionen ist in Abbildung~\ref{fig:rabi}
 zu sehen.
 
@@ -527,7 +526,6 @@ zu sehen.
 \FloatBarrier
 \section{Longitudinale Relaxationszeit $T_1$}
 
-
 Da die folgenden Messungen am zweiten Versuchstag durchgeführt wurden,
 musste die Frequenz auf $\nu = \SI{21.1573}{\mega\hertz}$ angepasst werden.
 
@@ -535,27 +533,25 @@ musste die Frequenz auf $\nu = \SI{21.1573}{\mega\hertz}$ angepasst werden.
 \subsection{Sättigungs-Zurückgewinnung}
 
 Die abgelesene Gleichgewichtsmagnetisierung beträgt
-
 \[
-    M_0 \hat = \SI{7.525}{\volt}
+    M_0 \hat = \SI{7.525}{\volt}.
 \]
 
 Unsere Messwerte sind in Tabelle~\ref{tab:saet} einzusehen. In
 Abbildung~\ref{fig:saet} ist unsere Messung graphisch dargestellt. Die
 Anpassungsfunktion ist
-
 \[
-    M(\tau) = M_0\del{1-\exp\del{ -\frac{\tau}{T_1} }}
+    M(\tau) = M_0\del{1-\exp\del{ -\frac{\tau}{T_1} }},
 \]
-
 da wir von einer Anfangsmagnetisierung von \num{0} ausgehen.
 Wir erhalten daraus
-
-\begin{align*}
-    M_0 &= \SI{<< M_0_sat >>}{\volt}
-    \intertext{und}
-    T_1 &= \SI{<< T_1_sat >>}{\second}
-\end{align*}
+\[
+    M_0 = \SI{<< M_0_sat >>}{\volt}
+\]
+und
+\[
+    T_1 = \SI{<< T_1_sat >>}{\second}.
+\]
 
 \begin{table}[htbp]
     \centering
@@ -585,21 +581,18 @@ Wir erhalten daraus
 
 Unsere Messwerte sind in Tabelle~\ref{tab:pol} einzusehen, eine graphische
 Darstellung in Abbildung~\ref{fig:pol}. Die Anpassungsfunktion ist hier
-
 \[
-    M(\tau) = M_0\del{ 1 - 2\exp\del{-\frac{\tau}{T_1}}}
+    M(\tau) = M_0\del{ 1 - 2\exp\del{-\frac{\tau}{T_1}}}.
 \]
 
 Für die longitudinale Relaxationszeit erhalten wir so
-
 \[
-    T_1 = \SI{<< T_1_pol >>}{\second}
+    T_1 = \SI{<< T_1_pol >>}{\second}.
 \]
 
 Die Gleichgewichtsmagnetisierung ist
-
 \[
-    M_0 = \SI{<< M_0_pol >>}{\volt}
+    M_0 = \SI{<< M_0_pol >>}{\volt}.
 \]
 
 \begin{table}[htbp]
@@ -630,12 +623,13 @@ Die Gleichgewichtsmagnetisierung ist
 
 Unsere Messwerte sind in Tabelle~\ref{tab:eff} und Abbildung~\ref{fig:eff}
 gezeigt. Aus der Anpassungsfunktion
-
-\begin{align*}
+\[
     M(t) = M_0\exp\del{-\frac{t}{T_2^*}}+M_\text{Offset}
-    \intertext{folgt für die effektive transversale Relaxationszeit:}
-    T_2^* &= \SI{<< T_eff >>}{\second}
-\end{align*}
+\]
+folgt für die effektive transversale Relaxationszeit:
+\[
+    T_2^* = \SI{<< T_eff >>}{\second}.
+\]
 
 \begin{table}
     \centering
@@ -661,7 +655,6 @@ gezeigt. Aus der Anpassungsfunktion
     \caption{Messdaten zur effektiven transversalen Relaxationszeit}
     \label{tab:eff}
 \end{table}
-
 
 \begin{figure}[htbp]
     \centering
@@ -739,17 +732,20 @@ aus. Dann wird in den geglätteten Daten nach Maxima gesucht.
 \parencite{scipy.signal.find_peaks_cwt}
 
 Da wir nur das Bild haben, wissen wir nicht direkt, wie die Achsen skaliert
-sind. Daher mussten wir unseren eingestellten Pulsabstand $\tau$ benutzen. Der
-Abstand der ersten fünf Maxima haben wir genommen, den Mittelwert berechnet
-und mit der Erwartung, dass die Maxima $2\tau$ auseinander sind, die Skala
-entsprechend angepasst. Somit erhalten wir eine Skala von \num{<< CP_skala >>}
-Sekunden pro Pixel.
+sind. Daher mussten wir nach dem Versuch noch einmal mit den gespeicherten
+Messdaten an das Oszilloskop. Dort haben wir den Abstand der Peaks in Sekunden
+abgelesen. Der Abstand der ersten fünf Maxima haben wir genommen, den
+Mittelwert berechnet und mit der Erwartung, dass die Maxima $2\tau$ auseinander
+sind, die Skala entsprechend angepasst. Somit erhalten wir eine Skala von
+\num{<< CP_skala >>} Sekunden pro Pixel.
 
-An die Maxima haben wir wie schon im Theorieteil erwähnt, eine
-Exponentialfunktion angepasst und eine Relaxationszeit von
+An alle bis auf das erste Maxima haben wir, wie schon im Theorieteil erwähnt,
+eine Exponentialfunktion angepasst und eine Relaxationszeit von
 \[
     T_{2,\text{CP}} = \SI{<< CP_T >>}{\second}
 \]
+erhalten. Das erste Maximum kommt durch die Anregung selbst und stellt kein
+Echo dar.
 
 \begin{figure}[htbp]
     \centering
@@ -796,7 +792,7 @@ von \num{<< MG_offset >>} und eine Relaxationszeit von:
 \FloatBarrier
 \chapter{Zusammenfassung}
 
-Hier unsere Messgrößen zusammengestellt:
+Hier sind unsere Messgrößen zusammengestellt:
 
 \begin{tabular}{llS}
     Größe & Methode & {Zeit in Sekunden} \\
@@ -808,8 +804,6 @@ Hier unsere Messgrößen zusammengestellt:
     $T_{2}$ & Carr-Purcell & << CP_T >> \\
     $T_{2}$ & Meiboom-Gill & << MG_T >>
 \end{tabular}
-
-\fehlt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 Diskussion                                  %
