@@ -79,7 +79,7 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
 
     popt, pconv = op.curve_fit(
         exponentieller_abfall, x[peak_indizes[1:]], y[peak_indizes[1:]],
-        sigma=1/y_err[peak_indizes[1:]], p0=[700, 200],
+        sigma=1/y_err[peak_indizes[1:]], p0=[700, 200, 0],
     )
 
     T_val = popt[1] * skala
@@ -104,8 +104,8 @@ def peaks_aus_bild(pngdatei, plot_ausgabe):
 
     return T_val, T_err, skala, offset
 
-def exponentieller_abfall(x, scale, T):
-    return scale * np.exp(- x / T)
+def exponentieller_abfall(x, scale, T, offset):
+    return scale * np.exp(- x / T) + offset
 
 def sequenzen(T):
     T_val, T_err, skala, offset = peaks_aus_bild(
@@ -130,11 +130,11 @@ def rabi_fit_gelb(x, a, b):
 def rabi_fit_gruen(x, a, b):
     return a*np.sin(b*x)
 
-def long_relaxation_sat(tau, M_0, T):
-    return M_0*(1-np.exp(-tau/T))
+def long_relaxation_sat(tau, M_0, T, offset):
+    return M_0*(1-np.exp(-tau/T)) + offset
 
-def long_relaxation_pol(tau, M_0, T):
-    return M_0*(1-2*np.exp(-tau/T))
+def long_relaxation_pol(tau, M_0, T, offset):
+    return M_0*(1-2*np.exp(-tau/T)) + offset
 
 def trans_relaxation(tau, M_0, T, Off):
     return M_0*np.exp(-tau/T)+Off
@@ -183,7 +183,7 @@ def saettigung(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat, tau, M_val, (7., .1))
+    popt_mit, pconv_mit = op.curve_fit(long_relaxation_sat, tau, M_val, (7., .1, 0))
     x = np.linspace(np.min(tau), np.max(tau), 500)
     y_mit = long_relaxation_sat(x, *popt_mit)
 
@@ -210,7 +210,7 @@ def polarisation(T):
     M_val = data[:, 1]
     M_err = data[:, 2]
 
-    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1))
+    popt, pconv = op.curve_fit(long_relaxation_pol, tau, M_val, (8., .1, 0))
     x = np.linspace(np.min(tau), np.max(tau), 500)
     y = long_relaxation_pol(x, *popt)
 
@@ -356,7 +356,6 @@ def pickup(T):
     pl.clf()
 
 def FID(T):
-
     data = np.loadtxt(
         open('Messdaten/print_003.csv', "rb"),
         delimiter=",",
