@@ -31,7 +31,17 @@
 \maketitle
 
 \begin{abstract}
-    \fehlt
+    In diesem Versuch untersuchen wir die magnetische Resonanz von Protonen,
+    die in Form von Wasserstoff in einer großen Form in der Probe aus leichtem
+    Mineralöl vorliegen. 
+
+    Dazu regen wir Spins mit einem magnetischen Wechselfeld an, um sie aus
+    ihrer Gleichgewichtslage zu lenken. Anschließend beobachten wir die sich
+    aus allen Spins ergebende makroskopische Magnetisierung, wie sie wieder in
+    ihren Gleichgewichtszustand zurückkehrt.
+
+    Die so zu bestimmenden Relaxationszeiten sind charakteristisch für die
+    Probe, so dass diese zur Identifikation benutzt werden können.
 \end{abstract}
 
 \tableofcontents
@@ -48,9 +58,7 @@
 
 \section{Spin $\sfrac12$ Teilchen im homogenen Magnetfeld}
 
-In diesem Versuch untersuchen wie die magnetische Resonanz von Protonen, die in
-Form von Wasserstoff in einer großen Form in der Probe aus leichtem Mineralöl
-vorliegen. Die Protonen zeichnen sich durch einen Spin $\sfrac12$ aus.
+Die Protonen in diesem Versuch zeichnen sich durch einen Spin $\sfrac12$ aus.
 
 Dieser Spin wurde in „Experimentalphysik 4“ eingeführt und verhält sich wie ein
 Drehimpuls. Die Quantenzahl $s$ ist hier immer $\sfrac12$. Es bleibt die
@@ -149,16 +157,18 @@ $\Sigma$. Es ist für die weiteren Überlegungen hilfreich, ein rotierendes
 Bezugssystem $\Sigma^*$ zu betrachten, in dem das magnetische Moment fest ist.
 
 In einem solchen rotierenden Bezugssystem tritt noch eine weitere,
-transversales magnetische Flussdichte auf. Diese hat genau die Stärke, dass
+transversale magnetische Flussdichte auf. Diese hat genau die Stärke, dass
 sich die resultierende Flussdichte genau in Richtung des magnetischen Momentes
 befindet. Diese präzessiert dann um sich selbst, es bleibt also stehen. Das
 Bezugssystem war gerade so konstruiert. \parencite{teach_spin_manual}
 
 Mit einer weiteren Spule können wir weitere transversale Magnetfelder erzeugen.
 Durch einen kurzen Puls kann die im System $\Sigma^*$ beobachtete magnetische
-Flussdichte so verändert werden, dass die parallel zur $x^*$-Achse liegt.
+Flussdichte so verändert werden, dass die parallel zur $x^*$-Achse liegt. Dazu
+muss von außen ein transversales Wechselfeld mit der Larmorfrequenz angelegt
+werden.
 
-\subsection{$\piup/2$–Puls}
+\subsection{$\sfrac\piup2$–Puls}
 
 Ein Puls des rotierenden Magnetfeldes der richtigen Stärke und Länge wird dazu
 führen, dass das magnetische Moment für den Augenblick nur um die mitgeführte
@@ -180,28 +190,29 @@ recht illustrativ.
 
 \subsection{$\piup$–Puls}
 
-Ähnlich wie der $\piup/2$-Puls kippt der $\piup$-Puls das magnetische Moment,
-jedoch um den doppelten Winkel. Im thermalisierten Grundzustand des Systems
-invertiert dieser Puls $\ket\uparrow$ und $\ket\downarrow$. Geht dem
-$\piup$-Puls ein $\piup/2$-Puls voraus, so wird der Azimutwinkel $\phi$ des
-Zustandes verändert.
+Ähnlich wie der $\sfrac\piup2$-Puls kippt der $\piup$-Puls das magnetische
+Moment, jedoch um den doppelten Winkel. Im thermalisierten Grundzustand des
+Systems invertiert dieser Puls $\ket\uparrow$ und $\ket\downarrow$. Geht dem
+$\piup$-Puls ein $\sfrac\piup2$-Puls voraus, so wird der Azimutwinkel $\phi$
+des Zustandes verändert.
 
 \subsection{Transversale Relaxation}
 
-Die Larmorfrequenz an jeder Stelle fast gleich, jedoch nur fast. Dadurch
+Die Larmorfrequenz ist an jeder Stelle fast gleich, jedoch nur fast. Dadurch
 präzessieren die einzelnen Spins mit einer lokal leicht verschiedenen
 Geschwindigkeit. Auch wenn die Unterschiede nur klein sind, reicht es aus, wenn
-die relative Verschiebung zwischen den Spins $\piup$ beträgt, dass keine
+die relative Verschiebung zwischen den Spins $\piup$ beträgt, damit keine
 makroskopische transversale Magnetisierung gemessen werden kann.
 
-Zum einen wird die Ortsabhängigkeit der Larmorfrequenz durch das leicht
-inhomogene Magnetfeld des großen äußeren Magneten verursacht. Diese Veränderung
-ist konstant und kann, wie wir später beschreiben werden, mit der
-Hahn-Spinecho-Sequenz rückgängig gemacht werden.
+Zum einen wird die Ortsabhängigkeit der Larmorfrequenz durch die leicht
+inhomogene magnetische Flussdichte des großen äußeren Magneten verursacht.
+Diese Veränderung ist konstant und kann, wie wir später beschreiben werden, mit
+der Hahn-Spinecho-Sequenz rückgängig gemacht werden.
 
 Außerdem erzeugen die magnetischen Momente der einzelnen Spins für sich auch
 wieder Magnetfelder $\vec H$, die auch zu einer Verschiebung der Larmorfrequenz
-führen. Dieser Effekt ist stark zeitabhängig und kann nicht korrigiert werden.
+führen. Dieser Effekt ist stark zeitabhängig und kann nicht korrigiert werden,
+jedoch charakteristisch für die Probe.
 
 Da es diese verschiedenen Effekte gibt, werden zwei verschiedene
 Relaxationszeiten eingeführt.
@@ -212,16 +223,16 @@ T_2$.
 
 \subsubsection{Homogene Transversale Relaxationszeit $T_2$}
 
-Durch einen $\piup/2$-Puls wird die makroskopische Magnetisierung in die
+Durch einen $\sfrac\piup2$-Puls wird die makroskopische Magnetisierung in die
 $x$-$y$-Ebene gekippt und präzessiert dann mit der Larmorfrequenz um die
 $z$-Achse, jedoch zerläuft diese Magnetisierung aufgrund der leicht
 verschiedenen Larmorfrequenzen. Dies nennt man „freien Induktionszerfall“, kurz
 „FID“\footnote{„FID“ kommt von „free induction decay“.}.
 
-Wäre das Magnetfeld perfekt homogen, so basierte die Frequenzverschiebung nur
-auf dem Magnetfeld der anderen Spins. Diese homogene Relaxation ist die
-eigentlich interessante Zeitkonstante, da sie vom nur Material abhängt und
-nicht vom experimentellen Aufbau.
+Wäre die magnetische Flussdichte perfekt homogen, so basierte die
+Frequenzverschiebung nur auf dem Magnetfeld der anderen Spins. Diese homogene
+Relaxation ist die eigentlich interessante Zeitkonstante, da sie vom nur
+Material abhängt und nicht vom experimentellen Aufbau.
 
 Mit der Hahn-Spinecho-Sequenz können wir später diese Zeit unabhängig vom
 externen Magnetfeld messen.
@@ -231,8 +242,8 @@ wir mit der Zeitkonstante $T_2$ beschreiben werden.
 
 \subsubsection{Effektive Transversale Relaxationszeit $T_2^*$}
 
-Das inhomogene Magnetfeld verstärkt den freien Induktionszerfall. Auch hier ist
-ein exponentieller Abfall zu beobachten, der jedoch schneller ist, als der
+Die inhomogene Flussdichte verstärkt den freien Induktionszerfall. Auch hier
+ist ein exponentieller Abfall zu beobachten, der jedoch schneller ist, als der
 Effekt durch die homogene Relaxation alleine. Daher ist $T_2^*$ kürzer als
 $T_2$.
 
@@ -246,19 +257,18 @@ die anderen wie folgt zusammen: \parencite[Formel~P443.5]{physik412-Anleitung}
 \subsection{Rabi-Oszillation}
 
 Rabi-Oszillationen sind allgemein Oszillationen eines Zweizustandsystems durch
-eine externe Anregung. \cite{wikipedia/Rabi_Oszillation}
+eine externe Anregung. \cite{wikipedia/Rabi_Oszillation} \cite[Abschnitt~15.9.5
+„Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
 
 Hier ist diese externe Anregung der RF-Puls, den wir durch die Spule schicken.
 Dabei legen wir die Frequenz des Pulses möglichst genau auf die Larmorfrequenz,
 und variieren hier die Pulslänge. Wir erwarten, dass sich bei einem sehr kurzen
 Puls die makroskopische Magnetisierung nicht verändert. Wenn der Puls länger
-wird, und in den Bereich des $\piup/2$-Puls kommt, ist ein maximales Signal zu
-erwarten. Wird der Puls länger, so dass er in der Nähe des $\piup$-Pulses
-kommt, ist wieder kein Signal zu erwarten. In der Größenordnung eines
-$3\piup/4$-Pulses sollte die Amplitude wieder maximal sein, jedoch die Phase
-umgekehrt sein.
-
-\cite[Abschnitt~15.9.5 „Rabi-Atomstrahlresonanz”]{meschede-gerthsen_24}
+wird, und in den Bereich des $\sfrac\piup2$-Puls kommt, ist ein maximales
+Signal zu erwarten. Wird der Puls länger, so dass er in der Nähe des
+$\piup$-Pulses kommt, ist wieder kein Signal zu erwarten. In der Größenordnung
+eines $\sfrac34\piup$-Pulses sollte die Amplitude wieder maximal sein, jedoch
+die Phase umgekehrt sein.
 
 \section{Messmethoden}
 
