@@ -6,11 +6,11 @@
 
 #import itertools
 #import scipy.interpolate
-#import scipy.signal
 import json
 import matplotlib.pyplot as pl
 import numpy as np
 import scipy.optimize as op
+import scipy.signal
 import sys
 import unitprint
 
