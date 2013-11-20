@@ -46,7 +46,7 @@ def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
     pl.plot(bins, counts, linestyle=linestyle, color=color, label=label, linewidth=linewidth)
     pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='o', markersize=5, color=color)
 
-def zefn(T):
+def unbekannte_probe(T):
     fezn_peaks = legierung_peaks('Messdaten/Legierungen/FeZn.txt')
 
     unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')
@@ -76,7 +76,7 @@ def zefn(T):
 
     n = 14
     colors = iter([
-        colorsys.hsv_to_rgb(x*1.0/n, 1.0, 1.0)
+        colorsys.hsv_to_rgb(x*1.0/n, 1.0, .8)
         for x in range(n)
     ])
 
@@ -106,7 +106,7 @@ def zefn(T):
 def main():
     T = {}
 
-    zefn(T)
+    unbekannte_probe(T)
 
     with open('_build/template.js', 'w') as f:
         json.dump(T, f, indent=4, sort_keys=True)
