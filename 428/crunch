@@ -40,10 +40,10 @@ def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
     bins = data[:, 0+column_offset]
     counts = data[:, 1+column_offset]
 
-    counts /= np.max(counts)
+    counts /= np.max(counts[real_peaks])
 
     pl.plot(bins, counts, linestyle=linestyle, color=color, label=label, linewidth=linewidth)
-    pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='*', markersize=10, color=color)
+    pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='o', markersize=5, color=color)
 
 def zefn(T):
     fezn_peaks = legierung_peaks('Messdaten/Legierungen/FeZn.txt')
@@ -73,6 +73,7 @@ def zefn(T):
     pl.xlabel('Energiekanal')
     pl.ylabel('normalisierte Anzahl')
     pl.xlim([30, 170])
+    pl.ylim([0, 1.05])
     pl.grid(True)
     pl.legend(loc='best')
     pl.savefig('_build/Bestimmung.pdf')
