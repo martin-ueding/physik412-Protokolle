@@ -14,8 +14,20 @@ import scipy.signal
 import sys
 import unitprint
 
+def zefn(T):
+    data = np.genfromtxt('Messdaten/Legierungen/FeZn.txt', skip_header=1)
+
+    print(data)
+    pl.plot(data[:, 0], data[:, 1])
+    pl.xlabel('Energiekanal')
+    pl.ylabel('Anzahl')
+    pl.grid(True)
+    pl.savefig('_build/FeZn.pdf')
+
 def main():
     T = {}
+
+    zefn(T)
 
     with open('_build/template.js', 'w') as f:
         json.dump(T, f, indent=4, sort_keys=True)
