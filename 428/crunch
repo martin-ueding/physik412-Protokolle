@@ -14,27 +14,50 @@ import scipy.signal
 import sys
 import unitprint
 
-def zefn(T):
-    data = np.genfromtxt('Messdaten/Legierungen/FeZn.txt', skip_header=1)
+def legierung_peaks(dataname, column_offset=0):
+    data = np.genfromtxt(dataname, skip_header=1)
 
-    bins = data[:, 0]
-    counts = data[:, 1]
+    bins = data[:, 0+column_offset]
+    counts = data[:, 1+column_offset]
 
-    peak_indizes = scipy.signal.find_peaks_cwt(counts, np.array([5, ]))
+    peak_indizes = scipy.signal.find_peaks_cwt(counts, np.array([5]))
     peak_indizes = np.array(peak_indizes)
+
+    max_count = np.max(counts)
 
     real_peaks = [
         peak_index
         for peak_index in peak_indizes
-        if counts[peak_index] > np.max(counts) * 0.1
+        if counts[peak_index] > max_count * 0.1
     ]
 
-    pl.plot(bins, counts)
-    pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='*', markersize=10)
+    return real_peaks
+
+def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
+                   column_offset=0, label=None):
+    data = np.genfromtxt(dataname, skip_header=1)
+
+    bins = data[:, 0+column_offset]
+    counts = data[:, 1+column_offset]
+
+    pl.plot(bins, counts, linestyle=linestyle, color=color, label=label)
+    pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='*', markersize=10, color=color)
+
+def zefn(T):
+    fezn_peaks = legierung_peaks('Messdaten/Legierungen/FeZn.txt')
+    zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)
+    unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')
+
+    #legierung_plot('Messdaten/Legierungen/FeZn.txt', fezn_peaks)
+    legierung_plot('Messdaten/Legierungen/Zn.txt', zn_peaks, column_offset=1, color='red', linestyle='--', label='Zn')
+    legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe')
+
     pl.xlabel('Energiekanal')
     pl.ylabel('Anzahl')
     pl.grid(True)
-    pl.savefig('_build/FeZn.pdf')
+    pl.legend(loc='best')
+    pl.savefig('_build/Bestimmung.pdf')
+    pl.clf()
 
 def main():
     T = {}
