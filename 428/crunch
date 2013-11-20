@@ -20,7 +20,7 @@ def legierung_peaks(dataname, column_offset=0):
     bins = data[:, 0+column_offset]
     counts = data[:, 1+column_offset]
 
-    peak_indizes = scipy.signal.find_peaks_cwt(counts, np.array([5]))
+    peak_indizes = scipy.signal.find_peaks_cwt(counts, np.array([4]))
     peak_indizes = np.array(peak_indizes)
 
     max_count = np.max(counts)
@@ -34,26 +34,45 @@ def legierung_peaks(dataname, column_offset=0):
     return real_peaks
 
 def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
-                   column_offset=0, label=None):
+                   column_offset=0, label=None, linewidth=1):
     data = np.genfromtxt(dataname, skip_header=1)
 
     bins = data[:, 0+column_offset]
     counts = data[:, 1+column_offset]
 
-    pl.plot(bins, counts, linestyle=linestyle, color=color, label=label)
+    counts /= np.max(counts)
+
+    pl.plot(bins, counts, linestyle=linestyle, color=color, label=label, linewidth=linewidth)
     pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='*', markersize=10, color=color)
 
 def zefn(T):
     fezn_peaks = legierung_peaks('Messdaten/Legierungen/FeZn.txt')
-    zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)
+
     unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')
 
+    cu_peaks = legierung_peaks('Messdaten/Legierungen/Cu.txt', column_offset=1)
+    fe_peaks = legierung_peaks('Messdaten/Legierungen/Fe.txt', column_offset=1)
+    mo_peaks = legierung_peaks('Messdaten/Legierungen/Mo.txt', column_offset=1)
+    ni_peaks = legierung_peaks('Messdaten/Legierungen/Ni.txt', column_offset=1)
+    ti_peaks = legierung_peaks('Messdaten/Legierungen/Ti.txt', column_offset=1)
+    zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)
+
     #legierung_plot('Messdaten/Legierungen/FeZn.txt', fezn_peaks)
-    legierung_plot('Messdaten/Legierungen/Zn.txt', zn_peaks, column_offset=1, color='red', linestyle='--', label='Zn')
-    legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe')
+
+    legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2)
+
+    linewidth_small = .5
+
+    legierung_plot('Messdaten/Legierungen/Cu.txt', cu_peaks, column_offset=1, color='red', linestyle='-', label='Cu', linewidth=linewidth_small)
+    legierung_plot('Messdaten/Legierungen/Fe.txt', fe_peaks, column_offset=1, color='orange', linestyle='-', label='Fe', linewidth=linewidth_small)
+    legierung_plot('Messdaten/Legierungen/Mo.txt', mo_peaks, column_offset=1, color='green', linestyle='-', label='Mo', linewidth=linewidth_small)
+    legierung_plot('Messdaten/Legierungen/Ni.txt', ni_peaks, column_offset=1, color='cyan', linestyle='-', label='Ni', linewidth=linewidth_small)
+    legierung_plot('Messdaten/Legierungen/Ti.txt', ti_peaks, column_offset=1, color='blue', linestyle='-', label='Ti', linewidth=linewidth_small)
+    legierung_plot('Messdaten/Legierungen/Zn.txt', zn_peaks, column_offset=1, color='purple', linestyle='-', label='Zn', linewidth=linewidth_small)
 
     pl.xlabel('Energiekanal')
-    pl.ylabel('Anzahl')
+    pl.ylabel('normalisierte Anzahl')
+    pl.xlim([30, 170])
     pl.grid(True)
     pl.legend(loc='best')
     pl.savefig('_build/Bestimmung.pdf')
