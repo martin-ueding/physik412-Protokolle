@@ -80,8 +80,6 @@ def zefn(T):
         for x in range(n)
     ])
 
-    print(colors)
-
     legierung_plot('Messdaten/Legierungen/Ag.txt', ag_peaks, column_offset=1, color=next(colors), label='Ag', **common_options)
     legierung_plot('Messdaten/Legierungen/Au.txt', au_peaks, column_offset=1, color=next(colors), label='Au', **common_options)
     legierung_plot('Messdaten/Legierungen/Cu.txt', cu_peaks, column_offset=1, color=next(colors), label='Cu', **common_options)
