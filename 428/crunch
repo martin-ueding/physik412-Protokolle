@@ -51,25 +51,23 @@ def zefn(T):
 
     unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')
 
-    cu_peaks = legierung_peaks('Messdaten/Legierungen/Cu.txt', column_offset=1)
-    fe_peaks = legierung_peaks('Messdaten/Legierungen/Fe.txt', column_offset=1)
-    mo_peaks = legierung_peaks('Messdaten/Legierungen/Mo.txt', column_offset=1)
-    ni_peaks = legierung_peaks('Messdaten/Legierungen/Ni.txt', column_offset=1)
-    ti_peaks = legierung_peaks('Messdaten/Legierungen/Ti.txt', column_offset=1)
-    zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)
-
     ag_peaks = legierung_peaks('Messdaten/Legierungen/Ag.txt', column_offset=1)
     au_peaks = legierung_peaks('Messdaten/Legierungen/Au.txt', column_offset=1)
+    cu_peaks = legierung_peaks('Messdaten/Legierungen/Cu.txt', column_offset=1)
+    fe_peaks = legierung_peaks('Messdaten/Legierungen/Fe.txt', column_offset=1)
     in_peaks = legierung_peaks('Messdaten/Legierungen/In.txt', column_offset=0)
+    mo_peaks = legierung_peaks('Messdaten/Legierungen/Mo.txt', column_offset=1)
+    ni_peaks = legierung_peaks('Messdaten/Legierungen/Ni.txt', column_offset=1)
     pb_peaks = legierung_peaks('Messdaten/Legierungen/Pb.txt', column_offset=1)
     sn_peaks = legierung_peaks('Messdaten/Legierungen/Sn.txt', column_offset=1)
+    ti_peaks = legierung_peaks('Messdaten/Legierungen/Ti.txt', column_offset=1)
     w_peaks = legierung_peaks('Messdaten/Legierungen/W.txt', column_offset=1)
+    zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)
     zr_peaks = legierung_peaks('Messdaten/Legierungen/Zr.txt', column_offset=1)
 
     #legierung_plot('Messdaten/Legierungen/FeZn.txt', fezn_peaks)
 
     legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2)
-
 
     common_options = {
         'linewidth': .5,
