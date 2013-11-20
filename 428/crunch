@@ -17,8 +17,20 @@ import unitprint
 def zefn(T):
     data = np.genfromtxt('Messdaten/Legierungen/FeZn.txt', skip_header=1)
 
-    print(data)
-    pl.plot(data[:, 0], data[:, 1])
+    bins = data[:, 0]
+    counts = data[:, 1]
+
+    peak_indizes = scipy.signal.find_peaks_cwt(counts, np.array([5, ]))
+    peak_indizes = np.array(peak_indizes)
+
+    real_peaks = [
+        peak_index
+        for peak_index in peak_indizes
+        if counts[peak_index] > np.max(counts) * 0.1
+    ]
+
+    pl.plot(bins, counts)
+    pl.plot(bins[real_peaks], counts[real_peaks], linestyle='none', marker='*', markersize=10)
     pl.xlabel('Energiekanal')
     pl.ylabel('Anzahl')
     pl.grid(True)
