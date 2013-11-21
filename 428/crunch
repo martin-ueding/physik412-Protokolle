@@ -147,14 +147,35 @@ def unbekannte_probe(T):
     pl.savefig('_build/Bestimmung_Zoom.pdf')
     pl.clf()
 
-def langzeitmessung(T):
-    data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=2)
+def roehre2(T):
+    data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)
     print(data)
+
+    pl.plot(data[:, 0], data[:, 1])
+    pl.xlabel(r'$\beta$')
+    pl.ylabel('Zählrate')
+    pl.savefig('_build/Roehre_2.pdf')
+    pl.clf()
+
+
+def langzeitmessung(T):
+    data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=1)
+    print(data)
+
+    beta = data[:, 0]
+    rate = data[:, 1]
+
+    pl.plot(beta, rate)
+    pl.xlabel(r'$\beta$')
+    pl.ylabel('Zählrate')
+    pl.savefig('_build/Langzeit.pdf')
+    pl.clf()
 
 def main():
     T = {}
 
     unbekannte_probe(T)
+    roehre2(T)
     langzeitmessung(T)
 
     with open('_build/template.js', 'w') as f:
