@@ -59,6 +59,9 @@ def fezn_plot(peaks):
 
     pl.plot(bins, counts)
     pl.plot(bins[peaks], counts[peaks], linestyle='none', marker='o', markersize=5)
+    pl.xlabel('Kanal')
+    pl.ylabel('Anzahl Zählereignisse')
+    pl.grid(True)
     pl.savefig('_build/FeZn.pdf')
     pl.clf()
 
@@ -82,9 +85,11 @@ def unbekannte_probe(T):
         return fit(bin_, *popt)
 
     pl.plot(fezn_peaks, fezn_energien)
+    pl.grid(True)
+    pl.xlabel('Kanal')
+    pl.ylabel('Energie / eV')
     pl.savefig('_build/Energieeichung.pdf')
     pl.clf()
-
 
     unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')[0]
 
@@ -101,7 +106,6 @@ def unbekannte_probe(T):
     w_peaks  = legierung_peaks('Messdaten/Legierungen/W.txt',  column_offset=1)[0]
     zn_peaks = legierung_peaks('Messdaten/Legierungen/Zn.txt', column_offset=1)[0]
     zr_peaks = legierung_peaks('Messdaten/Legierungen/Zr.txt', column_offset=1)[0]
-
 
     common_options = {
         'linewidth': 0.9,
@@ -152,11 +156,11 @@ def roehre2(T):
     print(data)
 
     pl.plot(data[:, 0], data[:, 1])
-    pl.xlabel(r'$\beta$')
+    pl.xlabel(r'$\beta / ^\circ$')
     pl.ylabel('Zählrate')
+    pl.grid(True)
     pl.savefig('_build/Roehre_2.pdf')
     pl.clf()
-
 
 def langzeitmessung(T):
     data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=1)
@@ -166,7 +170,8 @@ def langzeitmessung(T):
     rate = data[:, 1]
 
     pl.plot(beta, rate)
-    pl.xlabel(r'$\beta$')
+    pl.grid(True)
+    pl.xlabel(r'$\beta / ^\circ$')
     pl.ylabel('Zählrate')
     pl.savefig('_build/Langzeit.pdf')
     pl.clf()
