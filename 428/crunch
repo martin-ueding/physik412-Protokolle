@@ -147,10 +147,15 @@ def unbekannte_probe(T):
     pl.savefig('_build/Bestimmung_Zoom.pdf')
     pl.clf()
 
+def langzeitmessung(T):
+    data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=2)
+    print(data)
+
 def main():
     T = {}
 
     unbekannte_probe(T)
+    langzeitmessung(T)
 
     with open('_build/template.js', 'w') as f:
         json.dump(T, f, indent=4, sort_keys=True)
