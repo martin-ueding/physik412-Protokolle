@@ -187,7 +187,11 @@ def laue(T):
     pl.savefig('_build/laue-helligkeit.pdf')
     pl.clf()
 
-    helligkeit = scipy.ndimage.filters.gaussian_filter(helligkeit, 8)
+    gauss_radius = 8
+
+    T['gauss_radius'] = str(gauss_radius)
+
+    helligkeit = scipy.ndimage.filters.gaussian_filter(helligkeit, gauss_radius)
 
     pl.imshow(helligkeit)
     pl.colorbar()
@@ -207,7 +211,11 @@ def laue(T):
     pl.clf()
 
 
-    peaks = laplace >= 0.0005
+    laplace_threshold = 0.0005
+
+    T['laplace_threshold'] = unitprint.siunitx(laplace_threshold)
+
+    peaks = laplace >= laplace_threshold
     print(peaks)
     print(helligkeit[peaks])
 
