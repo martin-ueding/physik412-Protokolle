@@ -12,6 +12,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import scipy.optimize as op
 import scipy.signal
+import scipy.ndimage
 import sys
 import unitprint
 
@@ -164,7 +165,6 @@ def roehre2(T):
 
 def langzeitmessung(T):
     data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=1)
-    print(data)
 
     beta = data[:, 0]
     rate = data[:, 1]
@@ -176,12 +176,70 @@ def langzeitmessung(T):
     pl.savefig('_build/Langzeit.pdf')
     pl.clf()
 
+def laue(T):
+    raw = pl.imread('Messdaten/laue.png')
+
+    helligkeit = np.mean(raw, axis=2)
+    helligkeit = raw[:, :, 2]
+
+    pl.imshow(helligkeit)
+    pl.colorbar()
+    pl.savefig('_build/laue-helligkeit.pdf')
+    pl.clf()
+
+    helligkeit = scipy.ndimage.filters.gaussian_filter(helligkeit, 8)
+
+    pl.imshow(helligkeit)
+    pl.colorbar()
+    pl.savefig('_build/laue-helligkeit-gauss.pdf')
+    pl.clf()
+
+    gradient_x, gradient_y = np.gradient(helligkeit)
+    pl.imshow(np.sqrt(gradient_x**2 + gradient_y**2))
+    pl.colorbar()
+    pl.savefig('_build/laue-gradient_x_y.pdf')
+    pl.clf()
+
+    laplace = np.gradient(gradient_x)[0] + np.gradient(gradient_y)[1]
+    pl.imshow(laplace)
+    pl.colorbar()
+    pl.savefig('_build/laue-laplace.pdf')
+    pl.clf()
+
+
+    peaks = laplace >= 0.0005
+    print(peaks)
+    print(helligkeit[peaks])
+
+    # http://stackoverflow.com/a/9113227
+    labeled, num_objects = scipy.ndimage.label(peaks)
+    slices = scipy.ndimage.find_objects(labeled)
+
+    print(labeled)
+    print(num_objects)
+    print(slices)
+
+    pl.imshow(laplace)
+    x, y = [], []
+    for dy,dx in slices:
+        x_center = (dx.start + dx.stop - 1)/2
+        y_center = (dy.start + dy.stop - 1)/2    
+
+        if y_center > 200:
+            x.append(x_center)
+            y.append(y_center)
+
+    pl.plot(x, y, 'ro')
+    pl.savefig('_build/laue-peaks.pdf')
+    pl.clf()
+
 def main():
     T = {}
 
     unbekannte_probe(T)
     roehre2(T)
     langzeitmessung(T)
+    laue(T)
 
     with open('_build/template.js', 'w') as f:
         json.dump(T, f, indent=4, sort_keys=True)
