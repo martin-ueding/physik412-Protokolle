@@ -204,6 +204,11 @@ def laue(T):
     pl.savefig('_build/laue-gradient_x_y.pdf')
     pl.clf()
 
+    pl.imshow(np.arctan2(gradient_x, gradient_y))
+    pl.colorbar()
+    pl.savefig('_build/laue-gradient_phase.pdf')
+    pl.clf()
+
     laplace = np.gradient(gradient_x)[0] + np.gradient(gradient_y)[1]
     pl.imshow(laplace)
     pl.colorbar()
