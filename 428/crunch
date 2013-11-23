@@ -295,8 +295,6 @@ def laue(T):
         k_ = int(fy.numerator * lcm / fy.denominator)
         l_ = int(lcm)
 
-        print(xz_, yz_, fx.denominator, fy.denominator, h_, k_, l_)
-
         h.append(h_)
         k.append(k_)
         l.append(l_)
@@ -310,7 +308,6 @@ def laue(T):
                 for v in [h_, k_, l_]
             ])
         )
-        print(marker)
         pl.plot(x, y, marker=marker, markersize=15)
     pl.xlabel('$x / m$')
     pl.ylabel('$y / m$')
