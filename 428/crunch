@@ -6,6 +6,7 @@
 
 #import scipy.interpolate
 import colorsys
+import fractions
 import itertools
 import json
 import matplotlib.pyplot as pl
@@ -156,7 +157,6 @@ def unbekannte_probe(T):
 
 def roehre2(T):
     data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)
-    print(data)
 
     pl.plot(data[:, 0], data[:, 1])
     pl.xlabel(r'$\beta / ^\circ$')
@@ -196,6 +196,7 @@ def laue(T):
     helligkeit = scipy.ndimage.filters.gaussian_filter(helligkeit, gauss_radius)
 
     pl.imshow(helligkeit)
+    pl.grid(True)
     pl.colorbar()
     pl.savefig('_build/laue-helligkeit-gauss.pdf')
     pl.clf()
@@ -232,8 +233,15 @@ def laue(T):
     colors = coloriter(8)
     shapecoloriter = itertools.product(shapes, colors)
 
+    x_offset = 725
+    y_offset = 709
+
     pl.imshow(laplace)
-    x, y = [], []
+
+    x = []
+    y = []
+    used_shapes = []
+    used_colors = []
     for dy,dx in slices:
         x_center = (dx.start + dx.stop - 1)/2
         y_center = (dy.start + dy.stop - 1)/2    
@@ -244,10 +252,70 @@ def laue(T):
 
         shape, color = next(shapecoloriter)
 
-        pl.plot(x_center, y_center, color=color, marker=shape, label='{} {}'.format(x_center, y_center))
+        used_shapes.append(shape)
+        used_colors.append(color)
 
-    pl.legend(loc='best', prop={'size': 3})
+        pl.plot(x_center, y_center, color=color, marker=shape)
+
+    x = np.array(x)
+    y = np.array(y)
+
+    x -= x_offset
+    y -= y_offset
+
     pl.savefig('_build/laue-peaks.pdf')
+    pl.clf()
+
+    l = 15e-3
+
+    # Der Scan wurde mit 600 DPI erstellt, also kann damit die Pixel in Meter
+    # umgerechnet werden. Dazu rechne ich erst die DPI in Dots per Meter um und
+    # teile die Werte dann dadurch.
+    x /= 600 / 2.54e-2
+    y /= 600 / 2.54e-2
+
+    z = np.sqrt(x**2 + y**2 + l**2) - l
+
+    xz = x / z
+    yz = y / z
+
+    h = []
+    k = []
+    l = []
+
+    for xz_, yz_ in zip(xz, yz):
+        fx = fractions.Fraction(xz_)
+        fx = fx.limit_denominator(3)
+        fy = fractions.Fraction(yz_)
+        fy = fy.limit_denominator(3)
+
+        lcm = fx.denominator * fy.denominator / fractions.gcd(fx.denominator, fy.denominator)
+
+        h_ = int(fx.numerator * lcm / fx.denominator)
+        k_ = int(fy.numerator * lcm / fy.denominator)
+        l_ = int(lcm)
+
+        print(xz_, yz_, fx.denominator, fy.denominator, h_, k_, l_)
+
+        h.append(h_)
+        k.append(k_)
+        l.append(l_)
+
+    xyhkl = list(zip(x, y, h, k, l))
+
+    for x, y, h_, k_, l_ in xyhkl:
+        marker = '${}$'.format(
+            '|'.join([
+                (str(v) if v >= 0 else r'\overline{'+str(-v)+'}')
+                for v in [h_, k_, l_]
+            ])
+        )
+        print(marker)
+        pl.plot(x, y, marker=marker, markersize=15)
+    pl.xlabel('$x / m$')
+    pl.ylabel('$y / m$')
+    pl.grid(True)
+    pl.savefig('_build/laue-indizes.pdf')
     pl.clf()
 
 def main():
