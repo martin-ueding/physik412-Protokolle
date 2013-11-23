@@ -93,6 +93,9 @@ def unbekannte_probe(T):
 
     popt, pconv = op.curve_fit(fit, fezn_peak_bins, fezn_energien)
 
+    T['energie_steigung'] = unitprint.siunitx(popt[0])
+    T['energie_abschnitt'] = unitprint.siunitx(popt[1])
+
     def bin_to_energy(bin_):
         return fit(bin_, *popt)
 
@@ -131,6 +134,13 @@ def unbekannte_probe(T):
     colors = coloriter(15)
 
     legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2, bin_to_energy=bin_to_energy)
+    pl.xlabel('Energie / eV')
+    pl.ylabel('normalisierte Anzahl')
+    pl.grid(True)
+    pl.savefig('_build/Probe_1.pdf')
+    pl.clf()
+
+    legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2, bin_to_energy=bin_to_energy)
 
     legierung_plot('Messdaten/Legierungen/Ag.txt', ag_peaks, column_offset=1, color=next(colors), label='Ag', **common_options)
     legierung_plot('Messdaten/Legierungen/Au.txt', au_peaks, column_offset=1, color=next(colors), label='Au', **common_options)
@@ -158,6 +168,16 @@ def unbekannte_probe(T):
     pl.xlim([5000, 7000])
     pl.savefig('_build/Bestimmung_Zoom.pdf', **savefig_options)
     pl.clf()
+
+    unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')[2]
+    fe_peaks = legierung_peaks('Messdaten/Legierungen/Fe.txt', column_offset=1)[2]
+
+    fecr_max = np.max(unbekannt_peaks)
+    fe_max = np.max(fe_peaks)
+
+    T['fe_max'] = unitprint.siunitx(fe_max)
+    T['fecr_max'] = unitprint.siunitx(fecr_max)
+    T['fecr_fe_prozent'] = unitprint.siunitx(fecr_max / fe_max * 100)
 
 def roehre2(T):
     data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)

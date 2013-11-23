@@ -148,17 +148,27 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
 
 \chapter{Zerstörungsfreie Aufnahme chemischer Zusammensetzungen}
 
+In diesem Versuchsteil untersuchen wir eine Metalllegierung und versuchen ihre
+Bestandteile herauszufinden.
+
 \section{Aufbau}
 
-\subsection{Tausch der Röntgenröhre}
+Wir benutzen die Kupferanode und stellen das Goniometer so ein, dass die Probe
+auf \SI{45}{\degree} liegt und der Energiedetektor auf \SI{90}{\degree} steht.
 
-\subsection{Einbau Energiedetektor}
+Am Computer stellen wir die Vielkanalmessung mit 512 Kanälen ein. Negative
+Pulse. Wir setzen die Verstärkung auf \num{-2.5} und die Messdauer auf
+\SI{180}{\second}.
 
 \section{Kalibrierung mit FeZn}
 
+Zuerst müssen wir die Energie kalibrieren. Dies bedeutet, dass wir einem
+Energiekanal eine Energie in \si{\electronvolt} zuordnen können.
+
 \subsection{Durchführung}
 
-\subsection{Auswertung}
+Wir legen das Plättchen mit FeZn auf den Probenhalter und nehmen ein Spektrum
+auf. Dies ist in Abbildung~\ref{fig:FeZn} gezeigt.
 
 \begin{figure}[htbp]
     \centering
@@ -169,37 +179,60 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \label{fig:FeZn}
 \end{figure}
 
+\subsection{Auswertung}
+
+Nun schauen wir \cite[Tabelle~1-2]{x-ray_data_booklet} nach den Energien für
+die $K_\alpha$ Linie von Eisen und Zink nach. Mit diesen beiden Datenpunkten
+können wir die Energieanpassung vornehmen und mit einer linearen Funktion
+anpassen. Diese Funktion ist in Abbildung~\ref{fig:Energieeichung} dargestellt.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Energieeichung.pdf}
     \caption{%
         Anpassung der Energie an die Kanalnummer.
     }
-    \label{fig:}
+    \label{fig:Energieeichung}
 \end{figure}
+
+Als Transformation von Kanal $K$ zur Energie $E$ erhalten wir:
+\[
+    E(K) = a K + b
+    \eqnsep
+    a = \SI{<< energie_steigung >>}{\electronvolt}
+    \eqnsep
+    b = \SI{<< energie_abschnitt >>}{\electronvolt}
+\]
+
+Jetzt können wir in den weiteren Spektren anstelle der Kanalnummer eine Energie
+schreiben.
 
 \section{Aufnahme der Legierung}
 
 \subsection{Durchführung}
 
-\subsection{Auswertung}
+Wir tauschen das FeZn-Plättchen gegen die Probe~1 und nehmen erneut das
+Spektrum auf. Das Spektrum ist in Abbildung~\ref{fig:Probe_1} gezeigt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Probe_1.pdf}
     \caption{%
-        Spektrum der unbekannten Probe 1.
+        Spektrum der unbekannten Probe~1.
     }
-    \label{fig:}
+    \label{fig:Probe_1}
 \end{figure}
 
 \section{Aufnahme der reinen Metalle}
 
-\subsection{Durchführung}
-
-\subsection{Auswertung}
+Nun gehen wir nacheinander alle Metalle durch, die wir zur Verfügung haben und
+nehmen je ein Spektrum auf.
 
 \section{Bestimmung der Legierung und Massenanteile}
+
+Wir tragen alle Spektren der Metalle zusammen in einem Diagramm ein, siehe
+Abbildung~\ref{fig:Bestimmung}. Da wir daran interessiert sind, die Maxima der
+Probe~1 zu erklären, wählen wir einen entsprechenden Ausschnitt.
 
 \begin{figure}[htbp]
     \centering
@@ -210,6 +243,10 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \label{fig:Bestimmung}
 \end{figure}
 
+Es ist zu erkennen, dass das Hauptmaximum durch Eisen erzeugt wird. Das kleine
+Maximum ist allerdings durch kein anderes Spektrum zu erklären. In der
+Vergrößerung in Abbildung~\ref{fig:Bestimmung_Zoom} wird dies noch deutlicher.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Bestimmung_Zoom.pdf}
@@ -218,6 +255,15 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     }
     \label{fig:Bestimmung_Zoom}
 \end{figure}
+
+Daher haben wir in \cite{x-ray_data_booklet} nachgeschlagen und gefunden, dass
+das Element Chrom dort eine helle Linie hat. In dieser Legierung scheint also
+Eisen und Chrom zu sein.
+
+Die maximale Amplitude bei Eisen ist \num{<< fe_max >>}, in der
+Eisen-Chrom-Probe ist es \num{<< fecr_max >>}. Aus dem Verhältnis können wir
+schließen, dass der Atomanteil von Eisen \SI{<< fecr_fe_prozent >>}{\percent}
+beträgt.
 
 \chapter{Laue-Aufnahme}
 
