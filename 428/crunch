@@ -207,15 +207,12 @@ def roehre2(T):
 
     lambda_ = nacl_a * np.sin(np.radians(beta[real_peaks]))
 
-    print(lambda_)
-
-    T['r2_lambda'] = unitprint.siunitx(lambda_)
+    T['r2_lambda_pm'] = ';'.join(unitprint.siunitx(lambda_ * 10**12))
 
     e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
 
-    print(e)
-
-    T['r2_e'] = unitprint.siunitx(e)
+    T['nacl_a'] = unitprint.siunitx(nacl_a)
+    T['r2_e_kev'] = ';'.join(unitprint.siunitx(e / 1000))
 
     pl.plot(data[:, 0], data[:, 1])
     pl.plot(beta[real_peaks], rate[real_peaks], 'ro')
