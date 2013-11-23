@@ -227,17 +227,27 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
 
 \subsection{Entwickeln des Films}
 
+Nachdem wir den Film fertig entwickelt haben, haben wir ihn getrocknet und mit
+600 DPI eingescannt. Das Bild ist in Abbildung~\ref{fig:laue} gezeigt.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{../Messdaten/laue.png}
     \caption{%
         Scan des Fotos, das wir durch Beugung an einem NaCl-Kristall erzeugt
-        haben.
+        haben. 600 DPI.
     }
-    \label{fig:Laue}
+    \label{fig:laue}
 \end{figure}
 
 \section{Auswertung}
+
+Um das Bild analysieren zu können, haben wir aus den RGB-Daten den blauen Kanal
+herausgenommen. Wir hätten auch Mittelwerte, Maxima oder ähnliches nehmen
+können. Jedoch ist das ganze Bild etwas bläulich, so dass uns dies gut
+erschien. Der Helligkeitswert ist in Abbildung~\ref{fig:laue-helligkeit}
+dargestellt. Die Abbildung ist jedoch in Falschfarben um die Helligkeit besser
+sichtbar zu machen.
 
 \begin{figure}[htbp]
     \centering
@@ -245,20 +255,37 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \caption{%
         Helligkeit im blauen Kanal.
     }
-    \label{fig:}
+    \label{fig:laue-helligkeit}
 \end{figure}
+
+Gegen das unvermeidliche Rauschen durch den Scanner und den Film haben wir das
+Bild geglättet. Dazu haben wir eine Gauß'sche
+Unschärfe\footnote{\texttt{scipy.ndimage.filters.gaussian\_filter}} benutzt, die
+nacheinander eine Faltung in  $x$ und $y$ mit einem Gaußkern vornimmt. Dabei
+haben wir als Radius << gauss_radius >> Pixel benutzt. Das geglättete Bild ist
+in Abbildung~\ref{fig:laue-gauss}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-helligkeit-gauss.pdf}
     \caption{%
-        Helligkeit nach Gauss'scher Unschärfe mit << gauss_radius >> Pixeln
+        Helligkeit nach Gauß'scher Unschärfe mit << gauss_radius >> Pixeln
         Radius.
     }
-    \label{fig:}
+    \label{fig:laue-gauss}
 \end{figure}
 
+An der Skala am rechten Rand von Abbildung~\ref{fig:laue-gauss} ist zu
+erkennen, dass der Wertebereich der Helligkeit kleiner geworden ist. Die ganz
+dunklen und hellen Stellen wurden geschwächt. Der Kontrast hat also abgenommen,
+jedoch werden die nächsten Schritte dadurch zuverlässiger.
+
 \subsection{Ablesen der Reflexpunkte}
+
+Um die Punkte algorithmisch finden zu können, wollen wir den Laplaceoperator
+auf die Helligkeit anwenden. Dazu bilden wir zuerst den
+Gradient\footnote{\texttt{np.gradient}}. Das Zwischenergebnis ist in
+Abbildung~\ref{fig:laue-gradient} gezeigt.
 
 \begin{figure}[htbp]
     \centering
@@ -266,8 +293,11 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \caption{%
         Amplitude des Gradients
     }
-    \label{fig:}
+    \label{fig:laue-gradient}
 \end{figure}
+
+Dann bilden wir die Divergenz des Gradienten und erhalten die Quellendichte.
+Siehe Abbildung~\ref{fig:laue-laplace}.
 
 \begin{figure}[htbp]
     \centering
@@ -275,7 +305,7 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \caption{%
         Laplace
     }
-    \label{fig:}
+    \label{fig:laue-laplace}
 \end{figure}
 
 \begin{figure}[htbp]

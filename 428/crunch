@@ -308,7 +308,7 @@ def laue(T):
                 for v in [h_, k_, l_]
             ])
         )
-        pl.plot(x, y, marker=marker, markersize=15)
+        pl.plot(x, y, marker=marker, markersize=15, color='black', markeredgecolor='black')
     pl.xlabel('$x / m$')
     pl.ylabel('$y / m$')
     pl.grid(True)
