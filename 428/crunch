@@ -223,7 +223,7 @@ def laue(T):
     pl.clf()
 
 
-    laplace_threshold = 0.0005
+    laplace_threshold = 0.001
 
     T['laplace_threshold'] = unitprint.siunitx(laplace_threshold)
 
