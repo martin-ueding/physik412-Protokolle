@@ -284,14 +284,14 @@ jedoch werden die nächsten Schritte dadurch zuverlässiger.
 
 Um die Punkte algorithmisch finden zu können, wollen wir den Laplaceoperator
 auf die Helligkeit anwenden. Dazu bilden wir zuerst den
-Gradient\footnote{\texttt{np.gradient}}. Das Zwischenergebnis ist in
+Gradient\footnote{\texttt{numpy.gradient}}. Das Zwischenergebnis ist in
 Abbildung~\ref{fig:laue-gradient} gezeigt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-gradient_x_y.pdf}
     \caption{%
-        Amplitude des Gradients
+        Amplitude des Gradients der Helligkeit.
     }
     \label{fig:laue-gradient}
 \end{figure}
@@ -303,19 +303,66 @@ Siehe Abbildung~\ref{fig:laue-laplace}.
     \centering
     \includegraphics[width=\linewidth]{laue-laplace}
     \caption{%
-        Laplace
+        Quellendichte der Helligkeit. Diese wurde mit dem Laplaceoperator
+        bestimmt.
     }
     \label{fig:laue-laplace}
 \end{figure}
+
+Jetzt sind die Reflexionen besser vom Hintergrund abgehoben. Mit den Daten aus
+Abbildung~\ref{fig:laue-helligkeit} oder \ref{fig:laue-gauss} wäre es nicht
+möglich gewesen durch eine untere Grenze so viele Reflexionen zu isolieren.
+
+Wir wenden nun eine untere Grenze von \num{<< laplace_threshold >>} an, um die
+Maxima zu isolieren. Dann lassen wir die verbleibenden Objekte im Bild
+suchen.\footnote{\texttt{scipy.ndimage.label} und
+\texttt{scipy.ndimage.find\_objects}}
+
+Zur Kontrolle sind in Abbildung~\ref{fig:laue-peaks} die gefundenen Reflexionen
+eingezeichnet.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-peaks.pdf}
     \caption{%
-        Gefundene Maxima
+        Gefundene Maxima über einem Schwellenwert von \num{<< laplace_threshold
+        >>}.
     }
-    \label{fig:}
+    \label{fig:laue-peaks}
 \end{figure}
+
+\subsection{Zuordnung der Gitterebenen}
+
+Die Koordinaten korrigeren wir noch so, dass die Mitte gerade bei 0 liegt. Dazu
+ziehen wir von $x$ \num{<< x_offset >>} und von $y$ \num{<< y_offset >>} ab. Da
+das Bild mit 600 DPI eingescannt worden ist, können wir $x$ und $y$ von Pixeln
+in Meter umwandeln. Zusammen mit $L = \SI{15}{\milli\meter}$ können wir dann
+$z$ berechnen:
+\[
+    z = \sqrt{x^2 + y^2 + l^2} - l
+\]
+
+Wir bilden die beiden Verhältnisse
+\[
+    A := \frac xz
+    \eqnsep
+    B := \frac yz
+\]
+und lassen diese als Brüche mit kleinem Nenner
+darstellen\footnote{\texttt{fractions.Fraction} mit
+\texttt{fractions.Fractions.set\_denominator}}. Aus dieser Darstellung
+errechnen wir die drei Laue-Indizes wie folgt:
+\begin{align*}
+    h &= \frac{A_\text{Zähler}}{A_\text{Nenner}}
+    \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner}) \\
+    k &= \frac{B_\text{Zähler}}{B_\text{Nenner}}
+    \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner}) \\
+    l &= \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner})
+\end{align*}
+
+Die so errechneten Laue-Indizes sind an die Stellen des Reflexes in
+Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
+Überstreichung, dass der entsprechende Werte negativ ist.
 
 \begin{figure}[htbp]
     \centering
@@ -323,10 +370,8 @@ Siehe Abbildung~\ref{fig:laue-laplace}.
     \caption{%
         Errechne Laue-Indizes zu den Reflexionen.
     }
-    \label{fig:}
+    \label{fig:laue-indizes}
 \end{figure}
-
-\subsection{Zuordnung der Gitterebenen}
 
 \chapter{Zusammenfassung}
 

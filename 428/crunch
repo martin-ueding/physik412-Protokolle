@@ -240,6 +240,9 @@ def laue(T):
     x_offset = 725
     y_offset = 709
 
+    T['x_offset'] = x_offset
+    T['y_offset'] = y_offset
+
     pl.imshow(laplace)
 
     x = []
