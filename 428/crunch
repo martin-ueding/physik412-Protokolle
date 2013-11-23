@@ -175,9 +175,23 @@ def unbekannte_probe(T):
     fecr_max = np.max(unbekannt_peaks)
     fe_max = np.max(fe_peaks)
 
+    n_fe = fecr_max / fe_max
+    n_cr = 1 - n_fe
+
+    a_fe = 51.9961
+    a_cr = 55.845
+
+    c_fe = n_fe * a_fe / (n_fe * a_fe + n_cr * a_cr)
+    c_cr = n_cr * a_cr / (n_fe * a_fe + n_cr * a_cr)
+
+    T['A_fe'] = unitprint.siunitx(a_fe)
+    T['A_cr'] = unitprint.siunitx(a_cr)
+    T['C_fe'] = unitprint.siunitx(c_fe * 100)
+    T['C_cr'] = unitprint.siunitx(c_cr * 100)
     T['fe_max'] = unitprint.siunitx(fe_max)
     T['fecr_max'] = unitprint.siunitx(fecr_max)
-    T['fecr_fe_prozent'] = unitprint.siunitx(fecr_max / fe_max * 100)
+    T['fecr_fe_prozent'] = unitprint.siunitx(n_fe * 100)
+    T['cr_prozent'] = unitprint.siunitx(n_cr * 100)
 
 def roehre2(T):
     data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)

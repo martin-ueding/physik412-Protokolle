@@ -262,8 +262,23 @@ Eisen und Chrom zu sein.
 
 Die maximale Amplitude bei Eisen ist \num{<< fe_max >>}, in der
 Eisen-Chrom-Probe ist es \num{<< fecr_max >>}. Aus dem Verhältnis können wir
-schließen, dass der Atomanteil von Eisen \SI{<< fecr_fe_prozent >>}{\percent}
-beträgt.
+schließen, dass der Atomanteil von Eisen $n_\text{Fe} = \SI{<< fecr_fe_prozent
+>>}{\percent}$ beträgt. Wir nehmen an, dass die verbleibenden $n_\text{Cr} =
+\SI{<< cr_prozent >>}{\percent}$ der Atome Chrom sind. Mit Atomgewichten von
+$A_\text{Fe} = \SI{<< A_fe >>}{\atomicmassunit}$ und $A_\text{Cr} = \SI{<< A_cr
+>>}{\atomicmassunit}$ für Eisen bzw. Chrom können wir nun die Formel aus der
+Anleitung für die Massenanteile ausnutzen
+\[
+    C_i = \frac{n_i A_i}{\sum_j n_j A_j}
+    \eqnsep
+    i, j \in \set{\text{Fe}, \text{Cr}}
+\]
+und erhalten:
+\[
+    C_\text{Fe} = \SI{<< C_fe >>}{\percent}
+    \eqnsep
+    C_\text{Cr} = \SI{<< C_cr >>}{\percent}.
+\]
 
 \chapter{Laue-Aufnahme}
 
