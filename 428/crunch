@@ -42,7 +42,7 @@ def roehre2(T):
 
     nacl_a = 262e-12
 
-    lambda_ = nacl_a * np.sin(np.radians(beta[real_peaks]))
+    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks]))
 
     T['r2_lambda_pm'] = ';'.join(unitprint.siunitx(lambda_ * 10**12))
 
@@ -65,7 +65,36 @@ def langzeitmessung(T):
     beta = data[:, 0]
     rate = data[:, 1]
 
+    peak_indizes = scipy.signal.find_peaks_cwt(rate, np.array([.1]))
+    
+    real_peaks = [
+        peak_index
+        for peak_index in peak_indizes
+        if rate[peak_index] > 4.6
+    ]
+
+    nacl_a = 262e-12
+    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / 4
+    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
+
+    print(e)
+
+    e_mo = np.array([17479.34, 17374.3])
+
+    aufspaltung_gemessen = abs(e[0] - e[1]) / np.mean(e)
+    aufspaltung_literatur = abs(e_mo[0] - e_mo[1]) / np.mean(e_mo)
+
+    print(aufspaltung_gemessen)
+    print(aufspaltung_literatur)
+
+    T['aufspaltung_gemessen'] = unitprint.siunitx(aufspaltung_gemessen * 100)
+    T['aufspaltung_literatur'] = unitprint.siunitx(aufspaltung_literatur * 100)
+
+    T['langzeit_e'] = ';'.join(unitprint.siunitx(e / 1000, digits=5))
+    T['langzeit_e_mo'] = ';'.join(unitprint.siunitx(e_mo / 1000, digits=5))
+
     pl.plot(beta, rate)
+    pl.plot(beta[real_peaks], rate[real_peaks], marker='o', linestyle='none')
     pl.grid(True)
     pl.xlabel(r'$\beta / ^\circ$')
     pl.ylabel('Zählrate')
