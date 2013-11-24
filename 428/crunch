@@ -203,7 +203,7 @@ def roehre2(T):
 
     real_peaks = peak_indizes[[2, 3, 7, 10, 26]]
 
-    nacl_a = 562e-12
+    nacl_a = 262e-12
 
     lambda_ = nacl_a * np.sin(np.radians(beta[real_peaks]))
 
