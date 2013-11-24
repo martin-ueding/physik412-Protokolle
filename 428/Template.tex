@@ -120,14 +120,28 @@ Spannungsintervalle auf und zählt die Häufigkeit.
 
 \section{Aufbau}
 
-\parencite{wikipedia/Goniometer}
-\parencite{wikipedia/hygroskopie}
-\parencite{leybold/554831}
-\parencite{leybold/554800}
+Wir benutzen ein Vollschutzröntgengerät, wobei wir eine unbekannte Anode
+benutzen. \parencite{leybold/554800}
 
-Wir stellen den Taster auf \textsc{coupled}, damit der Winkel des Zählrohrs immer
-der doppelte Winkel der Probe ist. \parencite{leybold/554800} Auf diese Weise
-erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
+Für diesen Versuchsteil benutzen wir einen NaCl-Kristall
+\footcite{wikipedia/hygroskopie} der Größe $\SI{25 +- 1}{\milli\meter}
+\times \SI{25 +- 1}{\milli\meter} \times \SI{3.5 +- 0.5}{\milli\meter}$.
+
+Kristall und Geigerzähler sind an einem elektrischen Goniometer angebracht, so
+dass computergesteuert die Winkel durchfahren werden können.
+\parencite{leybold/554831} \parencite{wikipedia/Goniometer}
+
+Wir stellen den Taster am Gerät auf \textsc{coupled}, damit der Winkel des
+Zählrohrs immer der doppelte Winkel der Probe ist. \parencite{leybold/554800}
+Auf diese Weise erhalten wir eine optimale Bragg-Beugung und maximale
+Intensität.
+
+Dann setzen wir den groben Kollimator ein und stellen den Abstand zwischen
+Kollimator und Kristallarm auf \SI{5}{\centi\meter} ein, den Abstand zwischen
+Kristall- und Geigerzählerarm auf \SI{6}{\centi\meter}.
+
+Zuletzt lassen wir die automatische Nullpunktbestimmung durch die Software
+laufen.
 
 \section{Bestimmung des Anodenmaterials}
 
@@ -169,6 +183,15 @@ Die entsprechenden Energien erhalten wir mit
 In $\si{\kilo\electronvolt}$ umgewandelt ist die Liste dann: \SIlist{<<
 r2_e_kev >>}{\kilo\electronvolt}.
 
+Laut \cite[Tabelle~1-2]{x-ray_data_booklet} entsprechen die $K_\alpha$-Linien
+derer von Indium. Das nächste Linienpaar passen jedoch nicht zu Indium. Die
+Energien entsprechen jedoch den $K_\alpha$-Linien von Brom. Jedoch erscheint es
+uns nicht sinnvoll, dass die Anode aus Indiumbromid ist, was zwar kristalline
+Struktur hat, jedoch nicht als Röntgenanode erwähnt wird.
+\parencite{wikipedia/InBr} \parencite{wikipedia/InBr_3}
+
+Somit gehen wir davon aus, dass das Anodenmaterial von
+Röhre~2 Indium ist, auch wenn wir die restlichen Linien nicht zuordnen konnten.
 
 \section{Feinstrukturmessung}
 
@@ -323,9 +346,10 @@ Eisen-Chrom-Probe ist es \num{<< fecr_max >>}. Aus dem Verhältnis können wir
 schließen, dass der Atomanteil von Eisen $n_\text{Fe} = \SI{<< fecr_fe_prozent
 >>}{\percent}$ beträgt. Wir nehmen an, dass die verbleibenden $n_\text{Cr} =
 \SI{<< cr_prozent >>}{\percent}$ der Atome Chrom sind. Mit Atomgewichten von
-$A_\text{Fe} = \SI{<< A_fe >>}{\atomicmassunit}$ und $A_\text{Cr} = \SI{<< A_cr
->>}{\atomicmassunit}$ für Eisen bzw. Chrom können wir nun die Formel aus der
-Anleitung für die Massenanteile ausnutzen
+$A_\text{Fe} = \SI{<< A_fe >>}{\atomicmassunit}$\footcite{wikipedia/Eisen} und
+$A_\text{Cr} = \SI{<< A_cr >>}{\atomicmassunit}$\footcite{wikipedia/Chrom} für
+Eisen bzw. Chrom können wir nun die Formel aus der Anleitung für die
+Massenanteile ausnutzen
 \[
     C_i = \frac{n_i A_i}{\sum_j n_j A_j}
     \eqnsep
