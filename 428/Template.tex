@@ -172,7 +172,38 @@ Spannungsintervalle auf und zählt die Häufigkeit.
 
 \section{Röntgenfluoreszenz}
 
+Wird ein Atom durch Röntgenstrahlung angeregt oder ionisiert, fallen
+höherenergetische Elektronen in die frei gewordenen Löcher. Dabei strahlen
+sie wie bei der Erzeugung charakteristischer Röntgenstrahlung isotrop
+Energie in Form von erneuter Röntgenstrahlung ab, deren Spektrum für
+verschiedene Atomkerne unterschiedlich ist. Dies bietet die Möglichkeit ein
+Material zu untersuchen, ohne dieses zu zerstören.
+
 \subsection{Bestimmung der Massenanteile}
+
+Untersucht man eine Legierung mit Hilfe von Röntgenfluoreszens, erhält man
+ein Spektrum, welches aus den überlagerten Spektren der einzelnen
+Materialien besteht, nur mit unterschiedlich reduzierter Peakhöhe.
+
+Um die tatsächlichen Anteile zu berechnen, kann man davon ausgehen, dass die
+Peakhöhe $H$ proportional zur tatsächlichen Anzahl von Atomen $n$ ist.
+Damit gilt:
+
+\begin{align*}
+    n &= n_0 \frac{H}{H_0}
+    \intertext{Mit der Referenzanzahl}
+    n_0 &= V \frac{\rho}{A} \intertext{%
+        wobei $V$ das effektive Volumen, $\rho$ die Dichte und $A$ die
+        Atommasse bezeichnen, erhält man
+    }
+    n &= V \frac{\rho}{A} \frac{H}{H_0}
+    \intertext{%
+        Den Massenanteil $C_i$ erhält man durch
+    }
+    C_i &= \frac{n_iA_i}{\sum_i n_iA_i} \\
+        &= \frac{\rho_i\frac{H_i}{H_{0,i}}} {\sum_i\rho_i\frac{H_i}{H_{0,i}}}
+\end{align*}
+
 
 \parencite[„Massenanteilsbestimmung“]{physik412-Anleitung}
 
