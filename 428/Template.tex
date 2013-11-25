@@ -207,6 +207,7 @@ Damit gilt:
 
 \parencite[„Massenanteilsbestimmung“]{physik412-Anleitung}
 
+\FloatBarrier
 \section{Bragg-Beugung}
 
 \begin{figure}
@@ -217,16 +218,43 @@ Damit gilt:
     }
     \label{fig:bragg}
 \end{figure}
-\parencite[(18.4)]{meschede-gerthsen_24}
-\[
-    \Deltaup \vec k = \vec g
-\]
 
+Trifft eine elektromagnetische Welle auf ein Kristallgitter, wird sie
+an den Gitteratomen reflektiert. Dabei ändert sich die Wellenlänge nicht.
+Die Situation ist in Abbildung~\ref{fig:bragg} skizziert.
+Bei einem Winkel $\alpha$ zwischen einfallendem Strahl und Gitterebene ist
+der Gangunterschied zwischen an benachbarten Gitterebenen reflektierten
+Strahlen
+\begin{align*}
+    \Delta &= 2d\sin\alpha
+    \intertext{%
+        Damit konstruktive Interferenz stattfinden kann muss dieser
+        Gangunterschied ein vielfaches der Wellenlänge sein:
+    }
+    n\lambda &= 2d\sin\alpha
+\end{align*}
+Dies ist die so genannte Bragg-Bedingung. Bei allen anderen Verhältnissen
+zwischen Winkel, Wellenlänge und Netzebenenabstand, findet eine
+vollständige Auslöschung statt.
+
+\FloatBarrier
 \section{Laue-Verfahren}
 
 \parencite[P428.5.3, „Auswertung“]{physik412-Anleitung}
 
 \subsection{Laue-Bedingung}
+
+Die Laue-Bedingung lautet
+\[
+    \Deltaup \vec k = \vec g
+\]
+das heißt, konstruktive Interferenz findet statt, wenn die Änderung des
+Wellenvektors einem reziproken Gittervektor entsprechen. Im Grunde ist
+diese Bedingung zur Bragg-Bedingung äquivalent, während Bragg jedoch von
+quasi spiegelnden Ebenen ausgeht, formuliert von Laue seine Bedingung für
+viele einzelne Streuzentren.
+
+\parencite[(18.4)]{meschede-gerthsen_24}
 
 \subsection{Miller'sche Indizes}
 
