@@ -22,14 +22,24 @@
 }
 
 \setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+\setcounter{tocdepth}{3}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-    \fehlt
+    In diesem Versuch untersuchen wir Röntgenstrahlen mithilfe der
+    Kristallbeugung und Kristalle mithilfe von Röntgenbeugung. Im ersten Teil
+    werden wir eine unbekannte Röntgenröhre vermessen sowie die Aufspaltung
+    einer Linie genau untersuchen.
+
+    Im zweiten Teil werden wir weißes Röntgenlicht zur Materialanalyse
+    benutzen, in dem wir das Spektrum einer Legierung mit den Spektren von
+    reinen Metallen vergleichen.
+
+    Zuletzt nehmen wir mit einem Film das Beugungsmuster eines NaCl Kristalls
+    auf und ordnen den Reflexen ihre Miller-/Laue-Indizes zu.
 \end{abstract}
 
 \tableofcontents
@@ -110,14 +120,28 @@ Spannungsintervalle auf und zählt die Häufigkeit.
 
 \section{Aufbau}
 
-\parencite{wikipedia/Goniometer}
-\parencite{wikipedia/hygroskopie}
-\parencite{leybold/554831}
-\parencite{leybold/554800}
+Wir benutzen ein Vollschutzröntgengerät, wobei wir eine unbekannte Anode
+benutzen. \parencite{leybold/554800}
 
-Wir stellen den Taster auf \textsc{coupled}, damit der Winkel des Zählrohrs immer
-der doppelte Winkel der Probe ist. \parencite{leybold/554800} Auf diese Weise
-erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
+Für diesen Versuchsteil benutzen wir einen NaCl-Kristall
+\footcite{wikipedia/hygroskopie} der Größe $\SI{25 +- 1}{\milli\meter}
+\times \SI{25 +- 1}{\milli\meter} \times \SI{3.5 +- 0.5}{\milli\meter}$.
+
+Kristall und Geigerzähler sind an einem elektrischen Goniometer angebracht, so
+dass computergesteuert die Winkel durchfahren werden können.
+\parencite{leybold/554831} \parencite{wikipedia/Goniometer}
+
+Wir stellen den Taster am Gerät auf \textsc{coupled}, damit der Winkel des
+Zählrohrs immer der doppelte Winkel der Probe ist. \parencite{leybold/554800}
+Auf diese Weise erhalten wir eine optimale Bragg-Beugung und maximale
+Intensität.
+
+Dann setzen wir den groben Kollimator ein und stellen den Abstand zwischen
+Kollimator und Kristallarm auf \SI{5}{\centi\meter} ein, den Abstand zwischen
+Kristall- und Geigerzählerarm auf \SI{6}{\centi\meter}.
+
+Zuletzt lassen wir die automatische Nullpunktbestimmung durch die Software
+laufen.
 
 \section{Bestimmung des Anodenmaterials}
 
@@ -132,7 +156,46 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
 
 \subsection{Auswertung}
 
+Wir benutzen eine Gitterkonstante von $d = \SI{<< nacl_a >>}{\meter}$.
+\parencite{Unkelbach/Bragg_Zusatzaufgaben}. Dies ist die Hälfte der Konstante,
+die auf \cite{wikipedia/Natriumchlorid} angegeben ist.
+
+Die Wellenlängen erhalten wir unter der Annahme, dass wir in erster Ordnung
+gemessen haben, wie folgt:
+\[
+    \lambda = 2 d \sin(\beta)
+\]
+
+Die Maxima haben folgende Wellenlängen: \SIlist{<< r2_lambda_pm
+>>}{\pico\meter}.
+
+Dabei gehen wir davon aus, dass dies die folgenden Linien sind: $K_\beta$,
+$K_\alpha$, $L_\beta$, $L_\alpha$ sowie $M_\alpha$. Da die Aufspaltung der
+einzelnen Linien erst in vierter Ordnung zu sehen ist, und dort Bruchteile
+eines Grads sind, sollten wir hier keine Aufspaltung sehen können und die
+Linien verschiedene Übergänge darstellen.
+
+Die entsprechenden Energien erhalten wir mit
+\[
+    E = \frac{c h}{\lambda}.
+\]
+
+In $\si{\kilo\electronvolt}$ umgewandelt ist die Liste dann: \SIlist{<<
+r2_e_kev >>}{\kilo\electronvolt}.
+
+Laut \cite[Tabelle~1-2]{x-ray_data_booklet} entsprechen die $K_\alpha$-Linien
+derer von Indium. Das nächste Linienpaar passen jedoch nicht zu Indium. Die
+Energien entsprechen jedoch den $K_\alpha$-Linien von Brom. Jedoch erscheint es
+uns nicht sinnvoll, dass die Anode aus Indiumbromid ist, was zwar kristalline
+Struktur hat, jedoch nicht als Röntgenanode erwähnt wird.
+\parencite{wikipedia/InBr} \parencite{wikipedia/InBr_3}
+
+Somit gehen wir davon aus, dass das Anodenmaterial von
+Röhre~2 Indium ist, auch wenn wir die restlichen Linien nicht zuordnen konnten.
+
 \section{Feinstrukturmessung}
+
+Unsere Messdaten sind in Abbildung~\ref{fig:Langzeit} dargestellt.
 
 \begin{figure}[htbp]
     \centering
@@ -141,24 +204,50 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
         Spektrum der Molybdän-Röhre. Es ist die Aufspaltung der
         $K_\alpha$-Linie in vierter Beugungsordnung zu sehen.
     }
-    \label{fig:}
+    \label{fig:Langzeit}
 \end{figure}
 
 \subsection{Auswertung}
 
+Da wir in vierter Ordnung gemessen haben, ist die Formel jetzt
+\[
+    \lambda = \frac24 d \sin(\beta).
+\]
+
+Wir rechnen entsprechend die Wellenlängen in Energien um.
+
+Unsere gemessenen Peaks entsprechen Energien von \SIlist{<< langzeit_e
+>>}{\kilo\electronvolt}. Bei Molybdän sind die Energien \SIlist{<<
+langzeit_e_mo >>}{\kilo\electronvolt} zu erwarten.
+\parencite[Tabelle~1-2]{x-ray_data_booklet} Dies passt recht gut.
+
+Die Energieaufspaltung der $K_\alpha$ Linie ist bei den Literaturwerten \SI{<<
+aufspaltung_literatur >>}{\percent}, bei unserer Messung ist es \SI{<<
+aufspaltung_gemessen >>}{\percent}. Die beiden Werte passen gut zusammen.
+
 \chapter{Zerstörungsfreie Aufnahme chemischer Zusammensetzungen}
+
+In diesem Versuchsteil untersuchen wir eine Metalllegierung und versuchen ihre
+Bestandteile herauszufinden.
 
 \section{Aufbau}
 
-\subsection{Tausch der Röntgenröhre}
+Wir benutzen die Kupferanode und stellen das Goniometer so ein, dass die Probe
+auf \SI{45}{\degree} liegt und der Energiedetektor auf \SI{90}{\degree} steht.
 
-\subsection{Einbau Energiedetektor}
+Am Computer stellen wir die Vielkanalmessung mit 512 Kanälen ein. Negative
+Pulse. Wir setzen die Verstärkung auf \num{-2.5} und die Messdauer auf
+\SI{180}{\second}.
 
 \section{Kalibrierung mit FeZn}
 
+Zuerst müssen wir die Energie kalibrieren. Dies bedeutet, dass wir einem
+Energiekanal eine Energie in \si{\electronvolt} zuordnen können.
+
 \subsection{Durchführung}
 
-\subsection{Auswertung}
+Wir legen das Plättchen mit FeZn auf den Probenhalter und nehmen ein Spektrum
+auf. Dies ist in Abbildung~\ref{fig:FeZn} gezeigt.
 
 \begin{figure}[htbp]
     \centering
@@ -169,46 +258,75 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \label{fig:FeZn}
 \end{figure}
 
+\subsection{Auswertung}
+
+Nun schauen wir \cite[Tabelle~1-2]{x-ray_data_booklet} nach den Energien für
+die $K_\alpha$ Linie von Eisen und Zink nach. Mit diesen beiden Datenpunkten
+können wir die Energieanpassung vornehmen und mit einer linearen Funktion
+anpassen. Diese Funktion ist in Abbildung~\ref{fig:Energieeichung} dargestellt.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Energieeichung.pdf}
     \caption{%
         Anpassung der Energie an die Kanalnummer.
     }
-    \label{fig:}
+    \label{fig:Energieeichung}
 \end{figure}
+
+Als Transformation von Kanal $K$ zur Energie $E$ erhalten wir:
+\[
+    E(K) = a K + b
+    \eqnsep
+    a = \SI{<< energie_steigung >>}{\electronvolt}
+    \eqnsep
+    b = \SI{<< energie_abschnitt >>}{\electronvolt}
+\]
+
+Jetzt können wir in den weiteren Spektren anstelle der Kanalnummer eine Energie
+schreiben.
 
 \section{Aufnahme der Legierung}
 
 \subsection{Durchführung}
 
-\subsection{Auswertung}
+Wir tauschen das FeZn-Plättchen gegen die Probe~1 und nehmen erneut das
+Spektrum auf. Das Spektrum ist in Abbildung~\ref{fig:Probe_1} gezeigt.
 
 \begin{figure}[htbp]
     \centering
     %\includegraphics[width=\linewidth]{Probe_1.pdf}
     \caption{%
-        Spektrum der unbekannten Probe 1.
+        Spektrum der unbekannten Probe~1.
     }
-    \label{fig:}
+    \label{fig:Probe_1}
 \end{figure}
 
 \section{Aufnahme der reinen Metalle}
 
-\subsection{Durchführung}
-
-\subsection{Auswertung}
+Nun gehen wir nacheinander alle Metalle durch, die wir zur Verfügung haben und
+nehmen je ein Spektrum auf.
 
 \section{Bestimmung der Legierung und Massenanteile}
+
+Wir tragen alle normalisierten Spektren der Metalle zusammen in einem Diagramm
+ein, siehe Abbildung~\ref{fig:Bestimmung}. Da wir daran interessiert sind, die
+Maxima der Probe~1 zu erklären, wählen wir einen entsprechenden Ausschnitt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Bestimmung.pdf}
     \caption{%
-        Spektra der unbekannten Probe sowie der reinen Metalle.
+        Spektra der unbekannten Probe sowie der reinen Metalle. Die Spektra
+        sind normalisiert, so dass die Amplitude des Hauptmaximums gerade 1
+        ist. 
     }
     \label{fig:Bestimmung}
 \end{figure}
+
+Es ist zu erkennen, dass das Hauptmaximum durch Eisen erzeugt wird. Das kleine
+Maximum ist allerdings durch kein anderes Spektrum zu erklären. In der
+Vergrößerung in Abbildung~\ref{fig:Bestimmung_Zoom} wird dies noch deutlicher.
 
 \begin{figure}[htbp]
     \centering
@@ -219,25 +337,72 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \label{fig:Bestimmung_Zoom}
 \end{figure}
 
+Daher haben wir in \cite{x-ray_data_booklet} nachgeschlagen und gefunden, dass
+das Element Chrom dort eine helle Linie hat. In dieser Legierung scheint also
+Eisen und Chrom zu sein.
+
+Die maximale Amplitude bei Eisen ist \num{<< fe_max >>}, in der
+Eisen-Chrom-Probe ist es \num{<< fecr_max >>}. Aus dem Verhältnis können wir
+schließen, dass der Atomanteil von Eisen $n_\text{Fe} = \SI{<< fecr_fe_prozent
+>>}{\percent}$ beträgt. Wir nehmen an, dass die verbleibenden $n_\text{Cr} =
+\SI{<< cr_prozent >>}{\percent}$ der Atome Chrom sind. Mit Atomgewichten von
+$A_\text{Fe} = \SI{<< A_fe >>}{\atomicmassunit}$\footcite{wikipedia/Eisen} und
+$A_\text{Cr} = \SI{<< A_cr >>}{\atomicmassunit}$\footcite{wikipedia/Chrom} für
+Eisen bzw. Chrom können wir nun die Formel aus der Anleitung für die
+Massenanteile ausnutzen
+\[
+    C_i = \frac{n_i A_i}{\sum_j n_j A_j}
+    \eqnsep
+    i, j \in \set{\text{Fe}, \text{Cr}}
+\]
+und erhalten:
+\[
+    C_\text{Fe} = \SI{<< C_fe >>}{\percent}
+    \eqnsep
+    C_\text{Cr} = \SI{<< C_cr >>}{\percent}.
+\]
+
 \chapter{Laue-Aufnahme}
+
+In diesem Versuchsteil untersuchen wir das Beugungsmuster an einem NaCl
+Kristall.
 
 \section{Aufbau}
 
+Wir benutzen die Röntgenröhre mit der Kupferanode mit einer Hochspannung von
+\SI{35}{\kilo\volt} und einem Emissionsstrom von \SI{1}{\milli\ampere}.
+
+Auf den groben Kollimator wird der NaCl Kristall aufgesteckt. Der Film (AGFA
+Dentus M2 Comfort Röntgenfilm) wird mit dem entsprechenden Halter im Querformat
+in einem Abstand von \SI{15}{\milli\meter} zum Kristall angebracht.
+
 \section{Durchführung}
 
-\subsection{Entwickeln des Films}
+Die Strahlung wird für \SI{1800}{\second} betrieben. Danach entnehmen wir den
+Film und entwickeln ihn gemäß ausliegender Anleitung mit Entwickler und
+Fixierer.
+
+Nachdem wir den Film fertig entwickelt haben, haben wir ihn getrocknet und mit
+600 DPI eingescannt. Das Bild ist in Abbildung~\ref{fig:laue} gezeigt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{../Messdaten/laue.png}
     \caption{%
         Scan des Fotos, das wir durch Beugung an einem NaCl-Kristall erzeugt
-        haben.
+        haben. 600 DPI.
     }
-    \label{fig:Laue}
+    \label{fig:laue}
 \end{figure}
 
 \section{Auswertung}
+
+Um das Bild analysieren zu können, haben wir aus den RGB-Daten den blauen Kanal
+herausgenommen. Wir hätten auch Mittelwerte, Maxima oder ähnliches nehmen
+können. Jedoch ist das ganze Bild etwas bläulich, so dass uns dies gut
+erschien. Der Helligkeitswert ist in Abbildung~\ref{fig:laue-helligkeit}
+dargestellt. Die Abbildung ist jedoch in Falschfarben, um die Helligkeit besser
+sichtbar zu machen.
 
 \begin{figure}[htbp]
     \centering
@@ -245,49 +410,123 @@ erhalten wir eine optimale Bragg-Beugung und maximale Intensität.
     \caption{%
         Helligkeit im blauen Kanal.
     }
-    \label{fig:}
+    \label{fig:laue-helligkeit}
 \end{figure}
+
+Gegen das unvermeidliche Rauschen durch den Scanner und den Film haben wir das
+Bild geglättet. Dazu haben wir eine Gauß'sche
+Unschärfe\footnote{\texttt{scipy.ndimage.filters.gaussian\_filter}} benutzt, die
+nacheinander eine Faltung in  $x$ und $y$ mit einem Gaußkern vornimmt. Dabei
+haben wir als Radius << gauss_radius >> Pixel benutzt. Das geglättete Bild ist
+in Abbildung~\ref{fig:laue-gauss}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-helligkeit-gauss.pdf}
     \caption{%
-        Helligkeit nach Gauss'scher Unschärfe mit << gauss_radius >> Pixeln
+        Helligkeit nach Gauß'scher Unschärfe mit << gauss_radius >> Pixeln
         Radius.
     }
-    \label{fig:}
+    \label{fig:laue-gauss}
 \end{figure}
 
+An der Skala am rechten Rand von Abbildung~\ref{fig:laue-gauss} ist zu
+erkennen, dass der Wertebereich der Helligkeit kleiner geworden ist. Die ganz
+dunklen und hellen Stellen wurden geschwächt. Der Kontrast hat also abgenommen,
+jedoch werden die nächsten Schritte dadurch zuverlässiger.
+
 \subsection{Ablesen der Reflexpunkte}
+
+Um die Punkte algorithmisch finden zu können, wollen wir den Laplaceoperator
+auf die Helligkeit anwenden. Dazu bilden wir zuerst den
+Gradient\footnote{\texttt{numpy.gradient}}. Das Zwischenergebnis ist in
+Abbildung~\ref{fig:laue-gradient} gezeigt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-gradient_x_y.pdf}
     \caption{%
-        Amplitude des Gradients
+        Amplitude des Gradients der Helligkeit.
     }
-    \label{fig:}
+    \label{fig:laue-gradient}
 \end{figure}
+
+Dann bilden wir die Divergenz des Gradienten und erhalten die Quellendichte.
+Siehe Abbildung~\ref{fig:laue-laplace}.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-laplace}
     \caption{%
-        Laplace
+        Quellendichte der Helligkeit. Diese wurde mit dem Laplaceoperator
+        bestimmt.
     }
-    \label{fig:}
+    \label{fig:laue-laplace}
 \end{figure}
+
+Jetzt sind die Reflexionen besser vom Hintergrund abgehoben. Mit den Daten aus
+Abbildung~\ref{fig:laue-helligkeit} oder \ref{fig:laue-gauss} wäre es nicht
+möglich gewesen durch eine untere Grenze so viele Reflexionen zu isolieren.
+
+Wir wenden nun eine untere Grenze von \num{<< laplace_threshold >>} an, um die
+Maxima zu isolieren. Dann lassen wir die verbleibenden Objekte im Bild
+suchen.\footnote{\texttt{scipy.ndimage.label} und
+\texttt{scipy.ndimage.find\_objects}}
+
+Zur Kontrolle sind in Abbildung~\ref{fig:laue-peaks} die gefundenen Reflexionen
+eingezeichnet.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{laue-peaks.pdf}
     \caption{%
-        Gefundene Maxima
+        Gefundene Maxima über einem Schwellenwert von \num{<< laplace_threshold
+        >>}.
     }
-    \label{fig:}
+    \label{fig:laue-peaks}
 \end{figure}
 
 \subsection{Zuordnung der Gitterebenen}
+
+Die Koordinaten korrigeren wir noch so, dass die Mitte gerade bei 0 liegt. Dazu
+ziehen wir von $x$ \num{<< x_offset >>} und von $y$ \num{<< y_offset >>} ab. Da
+das Bild mit 600 DPI eingescannt worden ist, können wir $x$ und $y$ von Pixeln
+in Meter umwandeln. Zusammen mit $L = \SI{15}{\milli\meter}$ können wir dann
+$z$ berechnen:
+\[
+    z = \sqrt{x^2 + y^2 + l^2} - l
+\]
+
+Wir bilden die beiden Verhältnisse
+\[
+    A := \frac xz
+    \eqnsep
+    B := \frac yz
+\]
+und lassen diese als Brüche mit kleinem Nenner
+darstellen\footnote{\texttt{fractions.Fraction} mit
+\texttt{fractions.Fractions.set\_denominator}}. Aus dieser Darstellung
+errechnen wir die drei Laue-Indizes wie folgt:
+\begin{align*}
+    h &= \frac{A_\text{Zähler}}{A_\text{Nenner}}
+    \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner}) \\
+    k &= \frac{B_\text{Zähler}}{B_\text{Nenner}}
+    \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner}) \\
+    l &= \mathop{\mathrm{kgv}}(A_\text{Nenner}, B_\text{Nenner})
+\end{align*}
+
+Die so errechneten Laue-Indizes sind an die Stellen des Reflexes in
+Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
+Überstreichung, dass der entsprechende Werte negativ ist.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{laue-indizes.pdf}
+    \caption{%
+        Errechne Laue-Indizes zu den Reflexionen.
+    }
+    \label{fig:laue-indizes}
+\end{figure}
 
 \chapter{Zusammenfassung}
 

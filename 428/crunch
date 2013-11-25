@@ -4,17 +4,120 @@
 # Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
 # Licensed under The GNU Public License Version 2 (or later)
 
-#import itertools
 #import scipy.interpolate
 import colorsys
+import fractions
+import itertools
 import json
 import matplotlib.pyplot as pl
 import numpy as np
+import scipy.ndimage
 import scipy.optimize as op
 import scipy.signal
-import scipy.ndimage
 import sys
 import unitprint
+
+savefig_options = {
+    'bbox_inches': 'tight',
+}
+
+def coloriter(n):
+    return iter([
+        colorsys.hsv_to_rgb(x*1.0/n, 1.0, .8)
+        for x in range(n)
+    ])
+
+def fit(bin_, a, b):
+    return a * bin_ + b
+
+def roehre2(T):
+    data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)
+
+    beta = data[:, 0]
+    rate = data[:, 1]
+
+    peak_indizes = np.array(scipy.signal.find_peaks_cwt(rate, np.array([.1, .3, .4, .7, 1, 1.5])))
+
+    real_peaks = peak_indizes[[2, 3, 7, 10, 26]]
+
+    nacl_a = 262e-12
+
+    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks]))
+
+    T['r2_lambda_pm'] = ';'.join(unitprint.siunitx(lambda_ * 10**12))
+
+    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
+
+    T['nacl_a'] = unitprint.siunitx(nacl_a)
+    T['r2_e_kev'] = ';'.join(unitprint.siunitx(e / 1000))
+
+    pl.plot(data[:, 0], data[:, 1])
+    pl.plot(beta[real_peaks], rate[real_peaks], 'ro')
+    pl.xlabel(r'$\beta / ^\circ$')
+    pl.ylabel('Zählrate')
+    pl.grid(True)
+    pl.savefig('_build/Roehre_2.pdf', **savefig_options)
+    pl.clf()
+
+def langzeitmessung(T):
+    data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=1)
+
+    beta = data[:, 0]
+    rate = data[:, 1]
+
+    peak_indizes = scipy.signal.find_peaks_cwt(rate, np.array([.1]))
+    
+    real_peaks = [
+        peak_index
+        for peak_index in peak_indizes
+        if rate[peak_index] > 4.6
+    ]
+
+    nacl_a = 262e-12
+    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / 4
+    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
+
+    print(e)
+
+    e_mo = np.array([17479.34, 17374.3])
+
+    aufspaltung_gemessen = abs(e[0] - e[1]) / np.mean(e)
+    aufspaltung_literatur = abs(e_mo[0] - e_mo[1]) / np.mean(e_mo)
+
+    print(aufspaltung_gemessen)
+    print(aufspaltung_literatur)
+
+    T['aufspaltung_gemessen'] = unitprint.siunitx(aufspaltung_gemessen * 100)
+    T['aufspaltung_literatur'] = unitprint.siunitx(aufspaltung_literatur * 100)
+
+    T['langzeit_e'] = ';'.join(unitprint.siunitx(e / 1000, digits=5))
+    T['langzeit_e_mo'] = ';'.join(unitprint.siunitx(e_mo / 1000, digits=5))
+
+    pl.plot(beta, rate)
+    pl.plot(beta[real_peaks], rate[real_peaks], marker='o', linestyle='none')
+    pl.grid(True)
+    pl.xlabel(r'$\beta / ^\circ$')
+    pl.ylabel('Zählrate')
+    pl.savefig('_build/Langzeit.pdf', **savefig_options)
+    pl.clf()
+
+def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
+                   column_offset=0, label=None, linewidth=1,
+                   bin_to_energy=None):
+    data = np.genfromtxt(dataname, skip_header=1)
+
+    bins = data[:, 0+column_offset]
+    counts = data[:, 1+column_offset]
+
+    counts /= np.max(counts[real_peaks])
+
+    if bin_to_energy is None:
+        x = bins
+    else:
+        x = bin_to_energy(bins)
+
+    pl.plot(x, counts, linestyle=linestyle, color=color, label=label, linewidth=linewidth)
+    pl.plot(x[real_peaks], counts[real_peaks], linestyle='none', marker='o', markersize=5, color=color)
 
 def legierung_peaks(dataname, column_offset=0):
     data = np.genfromtxt(dataname, skip_header=1)
@@ -35,24 +138,6 @@ def legierung_peaks(dataname, column_offset=0):
 
     return real_peaks, bins[real_peaks], counts[real_peaks]
 
-def legierung_plot(dataname, real_peaks, linestyle='-', color='blue',
-                   column_offset=0, label=None, linewidth=1,
-                   bin_to_energy=None):
-    data = np.genfromtxt(dataname, skip_header=1)
-
-    bins = data[:, 0+column_offset]
-    counts = data[:, 1+column_offset]
-
-    counts /= np.max(counts[real_peaks])
-
-    if bin_to_energy is None:
-        x = bins
-    else:
-        x = bin_to_energy(bins)
-
-    pl.plot(x, counts, linestyle=linestyle, color=color, label=label, linewidth=linewidth)
-    pl.plot(x[real_peaks], counts[real_peaks], linestyle='none', marker='o', markersize=5, color=color)
-
 def fezn_plot(peaks):
     data = np.genfromtxt('Messdaten/Legierungen/FeZn.txt', skip_header=1)
     bins = data[:, 0]
@@ -63,7 +148,7 @@ def fezn_plot(peaks):
     pl.xlabel('Kanal')
     pl.ylabel('Anzahl Zählereignisse')
     pl.grid(True)
-    pl.savefig('_build/FeZn.pdf')
+    pl.savefig('_build/FeZn.pdf', **savefig_options)
     pl.clf()
 
 def unbekannte_probe(T):
@@ -77,10 +162,10 @@ def unbekannte_probe(T):
 
     fezn_plot(fezn_peaks)
 
-    def fit(bin_, a, b):
-        return a * bin_ + b
-
     popt, pconv = op.curve_fit(fit, fezn_peak_bins, fezn_energien)
+
+    T['energie_steigung'] = unitprint.siunitx(popt[0])
+    T['energie_abschnitt'] = unitprint.siunitx(popt[1])
 
     def bin_to_energy(bin_):
         return fit(bin_, *popt)
@@ -89,7 +174,7 @@ def unbekannte_probe(T):
     pl.grid(True)
     pl.xlabel('Kanal')
     pl.ylabel('Energie / eV')
-    pl.savefig('_build/Energieeichung.pdf')
+    pl.savefig('_build/Energieeichung.pdf', **savefig_options)
     pl.clf()
 
     unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')[0]
@@ -117,11 +202,14 @@ def unbekannte_probe(T):
     common_options_fe = dict(common_options)
     common_options_fe['linewidth'] = 2.0
 
-    n = 15
-    colors = iter([
-        colorsys.hsv_to_rgb(x*1.0/n, 1.0, .8)
-        for x in range(n)
-    ])
+    colors = coloriter(15)
+
+    legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2, bin_to_energy=bin_to_energy)
+    pl.xlabel('Energie / eV')
+    pl.ylabel('normalisierte Anzahl')
+    pl.grid(True)
+    pl.savefig('_build/Probe_1.pdf')
+    pl.clf()
 
     legierung_plot('Messdaten/Legierungen/Probe_1.txt', unbekannt_peaks, color='black', label='Probe', linewidth=2, bin_to_energy=bin_to_energy)
 
@@ -145,36 +233,36 @@ def unbekannte_probe(T):
     pl.ylim([0, 1.05])
     pl.grid(True)
     pl.legend(loc='best')
-    pl.savefig('_build/Bestimmung.pdf')
+    pl.savefig('_build/Bestimmung.pdf', **savefig_options)
 
     pl.legend().set_visible(False)
     pl.xlim([5000, 7000])
-    pl.savefig('_build/Bestimmung_Zoom.pdf')
+    pl.savefig('_build/Bestimmung_Zoom.pdf', **savefig_options)
     pl.clf()
 
-def roehre2(T):
-    data = np.genfromtxt('Messdaten/Roehre_2.txt', skip_header=1)
-    print(data)
+    unbekannt_peaks = legierung_peaks('Messdaten/Legierungen/Probe_1.txt')[2]
+    fe_peaks = legierung_peaks('Messdaten/Legierungen/Fe.txt', column_offset=1)[2]
 
-    pl.plot(data[:, 0], data[:, 1])
-    pl.xlabel(r'$\beta / ^\circ$')
-    pl.ylabel('Zählrate')
-    pl.grid(True)
-    pl.savefig('_build/Roehre_2.pdf')
-    pl.clf()
+    fecr_max = np.max(unbekannt_peaks)
+    fe_max = np.max(fe_peaks)
 
-def langzeitmessung(T):
-    data = np.genfromtxt('Messdaten/Langzeit-NaCl-Mo-120s-295-310.txt', skip_header=1)
+    n_fe = fecr_max / fe_max
+    n_cr = 1 - n_fe
 
-    beta = data[:, 0]
-    rate = data[:, 1]
+    a_fe = 51.9961
+    a_cr = 55.845
 
-    pl.plot(beta, rate)
-    pl.grid(True)
-    pl.xlabel(r'$\beta / ^\circ$')
-    pl.ylabel('Zählrate')
-    pl.savefig('_build/Langzeit.pdf')
-    pl.clf()
+    c_fe = n_fe * a_fe / (n_fe * a_fe + n_cr * a_cr)
+    c_cr = n_cr * a_cr / (n_fe * a_fe + n_cr * a_cr)
+
+    T['A_fe'] = unitprint.siunitx(a_fe)
+    T['A_cr'] = unitprint.siunitx(a_cr)
+    T['C_fe'] = unitprint.siunitx(c_fe * 100)
+    T['C_cr'] = unitprint.siunitx(c_cr * 100)
+    T['fe_max'] = unitprint.siunitx(fe_max)
+    T['fecr_max'] = unitprint.siunitx(fecr_max)
+    T['fecr_fe_prozent'] = unitprint.siunitx(n_fe * 100)
+    T['cr_prozent'] = unitprint.siunitx(n_cr * 100)
 
 def laue(T):
     raw = pl.imread('Messdaten/laue.png')
@@ -184,7 +272,7 @@ def laue(T):
 
     pl.imshow(helligkeit)
     pl.colorbar()
-    pl.savefig('_build/laue-helligkeit.pdf')
+    pl.savefig('_build/laue-helligkeit.pdf', **savefig_options)
     pl.clf()
 
     gauss_radius = 8
@@ -194,46 +282,55 @@ def laue(T):
     helligkeit = scipy.ndimage.filters.gaussian_filter(helligkeit, gauss_radius)
 
     pl.imshow(helligkeit)
+    pl.grid(True)
     pl.colorbar()
-    pl.savefig('_build/laue-helligkeit-gauss.pdf')
+    pl.savefig('_build/laue-helligkeit-gauss.pdf', **savefig_options)
     pl.clf()
 
     gradient_x, gradient_y = np.gradient(helligkeit)
     pl.imshow(np.sqrt(gradient_x**2 + gradient_y**2))
     pl.colorbar()
-    pl.savefig('_build/laue-gradient_x_y.pdf')
+    pl.savefig('_build/laue-gradient_x_y.pdf', **savefig_options)
     pl.clf()
 
     pl.imshow(np.arctan2(gradient_x, gradient_y))
     pl.colorbar()
-    pl.savefig('_build/laue-gradient_phase.pdf')
+    pl.savefig('_build/laue-gradient_phase.pdf', **savefig_options)
     pl.clf()
 
     laplace = np.gradient(gradient_x)[0] + np.gradient(gradient_y)[1]
     pl.imshow(laplace)
     pl.colorbar()
-    pl.savefig('_build/laue-laplace.pdf')
+    pl.savefig('_build/laue-laplace.pdf', **savefig_options)
     pl.clf()
 
 
-    laplace_threshold = 0.0005
+    laplace_threshold = 0.001
 
     T['laplace_threshold'] = unitprint.siunitx(laplace_threshold)
 
     peaks = laplace >= laplace_threshold
-    print(peaks)
-    print(helligkeit[peaks])
 
     # http://stackoverflow.com/a/9113227
     labeled, num_objects = scipy.ndimage.label(peaks)
     slices = scipy.ndimage.find_objects(labeled)
 
-    print(labeled)
-    print(num_objects)
-    print(slices)
+    shapes = ['o', '>', '<', 'd', 'v', '^', 's', 'p', '*', 'D']
+    colors = coloriter(8)
+    shapecoloriter = itertools.product(shapes, colors)
+
+    x_offset = 725
+    y_offset = 709
+
+    T['x_offset'] = x_offset
+    T['y_offset'] = y_offset
 
     pl.imshow(laplace)
-    x, y = [], []
+
+    x = []
+    y = []
+    used_shapes = []
+    used_colors = []
     for dy,dx in slices:
         x_center = (dx.start + dx.stop - 1)/2
         y_center = (dy.start + dy.stop - 1)/2    
@@ -242,8 +339,69 @@ def laue(T):
             x.append(x_center)
             y.append(y_center)
 
-    pl.plot(x, y, 'ro')
-    pl.savefig('_build/laue-peaks.pdf')
+        shape, color = next(shapecoloriter)
+
+        used_shapes.append(shape)
+        used_colors.append(color)
+
+        pl.plot(x_center, y_center, color=color, marker=shape)
+
+    x = np.array(x)
+    y = np.array(y)
+
+    x -= x_offset
+    y -= y_offset
+
+    pl.savefig('_build/laue-peaks.pdf', **savefig_options)
+    pl.clf()
+
+    l = 15e-3
+
+    # Der Scan wurde mit 600 DPI erstellt, also kann damit die Pixel in Meter
+    # umgerechnet werden. Dazu rechne ich erst die DPI in Dots per Meter um und
+    # teile die Werte dann dadurch.
+    x /= 600 / 2.54e-2
+    y /= 600 / 2.54e-2
+
+    z = np.sqrt(x**2 + y**2 + l**2) - l
+
+    xz = x / z
+    yz = y / z
+
+    h = []
+    k = []
+    l = []
+
+    for xz_, yz_ in zip(xz, yz):
+        fx = fractions.Fraction(xz_)
+        fx = fx.limit_denominator(3)
+        fy = fractions.Fraction(yz_)
+        fy = fy.limit_denominator(3)
+
+        lcm = fx.denominator * fy.denominator / fractions.gcd(fx.denominator, fy.denominator)
+
+        h_ = int(fx.numerator * lcm / fx.denominator)
+        k_ = int(fy.numerator * lcm / fy.denominator)
+        l_ = int(lcm)
+
+        h.append(h_)
+        k.append(k_)
+        l.append(l_)
+
+    xyhkl = list(zip(x, y, h, k, l))
+
+    for x, y, h_, k_, l_ in xyhkl:
+        marker = '${}$'.format(
+            '|'.join([
+                (str(v) if v >= 0 else r'\overline{'+str(-v)+'}')
+                for v in [h_, k_, l_]
+            ])
+        )
+        pl.plot(x, y, marker=marker, markersize=15, color='black', markeredgecolor='black')
+    pl.xlabel('$x / m$')
+    pl.ylabel('$y / m$')
+    pl.grid(True)
+    pl.savefig('_build/laue-indizes.pdf', **savefig_options)
     pl.clf()
 
 def main():
