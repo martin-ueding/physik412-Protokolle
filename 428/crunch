@@ -391,8 +391,8 @@ def laue(T):
     xyhkl = list(zip(x, y, h, k, l))
 
     for x, y, h_, k_, l_ in xyhkl:
-        marker = '${}$'.format(
-            '|'.join([
+        marker = '$({})$'.format(
+            ''.join([
                 (str(v) if v >= 0 else r'\overline{'+str(-v)+'}')
                 for v in [h_, k_, l_]
             ])
