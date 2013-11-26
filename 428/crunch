@@ -79,15 +79,10 @@ def langzeitmessung(T):
     lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / 4
     e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
 
-    print(e)
-
     e_mo = np.array([17479.34, 17374.3])
 
     aufspaltung_gemessen = abs(e[0] - e[1]) / np.mean(e)
     aufspaltung_literatur = abs(e_mo[0] - e_mo[1]) / np.mean(e_mo)
-
-    print(aufspaltung_gemessen)
-    print(aufspaltung_literatur)
 
     T['aufspaltung_gemessen'] = unitprint.siunitx(aufspaltung_gemessen * 100)
     T['aufspaltung_literatur'] = unitprint.siunitx(aufspaltung_literatur * 100)
@@ -407,11 +402,11 @@ def laue(T):
             ])
         )
         marker_list.append(marker)
-        pl.plot(x, y, marker=marker, markersize=15, color='black', markeredgecolor='black')
-    pl.xlabel('$x / m$')
-    pl.ylabel('$y / m$')
-    pl.xlim([-0.02, 0.02])
-    pl.ylim([-0.02, 0.02])
+        pl.plot(x * 1000, y * 1000, marker=marker, markersize=15, color='black', markeredgecolor='black')
+    pl.xlabel('$x / \mathrm{mm}$')
+    pl.ylabel('$y / \mathrm{mm}$')
+    pl.xlim([-20, 20])
+    pl.ylim([-20, 20])
     pl.grid(True)
     pl.savefig('_build/laue-indizes.pdf', **savefig_options)
     pl.clf()
