@@ -725,28 +725,14 @@ Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
 
 \begin{table}[htbp]
     \centering
-    \begin{minipage}[t]{.45\linewidth}
-        \centering
-        \begin{tabular}{SSSc}
-            {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
-        \si{\pico\meter}$} & Ebene \\
-            \midrule
-            %< for a, b, c, d in laue_tabelle[:24]: ->%
-            << a >> & << b >> & << c >> & << d >> \\
-            %< endfor ->%
-        \end{tabular}
-    \end{minipage}
-    \begin{minipage}[t]{.45\linewidth}
-        \centering
-        \begin{tabular}{SSSc}
-            {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
-        \si{\pico\meter}$} & Ebene \\
-            \midrule
-            %< for a, b, c, d in laue_tabelle[24:]: ->%
-            << a >> & << b >> & << c >> & << d >> \\
-            %< endfor ->%
-        \end{tabular}
-    \end{minipage}
+    \begin{tabular}{SSSc}
+        {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
+    \si{\pico\meter}$} & Ebene \\
+        \midrule
+        %< for a, b, c, d in laue_tabelle: ->%
+        << a >> & << b >> & << c >> & << d >> \\
+        %< endfor ->%
+    \end{tabular}
     \caption{%
         Errechnete Glanzwinkel $\theta$ und Ebenenabstände $d$. Die Daten sind
         nach absteigendem Glanzwinkel sortiert.

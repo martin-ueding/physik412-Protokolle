@@ -372,6 +372,15 @@ def laue(T):
     x /= 600 / 2.54e-2
     y /= 600 / 2.54e-2
 
+    xy = np.array([
+        (x_, y_)
+        for x_, y_ in zip(x, y)
+        if -0.02 < x_ < 0.02 and -0.02 < y_ < 0.02
+    ])
+
+    x = xy[:, 0]
+    y = xy[:, 1]
+
     z = np.sqrt(x**2 + y**2 + L**2) - L
 
     xz = x / z
