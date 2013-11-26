@@ -46,15 +46,47 @@
 
 \chapter{Theorie}
 
+\section{Röntgenstrahlung}
+
+Als Röntgenstrahlung bezeichnet man den Bereich im elektromagnetischen
+Spektrum mit Wellenlängen zwischen etwa \SI{10}{\nano\meter} und
+\SI{1}{\pico\meter}, also mit einer Photonenenergie zwischen
+\SI{100}{\electronvolt} und einigen \si{\mega\electronvolt}. Damit liegt sie
+zwischen der langwelligeren UV-Strahlung und der $\gamma$-Strahlung. Die
+Abgrenzung zu letzterer ist fließend, die Bereiche überlappen sich zum
+Teil. Sie unterscheiden sich in erster Linie durch ihren Entstehungsort:
+Während Röntgenstrahlung in der Atomhülle entsteht, also hauptsächlich
+durch Coulomb-Wechselwirkung, kommt $\gamma$-Strahlung aus dem Atomkern, wo
+schwache und starke Wechselwirkung ebenso eine Rolle spielen.
+
 \section{Entstehung der Röntgenstrahlung}
+
 
 \parencite[Abschnitt~17.3.1]{meschede-gerthsen_24}
 
 \subsection{Bremsstrahlung}
 
+Die erste ist die Bremstrahlung. Stoßen schnelle Elektronen auf Materie,
+werden sie Abgebremst. Da es geladene Teilchen sind, wird dabei
+Bremsstrahlung frei. Bei genügend schnellen Elektronen ist die Wellenlänge 
+im Röntgenbereich. Das so entstehende Spektrum ist kontinuierlich. Im
+Experiment kann die minimale Wellenlänge durch Variation der
+Beschleunigungsspannung verändert werden.
+
 \parencite[Abschnitt~17.3.4]{meschede-gerthsen_24}
 
 \subsection{$K_\alpha$ und weitere Linien}
+
+Prallen energiereiche Elektronen auf Materie, können durch inelastische
+Stöße an Atomkerne gebundene Elektronen aus ihren Bahnen geschlagen
+werden. Die dabei entstehenden Löcher werden durch energetisch höher
+liegende Elektronen gefüllt, welche beim Übergang Energie abgeben. Das so
+entstehende Spektrum ist diskret und charakteristisch für jede Atomart. Die
+stattfindenden Übergänge werden nach der neu gefüllten Schale und dem
+Abstand der Energieniveaus benannt. Wird das niedrigste Energieniveau, also
+die $K$-Schale, durch ein Elektron aus der $L$-Schale gefüllt, so nennt man
+die entstehende Linie $K_\alpha$, wird sie aus der $M$-Schale gefüllt, ist
+das Ergebnis die $K_\beta$-Linie.
 
 \parencite[Abschnitt~17.3.5]{meschede-gerthsen_24}
 
@@ -66,19 +98,78 @@
 
 \parencite[Abschnitt~19.3.2~d)]{meschede-gerthsen_24}
 
+\FloatBarrier
 \subsubsection{Aufbau}
 
+\begin{figure}[htpb]
+    \centering
+    \includegraphics[width=\textwidth]{../Abbildungen/Geiger-Mueller.pdf}
+    \caption{%
+        Aufbau eines Geiger-Müller-Zählers
+    }
+    \label{fig:geiger}
+\end{figure}
+
+Der Aufbau eines Geiger-Müller-Zählrohres ist in Abbildung~\ref{fig:geiger} 
+zu sehen. Sowohl die Spannung, als auch der Widerstand sind groß. Die 
+Kammer mit dem etwa \SI{0.1}{\milli\meter} dicken Anodendraht ist mit einem 
+Gasgemisch gefült, häufig werden Edelgase oder einfache Luft mit 
+Ethanoldampf vermischt.
+
+\FloatBarrier
 \subsubsection{Funktionsweise}
 
+Gelangt Strahlung in das Rohr werden vereinzelt Gasmoleküle ionisiert. Was
+nun passiert kommt auf die angelegte Spannung an. Bei geringer Spannung
+rekombinieren die Elektronen auf dem Weg zur Anode, was dafür sorgt, dass das
+Signal keine brauchbaren Informationen liefert.
+
+Bei einigen \SI{100}{\volt} lösen Elektronen nah der Anode durch Ionisation
+weitere Ionen aus, es entstehen Elektronenlawinen mit bis zu \num{1e6}
+Elektronen. Das entstehende Signal ist leicht messbar und proportional zur
+durch die Strahlung im Zählrohr abgegebenen Energie. Daher wird das
+Zählrohr in diesem Betrieb auch Proportionalzählrohr genannt.
+
+Ab einer noch höheren Spannung erzeugt jede einfallende ionisierende
+Strahlung Elektronenlawinen, die sich durch das ganze Rohr erstrecken. Das
+entstehende Signal ist so groß, dass es ohne weitere Verstärkung zum
+Beispiel in einem Lautsprecher ein Knacken erzeugen kann. In diesem Betrieb ist
+das Zählrohr maximal empfindlich.
+
+Ist die Spannung noch größer, braucht es keine einfallende Strahlung mehr um
+das Gas zu Ionisieren, dies geschieht durch die Spannung allein. Das
+Zählrohr ist in diesem Betrieb nicht mehr brauchbar.
+
 \subsubsection{Totzeit}
+
+Im Proportionalitäts- und Geiger-Müller-Betrieb des Zählrohrs schirmen die
+entstehenden Ionen das Gas teilweise von der Spannung ab, was kurzzeitig
+einen Betrieb verhindert. Erst wenn die Elektronen und Ionen rekombiniert
+sind ist das Zählrohr wieder funktionsfähig. Die Zeit die es bis dahin
+braucht nennt man Totzeit. Da im Geiger-Müller-Zähler das gesamte Gas
+ionisiert ist, ist die Totzeit entsprechend groß, sie liegt in der
+Größenordnung \SI{1e-4}{\second}.
+
+Durch die Wahl des Gasgemischs kann die Rekombinations- und Totzeit
+verringert werden.
 
 \subsection{Röntgenenergiedetektor}
 
 \subsubsection{Aufbau}
 
+Kern eines Röntgenenergiedetektors ist die so genannte PIN-Photodiode.
+Diese besteht aus einem Halbleiter, der zwischen einem $p$- und einem
+$n$-dotierten Bereich einen undotierten (intrisischen) Bereich hat. Dieser
+verhindert im normalbetrieb einen Stromfluss.
+
 \subsubsection{Funktionsweise}
 
-\subsubsection{PIN-Photodiode}
+Trifft Röntgenstrahlung auf den intrinsischen Bereich, werden Elektronen
+angeregt, und so ein freies Elektronen-Loch-Paar erzeugt. Da es zu dieser
+Anregung nur wenige \si{\electronvolt} braucht, kann ein einfallender
+Röntgenstrahl eine zu seiner Energie proportionale Anzahl an Paaren
+erzeugen. Dadurch fließt in der Diode ein zur Röntgenenergie proportionaler
+Strom, aus dem man die Energie ablesen kann.
 
 \parencite[Abschnitt~„Photodiode“]{wikipedia/pin-Diode}
 
@@ -91,32 +182,142 @@ Spannungsintervalle auf und zählt die Häufigkeit.
 
 \section{Röntgenfluoreszenz}
 
+Wird ein Atom durch Röntgenstrahlung angeregt oder ionisiert, fallen
+höherenergetische Elektronen in die frei gewordenen Löcher. Dabei strahlen
+sie wie bei der Erzeugung charakteristischer Röntgenstrahlung isotrop
+Energie in Form von erneuter Röntgenstrahlung ab, deren Spektrum für
+verschiedene Atomkerne unterschiedlich ist. Dies bietet die Möglichkeit ein
+Material zu untersuchen, ohne dieses zu zerstören.
+
 \subsection{Bestimmung der Massenanteile}
+
+Untersucht man eine Legierung mit Hilfe von Röntgenfluoreszens, erhält man
+ein Spektrum, welches aus den überlagerten Spektren der einzelnen
+Materialien besteht, nur mit unterschiedlich reduzierter Peakhöhe.
+
+Um die tatsächlichen Anteile zu berechnen, kann man davon ausgehen, dass die
+Peakhöhe $H$ proportional zur tatsächlichen Anzahl von Atomen $n$ ist.
+Damit gilt:
+
+\begin{align*}
+    n &= n_0 \frac{H}{H_0}
+    \intertext{Mit der Referenzanzahl}
+    n_0 &= V \frac{\rho}{A} \intertext{%
+        wobei $V$ das effektive Volumen, $\rho$ die Dichte und $A$ die
+        Atommasse bezeichnen, erhält man
+    }
+    n &= V \frac{\rho}{A} \frac{H}{H_0}
+    \intertext{%
+        Den Massenanteil $C_i$ erhält man durch
+    }
+    C_i &= \frac{n_iA_i}{\sum_i n_iA_i} \\
+        &= \frac{\rho_i\frac{H_i}{H_{0,i}}} {\sum_i\rho_i\frac{H_i}{H_{0,i}}}
+\end{align*}
+
 
 \parencite[„Massenanteilsbestimmung“]{physik412-Anleitung}
 
-\section{Bragg-Beugung}
+\FloatBarrier
+\section{Bragg-Bedingung}
 
-\parencite[(18.4)]{meschede-gerthsen_24}
+\begin{figure}
+    \centering
+    \includegraphics{../Abbildungen/Bragg.pdf}
+    \caption{%
+        Beugung im Kristallgitter
+    }
+    \label{fig:bragg}
+\end{figure}
+
+Trifft eine elektromagnetische Welle auf ein Kristallgitter, wird sie
+an den Gitteratomen reflektiert. Dabei ändert sich die Wellenlänge nicht.
+Die Situation ist in Abbildung~\ref{fig:bragg} skizziert.
+Bei einem Winkel $\alpha$ zwischen einfallendem Strahl und Gitterebene ist
+der Gangunterschied zwischen an benachbarten Gitterebenen reflektierten
+Strahlen
+\begin{align*}
+    \Delta &= 2d\sin\alpha
+    \intertext{%
+        Damit konstruktive Interferenz stattfinden kann muss dieser
+        Gangunterschied ein vielfaches der Wellenlänge sein:
+    }
+    n\lambda &= 2d\sin\alpha
+\end{align*}
+Dies ist die so genannte Bragg-Bedingung. Bei allen anderen Verhältnissen
+zwischen Winkel, Wellenlänge und Netzebenenabstand, findet eine
+vollständige Auslöschung statt.
+
+\section{Laue-Bedingung}
+
+Die Laue-Bedingung lautet
 \[
     \Deltaup \vec k = \vec g
 \]
+das heißt, konstruktive Interferenz findet statt, wenn die Änderung des
+Wellenvektors einem reziproken Gittervektor entsprechen. Im Grunde ist
+diese Bedingung zur Bragg-Bedingung äquivalent, während Bragg jedoch von
+quasi spiegelnden Ebenen ausgeht, formuliert von Laue seine Bedingung für
+viele einzelne Streuzentren.
 
+\parencite[(18.4)]{meschede-gerthsen_24}
+
+\FloatBarrier
 \section{Laue-Verfahren}
 
+Beim Laue-Verfahren wird ein dünner Kristall mit weißer Röntgenstrahlung
+bestrahlt. Hinter den Kristall wird im Abstand $L$ eine Photoplatte
+gestellt. Die Bragg-Bedingung wird, da verschiedene Wellenlängen vorliegen,
+vielfach erfüllt. Auf dem Schirm entsteht ein Punktmuster. Aus den
+Koordinaten ($x$,$y$) der Punkte kann zunächst die dritte Koordinate mit
+\[
+    z = \sqrt{x^2 + y^2 + L^2} - L
+\]
 \parencite[P428.5.3, „Auswertung“]{physik412-Anleitung}
-
-\subsection{Laue-Bedingung}
-
-\subsection{Miller'sche Indizes}
 
 \subsection{Elementarzelle}
 
+Die Elementarzelle einer Kristallstruktur, ist ein durch drei Vektoren
+$\vec a_1$, $\vec a_2$ und $\vec a_3$ aufgespanntes Paralellepiped. Durch
+periodische Wiederholung der Elementarzelle in alle Richtungen, wird das
+ganze Kristallgitter aufgespannt.
+
+\subsection{Millersche Indizes}
+
+Um scharen paralleler Ebenen definieren zu können sind die Millerschen
+Indizes hilfreich. Dabei legt man einen Punkt der Elementarzelle in den
+Ursprung eines Koordinatensystems und betrachtet die Spurpunkte $s_1\vec
+a_1$, $s_2\vec a_2$ und $s_3\vec a_3$ der Ebene. Nun bildet man die
+Kehrwerte der $s_i$ und multipliziert mit einer ganzen Zahl, sodass die
+Ergebnisse ebenfalls ganze Zahlen $h$, $k$, $l$ sind. Das Tupel $(hkl)$
+heißt Millersche Indizes.
+
+Liegt der Kristall beim Laue-Verfahren so, dass die Kristallachsen mit dem
+Laborkoordinatensystem übereinstimmem, können die Millerschen Indizes der
+reflektierenden Kristallebene über die Beziehung
+\[
+    h:k:l = x:y:z
+\]
+gefunden werden.
+
 \subsection{Glanzwinkel}
+
+Der Glanzwinkel kann aus einfachen geometrischen Überlegungen bestimmt
+werden. Der einfallende Strahl hat einen Winkel von 0 zur optischen Achse. 
+Da bei der Reflexion am Gitter Einfallswinkel und Ausfallswinkel gleich
+groß sein müssen, ist der Austrittswinkel $2\theta$. Dieser kann mit Hilfe
+der Punktkoordinaten berechnet werden:
+\[
+    \tan\del{2\theta} = \frac{\sqrt{x^2+y^2}}{L}
+\]
 
 \subsection{Netzebenenabstand}
 
-\parencite[Vorlesung~3]{physics613-Vorlesung}
+In einem kubischen System mit Gitterkonstante $a_0$ kann man den
+Netzebenabstand aus den Miller-Indizes mit
+\[
+    d = \frac {a_0} {\sqrt{ h^2 + k^2 + ^2}}
+\]
+berechnen. \parencite[Vorlesung~3]{physics613-Vorlesung}
 
 \chapter{Bragg-Reflexion}
 
