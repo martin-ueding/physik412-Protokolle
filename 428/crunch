@@ -45,14 +45,20 @@ def roehre2(T):
 
     n = [1, 1, 2, 2, 3]
 
-    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / n
+    beta_err = np.radians(0.3)
 
-    T['r2_lambda_pm'] = ';'.join(unitprint.siunitx(lambda_ * 10**12))
+    T['beta_err'] = "0.3"
 
-    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
+    lambda_val = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / n
+    lambda_err = 2 * nacl_a * np.cos(np.radians(beta[real_peaks])) / n * beta_err
+
+    T['r2_lambda_pm'] = ';'.join(unitprint.siunitx(lambda_val * 10**12, lambda_err * 10**12))
+
+    e = 6.626e-34 * 3e8 / lambda_val / 1.609e-19
+    e_err = 6.626e-34 * 3e8 / lambda_val**2 / 1.609e-19 * lambda_err
 
     T['nacl_a'] = unitprint.siunitx(nacl_a)
-    T['r2_e_kev'] = ';'.join(unitprint.siunitx(e / 1000))
+    T['r2_e_kev'] = ';'.join(unitprint.siunitx(e / 1000, e_err/1000))
 
     pl.plot(data[:, 0], data[:, 1])
     pl.plot(beta[real_peaks], rate[real_peaks], 'ro')
@@ -68,6 +74,10 @@ def langzeitmessung(T):
     beta = data[:, 0]
     rate = data[:, 1]
 
+    beta_err_lz = 0.05
+    T['beta_err_lz'] = beta_err_lz
+    beta_err_lz = np.radians(beta_err_lz)
+
     peak_indizes = scipy.signal.find_peaks_cwt(rate, np.array([.1]))
     
     real_peaks = [
@@ -77,18 +87,26 @@ def langzeitmessung(T):
     ]
 
     nacl_a = 262e-12
-    lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / 4
-    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
+    lambda_val = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / 4
+    lambda_err = 2 * nacl_a * np.cos(np.radians(beta[real_peaks])) / 4 * beta_err_lz
+    e = 6.626e-34 * 3e8 / lambda_val / 1.609e-19
+    e_err = 6.626e-34 * 3e8 / lambda_val**2 / 1.609e-19 * lambda_err
 
     e_mo = np.array([17479.34, 17374.3])
 
-    aufspaltung_gemessen = abs(e[0] - e[1]) / np.mean(e)
+    aufsp_val = abs(e[0] - e[1]) / np.mean(e)
+    aufsp_err = np.sqrt(
+        (e_err[0] / np.mean(e))**2
+        +
+        (e_err[1] / np.mean(e))**2
+    )
+
     aufspaltung_literatur = abs(e_mo[0] - e_mo[1]) / np.mean(e_mo)
 
-    T['aufspaltung_gemessen'] = unitprint.siunitx(aufspaltung_gemessen * 100)
+    T['aufspaltung_gemessen'] = unitprint.siunitx(aufsp_val * 100, aufsp_err*100)
     T['aufspaltung_literatur'] = unitprint.siunitx(aufspaltung_literatur * 100)
 
-    T['langzeit_e'] = ';'.join(unitprint.siunitx(e / 1000, digits=5))
+    T['langzeit_e'] = ';'.join(unitprint.siunitx(e / 1000, e_err/1000))
     T['langzeit_e_mo'] = ';'.join(unitprint.siunitx(e_mo / 1000, digits=5))
 
     pl.plot(beta, rate)
