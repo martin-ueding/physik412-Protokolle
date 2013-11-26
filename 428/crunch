@@ -9,6 +9,7 @@ import colorsys
 import fractions
 import itertools
 import json
+import operator
 import matplotlib.pyplot as pl
 import numpy as np
 import scipy.ndimage
@@ -415,7 +416,7 @@ def laue(T):
 
     marker_list = []
 
-    for x, y, h_, k_, l_, theta_, d_ in zip(x, y, h, k, l, theta, d):
+    for x_, y_, h_, k_, l_, theta_, d_ in zip(x, y, h, k, l, theta, d):
         marker = '$({})$'.format(
             ''.join([
                 (str(v) if v >= 0 else r'\overline{'+str(-v)+'}')
@@ -423,7 +424,7 @@ def laue(T):
             ])
         )
         marker_list.append(marker)
-        pl.plot(x * 1000, y * 1000, marker=marker, markersize=15, color='black', markeredgecolor='black')
+        pl.plot(x_ * 1000, y_ * 1000, marker=marker, markersize=15, color='black', markeredgecolor='black')
     pl.xlabel('$x / \mathrm{mm}$')
     pl.ylabel('$y / \mathrm{mm}$')
     pl.xlim([-20, 20])
@@ -434,12 +435,23 @@ def laue(T):
 
     lambda_ = 2 * d * np.sin(theta)
 
-    T['laue_tabelle'] = list(reversed(sorted(zip(
+    laue_tabelle = zip(
+        unitprint.siunitx(x * 1000),
+        unitprint.siunitx(y * 1000),
+        unitprint.siunitx(xz),
+        unitprint.siunitx(yz),
+        marker_list,
         unitprint.siunitx(np.degrees(theta)),
         unitprint.siunitx(d * 10**12),
         unitprint.siunitx(lambda_ * 10**12),
-        marker_list,
-    ))))
+    )
+
+    T['laue_tabelle'] = list(reversed(sorted(laue_tabelle, key=operator.itemgetter(3))))
+
+    print(x)
+    print(y)
+    print(T['laue_tabelle'])
+
 
 def main():
     T = {}

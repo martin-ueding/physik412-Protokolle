@@ -723,21 +723,28 @@ Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
     \label{fig:laue-indizes}
 \end{figure}
 
+Alle in Abbildung~\ref{fig:laue-indies} Gitterebenen haben wir in
+Tabelle~\ref{tab:laue-index}
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSc}
-        {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
-    \si{\pico\meter}$} & Ebene \\
+    \begin{tabular}{SSSS|cSSS}
+        {$x / \si{\milli\meter}$} & {$y / \si{\milli\meter}$} & {$A$} & {$B$} & Ebene & {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
+    \si{\pico\meter}$} \\
         \midrule
-        %< for a, b, c, d in laue_tabelle: ->%
-        << a >> & << b >> & << c >> & << d >> \\
+        %< for a, b, c, d, e, f, g, h in laue_tabelle: ->%
+        << a >> & << b >> & << c >> & << d >> & << e >> & << f >> & << g >> &
+        << h >> \\
         %< endfor ->%
     \end{tabular}
     \caption{%
         Errechnete Glanzwinkel $\theta$ und Ebenenabstände $d$. Die Daten sind
         nach absteigendem Glanzwinkel sortiert.
     }
+    \label{tab:laue-index}
 \end{table}
+
+Bei der Zurodnung
 
 \chapter{Zusammenfassung}
 
