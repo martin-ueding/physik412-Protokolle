@@ -385,7 +385,8 @@ In $\si{\kilo\electronvolt}$ umgewandelt ist die Liste dann: \SIlist{<<
 r2_e_kev >>}{\kilo\electronvolt}.
 
 Laut \cite[Tabelle~1-2]{x-ray_data_booklet}, entsprechen die $K_\alpha$- und
-$K_\beta$-Linien derer von Indium. Somit gehen wir davon aus, dass das
+$K_\beta$-Linien derer von Indium, die bei \SI{24.21}{\kilo\electronvolt} bzw.
+\SI{27.28}{\kilo\electronvolt} liegen. Somit gehen wir davon aus, dass das
 Anodenmaterial von Röhre~2 Indium ist.
 
 \section{Feinstrukturmessung}
@@ -419,6 +420,14 @@ langzeit_e_mo >>}{\kilo\electronvolt} zu erwarten.
 Die Energieaufspaltung der $K_\alpha$ Linie ist bei den Literaturwerten \SI{<<
 aufspaltung_literatur >>}{\percent}, bei unserer Messung ist es \SI{<<
 aufspaltung_gemessen >>}{\percent}. Die beiden Werte passen gut zusammen.
+
+\section{Diskussion}
+
+In diesem Versuchsteil stimmen die Literaturwerte recht gut mit unseren
+Messungen überein. Die $K_\alpha$- und $K_\beta$-Linien liegen nah am
+Literaturwert für Indium.
+
+Die Energieaufspaltung für Molybdän liegt auch nahe am Literaturwert.
 
 \chapter{Zerstörungsfreie Aufnahme chemischer Zusammensetzungen}
 
@@ -712,7 +721,9 @@ errechnen wir die drei Laue-Indizes wie folgt:
 
 Die so errechneten Laue-Indizes sind an die Stellen des Reflexes in
 Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
-Überstreichung, dass der entsprechende Werte negativ ist.
+Überstreichung, dass der entsprechende Werte negativ ist. Reflexe, deren $x$-
+und $y$-Koordinaten nicht innerhalb von \SIrange{-20}{20}{\milli\meter} lagen,
+haben wir für die weitere Auswertung ignoriert.
 
 \begin{figure}[htbp]
     \centering
@@ -777,6 +788,11 @@ sind. Bei einer Beschleunigungsspannung von \SI{35}{\kilo\volt} sollte es
 nicht möglich sein, mehr als \SI{35}{\kilo\electronvolt} zu erhalten. Diese
 hohen Energien treten bei den Ebenen mit den großen Zahlen auf. Diese müssten
 also noch stärker gekürzt werden, als wir es bisher gemacht haben.
+
+Dadurch, dass wir $l$ auf 2 begrenzt haben, haben wir uns eventuell weitere
+Diskretisierungsfehler eingehandelt. Hätten wir dies nicht gemacht, wären die
+Zahlen jedoch noch größer geworden und mehr Fälle wie (502) und (201) wären
+eingetreten.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
