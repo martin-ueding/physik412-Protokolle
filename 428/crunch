@@ -21,6 +21,8 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+nacl_a = 262e-12
+
 def coloriter(n):
     return iter([
         colorsys.hsv_to_rgb(x*1.0/n, 1.0, .8)
@@ -41,8 +43,6 @@ def roehre2(T):
     real_peaks = peak_indizes[[2, 3, 7, 10, 26]]
 
     n = [1, 1, 2, 2, 3]
-
-    nacl_a = 262e-12
 
     lambda_ = 2 * nacl_a * np.sin(np.radians(beta[real_peaks])) / n
 
@@ -357,7 +357,7 @@ def laue(T):
     pl.savefig('_build/laue-peaks.pdf', **savefig_options)
     pl.clf()
 
-    l = 15e-3
+    L = 15e-3
 
     # Der Scan wurde mit 600 DPI erstellt, also kann damit die Pixel in Meter
     # umgerechnet werden. Dazu rechne ich erst die DPI in Dots per Meter um und
@@ -365,7 +365,7 @@ def laue(T):
     x /= 600 / 2.54e-2
     y /= 600 / 2.54e-2
 
-    z = np.sqrt(x**2 + y**2 + l**2) - l
+    z = np.sqrt(x**2 + y**2 + L**2) - L
 
     xz = x / z
     yz = y / z
@@ -390,15 +390,23 @@ def laue(T):
         k.append(k_)
         l.append(l_)
 
-    xyhkl = list(zip(x, y, h, k, l))
+    h = np.array(h)
+    k = np.array(k)
+    l = np.array(l)
 
-    for x, y, h_, k_, l_ in xyhkl:
+    theta = np.arctan(np.sqrt(x**2 + y**2) / L) / 2
+    d = nacl_a / np.sqrt(h**2 + k**2 + l**2)
+
+    marker_list = []
+
+    for x, y, h_, k_, l_, theta_, d_ in zip(x, y, h, k, l, theta, d):
         marker = '$({})$'.format(
             ''.join([
                 (str(v) if v >= 0 else r'\overline{'+str(-v)+'}')
                 for v in [h_, k_, l_]
             ])
         )
+        marker_list.append(marker)
         pl.plot(x, y, marker=marker, markersize=15, color='black', markeredgecolor='black')
     pl.xlabel('$x / m$')
     pl.ylabel('$y / m$')
@@ -407,6 +415,15 @@ def laue(T):
     pl.grid(True)
     pl.savefig('_build/laue-indizes.pdf', **savefig_options)
     pl.clf()
+
+    lambda_ = 2 * d * np.sin(theta)
+
+    T['laue_tabelle'] = list(reversed(sorted(zip(
+        unitprint.siunitx(np.degrees(theta)),
+        unitprint.siunitx(d * 10**12),
+        unitprint.siunitx(lambda_ * 10**12),
+        marker_list,
+    ))))
 
 def main():
     T = {}
