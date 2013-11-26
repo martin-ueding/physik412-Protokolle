@@ -434,6 +434,7 @@ def laue(T):
     pl.clf()
 
     lambda_ = 2 * d * np.sin(theta)
+    e = 6.626e-34 * 3e8 / lambda_ / 1.609e-19
 
     laue_tabelle = zip(
         unitprint.siunitx(x * 1000),
@@ -444,6 +445,7 @@ def laue(T):
         unitprint.siunitx(np.degrees(theta)),
         unitprint.siunitx(d * 10**12),
         unitprint.siunitx(lambda_ * 10**12),
+        unitprint.siunitx(e / 10**3),
     )
 
     T['laue_tabelle'] = list(reversed(sorted(laue_tabelle, key=operator.itemgetter(3))))

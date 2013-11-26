@@ -724,17 +724,17 @@ Abbildung~\ref{fig:laue-indizes} eingetragen. Dabei bedeutet die
 \end{figure}
 
 Alle in Abbildung~\ref{fig:laue-indies} Gitterebenen haben wir in
-Tabelle~\ref{tab:laue-index}
+Tabelle~\ref{tab:laue-index}.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS|cSSS}
+    \begin{tabular}{SSSS|cSSSS}
         {$x / \si{\milli\meter}$} & {$y / \si{\milli\meter}$} & {$A$} & {$B$} & Ebene & {$\theta / \si\degree$} & {$d / \si{\pico\meter}$} & {$\lambda /
-    \si{\pico\meter}$} \\
+    \si{\pico\meter}$} & {$E / \si{\kilo\electronvolt}$} \\
         \midrule
-        %< for a, b, c, d, e, f, g, h in laue_tabelle: ->%
+        %< for a, b, c, d, e, f, g, h, i in laue_tabelle: ->%
         << a >> & << b >> & << c >> & << d >> & << e >> & << f >> & << g >> &
-        << h >> \\
+        << h >> & << i >> \\
         %< endfor ->%
     \end{tabular}
     \caption{%
@@ -745,11 +745,38 @@ Tabelle~\ref{tab:laue-index}
     \label{tab:laue-index}
 \end{table}
 
-Bei der Zurodnung
+\section{Diskussion}
 
-\chapter{Zusammenfassung}
+Bei der Zuordnung der Miller'schen Indizes gibt es zwei Fehlerquellen, die sich
+leider verstärken: Zum einen kann der Mittelpunkt des Bildes etwas daneben
+liegen, zum anderen Rundungsfehler.
 
-\chapter{Diskussion}
+Dann haben wir das Bild zwar gedreht, jedoch könnte der Winkel nicht perfekt
+gewesen sein. Beim Drehen hatten nicht alle Reflexe ideal gepasst, daher
+mussten wir einen Kompromiss eingehen. Wahrscheinlich liegt das daran, dass
+Kristall und Film nicht perfekt senkrecht zur optischen Achse lagen. Der Film
+lag auch eventuell nicht ganz plan auf, so dass sich kleine Abweichungen
+ergeben.
+
+Unsere Methode zur Bestimmung der Indizes führt zwar zu kleinen Zahlen, jedoch
+sind die Rundungsfehler bei der Rationalisierung der Verhältnisse entsprechend
+groß. Dadurch kommt es zum Beispiel dazu, dass anstelle von (121) der ähnliche
+Wert (252)
+herauskommt. Aufgrund der hohen Symmetrie bei den besagten Reflexen erscheint
+uns in diesem Fall (121) deutlich plausibler.
+
+Die beiden Reflexe ganz links und ganz rechts sind ebenfalls (502) und (201),
+letzteres erscheint auch hier wieder wahrscheinlicher.
+
+Die Fehler treten auch meistens in Paaren auf, die horizontal, vertikal oder
+diagonal gegenüber liegen. Dies spricht dafür, dass die Drehung und
+Mittelpunktsbestimmung nicht ausreichend gewesen ist.
+
+Bei den Energien ist zu erkennen, dass sehr viele Wellenlängen viel zu klein
+sind. Bei einer Beschleunigungsspannung von \SI{35}{\kilo\volt} sollte es
+nicht möglich sein, mehr als \SI{35}{\kilo\electronvolt} zu erhalten. Diese
+hohen Energien treten bei den Ebenen mit den großen Zahlen auf. Diese müssten
+also noch stärker gekürzt werden, als wir es bisher gemacht haben.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
