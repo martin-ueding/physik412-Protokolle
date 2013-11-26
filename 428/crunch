@@ -374,9 +374,9 @@ def laue(T):
 
     for xz_, yz_ in zip(xz, yz):
         fx = fractions.Fraction(xz_)
-        fx = fx.limit_denominator(3)
+        fx = fx.limit_denominator(2)
         fy = fractions.Fraction(yz_)
-        fy = fy.limit_denominator(3)
+        fy = fy.limit_denominator(2)
 
         lcm = fx.denominator * fy.denominator / fractions.gcd(fx.denominator, fy.denominator)
 
@@ -400,6 +400,8 @@ def laue(T):
         pl.plot(x, y, marker=marker, markersize=15, color='black', markeredgecolor='black')
     pl.xlabel('$x / m$')
     pl.ylabel('$y / m$')
+    pl.xlim([-0.02, 0.02])
+    pl.ylim([-0.02, 0.02])
     pl.grid(True)
     pl.savefig('_build/laue-indizes.pdf', **savefig_options)
     pl.clf()
