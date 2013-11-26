@@ -269,6 +269,8 @@ def laue(T):
 
     pl.imshow(helligkeit)
     pl.colorbar()
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-helligkeit.pdf', **savefig_options)
     pl.clf()
 
@@ -281,23 +283,31 @@ def laue(T):
     pl.imshow(helligkeit)
     pl.grid(True)
     pl.colorbar()
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-helligkeit-gauss.pdf', **savefig_options)
     pl.clf()
 
     gradient_x, gradient_y = np.gradient(helligkeit)
     pl.imshow(np.sqrt(gradient_x**2 + gradient_y**2))
     pl.colorbar()
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-gradient_x_y.pdf', **savefig_options)
     pl.clf()
 
     pl.imshow(np.arctan2(gradient_x, gradient_y))
     pl.colorbar()
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-gradient_phase.pdf', **savefig_options)
     pl.clf()
 
     laplace = np.gradient(gradient_x)[0] + np.gradient(gradient_y)[1]
     pl.imshow(laplace)
     pl.colorbar()
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-laplace.pdf', **savefig_options)
     pl.clf()
 
@@ -349,6 +359,8 @@ def laue(T):
     x -= x_offset
     y -= y_offset
 
+    pl.xlabel('Pixel')
+    pl.ylabel('Pixel')
     pl.savefig('_build/laue-peaks.pdf', **savefig_options)
     pl.clf()
 
