@@ -466,7 +466,7 @@ def laue(T):
         unitprint.siunitx(e / 10**3),
     )
 
-    T['laue_tabelle'] = list(reversed(sorted(laue_tabelle, key=operator.itemgetter(3))))
+    T['laue_tabelle'] = list(reversed(sorted(laue_tabelle, key=operator.itemgetter(7))))
 
     print(x)
     print(y)
