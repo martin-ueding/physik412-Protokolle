@@ -331,7 +331,6 @@ def laue(T):
     pl.savefig('_build/laue-laplace.pdf', **savefig_options)
     pl.clf()
 
-
     laplace_threshold = 0.001
 
     T['laplace_threshold'] = unitprint.siunitx(laplace_threshold)
@@ -473,7 +472,6 @@ def main():
     with multiprocessing.Manager() as manager:
         T = manager.dict()
 
-
         processes = []
         for f in [
             unbekannte_probe,
@@ -485,7 +483,6 @@ def main():
             print("Starting", p)
             p.start()
             processes.append(p)
-
 
         for p in processes:
             print("Waiting for", p)
