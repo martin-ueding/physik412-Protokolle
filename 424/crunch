@@ -1,0 +1,48 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+# Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
+# Licensed under The GNU Public License Version 2 (or later)
+
+#import scipy.interpolate
+import colorsys
+import fractions
+import itertools
+import json
+import matplotlib.pyplot as pl
+import multiprocessing
+import numpy as np
+import operator
+import scipy.ndimage
+import scipy.optimize as op
+import scipy.signal
+import sys
+import unitprint
+
+savefig_options = {
+    'bbox_inches': 'tight',
+}
+
+def main():
+    with multiprocessing.Manager() as manager:
+        T = manager.dict()
+
+        processes = []
+        for f in [
+        ]:
+            p = multiprocessing.Process(target=f, args=(T,))
+            print("Starting", p)
+            p.start()
+            processes.append(p)
+
+        for p in processes:
+            print("Waiting for", p)
+            p.join()
+
+        print("Serializing …")
+
+        with open('_build/template.js', 'w') as f:
+            json.dump(dict(T), f, indent=4, sort_keys=True)
+
+if __name__ == "__main__":
+    main()

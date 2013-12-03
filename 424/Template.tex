@@ -1,0 +1,73 @@
+% Copyright © 2013 Martin Ueding <dev@martin-ueding.de>
+
+\input{../../header.tex}
+
+\usepackage[section]{placeins}
+\usepackage{booktabs}
+
+\newcommand\versuchsnummer{424}
+
+\ihead{physik412 – Versuch \versuchsnummer}
+\ifoot{Martin Ueding, Lino Lemmer}
+
+\subject{Praktikumsprotokoll}
+\title{Halleffekt in Halbleitern}
+\subtitle{physik412 – Versuch \versuchsnummer}
+\author{
+    Martin Ueding \\
+    \small{\href{mailto:mu@martin-ueding.de}{mu@martin-ueding.de}}
+    \and
+    Lino Lemmer \\
+    \small{\href{mailto:s6lilemm@uni-bonn.de}{s6lilemm@uni-bonn.de}}
+}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    \fehlt
+\end{abstract}
+
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                   Anhang                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\begin{appendix}
+    \FloatBarrier
+    \chapter{\LaTeX-Quelltext}
+
+    Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
+    \ref{it:mu} eingesehen werden. Die Quellen für alle Protokolle in diesem
+    Praktikum können auf \ref{it:github/alles} eingesehen werden. Die
+    \LaTeX-Datei wird aus \ref{it:github/template} generiert.
+
+    \begin{enumerate}
+        \item
+            \label{it:mu}
+            \url{http://martin-ueding.de/de/university/physik412/}
+        \item
+            \label{it:github/alles}
+            \url{https://github.com/martin-ueding/physik412-Protokolle/}
+        \item
+            \label{it:github/template}
+            \url{https://github.com/martin-ueding/physik412-Protokolle/blob/master/\versuchsnummer/Template.tex}
+    \end{enumerate}
+\end{appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                  Literatur                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\FloatBarrier
+\printbibliography
+
+\end{document}
+
+% vim: et spell spelllang=de tw=79
