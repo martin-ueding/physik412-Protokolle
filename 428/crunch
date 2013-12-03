@@ -9,9 +9,10 @@ import colorsys
 import fractions
 import itertools
 import json
-import operator
 import matplotlib.pyplot as pl
+import multiprocessing
 import numpy as np
+import operator
 import scipy.ndimage
 import scipy.optimize as op
 import scipy.signal
@@ -330,7 +331,6 @@ def laue(T):
     pl.savefig('_build/laue-laplace.pdf', **savefig_options)
     pl.clf()
 
-
     laplace_threshold = 0.001
 
     T['laplace_threshold'] = unitprint.siunitx(laplace_threshold)
@@ -469,15 +469,29 @@ def laue(T):
     T['laue_tabelle'] = list(reversed(sorted(laue_tabelle, key=operator.itemgetter(7))))
 
 def main():
-    T = {}
+    with multiprocessing.Manager() as manager:
+        T = manager.dict()
 
-    unbekannte_probe(T)
-    roehre2(T)
-    langzeitmessung(T)
-    laue(T)
+        processes = []
+        for f in [
+            unbekannte_probe,
+            roehre2,
+            langzeitmessung,
+            laue,
+        ]:
+            p = multiprocessing.Process(target=f, args=(T,))
+            print("Starting", p)
+            p.start()
+            processes.append(p)
 
-    with open('_build/template.js', 'w') as f:
-        json.dump(T, f, indent=4, sort_keys=True)
+        for p in processes:
+            print("Waiting for", p)
+            p.join()
+
+        print("Serializing …")
+
+        with open('_build/template.js', 'w') as f:
+            json.dump(dict(T), f, indent=4, sort_keys=True)
 
 if __name__ == "__main__":
     main()
