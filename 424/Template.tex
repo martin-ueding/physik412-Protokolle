@@ -34,12 +34,18 @@
 
 \tableofcontents
 
-$I = \SI{13.601}{\milli\ampere}$
 
 $B = \SI{0.138 +- 0.001}{\tesla}$
 
 \newcommand\probeA{InAs~HF-301}
 \newcommand\probeB{InAs~HF-301-040}
+
+
+\chapter{Messung des spezifischen Widerstands}
+
+$I = \SI{13.601}{\milli\ampere}$
+
+\section{\probeA}
 
 \begin{table}[htbp]
     \centering
@@ -81,6 +87,8 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
 Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
 hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
+\section{\probeB}
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSSSS}
@@ -120,6 +128,97 @@ hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
 Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
 hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+
+\chapter{Messung der Hallkonstanten}
+
+\section{\probeA}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$\Deltaup V_\text{A} / \si\volt$} &
+        {$\Deltaup V_\text{B} / \si\volt$} &
+        {$\Deltaup V_\text{C} / \si\volt$} &
+        {$\Deltaup V_\text{D} / \si\volt$} \\
+        \midrule
+        %< for row in hf_540_hall_V_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spannungsdifferenzen bei der Messung der Hallkonstanten für die Probe
+        \probeA.
+    }
+    \label{tab:Ar}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$V_{H+} / \si\volt$} &
+        {$V_{H-} / \si\volt$} &
+        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in hf_540_hall_V_R_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Hallkonstanten für die Probe \probeA.
+    }
+    \label{tab:Ar}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
+hf_540_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
+hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
+
+\section{\probeB}
+
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$\Deltaup V_\text{A} / \si\volt$} &
+        {$\Deltaup V_\text{B} / \si\volt$} &
+        {$\Deltaup V_\text{C} / \si\volt$} &
+        {$\Deltaup V_\text{D} / \si\volt$} \\
+        \midrule
+        %< for row in hf_301_hall_V_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spannungsdifferenzen bei der Messung der Hallkonstanten für die Probe
+        \probeB.
+    }
+    \label{tab:Ar}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$V_{H+} / \si\volt$} &
+        {$V_{H-} / \si\volt$} &
+        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in hf_301_hall_V_R_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Hallkonstanten für die Probe \probeB.
+    }
+    \label{tab:Ar}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
+hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
+hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %

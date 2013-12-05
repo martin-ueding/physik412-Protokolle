@@ -25,7 +25,11 @@ savefig_options = {
 
 def job_hf_540(T):
     strom(T, 'hf_540_strom_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
+    hall_mit_nullfeld(T, 'hf_540_hall_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
+
+def job_hf_301(T):
     strom(T, 'hf_301_strom_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
+    hall_mit_nullfeld(T, 'hf_301_hall_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
 
 def strom(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
@@ -46,7 +50,7 @@ def strom(T, prefix, messdaten):
     rho = (rho1 + rho2) / 2
 
     rho_val = np.mean(rho)
-    rho_err = np.std(rho)
+    rho_err = np.std(rho) / np.sqrt(len(rho))
 
     digits = 4
 
@@ -64,6 +68,49 @@ def strom(T, prefix, messdaten):
         unitprint.siunitx(rho, digits=digits),
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
+
+def hall_mit_nullfeld(T, prefix, messdaten):
+    data = np.genfromtxt(messdaten)
+    n = data[:, 0]
+    V = data[:, 1] * 10**-3
+
+    I = 13.601e-3
+
+    B = 0.138
+
+    dV_A = V[n==1] - V[n==9]
+    dV_B = V[n==2] - V[n==10]
+    dV_C = V[n==5] - V[n==9]
+    dV_D = V[n==6] - V[n==10]
+
+    V_H_plus = (dV_A - dV_B) / 2
+    V_H_minus = (dV_C - dV_D) / 2
+
+    R_H_plus = V_H_plus / (B * I)
+    R_H_minus = - V_H_minus / (B * I)
+
+    digits = 4
+
+    T[prefix+'V_tabelle'] = list(zip(
+        unitprint.siunitx(dV_A, digits=digits),
+        unitprint.siunitx(dV_B, digits=digits),
+        unitprint.siunitx(dV_C, digits=digits),
+        unitprint.siunitx(dV_D, digits=digits),
+    ))
+    T[prefix+'V_R_tabelle'] = list(zip(
+        unitprint.siunitx(V_H_plus, digits=digits),
+        unitprint.siunitx(V_H_minus, digits=digits),
+        unitprint.siunitx(R_H_plus, digits=digits),
+        unitprint.siunitx(R_H_minus, digits=digits),
+    ))
+
+    R_H_plus_val = np.mean(R_H_plus)
+    R_H_plus_err = np.std(R_H_plus) / np.sqrt(len(R_H_plus))
+    T[prefix+'R_H_plus'] = unitprint.siunitx(R_H_plus_val, R_H_plus_err)
+
+    R_H_minus_val = np.mean(R_H_minus)
+    R_H_minus_err = np.std(R_H_minus) / np.sqrt(len(R_H_minus))
+    T[prefix+'R_H_minus'] = unitprint.siunitx(R_H_minus_val, R_H_minus_err)
 
 def main():
     with multiprocessing.Manager() as manager:
