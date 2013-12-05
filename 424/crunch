@@ -23,13 +23,25 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+def job_test(T):
+    print('Test')
+
 def main():
     with multiprocessing.Manager() as manager:
         T = manager.dict()
 
+        l = globals()
+        to_run = []
+        for key, value in l.items():
+            if key.startswith('job_'):
+                to_run.append(value)
+
+        print('Will run the following functions:')
+        for f in to_run:
+            print('-', f)
+
         processes = []
-        for f in [
-        ]:
+        for f in to_run:
             p = multiprocessing.Process(target=f, args=(T,))
             print("Starting", p)
             p.start()
