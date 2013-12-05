@@ -68,15 +68,8 @@ def job_temperatur(T):
     rho = strom(T, 'strom_', 'Messdaten/Strom.txt')[-1]
     rh = hall_mit_nullfeld(T, 'hall_', 'Messdaten/Hall.txt')[-1]
 
-    print(np.column_stack([T_val, rho, rh]))
-
-    T['temperatur_tabelle'] = list(zip(
-        unitprint.siunitx(T_val, T_err),
-        unitprint.siunitx(rho),
-        unitprint.siunitx(rh),
-    ))
-
     p = 1 / (rh * 1.609e-19)
+    mu = rh * rho
 
     pl.plot(1/T_val, np.log(rho))
     pl.grid(True)
@@ -92,12 +85,20 @@ def job_temperatur(T):
     pl.savefig('_build/plot2.pdf')
     pl.clf()
 
-    pl.plot(np.log(T_val), np.log(rho * rh))
+    pl.plot(np.log(T_val), np.log(mu))
     pl.grid(True)
     pl.xlabel(r'$\ln(T)$')
     pl.ylabel(r'$\ln(\mu)$')
     pl.savefig('_build/plot3.pdf')
     pl.clf()
+
+    T['temperatur_tabelle'] = list(zip(
+        unitprint.siunitx(T_val, T_err),
+        unitprint.siunitx(rho),
+        unitprint.siunitx(rh),
+        unitprint.siunitx(p),
+        unitprint.siunitx(mu),
+    ))
 
 def strom(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)

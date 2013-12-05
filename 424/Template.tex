@@ -338,6 +338,48 @@ Tabelle~\ref{tab:zimmertemperatur_tabelle1}), die für positive Ladungsträger
 berechnet worden ist, folgt, dass die Probe~\probeA{} negativ und die
 Probe~\probeB{} positiv dotiert ist.
 
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$T$} &
+        {$\rho$} &
+        {$R_\text H$} &
+        {$p$} &
+        {$\mu$} \\
+        \midrule
+        %< for row in temperatur_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+    }
+    \label{tab:temperatur_tabelle}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot1.pdf}
+    \caption{%
+    }
+    \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot2.pdf}
+    \caption{%
+    }
+    \label{fig:}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot3.pdf}
+    \caption{%
+    }
+    \label{fig:}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
