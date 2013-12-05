@@ -35,7 +35,7 @@
 \tableofcontents
 
 
-\newcommand\probeA{InAs~HF-301}
+\newcommand\probeA{InAs~HF-540}
 \newcommand\probeB{InAs~HF-301-040}
 
 
@@ -227,6 +227,76 @@ hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihe
 Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
 hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
 hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
+\section{Ohne Nullfeldmessung}
+
+\subsection{\probeA}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in hf_540_hall_RH_mit_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Hallkonstanten für die Probe \probeA, nach der Auswertungsmethode ohne
+        Nullmessung.
+    }
+    \label{tab:AH_ohne}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
+hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
+
+\subsection{\probeB}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in hf_301_hall_RH_mit_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Hallkonstanten für die Probe \probeB, nach der Auswertungsmethode ohne
+        Nullmessung.
+    }
+    \label{tab:BH_ohne}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
+hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lSSSS}
+        Probe &
+        {$\rho d^{-1} / \si{\ohm}$} &
+        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in zimmertemperatur_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Ergebnisse aus dem ersten Versuchsteil.
+    }
+    \label{tab:zimmertemperatur_tabelle}
+\end{table}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -23,13 +23,19 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
-def job_hf_540(T):
-    strom(T, 'hf_540_strom_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
-    hall_mit_nullfeld(T, 'hf_540_hall_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
+def job_zimmertemperatur(T):
+    sr540 = strom(T, 'hf_540_strom_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
+    hr540 = hall_mit_nullfeld(T, 'hf_540_hall_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
 
-def job_hf_301(T):
-    strom(T, 'hf_301_strom_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
-    hall_mit_nullfeld(T, 'hf_301_hall_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
+    sr301 = strom(T, 'hf_301_strom_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
+    hr301 = hall_mit_nullfeld(T, 'hf_301_hall_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
+
+    results = [
+        [r'\probeA', unitprint.siunitx(*sr540), unitprint.siunitx(*hr540[0:2]), unitprint.siunitx(*hr540[2:4]), unitprint.siunitx(*hr540[4:6])],
+        [r'\probeB', unitprint.siunitx(*sr301), unitprint.siunitx(*hr301[0:2]), unitprint.siunitx(*hr301[2:4]), unitprint.siunitx(*hr301[4:6])],
+    ]
+
+    T['zimmertemperatur_tabelle'] = results
 
 def strom(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
@@ -68,6 +74,8 @@ def strom(T, prefix, messdaten):
         unitprint.siunitx(rho, digits=digits),
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
+
+    return rho_val, rho_err
 
 def hall_mit_nullfeld(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
@@ -111,6 +119,24 @@ def hall_mit_nullfeld(T, prefix, messdaten):
     R_H_minus_val = np.mean(R_H_minus)
     R_H_minus_err = np.std(R_H_minus) / np.sqrt(len(R_H_minus))
     T[prefix+'R_H_minus'] = unitprint.siunitx(R_H_minus_val, R_H_minus_err)
+
+    R_H1 = 1 / (B * I) * ((V[n==1] - V[n==2]) - (V[n==5] - V[n==6])) / 4
+    R_H2 = 1 / (B * I) * ((V[n==3] - V[n==4]) - (V[n==7] - V[n==8])) / 4
+
+    R_H = (R_H1 + R_H2) / 2
+
+    T[prefix+'RH_mit_tabelle'] = list(zip(
+        unitprint.siunitx(R_H1, digits=digits),
+        unitprint.siunitx(R_H2, digits=digits),
+        unitprint.siunitx(R_H, digits=digits),
+    ))
+
+    R_H_val = np.mean(R_H)
+    R_H_err = np.std(R_H) / np.sqrt(len(R_H))
+
+    T[prefix+'R_H'] = unitprint.siunitx(R_H_val, R_H_err)
+
+    return R_H_plus_val, R_H_plus_err, R_H_minus_val, R_H_minus_err, R_H_val, R_H_err
 
 def main():
     with multiprocessing.Manager() as manager:
