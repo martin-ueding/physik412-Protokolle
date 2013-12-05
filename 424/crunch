@@ -24,16 +24,23 @@ savefig_options = {
 }
 
 def job_zimmertemperatur(T):
-    sr540 = strom(T, 'hf_540_strom_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
-    hr540 = hall_mit_nullfeld(T, 'hf_540_hall_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
+    results = []
 
-    sr301 = strom(T, 'hf_301_strom_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
-    hr301 = hall_mit_nullfeld(T, 'hf_301_hall_', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
+    for probe, prefix_s, filename_s, prefix_h, filename_h in zip(
+        [r'\probeA', r'\probeB'],
+        ['hf_540_strom_', 'hf_301_strom_'],
+        ['Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt'],
+        ['hf_540_hall_', 'hf_301_hall_'],
+        [ 'Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt', 'Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt'],
+    ):
+        sr = strom(T, prefix_s, filename_s)
+        hr = hall_mit_nullfeld(T, prefix_h, filename_h)
 
-    results = [
-        [r'\probeA', unitprint.siunitx(*sr540), unitprint.siunitx(*hr540[0:2]), unitprint.siunitx(*hr540[2:4]), unitprint.siunitx(*hr540[4:6])],
-        [r'\probeB', unitprint.siunitx(*sr301), unitprint.siunitx(*hr301[0:2]), unitprint.siunitx(*hr301[2:4]), unitprint.siunitx(*hr301[4:6])],
-    ]
+        results.append([
+            probe, unitprint.siunitx(*sr),
+            unitprint.siunitx(*hr[0:2]), unitprint.siunitx(*hr[2:4]),
+            unitprint.siunitx(*hr[4:6])
+        ])
 
     T['zimmertemperatur_tabelle'] = results
 

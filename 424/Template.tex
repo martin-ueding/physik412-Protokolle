@@ -278,14 +278,21 @@ Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
 hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
 
+\section{Diskussion}
+
+In Tabelle~\ref{tab:zimmertemperatur_tabelle} haben wir die endgültigen Werte
+zusammengetragen. Es fällt auf, dass die Leitfähigkeiten recht nahe beiander
+liegen. Die Hallkonstanten liegen betragsmäßig ebenfalls recht nahe
+beieinander, unterscheiden sich jedoch im Vorzeichen.
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{lSSSS}
         Probe &
         {$\rho d^{-1} / \si{\ohm}$} &
-        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in zimmertemperatur_tabelle: ->%
         << row | join(' & ') >> \\
@@ -297,7 +304,14 @@ hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
     \label{tab:zimmertemperatur_tabelle}
 \end{table}
 
+In beiden Fällen ist $R_\text H$ innerhalb des Fehlerbereichs der Mittelwert
+auf $H_{\text H+}$ und $H_{\text H-}$. Dies bedeutet, dass beide Mess- und
+Auswertungsmethoden das Nullfeld gleich korrigieren.
 
+Da die Hallkonstante für Elektronen- oder Löcherleitung $1/(e n)$ bzw. $1/(ep)$
+ist, ist das Vorzeichen der Hallkonstante auch das Vorzeichen der Ladung.
+Daraus folgt, dass die Probe~\probeA{} negativ und die Probe~\probeB{} positiv
+dotiert ist.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
