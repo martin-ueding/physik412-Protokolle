@@ -38,6 +38,89 @@ $I = \SI{13.601}{\milli\ampere}$
 
 $B = \SI{0.138 +- 0.001}{\tesla}$
 
+\newcommand\probeA{InAs~HF-301}
+\newcommand\probeB{InAs~HF-301-040}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSSS}
+        {$R_{1234} / \si\ohm$} &
+        {$R_{2341} / \si\ohm$} &
+        {$R_{3412} / \si\ohm$} &
+        {$R_{4132} / \si\ohm$} &
+        {$R_{1234} / R_{2341}$} &
+        {$R_{3412} / R_{4121}$} \\
+        \midrule
+        %< for row in hf_540_strom_R_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Widerstände für die Probe \probeA.
+    }
+    \label{tab:Ar}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$\rho_1 d^{-1} / \si\ohm$} &
+        {$\rho_2 d^{-1} / \si\ohm$} &
+        {$\rho d^{-1} / \si\ohm$} \\
+        \midrule
+        %< for row in hf_540_strom_rho_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spezifische Widerstände für die Probe \probeA.
+    }
+    \label{tab:Ar}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
+hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSSS}
+        {$R_{1234} / \si\ohm$} &
+        {$R_{2341} / \si\ohm$} &
+        {$R_{3412} / \si\ohm$} &
+        {$R_{4132} / \si\ohm$} &
+        {$R_{1234} / R_{2341}$} &
+        {$R_{3412} / R_{4121}$} \\
+        \midrule
+        %< for row in hf_301_strom_R_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Widerstände für die Probe \probeB.
+    }
+    \label{tab:Ar}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$\rho_1 d^{-1} / \si\ohm$} &
+        {$\rho_2 d^{-1} / \si\ohm$} &
+        {$\rho d^{-1} / \si\ohm$} \\
+        \midrule
+        %< for row in hf_301_strom_rho_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spezifische Widerstände für die Probe \probeA.
+    }
+    \label{tab:Ar}
+\end{table}
+
+Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
+hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
