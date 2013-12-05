@@ -48,7 +48,7 @@ def job_zimmertemperatur(T):
 
         results1.append([
             probe,
-            unitprint.siunitx(*sr),
+            unitprint.siunitx(*sr[:2]),
             unitprint.siunitx(mu_val, mu_err),
             unitprint.siunitx(p_val / 1e15, p_err / 1e15),
         ])
@@ -60,6 +60,35 @@ def job_zimmertemperatur(T):
 
     T['zimmertemperatur_tabelle1'] = results1
     T['zimmertemperatur_tabelle2'] = results2
+
+def job_temperatur(T):
+    temp_data = np.genfromtxt('Messdaten/Temperaturen.txt')
+    T_val = temp_data[:, 0] + temp_data[:, 2] - 20 + 273
+    T_err = temp_data[:, 1]
+    rho = strom(T, 'strom_', 'Messdaten/Strom.txt')[-1]
+    rh = hall_mit_nullfeld(T, 'hall_', 'Messdaten/Hall.txt')[-1]
+
+    print(np.column_stack([T_val, rho, rh]))
+
+    T['temperatur_tabelle'] = list(zip(
+        unitprint.siunitx(T_val, T_err),
+        unitprint.siunitx(rho),
+        unitprint.siunitx(rh),
+    ))
+
+    p = 1 / (rh * 1.609e-19)
+
+    pl.plot(1/T_val, np.log(rho))
+    pl.savefig('_build/plot1.pdf')
+    pl.clf()
+
+    pl.plot(1/T_val, np.log(p))
+    pl.savefig('_build/plot2.pdf')
+    pl.clf()
+
+    pl.plot(np.log(T_val), np.log(rho * rh))
+    pl.savefig('_build/plot3.pdf')
+    pl.clf()
 
 def strom(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
@@ -99,7 +128,7 @@ def strom(T, prefix, messdaten):
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
 
-    return rho_val, rho_err
+    return rho_val, rho_err, rho
 
 def hall_mit_nullfeld(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
@@ -160,7 +189,7 @@ def hall_mit_nullfeld(T, prefix, messdaten):
 
     T[prefix+'R_H'] = unitprint.siunitx(R_H_val, R_H_err)
 
-    return R_H_plus_val, R_H_plus_err, R_H_minus_val, R_H_minus_err, R_H_val, R_H_err
+    return R_H_plus_val, R_H_plus_err, R_H_minus_val, R_H_minus_err, R_H_val, R_H_err, R_H
 
 def main():
     with multiprocessing.Manager() as manager:
