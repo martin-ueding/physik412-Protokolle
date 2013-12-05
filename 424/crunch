@@ -23,8 +23,48 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
-def job_test(T):
-    print('Test')
+def job_hf_540(T):
+    strom(T, 'hf_540_strom_', 'Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
+
+def strom(T, prefix, messdaten):
+    data = np.genfromtxt(messdaten)
+    n = data[:, 0]
+    V = data[:, 1] * 10**-3
+
+    I = 13.601e-3
+
+    R1234 = abs(V[n==1] - V[n==2]) / (2 * I)
+    R2341 = abs(V[n==3] - V[n==4]) / (2 * I)
+
+    print(R1234/R2341)
+
+    rho1 = np.pi / np.log(2) * (R1234 + R2341) / 2
+
+    print(rho1)
+
+    R3412 = abs(V[n==3] - V[n==4]) / (2 * I)
+    R4132 = abs(V[n==4] - V[n==1]) / (2 * I)
+    rho2 = np.pi / np.log(2) * (R3412 + R4132) / 2
+
+    print(rho2)
+
+    rho = (rho1 + rho2) / 2
+
+    rho_val = np.mean(rho)
+    rho_err = np.std(rho)
+
+    print(rho_val, rho_err)
+
+    T[prefix+'tabelle'] = list(zip(
+        unitprint.siunitx(R1234),
+        unitprint.siunitx(R2341),
+        unitprint.siunitx(R3412),
+        unitprint.siunitx(R4132),
+        unitprint.siunitx(rho1),
+        unitprint.siunitx(rho2),
+        unitprint.siunitx(rho),
+    ))
+    T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
 
 def main():
     with multiprocessing.Manager() as manager:
