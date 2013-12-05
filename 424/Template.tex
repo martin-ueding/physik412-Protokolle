@@ -280,38 +280,59 @@ hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
 \section{Diskussion}
 
-In Tabelle~\ref{tab:zimmertemperatur_tabelle} haben wir die endgültigen Werte
-zusammengetragen. Es fällt auf, dass die Leitfähigkeiten recht nahe beiander
-liegen. Die Hallkonstanten liegen betragsmäßig ebenfalls recht nahe
-beieinander, unterscheiden sich jedoch im Vorzeichen.
+In Tabelle~\ref{tab:zimmertemperatur_tabelle1} haben wir die endgültigen Werte
+für $\rho$ zusammengetragen und $\mu_\text H$ sowie $p$ berechnet. In
+Tabelle~\ref{tab:zimmertemperatur_tabelle2} sind die Hallkonstanten
+zusammengefasst.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{lSSSS}
+    \begin{tabular}{lSSS}
         Probe &
         {$\rho d^{-1} / \si{\ohm}$} &
-        {$R_{\text H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$\mu_{\text H} d^{-1} / \si{\ohm\volt\per\tesla\per\ampere}$} &
+        {$p / \SI{e15}{\per\cubic\meter}$} \\
         \midrule
-        %< for row in zimmertemperatur_tabelle: ->%
+        %< for row in zimmertemperatur_tabelle1: ->%
         << row | join(' & ') >> \\
         %< endfor ->%
     \end{tabular}
     \caption{%
-        Zusammenstellung der Ergebnisse aus dem ersten Versuchsteil.
+        Zusammenstellung der Ergebnisse aus dem ersten Versuchsteil, Teil~1.
     }
-    \label{tab:zimmertemperatur_tabelle}
+    \label{tab:zimmertemperatur_tabelle1}
 \end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lSSS}
+        Probe &
+        {$R_{\text H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        \midrule
+        %< for row in zimmertemperatur_tabelle2: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Ergebnisse aus dem ersten Versuchsteil, Teil~2.
+    }
+    \label{tab:zimmertemperatur_tabelle2}
+\end{table}
+
+Es fällt auf, dass die Leitfähigkeiten recht nahe beiander
+liegen. Die Hallkonstanten liegen betragsmäßig ebenfalls recht nahe
+beieinander, unterscheiden sich jedoch im Vorzeichen.
 
 In beiden Fällen ist $R_\text H$ innerhalb des Fehlerbereichs der Mittelwert
 auf $H_{\text H+}$ und $H_{\text H-}$. Dies bedeutet, dass beide Mess- und
 Auswertungsmethoden das Nullfeld gleich korrigieren.
 
-Da die Hallkonstante für Elektronen- oder Löcherleitung $1/(e n)$ bzw. $1/(ep)$
-ist, ist das Vorzeichen der Hallkonstante auch das Vorzeichen der Ladung.
-Daraus folgt, dass die Probe~\probeA{} negativ und die Probe~\probeB{} positiv
-dotiert ist.
+Aus der Ladungsträgerkonzentration (siehe
+Tabelle~\label{tab:zimmertemperatur_tabelle1}), die für positive Ladungsträger
+berechnet worden ist, folgt, dass die Probe~\probeA{} negativ und die
+Probe~\probeB{} positiv dotiert ist.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                   Anhang                                    %

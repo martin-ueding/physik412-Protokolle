@@ -24,7 +24,8 @@ savefig_options = {
 }
 
 def job_zimmertemperatur(T):
-    results = []
+    results1 = []
+    results2 = []
 
     for probe, prefix_s, filename_s, prefix_h, filename_h in zip(
         [r'\probeA', r'\probeB'],
@@ -36,13 +37,29 @@ def job_zimmertemperatur(T):
         sr = strom(T, prefix_s, filename_s)
         hr = hall_mit_nullfeld(T, prefix_h, filename_h)
 
-        results.append([
-            probe, unitprint.siunitx(*sr),
+        mu_val = sr[0] * hr[4]
+        mu_err = np.sqrt(
+            (sr[0] * hr[5])**2
+            + (sr[1] * hr[4])**2
+        )
+
+        p_val = 1 / (hr[4] * 1.609e-19)
+        p_err = abs(1 / (hr[4]**2 * 1.609e-19) * hr[5])
+
+        results1.append([
+            probe,
+            unitprint.siunitx(*sr),
+            unitprint.siunitx(mu_val, mu_err),
+            unitprint.siunitx(p_val / 1e15, p_err / 1e15),
+        ])
+        results2.append([
+            probe,
             unitprint.siunitx(*hr[0:2]), unitprint.siunitx(*hr[2:4]),
-            unitprint.siunitx(*hr[4:6])
+            unitprint.siunitx(*hr[4:6]),
         ])
 
-    T['zimmertemperatur_tabelle'] = results
+    T['zimmertemperatur_tabelle1'] = results1
+    T['zimmertemperatur_tabelle2'] = results2
 
 def strom(T, prefix, messdaten):
     data = np.genfromtxt(messdaten)
