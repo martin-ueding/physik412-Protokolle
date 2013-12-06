@@ -43,17 +43,51 @@
 \newcommand\probeB{InAs~HF-301-040}
 
 
-\FloatBarrier
-\chapter{Bestimmung des spezifischen Widerstands}
+\chapter{Durchführung}
+
+\section{Widerstandsmessung}
 
 $I = \SI{13.601}{\milli\ampere}$
 
-\FloatBarrier
-\section{\probeA}
+\subsection{\probeA}
+
+\subsection{\probeB}
+
+\chapter{Auswertung}
+
+\section{Bestimmung des spezifischen Widerstands}
+
+Aus den gemessenen Spannungen bestimmen wir nach \cite{heldt/Diplomarbeit}
+Widerstände. Die gemessenen 8 Spannungen, die wir wie in
+\cite[Tab.~4.1]{heldt/Diplomarbeit} $V_1$ bis $V_8$ nennen werden, werden wie
+folgt verrechnet:
+\[
+    R_{ij,kl} := \frac{|V_i - V_j|}{2 I_{kl}} = \frac{|V_i - V_j|}{2 I}.
+\]
+
+Dabei ist $I_{kl} = I$, da wir den Strom während der ganzen Durchführung auf
+dem Wert $I = \SI{<< I_mA >>}{\milli\ampere}$ eingestellt haben.
+
+Aus je zwei Widerständen können wir dann nach der van der Pauw-Methode einen
+Wert für den spezifischen Widerstand bestimmen:
+\begin{align*}
+    \rho_1 &= \frac{\piup d}{\ln(2)} \frac{R_{12,34} + R_{23,41}}{2}
+    \, f\del{\frac{F_{12,34}}{F_{23,41}}} \\
+    %
+    \rho_2 &= \frac{\piup d}{\ln(2)} \frac{R_{34,12} + R_{41.23}}{2}
+    \, f\del{\frac{F_{34,12}}{F_{41.23}}}. \\
+\end{align*}
+
+Dabei ist $f$ ein Korrekturfaktor für die Assymetrie der Probe. Aus
+\cite[Abb.~4.4]{heldt/Diplomarbeit} können wir diesen Korrekturfaktor ablesen.
+Wie in Tabelle~\ref{tab:A:R} zu sehen ist, sind die Verhältnisse der
+$R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen können.
+
+\subsection{\probeA}
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSSSS}
+    \begin{tabular}{SSSS|SS}
         {$R_{1234} / \si\ohm$} &
         {$R_{2341} / \si\ohm$} &
         {$R_{3412} / \si\ohm$} &
@@ -68,12 +102,12 @@ $I = \SI{13.601}{\milli\ampere}$
     \caption{%
         Widerstände für die Probe \probeA.
     }
-    \label{tab:Ar}
+    \label{tab:A:R}
 \end{table}
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSSS}
+    \begin{tabular}{SS|S}
         {$\rho_1 d^{-1} / \si\ohm$} &
         {$\rho_2 d^{-1} / \si\ohm$} &
         {$\rho d^{-1} / \si\ohm$} \\
@@ -91,8 +125,7 @@ $I = \SI{13.601}{\milli\ampere}$
 Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
 hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
-\FloatBarrier
-\section{\probeB}
+\subsection{\probeB}
 
 \begin{table}[htbp]
     \centering
@@ -134,16 +167,13 @@ hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
 hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
-\FloatBarrier
-\chapter{Bestimmung der Hallkonstanten}
+\section{Bestimmung der Hallkonstanten}
 
 $B = \SI{0.138 +- 0.001}{\tesla}$
 
-\FloatBarrier
-\section{Mit Nullfeldmessung}
+\subsection{Mit Nullfeldmessung}
 
-\FloatBarrier
-\subsection{\probeA}
+\subsubsection{\probeA}
 
 \begin{table}[htbp]
     \centering
@@ -187,8 +217,7 @@ hf_540_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
 hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
 
-\FloatBarrier
-\subsection{\probeB}
+\subsubsection{\probeB}
 
 
 \begin{table}[htbp]
@@ -232,9 +261,9 @@ Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
 hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
 hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
-\section{Ohne Nullfeldmessung}
+\subsection{Ohne Nullfeldmessung}
 
-\subsection{\probeA}
+\subsubsection{\probeA}
 
 \begin{table}[htbp]
     \centering
@@ -258,7 +287,7 @@ Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
 hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
 
-\subsection{\probeB}
+\subsubsection{\probeB}
 
 \begin{table}[htbp]
     \centering
@@ -282,7 +311,7 @@ Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
 hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
 
 
-\section{Diskussion}
+\chapter{Diskussion}
 
 In Tabelle~\ref{tab:zimmertemperatur_tabelle1} haben wir die endgültigen Werte
 für $\rho$ zusammengetragen und $\mu_\text H$ sowie $p$ berechnet. In
@@ -395,9 +424,7 @@ Ladungsträgerdichte. Davor gibt es noch ein Minimum.
 %                                   Anhang                                    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\FloatBarrier
 \begin{appendix}
-    \FloatBarrier
     \chapter{\LaTeX-Quelltext}
 
     Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
@@ -422,7 +449,6 @@ Ladungsträgerdichte. Davor gibt es noch ein Minimum.
 %                                  Literatur                                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\FloatBarrier
 \printbibliography
 
 \end{document}
