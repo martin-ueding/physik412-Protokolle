@@ -69,9 +69,10 @@ def job_temperatur(T):
     rh = hall_mit_nullfeld(T, 'hall_', 'Messdaten/Hall.txt')[-1]
 
     p = 1 / (rh * 1.609e-19)
+    sigma = 1 / rho
     mu = rh * rho
 
-    pl.plot(1/T_val, np.log(rho))
+    pl.plot(1/T_val, np.log(sigma))
     pl.grid(True)
     pl.xlabel(r'$1/T$')
     pl.ylabel(r'$\ln(\rho)$')
