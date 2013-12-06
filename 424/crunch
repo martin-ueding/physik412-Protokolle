@@ -72,21 +72,21 @@ def job_temperatur(T):
     sigma = 1 / rho
     mu = rh * rho
 
-    pl.plot(1/T_val, np.log(sigma))
+    pl.plot(1/T_val, np.log(sigma), linestyle='none', marker='+')
     pl.grid(True)
-    pl.xlabel(r'$1/T$')
-    pl.ylabel(r'$\ln(\rho)$')
+    pl.xlabel(r'$T^{-1}$')
+    pl.ylabel(r'$\ln(\sigma)$')
     pl.savefig('_build/plot1.pdf')
     pl.clf()
 
-    pl.plot(1/T_val, np.log(p))
+    pl.plot(1/T_val, np.log(p / 10**17), linestyle='none', marker='+')
     pl.grid(True)
-    pl.xlabel(r'$T^{-1} / K^{-1}$')
-    pl.ylabel(r'$\ln(p)$')
+    pl.xlabel(r'$T^{-1} / \mathrm{K^{-1}}$')
+    pl.ylabel(r'$\ln(p / 10^{17})$')
     pl.savefig('_build/plot2.pdf')
     pl.clf()
 
-    pl.plot(np.log(T_val), np.log(mu))
+    pl.plot(np.log(T_val), np.log(mu), linestyle='none', marker='+')
     pl.grid(True)
     pl.xlabel(r'$\ln(T)$')
     pl.ylabel(r'$\ln(\mu)$')
