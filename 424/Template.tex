@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 
 \newcommand\versuchsnummer{424}
+\DeclareMathOperator\std{std}
 
 \ihead{physik412 – Versuch \versuchsnummer}
 \ifoot{M. Ueding, L. Lemmer, G. Ahmad}
@@ -68,23 +69,6 @@ folgt verrechnet:
 Dabei ist $I_{kl} = I$, da wir den Strom während der ganzen Durchführung auf
 dem Wert $I = \SI{<< I_mA >>}{\milli\ampere}$ eingestellt haben.
 
-Aus je zwei Widerständen können wir dann nach der van der Pauw-Methode einen
-Wert für den spezifischen Widerstand bestimmen:
-\begin{align*}
-    \rho_1 &= \frac{\piup d}{\ln(2)} \frac{R_{12,34} + R_{23,41}}{2}
-    \, f\del{\frac{F_{12,34}}{F_{23,41}}} \\
-    %
-    \rho_2 &= \frac{\piup d}{\ln(2)} \frac{R_{34,12} + R_{41.23}}{2}
-    \, f\del{\frac{F_{34,12}}{F_{41.23}}}. \\
-\end{align*}
-
-Dabei ist $f$ ein Korrekturfaktor für die Assymetrie der Probe. Aus
-\cite[Abb.~4.4]{heldt/Diplomarbeit} können wir diesen Korrekturfaktor ablesen.
-Wie in Tabelle~\ref{tab:A:R} zu sehen ist, sind die Verhältnisse der
-$R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen können.
-
-\subsection{\probeA}
-
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS|SS}
@@ -107,28 +91,6 @@ $R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen können.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SS|S}
-        {$\rho_1 d^{-1} / \si\ohm$} &
-        {$\rho_2 d^{-1} / \si\ohm$} &
-        {$\rho d^{-1} / \si\ohm$} \\
-        \midrule
-        %< for row in hf_540_strom_rho_tabelle: ->%
-        << row | join(' & ') >> \\
-        %< endfor ->%
-    \end{tabular}
-    \caption{%
-        Spezifische Widerstände für die Probe \probeA.
-    }
-    \label{tab:Arho}
-\end{table}
-
-Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
-hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
-
-\subsection{\probeB}
-
-\begin{table}[htbp]
-    \centering
     \begin{tabular}{SSSSSS}
         {$R_{1234} / \si\ohm$} &
         {$R_{2341} / \si\ohm$} &
@@ -144,7 +106,46 @@ hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
     \caption{%
         Widerstände für die Probe \probeB.
     }
-    \label{tab:Br}
+    \label{tab:B:R}
+\end{table}
+
+Aus je zwei Widerständen können wir dann nach der van der Pauw-Methode einen
+Wert für den spezifischen Widerstand bestimmen:
+\parencite[Formel (4.9) und (4.10)]{heldt/Diplomarbeit}
+\begin{align*}
+    \rho_1 &= \frac{\piup d}{\ln(2)} \frac{R_{12,34} + R_{23,41}}{2}
+    \, f\del{\frac{R_{12,34}}{R_{23,41}}} \\
+    %
+    \rho_2 &= \frac{\piup d}{\ln(2)} \frac{R_{34,12} + R_{41.23}}{2}
+    \, f\del{\frac{R_{34,12}}{R_{41.23}}}.
+\end{align*}
+
+Dabei ist $f$ ein Korrekturfaktor für die Assymetrie der Probe. Aus
+\cite[Abb.~4.4]{heldt/Diplomarbeit} können wir diesen Korrekturfaktor ablesen.
+Wie in Tabellen \ref{tab:A:R} und \ref{tab:B:R} zu sehen ist, sind die
+Verhältnisse der $R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen
+können.
+
+Aus den beiden Werten für den spezifischen Widerstand bilden wir den
+Mittelwert und erhalten für jede der fünf Messreihen einen Wert für $\rho$.
+Diese Ergebnisse sind in den Tabellen \ref{tab:A:rho} und \ref{tab:B:rho}
+abgedruckt.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SS|S}
+        {$\rho_1 d^{-1} / \si\ohm$} &
+        {$\rho_2 d^{-1} / \si\ohm$} &
+        {$\rho d^{-1} / \si\ohm$} \\
+        \midrule
+        %< for row in hf_540_strom_rho_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spezifische Widerstände für die Probe \probeA.
+    }
+    \label{tab:A:rho}
 \end{table}
 
 \begin{table}[htbp]
@@ -161,8 +162,21 @@ hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
     \caption{%
         Spezifische Widerstände für die Probe \probeA.
     }
-    \label{tab:Brho}
+    \label{tab:B:rho}
 \end{table}
+
+Diese fünf Werte pro Probe mitteln wir zu einem endgültigen Ergebnis. Den
+Fehler bestimmen wir mit der Standardabweichung, die wir im folgenden mit dem
+Operator $\std$ bezeichnen werden:
+\[
+    \rho = \bracket{\{\rho\}}
+    \eqnsep
+    \Deltaup \rho = \std(\{\rho\})
+\]
+
+
+Für die Probe \probeA{} Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
+hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
 Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
 hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.

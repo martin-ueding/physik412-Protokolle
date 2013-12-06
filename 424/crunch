@@ -122,6 +122,9 @@ def strom(T, prefix, messdaten):
     rho_val = np.mean(rho)
     rho_err = np.std(rho) / np.sqrt(len(rho))
 
+    sigma_val = 1/rho_val
+    sigma_err = 1/rho_val**2 * rho_err
+
     digits = 4
 
     T[prefix+'R_tabelle'] = list(zip(
@@ -138,6 +141,7 @@ def strom(T, prefix, messdaten):
         unitprint.siunitx(rho, digits=digits),
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
+    T[prefix+'sigma'] = unitprint.siunitx(sigma_val, sigma_err)
 
     return rho_val, rho_err, rho
 
