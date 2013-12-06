@@ -15,10 +15,6 @@
 
 \usepackage{graphicx}
 
-% Environment to quote the problem. Currently, this is just a new name for the
-% quote environment.
-\newenvironment{problem}{\begin{quote}\textsf{\textbf{Aufgabenstellung:}}\quad}{\end{quote}}
-
 \setkomafont{caption}{\sf}
 \setkomafont{captionlabel}{\usekomafont{caption}}
 
@@ -132,9 +128,7 @@
 
 % Roman versions of “e” and “i” to serve as Euler's number and the imaginary
 % constant.
-\newcommand{\ee}{\eup}
 \newcommand{\eup}{\mathrm e}
-\newcommand{\ii}{\iup}
 \newcommand{\iup}{\mathrm i}
 
 % Symbols for the various mathematical fields (natural numbers, integers,
@@ -150,6 +144,7 @@
 \DeclareMathOperator{\laplace}{\bigtriangleup}
 \newcommand{\curl}{\vnabla \times}
 \newcommand{\divergence}[1]{\inner{\vnabla}{#1}}
+\newcommand{\Divergence}[1]{\Inner{\vnabla}{#1}}
 \newcommand{\vnabla}{\vec \nabla}
 
 \newcommand{\half}{\frac 12}
@@ -157,26 +152,25 @@
 % Unit vector (German „Einheitsvektor“).
 \newcommand{\ev}{\hat{\vec e}}
 
-% Scientific notation for large numbers.
-\newcommand{\e}[1]{\cdot 10^{#1}}
-
 % Mathematician's notation for the inner (scalar, dot) product.
-\newcommand{\bracket}[1]{\left\langle #1 \right\rangle}
-\newcommand{\Inner}[2]{\bracket{#1, #2}}
-\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\bracket}[1]{\langle #1 \rangle}
+\newcommand{\Bracket}[1]{\left\langle #1 \right\rangle}
+\newcommand{\inner}[2]{\bracket{#1, #2}}
+\newcommand{\Inner}[2]{\Bracket{#1, #2}}
 
 % Placeholders.
-\newcommand{\emesswert}{\del{\messwert \pm \messwert}}
 \newcommand{\fehlt}{\textcolor{darkred}{Hier fehlen noch Inhalte.}}
 \newcommand{\messwert}{\textcolor{blue}{\square}}
 \newcommand{\punkte}{\phantom{xxxxx}}
-\newcommand{\punktevon}[1]{\begin{flushright}/ #1\end{flushright}}
 
 % Separator for equations on a single line.
 \newcommand{\eqnsep}{,\quad}
 
-% Quantum Mechanics
+% Quantum Mechanics.
 \usepackage{braket}
+
+% Thermodynamic partial derivative.
+\newcommand\tdpd[3]{\del{\dpd{#1}{#2}}_{#3}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                  Headings                                   %
@@ -224,7 +218,7 @@
 
 \IfFileExists{\bibliographyfile}{
     \bibliography{\bibliographyfile}
-}{\bibliographyfile existiert nicht.}
+}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                Abbreviations                                %
