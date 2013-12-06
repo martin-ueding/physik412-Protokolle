@@ -186,7 +186,7 @@ Operator $\std$ bezeichnen werden. Somit erhalten wir also:
 \]
 
 Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho = \SI{<<
-hf_540_strom_rho >>}{\ohm}$\footnote\erklaerungFehlerNotation bzw. $\rho =
+hf_540_strom_rho >>}{\ohm}$\footnote{\erklaerungFehlerNotation} bzw. $\rho =
 \SI{<< hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
 \section{Bestimmung der Hallkonstanten bei Raumtemperatur}
@@ -203,7 +203,7 @@ einbeziehen.
 
 \subsection{Mit Nullfeldmessung}
 
-Aus den 10 Messungen werden 4 ausgewählt. Diese werden wie folgt verrechnet:
+Aus den 10 Messungen werden 6 ausgewählt. Diese werden wie folgt verrechnet:
 \parencite[Formel (4.14) und (4.15)]{heldt/Diplomarbeit}
 \begin{align*}
     V_{\text H+} &= \half\del[1]{(\overbrace{V_1 - V_9}^{\Deltaup V_\text A}) - (\overbrace{V_2 - V_{10}}^{\Deltaup V_\text B})} \\
@@ -300,11 +300,22 @@ Bei Probe \probeB{} sind die Werte $R_{H+} = \SI{<< hf_301_hall_R_H_plus
 
 \subsection{Ohne Nullfeldmessung}
 
-\subsubsection{\probeA}
+Es ist auch möglich, die ersten 8 Messwerte (die mit angelegter magnetischer
+Flussdichte) so zu verrechnen, dass keine Nullfeldmessung notwendig ist. Dazu
+werden zwei Zwischenwerte berechnet:
+\parencite[Formel (4.18) und (4.19)]{heldt/Diplomarbeit}
+\begin{align*}
+    R_{\text H1} d^{-1} &= \frac{1}{BI} \frac{(V_1 - V_2) - (V_5 - V_6)}{4} \\
+    R_{\text H2} d^{-1} &= \frac{1}{BI} \frac{(V_3 - V_4) - (V_7 - V_8)}{4}.
+\end{align*}
+
+Aus den beiden Hallkonstanten pro Messreihe wird der Mittelwert genommen und
+wir erhalten eine Hallkonstante pro Messreihe. Diese drei Werte sind für die
+beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS}
+    \begin{tabular}{SS|S}
         {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
         {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
         {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
@@ -317,18 +328,12 @@ Bei Probe \probeB{} sind die Werte $R_{H+} = \SI{<< hf_301_hall_R_H_plus
         Hallkonstanten für die Probe \probeA, nach der Auswertungsmethode ohne
         Nullmessung.
     }
-    \label{tab:AH_ohne}
+    \label{tab:A:H_12}
 \end{table}
-
-Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
-hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
-
-
-\subsubsection{\probeB}
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSS}
+    \begin{tabular}{SS|S}
         {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
         {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
         {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
@@ -341,12 +346,68 @@ hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
         Hallkonstanten für die Probe \probeB, nach der Auswertungsmethode ohne
         Nullmessung.
     }
-    \label{tab:BH_ohne}
+    \label{tab:B:H_12}
 \end{table}
 
-Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H} = \SI{<<
-hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+Wir bilden Mittelwert und Fehler und erhalten so $R_{H} = \SI{<<
+hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ und $R_{H} = \SI{<<
+hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen für
+Probe \probeA{} bzw. Probe \probeB{}.
 
+\section{Untersuchung der Temperaturabhängigkeit}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$T$} &
+        {$\rho$} &
+        {$R_\text H$} &
+        {$p$} &
+        {$\mu$} \\
+        \midrule
+        %< for row in temperatur_tabelle: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+    }
+    \label{tab:temperatur_tabelle}
+\end{table}
+
+In Abbildung~\ref{fig:sigma-T} ist die Abhängigkeit der Leitfähigkeit von der
+Temperatur dargestellt. Für große $T$, also kleine $T^{-1}$ sinkt die
+Leitfähigkeit.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot1.pdf}
+    \caption{%
+        Zusammenhang zwischen Leitfähigkeit und Temperatur.
+    }
+    \label{fig:sigma-T}
+\end{figure}
+
+Der Graph in Abbildung~\ref{fig:p-T} zeigt den Zusammenhang zwischen der
+Ladungsträgerdichte und Temperatur. Für große $T$ steigt die
+Ladungsträgerdichte. Davor gibt es noch ein Minimum.
+
+\fehlt
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot2.pdf}
+    \caption{%
+    }
+    \label{fig:p-T}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{plot3.pdf}
+    \caption{%
+    }
+    \label{fig:}
+\end{figure}
 
 \chapter{Diskussion}
 
@@ -403,59 +464,6 @@ Aus der Ladungsträgerkonzentration (siehe
 Tabelle~\ref{tab:zimmertemperatur_tabelle1}), die für positive Ladungsträger
 berechnet worden ist, folgt, dass die Probe~\probeA{} negativ und die
 Probe~\probeB{} positiv dotiert ist.
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{SSSSS}
-        {$T$} &
-        {$\rho$} &
-        {$R_\text H$} &
-        {$p$} &
-        {$\mu$} \\
-        \midrule
-        %< for row in temperatur_tabelle: ->%
-        << row | join(' & ') >> \\
-        %< endfor ->%
-    \end{tabular}
-    \caption{%
-    }
-    \label{tab:temperatur_tabelle}
-\end{table}
-
-In Abbildung~\ref{fig:sigma-T} ist die Abhängigkeit der Leitfähigkeit von der
-Temperatur dargestellt. Für große $T$, also kleine $T^{-1}$ sinkt die
-Leitfähigkeit.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{plot1.pdf}
-    \caption{%
-        Zusammenhang zwischen Leitfähigkeit und Temperatur.
-    }
-    \label{fig:sigma-T}
-\end{figure}
-
-Der Graph in Abbildung~\ref{fig:p-T} zeigt den Zusammenhang zwischen der
-Ladungsträgerdichte und Temperatur. Für große $T$ steigt die
-Ladungsträgerdichte. Davor gibt es noch ein Minimum.
-
-\fehlt
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{plot2.pdf}
-    \caption{%
-    }
-    \label{fig:p-T}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{plot3.pdf}
-    \caption{%
-    }
-    \label{fig:}
-\end{figure}
 
 \printbibliography
 
