@@ -8,6 +8,13 @@
 \newcommand\versuchsnummer{424}
 \DeclareMathOperator\std{std}
 
+\newcommand\erklaerungFehlerNotation{%
+    In dieser Notation bedeutet \num{1.234 +- 0.005}, dass der Wert
+    $\num{1.234} \pm \num{0.005}$ ist. Die Ziffern in Klammern sind die
+    Fehlerangabe. Um den Fehler zu erhalten, wird diese von rechts über die
+    Zahl gelegt, alle anderen Stellen werden auf 0 gesetzt.
+}
+
 \ihead{physik412 – Versuch \versuchsnummer}
 \ifoot{M. Ueding, L. Lemmer, G. Ahmad}
 
@@ -50,13 +57,15 @@
 
 $I = \SI{13.601}{\milli\ampere}$
 
+$B = \SI{0.138 +- 0.001}{\tesla}$
+
 \subsection{\probeA}
 
 \subsection{\probeB}
 
 \chapter{Auswertung}
 
-\section{Bestimmung des spezifischen Widerstands}
+\section{Bestimmung des spezifischen Widerstands bei Raumtemperatur}
 
 Aus den gemessenen Spannungen bestimmen wir nach \cite{heldt/Diplomarbeit}
 Widerstände. Die gemessenen 8 Spannungen, die wir wie in
@@ -67,7 +76,9 @@ folgt verrechnet:
 \]
 
 Dabei ist $I_{kl} = I$, da wir den Strom während der ganzen Durchführung auf
-dem Wert $I = \SI{<< I_mA >>}{\milli\ampere}$ eingestellt haben.
+dem Wert $I = \SI{<< I_mA >>}{\milli\ampere}$ eingestellt haben. Die
+Zwischenergebnisse sind in den Tabellen \ref{tab:A:R} und \ref{tab:B:R}
+gezeigt.
 
 \begin{table}[htbp]
     \centering
@@ -91,7 +102,7 @@ dem Wert $I = \SI{<< I_mA >>}{\milli\ampere}$ eingestellt haben.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSSSS}
+    \begin{tabular}{SSSS|SS}
         {$R_{1234} / \si\ohm$} &
         {$R_{2341} / \si\ohm$} &
         {$R_{3412} / \si\ohm$} &
@@ -121,7 +132,7 @@ Wert für den spezifischen Widerstand bestimmen:
 \end{align*}
 
 Dabei ist $f$ ein Korrekturfaktor für die Assymetrie der Probe. Aus
-\cite[Abb.~4.4]{heldt/Diplomarbeit} können wir diesen Korrekturfaktor ablesen.
+\cite[Abb.~4.4]{heldt/Diplomarbeit}, können wir diesen Korrekturfaktor ablesen.
 Wie in Tabellen \ref{tab:A:R} und \ref{tab:B:R} zu sehen ist, sind die
 Verhältnisse der $R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen
 können.
@@ -150,7 +161,7 @@ abgedruckt.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSSS}
+    \begin{tabular}{SS|S}
         {$\rho_1 d^{-1} / \si\ohm$} &
         {$\rho_2 d^{-1} / \si\ohm$} &
         {$\rho d^{-1} / \si\ohm$} \\
@@ -160,44 +171,59 @@ abgedruckt.
         %< endfor ->%
     \end{tabular}
     \caption{%
-        Spezifische Widerstände für die Probe \probeA.
+        Spezifische Widerstände für die Probe \probeB.
     }
     \label{tab:B:rho}
 \end{table}
 
 Diese fünf Werte pro Probe mitteln wir zu einem endgültigen Ergebnis. Den
 Fehler bestimmen wir mit der Standardabweichung, die wir im folgenden mit dem
-Operator $\std$ bezeichnen werden:
+Operator $\std$ bezeichnen werden. Somit erhalten wir also:
 \[
     \rho = \bracket{\{\rho\}}
     \eqnsep
     \Deltaup \rho = \std(\{\rho\})
 \]
 
+Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho = \SI{<<
+hf_540_strom_rho >>}{\ohm}$\footnote\erklaerungFehlerNotation bzw. $\rho =
+\SI{<< hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
-Für die Probe \probeA{} Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
-hf_540_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+\section{Bestimmung der Hallkonstanten bei Raumtemperatur}
 
-Wir bilden Mittelwert und Standardabweichung und erhalten so $\rho = \SI{<<
-hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+Die Bestimmung der Hallkonstanten ähnelt in einigen Schritten der vorherigen
+Bestimmung des spezifischen Widerstands. Die 10 Spannungen, die wir gemessen
+haben, nennen wir wieder gemäß \parencite[Tab.~4.2]{heldt/Diplomarbeit} $V_1$ bis
+$V_{10}$.
 
-\section{Bestimmung der Hallkonstanten}
-
-$B = \SI{0.138 +- 0.001}{\tesla}$
+Es gibt zwei Methoden, aus einer Teilmenge dieser 10 Spannungen die
+Hallkonstante zu bestimmen. Wir werden hier beide durchführen, angefangen mit
+der Methode, die die Messungen ohne magnetische Induktion, $V_9$ und $V_{10}$,
+einbeziehen.
 
 \subsection{Mit Nullfeldmessung}
 
-\subsubsection{\probeA}
+Aus den 10 Messungen werden 4 ausgewählt. Diese werden wie folgt verrechnet:
+\parencite[Formel (4.14) und (4.15)]{heldt/Diplomarbeit}
+\begin{align*}
+    V_{\text H+} &= \half\del[1]{(\overbrace{V_1 - V_9}^{\Deltaup V_\text A}) - (\overbrace{V_2 - V_{10}}^{\Deltaup V_\text B})} \\
+    V_{\text H-} &= - \half\del[1]{(\underbrace{V_5 - V_9}_{\Deltaup V_\text C}) - (\underbrace{V_6 - V_{10}}_{\Deltaup V_\text D})}.
+\end{align*}
+
+Die Zwischenergebnisse sind in den Tabellen \ref{tab:A:V_ABCD} und
+\ref{tab:B:V_ABCD} aufgelistet. Die Hallspannungen und -konstanten für beide
+Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
+\ref{tab:B:VH+-,RH+-} aufgelistet.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS}
-        {$\Deltaup V_\text{A} / \si\volt$} &
-        {$\Deltaup V_\text{B} / \si\volt$} &
-        {$\Deltaup V_\text{C} / \si\volt$} &
-        {$\Deltaup V_\text{D} / \si\volt$} \\
+        {$\Deltaup V_\text{A} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{B} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{C} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{D} / \si{\milli\volt}$} \\
         \midrule
-        %< for row in hf_540_hall_V_tabelle: ->%
+        %< for row in hf_540_hall_V_tabelle_mV: ->%
         << row | join(' & ') >> \\
         %< endfor ->%
     \end{tabular}
@@ -205,12 +231,31 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
         Spannungsdifferenzen bei der Messung der Hallkonstanten für die Probe
         \probeA.
     }
-    \label{tab:AV}
+    \label{tab:A:V_ABCD}
 \end{table}
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS}
+        {$\Deltaup V_\text{A} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{B} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{C} / \si{\milli\volt}$} &
+        {$\Deltaup V_\text{D} / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in hf_301_hall_V_tabelle_mV: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Spannungsdifferenzen bei der Messung der Hallkonstanten für die Probe
+        \probeB.
+    }
+    \label{tab:B:V_ABCD}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SS|SS}
         {$V_{H+} / \si\volt$} &
         {$V_{H-} / \si\volt$} &
         {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
@@ -223,41 +268,14 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
     \caption{%
         Hallkonstanten für die Probe \probeA.
     }
-    \label{tab:AR}
-\end{table}
-
-Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
-hf_540_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
-hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
-
-
-\subsubsection{\probeB}
-
-
-\begin{table}[htbp]
-    \centering
-    \begin{tabular}{SSSS}
-        {$\Deltaup V_\text{A} / \si\volt$} &
-        {$\Deltaup V_\text{B} / \si\volt$} &
-        {$\Deltaup V_\text{C} / \si\volt$} &
-        {$\Deltaup V_\text{D} / \si\volt$} \\
-        \midrule
-        %< for row in hf_301_hall_V_tabelle: ->%
-        << row | join(' & ') >> \\
-        %< endfor ->%
-    \end{tabular}
-    \caption{%
-        Spannungsdifferenzen bei der Messung der Hallkonstanten für die Probe
-        \probeB.
-    }
-    \label{tab:BV}
+    \label{tab:A:VH+-,RH+-}
 \end{table}
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS}
-        {$V_{H+} / \si\volt$} &
-        {$V_{H-} / \si\volt$} &
+        {$V_{H+} / \si{\milli\volt}$} &
+        {$V_{H-} / \si{\milli\volt}$} &
         {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
         {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
@@ -268,12 +286,17 @@ hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihe
     \caption{%
         Hallkonstanten für die Probe \probeB.
     }
-    \label{tab:BH}
+    \label{tab:B:VH+-,RH+-}
 \end{table}
 
-Wir bilden Mittelwert und Standardabweichung und erhalten so $R_{H+} = \SI{<<
-hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<<
-hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+Wir bilden wie im vorherigen Teil Mittelwert und Fehler. Wir erhalten so für
+Proble \probeA{} $R_{H+} = \SI{<< hf_540_hall_R_H_plus
+>>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<< hf_540_hall_R_H_minus
+>>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+
+Bei Probe \probeB{} sind die Werte $R_{H+} = \SI{<< hf_301_hall_R_H_plus
+>>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<< hf_301_hall_R_H_minus
+>>}{\volt\per\tesla\per\ampere}$.
 
 \subsection{Ohne Nullfeldmessung}
 
@@ -433,35 +456,6 @@ Ladungsträgerdichte. Davor gibt es noch ein Minimum.
     }
     \label{fig:}
 \end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                   Anhang                                    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{appendix}
-    \chapter{\LaTeX-Quelltext}
-
-    Der \LaTeX-Quelltext zu allen Protokollen in diesem Praktikum kann auf
-    \ref{it:mu} eingesehen werden. Die Quellen für alle Protokolle in diesem
-    Praktikum können auf \ref{it:github/alles} eingesehen werden. Die
-    \LaTeX-Datei wird aus \ref{it:github/template} generiert.
-
-    \begin{enumerate}
-        \item
-            \label{it:mu}
-            \url{http://martin-ueding.de/de/university/physik412/}
-        \item
-            \label{it:github/alles}
-            \url{https://github.com/martin-ueding/physik412-Protokolle/}
-        \item
-            \label{it:github/template}
-            \url{https://github.com/martin-ueding/physik412-Protokolle/blob/master/\versuchsnummer/Template.tex}
-    \end{enumerate}
-\end{appendix}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                  Literatur                                  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \printbibliography
 

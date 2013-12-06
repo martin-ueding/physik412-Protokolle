@@ -108,6 +108,8 @@ def strom(T, prefix, messdaten):
 
     I = 13.601e-3
 
+    T['I_mA'] = unitprint.siunitx(I / 10**-3)
+
     R1234 = abs(V[n==1] - V[n==2]) / (2 * I)
     R2341 = abs(V[n==3] - V[n==4]) / (2 * I)
 
@@ -120,7 +122,7 @@ def strom(T, prefix, messdaten):
     rho = (rho1 + rho2) / 2
 
     rho_val = np.mean(rho)
-    rho_err = np.std(rho) / np.sqrt(len(rho))
+    rho_err = np.std(rho)
 
     sigma_val = 1/rho_val
     sigma_err = 1/rho_val**2 * rho_err
@@ -167,25 +169,25 @@ def hall_mit_nullfeld(T, prefix, messdaten):
 
     digits = 4
 
-    T[prefix+'V_tabelle'] = list(zip(
-        unitprint.siunitx(dV_A, digits=digits),
-        unitprint.siunitx(dV_B, digits=digits),
-        unitprint.siunitx(dV_C, digits=digits),
-        unitprint.siunitx(dV_D, digits=digits),
+    T[prefix+'V_tabelle_mV'] = list(zip(
+        unitprint.siunitx(dV_A / 10**-3, digits=digits),
+        unitprint.siunitx(dV_B / 10**-3, digits=digits),
+        unitprint.siunitx(dV_C / 10**-3, digits=digits),
+        unitprint.siunitx(dV_D / 10**-3, digits=digits),
     ))
     T[prefix+'V_R_tabelle'] = list(zip(
-        unitprint.siunitx(V_H_plus, digits=digits),
-        unitprint.siunitx(V_H_minus, digits=digits),
+        unitprint.siunitx(V_H_plus / 10**-3, digits=digits),
+        unitprint.siunitx(V_H_minus / 10**-3, digits=digits),
         unitprint.siunitx(R_H_plus, digits=digits),
         unitprint.siunitx(R_H_minus, digits=digits),
     ))
 
     R_H_plus_val = np.mean(R_H_plus)
-    R_H_plus_err = np.std(R_H_plus) / np.sqrt(len(R_H_plus))
+    R_H_plus_err = np.std(R_H_plus)
     T[prefix+'R_H_plus'] = unitprint.siunitx(R_H_plus_val, R_H_plus_err)
 
     R_H_minus_val = np.mean(R_H_minus)
-    R_H_minus_err = np.std(R_H_minus) / np.sqrt(len(R_H_minus))
+    R_H_minus_err = np.std(R_H_minus)
     T[prefix+'R_H_minus'] = unitprint.siunitx(R_H_minus_val, R_H_minus_err)
 
     R_H1 = 1 / (B * I) * ((V[n==1] - V[n==2]) - (V[n==5] - V[n==6])) / 4
@@ -200,7 +202,7 @@ def hall_mit_nullfeld(T, prefix, messdaten):
     ))
 
     R_H_val = np.mean(R_H)
-    R_H_err = np.std(R_H) / np.sqrt(len(R_H))
+    R_H_err = np.std(R_H)
 
     T[prefix+'R_H'] = unitprint.siunitx(R_H_val, R_H_err)
 
