@@ -81,7 +81,7 @@ def job_temperatur(T):
 
     pl.plot(1/T_val, np.log(p))
     pl.grid(True)
-    pl.xlabel(r'$1/T$')
+    pl.xlabel(r'$T^{-1} / K^{-1}$')
     pl.ylabel(r'$\ln(p)$')
     pl.savefig('_build/plot2.pdf')
     pl.clf()
