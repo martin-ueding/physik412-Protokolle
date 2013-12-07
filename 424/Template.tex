@@ -185,9 +185,15 @@ Operator $\std$ bezeichnen werden. Somit erhalten wir also:
     \Deltaup \rho = \std(\{\rho\})
 \]
 
-Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho = \SI{<<
-hf_540_strom_rho >>}{\ohm}$\footnote{\erklaerungFehlerNotation} bzw. $\rho =
+Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho d^{-1} = \SI{<<
+hf_540_strom_rho >>}{\ohm}$\footnote{\erklaerungFehlerNotation} bzw. $\rho
+d^{-1} =
 \SI{<< hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+
+Da nach der Leitfähigkeit gefragt ist, rechnen wir $\rho d^{-1}$ um. Den Fehler
+erhalten wir nach Gauß'scher Fehlerfortplanzung. Wir erhalten $\sigma d =
+\SI{<< hf_540_strom_sigma >>}{\per\kilo\ohm}$ bzw. $\sigma d = \SI{<<
+hf_301_strom_sigma >>}{\per\kilo\ohm}$.
 
 \section{Bestimmung der Hallkonstanten bei Raumtemperatur}
 
@@ -354,16 +360,58 @@ hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ und $R_{H} = \SI{<<
 hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen für
 Probe \probeA{} bzw. Probe \probeB{}.
 
+\section{Bestimmung der Beweglichkeit und Ladungsträgerdichte}
+
+Aus den bisher errechneten Größen $\sigma$ und $R_\text H$ errechnen wir nun
+die Beweglichkeit $\mu$ und die Ladungsträgerdichte der Majoritätsladung $p$:
+\[
+    p = \frac1{e R_\text H}
+    \eqnsep
+    \mu = \abs{\frac{R_\text H}{\rho}}
+\]
+
+Die so errechneten Größen sind in Tabelle~\ref{tab:mu-p}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{lSSS}
+        Probe &
+        {$\sigma d / \si{\per\kilo\ohm}$} &
+        {$\mu_{\text H} d^{-1} / \si{\ohm\volt\per\tesla\per\ampere}$} &
+        {$p d / \SI{e15}{\per\square\meter}$} \\
+        \midrule
+        %< for row in zimmertemperatur_tabelle1: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Errechnete Beweglichkeiten und Ladungsträgerdichten
+    }
+    \label{tab:mu-p}
+\end{table}
+
 \section{Untersuchung der Temperaturabhängigkeit}
+
+Die Auswertungsmethoden, die wir in für die Messungen bei Raumtemperatur
+benutzt haben, nutzen wir hier ebenfalls aus. Da wir jedoch nur eine Messreihe
+pro Temperatur haben, entfällt hier die Mittelwertbildung. 
+
+Die direkt vor Ort in eine Temperatur in \si{\celsius} umgerechneten
+Thermospannungen haben wir hier in der Auswertung noch um die Verschiebung
+$\SI{5}\kelvin$ angepasst, die wir durch die erhöhte Raumtemperatur von
+\SI{25}{\celsius} hatten. Außerdem haben wir die Temperaturen in Kelvin
+umgerechnet.
+
+Alle Werte sind in Tabelle~\ref{tab:Temperaturabhängigkeit} zusammengestellt.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSSS}
-        {$T$} &
-        {$\rho$} &
-        {$R_\text H$} &
-        {$p$} &
-        {$\mu$} \\
+        {$T / \si\kelvin$} &
+        {$\sigma d / \si{\kilo\ohm}$} &
+        {$R_\text H d^{-1}$} &
+        {$p d^{-1} / \SI{e15}{\per\cubic\meter}$} &
+        {$\mu d^{-1}$} \\
         \midrule
         %< for row in temperatur_tabelle: ->%
         << row | join(' & ') >> \\
@@ -371,7 +419,7 @@ Probe \probeA{} bzw. Probe \probeB{}.
     \end{tabular}
     \caption{%
     }
-    \label{tab:temperatur_tabelle}
+    \label{tab:Temperaturabhängigkeit}
 \end{table}
 
 In Abbildung~\ref{fig:sigma-T} ist die Abhängigkeit der Leitfähigkeit von der
@@ -420,7 +468,7 @@ zusammengefasst.
     \centering
     \begin{tabular}{lSSS}
         Probe &
-        {$\rho d^{-1} / \si{\ohm}$} &
+        {$\sigma d / \si{\per\kilo\ohm}$} &
         {$\mu_{\text H} d^{-1} / \si{\ohm\volt\per\tesla\per\ampere}$} &
         {$p / \SI{e15}{\per\cubic\meter}$} \\
         \midrule

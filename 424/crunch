@@ -37,7 +37,10 @@ def job_zimmertemperatur(T):
         sr = strom(T, prefix_s, filename_s)
         hr = hall_mit_nullfeld(T, prefix_h, filename_h)
 
-        mu_val = sr[0] * hr[4]
+        sigma_val = 1 / sr[0]
+        sigma_err = 1 / sr[0]**2 * sr[1]
+
+        mu_val = abs(sr[0] * hr[4])
         mu_err = np.sqrt(
             (sr[0] * hr[5])**2
             + (sr[1] * hr[4])**2
@@ -48,7 +51,7 @@ def job_zimmertemperatur(T):
 
         results1.append([
             probe,
-            unitprint.siunitx(*sr[:2]),
+            unitprint.siunitx(sigma_val / 10**-3, sigma_err / 10**-3),
             unitprint.siunitx(mu_val, mu_err),
             unitprint.siunitx(p_val / 1e15, p_err / 1e15),
         ])
@@ -95,9 +98,9 @@ def job_temperatur(T):
 
     T['temperatur_tabelle'] = list(zip(
         unitprint.siunitx(T_val, T_err),
-        unitprint.siunitx(rho),
+        unitprint.siunitx(sigma / 10**-3),
         unitprint.siunitx(rh),
-        unitprint.siunitx(p),
+        unitprint.siunitx(p / 10**15),
         unitprint.siunitx(mu),
     ))
 
@@ -143,7 +146,7 @@ def strom(T, prefix, messdaten):
         unitprint.siunitx(rho, digits=digits),
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
-    T[prefix+'sigma'] = unitprint.siunitx(sigma_val, sigma_err)
+    T[prefix+'sigma'] = unitprint.siunitx(sigma_val / 10**-3, sigma_err / 10**-3)
 
     return rho_val, rho_err, rho
 
