@@ -73,7 +73,7 @@ def job_temperatur(T):
 
     p = 1 / (rh * 1.609e-19)
     sigma = 1 / rho
-    mu = rh * rho
+    mu = rh / rho
 
     pl.plot(1/T_val, np.log(sigma), linestyle='none', marker='+')
     pl.grid(True)
