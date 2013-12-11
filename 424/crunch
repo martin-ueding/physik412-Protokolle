@@ -37,7 +37,10 @@ def job_zimmertemperatur(T):
         sr = strom(T, prefix_s, filename_s)
         hr = hall_mit_nullfeld(T, prefix_h, filename_h)
 
-        mu_val = sr[0] * hr[4]
+        sigma_val = 1 / sr[0]
+        sigma_err = 1 / sr[0]**2 * sr[1]
+
+        mu_val = abs(sr[0] * hr[4])
         mu_err = np.sqrt(
             (sr[0] * hr[5])**2
             + (sr[1] * hr[4])**2
@@ -48,7 +51,7 @@ def job_zimmertemperatur(T):
 
         results1.append([
             probe,
-            unitprint.siunitx(*sr[:2]),
+            unitprint.siunitx(sigma_val / 10**-3, sigma_err / 10**-3),
             unitprint.siunitx(mu_val, mu_err),
             unitprint.siunitx(p_val / 1e15, p_err / 1e15),
         ])
@@ -69,23 +72,24 @@ def job_temperatur(T):
     rh = hall_mit_nullfeld(T, 'hall_', 'Messdaten/Hall.txt')[-1]
 
     p = 1 / (rh * 1.609e-19)
-    mu = rh * rho
+    sigma = 1 / rho
+    mu = rh / rho
 
-    pl.plot(1/T_val, np.log(rho))
+    pl.plot(1/T_val, np.log(sigma), linestyle='none', marker='+')
     pl.grid(True)
-    pl.xlabel(r'$1/T$')
-    pl.ylabel(r'$\ln(\rho)$')
+    pl.xlabel(r'$T^{-1}$')
+    pl.ylabel(r'$\ln(\sigma)$')
     pl.savefig('_build/plot1.pdf')
     pl.clf()
 
-    pl.plot(1/T_val, np.log(p))
+    pl.plot(1/T_val, np.log(p / 10**17), linestyle='none', marker='+')
     pl.grid(True)
-    pl.xlabel(r'$1/T$')
-    pl.ylabel(r'$\ln(p)$')
+    pl.xlabel(r'$T^{-1} / \mathrm{K^{-1}}$')
+    pl.ylabel(r'$\ln(p / 10^{17})$')
     pl.savefig('_build/plot2.pdf')
     pl.clf()
 
-    pl.plot(np.log(T_val), np.log(mu))
+    pl.plot(np.log(T_val), np.log(mu), linestyle='none', marker='+')
     pl.grid(True)
     pl.xlabel(r'$\ln(T)$')
     pl.ylabel(r'$\ln(\mu)$')
@@ -94,9 +98,9 @@ def job_temperatur(T):
 
     T['temperatur_tabelle'] = list(zip(
         unitprint.siunitx(T_val, T_err),
-        unitprint.siunitx(rho),
+        unitprint.siunitx(sigma / 10**-3),
         unitprint.siunitx(rh),
-        unitprint.siunitx(p),
+        unitprint.siunitx(p / 10**15),
         unitprint.siunitx(mu),
     ))
 
@@ -106,6 +110,8 @@ def strom(T, prefix, messdaten):
     V = data[:, 1] * 10**-3
 
     I = 13.601e-3
+
+    T['I_mA'] = unitprint.siunitx(I / 10**-3)
 
     R1234 = abs(V[n==1] - V[n==2]) / (2 * I)
     R2341 = abs(V[n==3] - V[n==4]) / (2 * I)
@@ -119,7 +125,10 @@ def strom(T, prefix, messdaten):
     rho = (rho1 + rho2) / 2
 
     rho_val = np.mean(rho)
-    rho_err = np.std(rho) / np.sqrt(len(rho))
+    rho_err = np.std(rho)
+
+    sigma_val = 1/rho_val
+    sigma_err = 1/rho_val**2 * rho_err
 
     digits = 4
 
@@ -137,6 +146,7 @@ def strom(T, prefix, messdaten):
         unitprint.siunitx(rho, digits=digits),
     ))
     T[prefix+'rho'] = unitprint.siunitx(rho_val, rho_err)
+    T[prefix+'sigma'] = unitprint.siunitx(sigma_val / 10**-3, sigma_err / 10**-3)
 
     return rho_val, rho_err, rho
 
@@ -162,25 +172,25 @@ def hall_mit_nullfeld(T, prefix, messdaten):
 
     digits = 4
 
-    T[prefix+'V_tabelle'] = list(zip(
-        unitprint.siunitx(dV_A, digits=digits),
-        unitprint.siunitx(dV_B, digits=digits),
-        unitprint.siunitx(dV_C, digits=digits),
-        unitprint.siunitx(dV_D, digits=digits),
+    T[prefix+'V_tabelle_mV'] = list(zip(
+        unitprint.siunitx(dV_A / 10**-3, digits=digits),
+        unitprint.siunitx(dV_B / 10**-3, digits=digits),
+        unitprint.siunitx(dV_C / 10**-3, digits=digits),
+        unitprint.siunitx(dV_D / 10**-3, digits=digits),
     ))
     T[prefix+'V_R_tabelle'] = list(zip(
-        unitprint.siunitx(V_H_plus, digits=digits),
-        unitprint.siunitx(V_H_minus, digits=digits),
+        unitprint.siunitx(V_H_plus / 10**-3, digits=digits),
+        unitprint.siunitx(V_H_minus / 10**-3, digits=digits),
         unitprint.siunitx(R_H_plus, digits=digits),
         unitprint.siunitx(R_H_minus, digits=digits),
     ))
 
     R_H_plus_val = np.mean(R_H_plus)
-    R_H_plus_err = np.std(R_H_plus) / np.sqrt(len(R_H_plus))
+    R_H_plus_err = np.std(R_H_plus)
     T[prefix+'R_H_plus'] = unitprint.siunitx(R_H_plus_val, R_H_plus_err)
 
     R_H_minus_val = np.mean(R_H_minus)
-    R_H_minus_err = np.std(R_H_minus) / np.sqrt(len(R_H_minus))
+    R_H_minus_err = np.std(R_H_minus)
     T[prefix+'R_H_minus'] = unitprint.siunitx(R_H_minus_val, R_H_minus_err)
 
     R_H1 = 1 / (B * I) * ((V[n==1] - V[n==2]) - (V[n==5] - V[n==6])) / 4
@@ -195,7 +205,7 @@ def hall_mit_nullfeld(T, prefix, messdaten):
     ))
 
     R_H_val = np.mean(R_H)
-    R_H_err = np.std(R_H) / np.sqrt(len(R_H))
+    R_H_err = np.std(R_H)
 
     T[prefix+'R_H'] = unitprint.siunitx(R_H_val, R_H_err)
 
