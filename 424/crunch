@@ -23,6 +23,51 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+def job_messdaten_301_strom(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_301_strom'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 9)
+    ])
+
+def job_messdaten_301_hall(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_301_hall'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 11)
+    ])
+
+def job_messdaten_540_strom(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_540_strom'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 9)
+    ])
+
+
+def job_messdaten_540_hall(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_540_hall'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 11)
+    ])
+
 def job_zimmertemperatur(T):
     results1 = []
     results2 = []

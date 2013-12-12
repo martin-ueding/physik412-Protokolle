@@ -53,15 +53,108 @@
 
 \chapter{Durchführung}
 
-\section{Widerstandsmessung}
+\section{Widerstandsmessung bei Raumtemperatur}
 
 $I = \SI{13.601}{\milli\ampere}$
 
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_301_strom: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Widerstandsmessung für Probe~\probeA. Die
+        Wiederholungen der Messung für jede Beschaltung ist jeweils in einer
+        Zeile.
+    }
+    \label{tab:A:Strom}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_540_strom: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Widerstandsmessung für Probe~\probeB. Die
+        Wiederholungen der Messung für jede Beschaltung ist jeweils in einer
+        Zeile.
+    }
+    \label{tab:B:Strom}
+\end{table}
+
+
+
+\section{Messung der Hallkonstanten bei Raumtemperatur}
+
 $B = \SI{0.138 +- 0.001}{\tesla}$
 
-\subsection{\probeA}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_301_hall: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Messung der Hallkonstanten für
+        Probe~\probeA. Die Wiederholungen der Messung für jede Beschaltung ist
+        jeweils in einer Zeile.
+    }
+    \label{tab:A:Hall}
+\end{table}
 
-\subsection{\probeB}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} &
+        {$V / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_540_hall: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Messung der Hallkonstanten für
+        Probe~\probeB. Die Wiederholungen der Messung für jede Beschaltung ist
+        jeweils in einer Zeile.
+    }
+    \label{tab:B:Hall}
+\end{table}
+
+
+
+\section{Messung der Hallkonstanten bei verschiedenen Temperaturen}
+
 
 \chapter{Auswertung}
 
