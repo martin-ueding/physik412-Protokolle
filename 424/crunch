@@ -82,12 +82,14 @@ def job_messdaten_temp_strom_hall(T):
     n_hall = data[:, 0]
     U_hall = data[:, 1]
 
-    header_strom = unitprint.siunitx(T_val, T_err)
-
-    T['header_temp_strom'] = list(header_strom)
     T['messdaten_temp_strom'] = list([
-        [i] + unitprint.siunitx(U_strom[n_strom==i])
-        for i in range(1, 9)
+        [unitprint.siunitx(T_val[i], T_err[i]), unitprint.siunitx(T_raum[i])] + unitprint.siunitx(U_strom[i*8:(i+1)*8])
+        for i in range(len(T_val))
+    ])
+
+    T['messdaten_temp_hall'] = list([
+        [unitprint.siunitx(T_val[i], T_err[i]), unitprint.siunitx(T_raum[i])] + unitprint.siunitx(U_hall[i*10:(i+1)*10])
+        for i in range(len(T_val))
     ])
 
 def job_zimmertemperatur(T):
