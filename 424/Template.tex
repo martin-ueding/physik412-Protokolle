@@ -4,6 +4,7 @@
 
 \usepackage[section]{placeins}
 \usepackage{booktabs}
+\usepackage{pdflscape}
 
 \newcommand\versuchsnummer{424}
 \DeclareMathOperator\std{std}
@@ -46,10 +47,8 @@
 
 \tableofcontents
 
-
 \newcommand\probeA{InAs~HF-540}
 \newcommand\probeB{InAs~HF-301-040}
-
 
 \chapter{Durchführung}
 
@@ -101,8 +100,6 @@ $I = \SI{13.601}{\milli\ampere}$
     \label{tab:B:Strom}
 \end{table}
 
-
-
 \section{Messung der Hallkonstanten bei Raumtemperatur}
 
 $B = \SI{0.138 +- 0.001}{\tesla}$
@@ -151,10 +148,32 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
     \label{tab:B:Hall}
 \end{table}
 
+\section{Widerstandsmessung bei verschiedenen Temperaturen}
 
+\begin{landscape}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSSSSSSSSS}
+        {Beschaltung}
+        %< for header in header_temp_strom: ->%
+        & {$\num{<< header >>}$}
+        %< endfor ->%
+        \\
+        \midrule
+        %< for row in messdaten_temp_strom: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Messung der Hallkonstanten für
+        Probe~\probeB. Die Wiederholungen der Messung für jede Beschaltung ist
+        jeweils in einer Zeile.
+    }
+    \label{tab:B:Hall}
+\end{table}
+\end{landscape}
 
 \section{Messung der Hallkonstanten bei verschiedenen Temperaturen}
-
 
 \chapter{Auswertung}
 
