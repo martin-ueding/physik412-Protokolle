@@ -114,7 +114,7 @@ Teilchen trägt ebenso zum Ladungstransport bei. Da hier jedoch Elektronen von
 Loch zu Loch springen müssen, sind diese Löcher weniger beweglich, als die
 freien Elektronen.
 
-\subsection{Dotierte und undotierte Halbleiter}
+\subsection{Dotierung}
 
 Da bei Halbleitern immer noch Energien in der Größenordnung \si{\electronvolt}
 aufgebracht werden müssen um Elektronen in das Leitungsband anzuregen. Dies
@@ -145,9 +145,86 @@ erneut.
 
 \section{Streuung von Ladungsträgern}
 
-\section{Hall-Effekt}
+Jede Störstelle, wie zum Beispiel Löcher oder Fremdatome im Gitter, sowie die
+mit der Temperatur zunehmenden Gitterschwingungen, sorgen für
+eine Abweichung im periodischen Potenzial. Die daraus folgende Deformation der
+Bänder führt zu Streuung der sich bewegenden Elektronen.
+
+\section{Transporteigenschaften von Halbleitern}
+
+\subsection{Hall-Effekt}
+
+Auch hier betrachten wir zunächst negative Ladungsträger. Die dargestellte
+Physik gilt dabei selbstverständlich analog für Löcherleitung.
+
+Wird ein quaderförmiger (Halb-)Leiter von einem Strom in $x$- und von einem
+Magnetfeld in $z$-Richtung durchsetzt, lenkt die Lorenz-Kraft die Elektronen
+in $ $-Richtung ab. Dort sammelt sich Ladung an, wodurch ein elektrisches Feld
+aufgebaut wird, das die Ablenkung der Elektronen abschwächt. Sobald die Kräfte
+gleich groß sind, fließt der Strom wieder nur in $x$-Richtung. Es gilt
+\begin{align*}
+    Bev &= -eE.
+    \intertext{%
+        Die Driftgeschwindigkeit $v$ ist dabei proportional zur Stromdichte,
+        daher folgt für den Proportionalitätsfaktor
+    }
+    R_\text{H} &= -\frac{E}{Bj} = \frac{V}{Bjb} = \frac{dV}{BI}.
+    \intertext{%
+        Diese Hall-Konstante wird häufig unabhängig von der Dicke der Probe
+        angegeben:
+    }
+    R_\text{HS} &= \frac{V}{BI}
+    \intertext{%
+        Man sieht, dass sie das gleiche Vorzeichen hat, wie die Hall-Spannung.
+        Da bei in einem p-Dotierten Halbleiter die Löcher in die gleiche
+        Richtung abgelenkt werden ist die Spannung umgekehrt. Wir nehmen diese
+        so ab, dass sie bei p-Dotierung positiv ist.
+        Desweiteren gilt wegen $j=epv$
+    }
+    R_\text{H} &= \frac{1}{ep},
+    \intertext{%
+        wobei $p$ die Ladungsträgerkonzentration darstellt. Da wir hier jedoch
+        davon ausgehen, dass alle Ladungsträger die gleiche
+        Driftgeschwindigkeit habe, es in der Realität aber eine
+        Geschwindigkeitsverteilung gibt, die zum Beispiel auf Streuprozesse
+        zurückzuführen sind, müssen wir noch einen Korrekturfaktor hinzunehmen:
+    }
+    R_\text{H} &= \frac{r}{ep}
+\end{align*}
+Dieser hängt vom vorherrschenden Streuprozess ab und ist zum Beispiel for
+Streuung an ionisierten Störstellen $r = \num{1.93}$.
+
+\subsection{Driftbeweglichkeit und spezifischer Widerstand}
+
+Die Driftgeschwindigkeit der Ladungsträger ist für nicht zu große elektrische
+Felder proportional zu deren Feldstärke.
+\begin{align*}
+    v &= \mu E
+    \intertext{%
+        Die Proportionalitätskonstante $\mu$ nennt man Beweglichkeit der
+        Ladungsträger. Es gilt
+    }
+    \mu &= \frac{v}{E} = \frac{j}{epE} = \frac{\sigma}{ep} =
+    \frac{R_\text{H}\sigma}{r},
+    \intertext{%
+        mit der Leitfähigkeit $\sigma$, welche mit dem spezifischen Widerstand
+        $\rho$ über
+    }
+    \sigma &= \rho^{-1}
+    \intertext{%
+        zusammenhängt. Man muss die Driftbeweglichkeit von der
+        Hall-Beweglichkeit unterscheide. Diese hängen über den Korrekturfaktor
+        $r$ zusammen:
+    }
+    \mu_\text{H} &= r\mu
+\end{align*}
 
 \subsection{Van-der-Pauw-Messmethode}
+
+Mit der Van-der-Pauw-Messmethode kann man sowohl den Hall-Effekt, als auch die
+Transporteigenschaften von nicht quaderförmigen Proben untersuchen. Auch hier
+geht man jedoch von einem homogen dotierten, nicht durchlöcherten,
+scheibenförmigen Leiterstück aus.
 
 \section{Magnetische Thermospannungen}
 
