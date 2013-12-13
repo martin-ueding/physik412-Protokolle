@@ -4,6 +4,7 @@
 
 \usepackage[section]{placeins}
 \usepackage{booktabs}
+\usepackage{pdflscape}
 
 \newcommand\versuchsnummer{424}
 \DeclareMathOperator\std{std}
@@ -50,7 +51,6 @@
 \end{abstract}
 
 \tableofcontents
-
 
 \newcommand\probeA{InAs~HF-540}
 \newcommand\probeB{InAs~HF-301-040}
@@ -253,15 +253,181 @@ Hall-Effekts-Messung ist in Abschnitt~\ref{sec:hall-rt} genauer dargestellt.
 \FloatBarrier
 \chapter{Durchführung}
 
-\section{Widerstandsmessung}
+\section{Widerstandsmessung bei Raumtemperatur}
 
-$I = \SI{13.601}{\milli\ampere}$
+Zuerst messen wir den Widerstand an den Proben \probeA{} und \probeB. Dazu
+benutzen wir die Nummerierung der Schalterstellungen aus
+\cite[Tab.~4.1]{heldt/Diplomarbeit}.
 
-$B = \SI{0.138 +- 0.001}{\tesla}$
+Den Strom stellen wir für alle weitere Durchführungen auf $I =
+\SI{13.601}{\milli\ampere}$ ein. Dieser hat sich im Laufe des Versuches nur um
+\SI{0.01}{\milli\ampere} geändert, so dass dies keine große Fehlerquelle
+werden wird.
 
-\subsection{\probeA}
+Die Messungen für die beiden Proben sind in den Tabellen \ref{tab:A:Strom} und
+\ref{tab:B:Strom}.
 
-\subsection{\probeB}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_301_strom: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Widerstandsmessung für Probe~\probeA. Die
+        Wiederholungen der Messung für jede Beschaltung sind jeweils in einer
+        Zeile.
+    }
+    \label{tab:A:Strom}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_540_strom: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Widerstandsmessung für Probe~\probeB. Die
+        Wiederholungen der Messung für jede Beschaltung sind jeweils in einer
+        Zeile.
+    }
+    \label{tab:B:Strom}
+\end{table}
+
+\section{Messung der Hallkonstanten bei Raumtemperatur}
+
+Für die Messung der Hallkonstanten an den beiden Proben benutzen wir den
+Permanentmagneten mit $B = \SI{0.138 +-
+0.001}{\tesla}$\footnote{\erklaerungFehlerNotation}.
+
+Die Messdaten sind in den Tabellen \ref{tab:A:Hall} und \ref{tab:B:Hall}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_301_hall: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Messung der Hallkonstanten für
+        Probe~\probeA. Die Wiederholungen der Messung für jede Beschaltung ist
+        jeweils in einer Zeile.
+    }
+    \label{tab:A:Hall}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{S|SSSSS}
+        {Beschaltung} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} &
+        {$U / \si{\milli\volt}$} \\
+        \midrule
+        %< for row in messdaten_540_hall: ->%
+        << row | join(' & ') >> \\
+        %< endfor ->%
+    \end{tabular}
+    \caption{%
+        Gemessene Spannungen bei der Messung der Hallkonstanten für
+        Probe~\probeB. Die Wiederholungen der Messung für jede Beschaltung ist
+        jeweils in einer Zeile.
+    }
+    \label{tab:B:Hall}
+\end{table}
+
+\section{Messungen bei verschiedenen Temperaturen}
+
+Nach Beendigung der letzten Messung an Probe~\probeB{} lassen wir diese im
+Kryostaten und starten die Kühlung. Am nächsten Tag fahren wir mit der Messung
+bei der niedrigsten Temperatur fort. Wir heizen für jede weitere Messreihe die
+Probe mit den Heizwiderständen auf und halten die Temperatur dann möglichst
+konstant. Die Schwankung, die wir während den Messreihen beobachtet haben,
+haben wir als Fehler angegeben.
+
+Bei jeder Temperatur haben wir eine Messreihe für den Widerstand und eine für
+die Hallkonstante vorgenommen. Die Ergebnisse sind in Tabelle
+\ref{tab:Strom_Temp} bzw. \ref{tab:Hall_Temp}. Bei der Temperatur handelt es
+sich um die mit der ausliegenden Tabelle konvertierte Thermospannung. Erst in
+der Auswertung korrigieren wir die Verschiebung durch die erhöhte
+Raumtemperatur.
+
+\begin{landscape}
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{SS|SSSSSSSS}
+            {$T/ \si\celsius$}
+            & {$T_\text{Raum} / \si\celsius$}
+            %< for header in range(1, 9): ->%
+            & {$U_{<< header >>}$}
+            %< endfor ->%
+            \\
+            \midrule
+            %< for row in messdaten_temp_strom: ->%
+            << row | join(' & ') >> \\
+            %< endfor ->%
+        \end{tabular}
+        \caption{%
+            Gemessene Spannungen (in \si{\milli\volt}) bei der Messung des
+            Widerstands für Probe~\probeB{} bei verschiedenen Temperaturen. In
+            den Spalten stehen die verschiedenen Beschaltungen, in den Zeilen
+            die unterschiedlichen Temperaturen.
+        }
+        \label{tab:Strom_Temp}
+    \end{table}
+\end{landscape}
+
+\begin{landscape}
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{SS|SSSSSSSSSS}
+            {$T/ \si\celsius$}
+            & {$T_\text{Raum} / \si\celsius$}
+            %< for header in range(1, 11): ->%
+            & {$U_{<< header >>}$}
+            %< endfor ->%
+            \\
+            \midrule
+            %< for row in messdaten_temp_hall: ->%
+            << row | join(' & ') >> \\
+            %< endfor ->%
+        \end{tabular}
+        \caption{%
+            Gemessene Spannungen (in \si{\milli\volt}) bei der Messung der
+            Hallkonstanten für Probe~\probeB{} bei verschiedenen Temperaturen.
+            In den Spalten stehen die verschiedenen Beschaltungen, in den
+            Zeilen die unterschiedlichen Temperaturen.
+        }
+        \label{tab:Hall_Temp}
+    \end{table}
+\end{landscape}
 
 \chapter{Auswertung}
 
@@ -269,9 +435,9 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
 \label{sec:spez-wid-rt}
 
 Aus den gemessenen Spannungen bestimmen wir nach \cite{heldt/Diplomarbeit}
-Widerstände. Die gemessenen 8 Spannungen, die wir wie in
-\cite[Tab.~4.1]{heldt/Diplomarbeit} $V_1$ bis $V_8$ nennen werden, werden wie
-folgt verrechnet:
+mit dem eingestellten Strom Widerstände. Die gemessenen 8 Spannungen, die wir
+wie in \cite[Tab.~4.1]{heldt/Diplomarbeit}, $V_1$ bis $V_8$ nennen werden,
+werden wie folgt verrechnet:
 \[
     R_{ij,kl} := \frac{|V_i - V_j|}{2 I_{kl}} = \frac{|V_i - V_j|}{2 I}.
 \]
@@ -322,8 +488,8 @@ gezeigt.
 \end{table}
 
 Aus je zwei Widerständen können wir dann nach der van der Pauw-Methode einen
-Wert für den spezifischen Widerstand bestimmen:
-\parencite[Formel (4.9) und (4.10)]{heldt/Diplomarbeit}
+Wert für den spezifischen Widerstand bestimmen \parencite[Formel (4.9) und
+(4.10)]{heldt/Diplomarbeit}:
 \begin{align*}
     \rho_1 &= \frac{\piup d}{\ln(2)} \frac{R_{12,34} + R_{23,41}}{2}
     \, f\del{\frac{R_{12,34}}{R_{23,41}}} \\
@@ -387,9 +553,8 @@ Operator $\std$ bezeichnen werden. Somit erhalten wir also:
 \]
 
 Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho d^{-1} = \SI{<<
-hf_540_strom_rho >>}{\ohm}$\footnote{\erklaerungFehlerNotation} bzw. $\rho
-d^{-1} =
-\SI{<< hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
+hf_540_strom_rho >>}{\ohm}$ bzw. $\rho d^{-1} = \SI{<< hf_301_strom_rho
+>>}{\ohm}$ aus allen fünf Messreihen.
 
 Da nach der Leitfähigkeit gefragt ist, rechnen wir $\rho d^{-1}$ um. Den Fehler
 erhalten wir nach Gauß'scher Fehlerfortplanzung. Wir erhalten $\sigma d =
@@ -401,8 +566,8 @@ hf_301_strom_sigma >>}{\per\kilo\ohm}$.
 
 Die Bestimmung der Hallkonstanten ähnelt in einigen Schritten der vorherigen
 Bestimmung des spezifischen Widerstands. Die 10 Spannungen, die wir gemessen
-haben, nennen wir wieder gemäß \parencite[Tab.~4.2]{heldt/Diplomarbeit} $V_1$ bis
-$V_{10}$.
+haben, nennen wir wieder $V_1$ bis $V_{10}$
+\parencite[Tab.~4.2]{heldt/Diplomarbeit}.
 
 Es gibt zwei Methoden, aus einer Teilmenge dieser 10 Spannungen die
 Hallkonstante zu bestimmen. Wir werden hier beide durchführen, angefangen mit
@@ -411,8 +576,8 @@ einbeziehen.
 
 \subsection{Mit Nullfeldmessung}
 
-Aus den 10 Messungen werden 6 ausgewählt. Diese werden wie folgt verrechnet:
-\parencite[Formel (4.14) und (4.15)]{heldt/Diplomarbeit}
+Aus den 10 Messungen werden 6 ausgewählt. Diese werden wie folgt verrechnet
+\parencite[Formel (4.14) und (4.15)]{heldt/Diplomarbeit}:
 \begin{align*}
     V_{\text H+} &= \half\del[1]{(\overbrace{V_1 - V_9}^{\Deltaup V_\text A}) - (\overbrace{V_2 - V_{10}}^{\Deltaup V_\text B})} \\
     V_{\text H-} &= - \half\del[1]{(\underbrace{V_5 - V_9}_{\Deltaup V_\text C}) - (\underbrace{V_6 - V_{10}}_{\Deltaup V_\text D})}.
@@ -510,8 +675,8 @@ Bei Probe \probeB{} sind die Werte $R_{H+} = \SI{<< hf_301_hall_R_H_plus
 
 Es ist auch möglich, die ersten 8 Messwerte (die mit angelegter magnetischer
 Flussdichte) so zu verrechnen, dass keine Nullfeldmessung notwendig ist. Dazu
-werden zwei Zwischenwerte berechnet:
-\parencite[Formel (4.18) und (4.19)]{heldt/Diplomarbeit}
+werden zwei Zwischenwerte berechnet \parencite[Formel (4.18) und
+(4.19)]{heldt/Diplomarbeit}:
 \begin{align*}
     R_{\text H1} d^{-1} &= \frac{1}{BI} \frac{(V_1 - V_2) - (V_5 - V_6)}{4} \\
     R_{\text H2} d^{-1} &= \frac{1}{BI} \frac{(V_3 - V_4) - (V_7 - V_8)}{4}.
@@ -662,7 +827,7 @@ Ladungsträgerdichte. Davor gibt es noch ein Minimum.
 \chapter{Diskussion}
 
 In Tabelle~\ref{tab:zimmertemperatur_tabelle1} haben wir die endgültigen Werte
-für $\rho$ zusammengetragen und $\mu_\text H$ sowie $p$ berechnet. In
+für $\sigma$ zusammengetragen und $\mu_\text H$ sowie $p$ berechnet. In
 Tabelle~\ref{tab:zimmertemperatur_tabelle2} sind die Hallkonstanten
 zusammengefasst.
 

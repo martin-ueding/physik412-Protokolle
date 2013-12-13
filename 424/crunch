@@ -23,6 +23,75 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+def job_messdaten_301_strom(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-301-040-Zimmertemperatur-Strom.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_301_strom'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 9)
+    ])
+
+def job_messdaten_301_hall(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-301-040-Zimmertemperatur-Hall.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_301_hall'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 11)
+    ])
+
+def job_messdaten_540_strom(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-540-Zimmertemperatur-Strom.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_540_strom'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 9)
+    ])
+
+
+def job_messdaten_540_hall(T):
+    data = np.genfromtxt('Messdaten/InAs-HF-540-Zimmertemperatur-Hall.txt')
+
+    n = data[:, 0]
+    t = data[:, 1]
+
+    T['messdaten_540_hall'] = list([
+        [i] + unitprint.siunitx(t[n==i])
+        for i in range(1, 11)
+    ])
+
+def job_messdaten_temp_strom_hall(T):
+    data = np.genfromtxt('Messdaten/Temperaturen.txt')
+    T_val = data[:, 0]
+    T_err = data[:, 1]
+    T_raum = data[:, 2]
+
+    data = np.genfromtxt('Messdaten/Strom.txt')
+    n_strom = data[:, 0]
+    U_strom = data[:, 1]
+
+    data = np.genfromtxt('Messdaten/Hall.txt')
+    n_hall = data[:, 0]
+    U_hall = data[:, 1]
+
+    T['messdaten_temp_strom'] = list([
+        [unitprint.siunitx(T_val[i], T_err[i]), unitprint.siunitx(T_raum[i])] + unitprint.siunitx(U_strom[i*8:(i+1)*8])
+        for i in range(len(T_val))
+    ])
+
+    T['messdaten_temp_hall'] = list([
+        [unitprint.siunitx(T_val[i], T_err[i]), unitprint.siunitx(T_raum[i])] + unitprint.siunitx(U_hall[i*10:(i+1)*10])
+        for i in range(len(T_val))
+    ])
+
 def job_zimmertemperatur(T):
     results1 = []
     results2 = []
