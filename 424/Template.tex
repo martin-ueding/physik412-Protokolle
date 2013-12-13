@@ -226,6 +226,21 @@ Transporteigenschaften von nicht quaderförmigen Proben untersuchen. Auch hier
 geht man jedoch von einem homogen dotierten, nicht durchlöcherten,
 scheibenförmigen Leiterstück aus.
 
+An der Probe werden vier Anschlüsse befestigt, durch die entweder ein Strom
+durch die Probe geleitet wird, oder eine Spannung abgegriffen wird. Diese
+Anschlüsse liegen auf dem Rand der Probe uns sind hinreichend klein.
+
+In Abbildung~\ref{fig:vdPauw-wid} und \ref{fig:vdPauw-hall} ist der Aufbau für
+die Widerstands- bzw. Hall-Effekts-Messung gezeigt. Nun wird der Widerstand
+$R_\text{AB,CD}$ bestimmt, das erste Indexpaar gibt dabei die Stromrichtung,
+das zweite die Kontakte für den Spannungsabgriff an:
+\[
+    R_\text{AB,CD} &= \frac{\abs{V_\text{CD}}}{I_\text{AB}}
+\]
+Wie man daraus den spezifischen Widerstand und die Leitfähigkeit bestimmt, wird
+wird in Abschnitt~\ref{sec:spez-wid-rt} näher beschrieben. Die
+Hall-Effekts-Messung ist in Abschnitt~\ref{sec:hall-rt} genauer dargestellt.
+
 \section{Magnetische Thermospannungen}
 
 \subsection{Ettingshausen-Effekt}
@@ -251,6 +266,7 @@ $B = \SI{0.138 +- 0.001}{\tesla}$
 \chapter{Auswertung}
 
 \section{Bestimmung des spezifischen Widerstands bei Raumtemperatur}
+\label{sec:spez-wid-rt}
 
 Aus den gemessenen Spannungen bestimmen wir nach \cite{heldt/Diplomarbeit}
 Widerstände. Die gemessenen 8 Spannungen, die wir wie in
@@ -381,6 +397,7 @@ erhalten wir nach Gauß'scher Fehlerfortplanzung. Wir erhalten $\sigma d =
 hf_301_strom_sigma >>}{\per\kilo\ohm}$.
 
 \section{Bestimmung der Hallkonstanten bei Raumtemperatur}
+\label{sec:hall-rt}
 
 Die Bestimmung der Hallkonstanten ähnelt in einigen Schritten der vorherigen
 Bestimmung des spezifischen Widerstands. Die 10 Spannungen, die wir gemessen
