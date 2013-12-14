@@ -511,17 +511,17 @@ Wie in Tabellen \ref{tab:A:R} und \ref{tab:B:R} zu sehen ist, sind die
 Verhältnisse der $R_{ij,kl}$ derart nahe bei 1, dass wir $f = 1$ annehmen
 können.
 
-Aus den beiden Werten für den spezifischen Widerstand bilden wir den
-Mittelwert und erhalten für jede der fünf Messreihen einen Wert für $\rho$.
+Aus den beiden Werten für den spezifischen Widerstand bilden wir den Mittelwert
+und erhalten für jede der fünf Messreihen einen Wert für $\rho_{\text S}$.
 Diese Ergebnisse sind in den Tabellen \ref{tab:A:rho} und \ref{tab:B:rho}
 abgedruckt.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$\rho_1 d^{-1} / \si\ohm$} &
-        {$\rho_2 d^{-1} / \si\ohm$} &
-        {$\rho d^{-1} / \si\ohm$} \\
+        {$\rho_{1, \text S} / \si{\ohm}$} &
+        {$\rho_{2, \text S} / \si{\ohm}$} &
+        {$\rho_{\text S} / \si{\ohm}$} \\
         \midrule
         %< for row in hf_540_strom_rho_tabelle: ->%
         << row | join(' & ') >> \\
@@ -536,9 +536,9 @@ abgedruckt.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$\rho_1 d^{-1} / \si\ohm$} &
-        {$\rho_2 d^{-1} / \si\ohm$} &
-        {$\rho d^{-1} / \si\ohm$} \\
+        {$\rho_{1, \text S} / \si{\ohm}$} &
+        {$\rho_{2, \text S} / \si{\ohm}$} &
+        {$\rho_{\text S} / \si{\ohm}$} \\
         \midrule
         %< for row in hf_301_strom_rho_tabelle: ->%
         << row | join(' & ') >> \\
@@ -554,19 +554,19 @@ Diese fünf Werte pro Probe mitteln wir zu einem endgültigen Ergebnis. Den
 Fehler bestimmen wir mit der Standardabweichung, die wir im folgenden mit dem
 Operator $\std$ bezeichnen werden. Somit erhalten wir also:
 \[
-    \rho = \bracket{\{\rho\}}
+    \rho_{\text S} = \bracket{\{\rho_{\text S}\}}
     \eqnsep
-    \Deltaup \rho = \std(\{\rho\})
+    \Deltaup \rho_{\text S} = \std(\{\rho_{\text S}\})
 \]
 
-Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho d^{-1} = \SI{<<
-hf_540_strom_rho >>}{\ohm}$ bzw. $\rho d^{-1} = \SI{<< hf_301_strom_rho
->>}{\ohm}$ aus allen fünf Messreihen.
+Für die Proben \probeA{} und \probeB{} erhalten wir so $\rho_{\text S} = \SI{<<
+hf_540_strom_rho >>}{\ohm}$ bzw. $\rho_{\text S} = \SI{<<
+hf_301_strom_rho >>}{\ohm}$ aus allen fünf Messreihen.
 
-Da nach der Leitfähigkeit gefragt ist, rechnen wir $\rho d^{-1}$ um. Den Fehler
-erhalten wir nach Gauß'scher Fehlerfortplanzung. Wir erhalten $\sigma d =
-\SI{<< hf_540_strom_sigma >>}{\per\kilo\ohm}$ bzw. $\sigma d = \SI{<<
-hf_301_strom_sigma >>}{\per\kilo\ohm}$.
+Da nach der Leitfähigkeit gefragt ist, rechnen wir $\rho$ um. Den Fehler
+erhalten wir nach Gauß'scher Fehlerfortplanzung. Wir erhalten $\sigma_{\text S}
+= \SI{<< hf_540_strom_sigma >>}{\per\kilo\ohm}$ bzw. $\sigma_{\text S} =
+\SI{<< hf_301_strom_sigma >>}{\per\kilo\ohm}$.
 
 \section{Bestimmung der Hallkonstanten bei Raumtemperatur}
 \label{sec:hall-rt}
@@ -636,10 +636,10 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|SS}
-        {$V_{H+} / \si\volt$} &
-        {$V_{H-} / \si\volt$} &
-        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$V_{\text H+} / \si\volt$} &
+        {$V_{\text H-} / \si\volt$} &
+        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in hf_540_hall_V_R_tabelle: ->%
         << row | join(' & ') >> \\
@@ -654,10 +654,10 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS}
-        {$V_{H+} / \si{\milli\volt}$} &
-        {$V_{H-} / \si{\milli\volt}$} &
-        {$R_{H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$V_{\text H+} / \si{\milli\volt}$} &
+        {$V_{\text H-} / \si{\milli\volt}$} &
+        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in hf_301_hall_V_R_tabelle: ->%
         << row | join(' & ') >> \\
@@ -670,13 +670,14 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
 \end{table}
 
 Wir bilden wie im vorherigen Teil Mittelwert und Fehler. Wir erhalten so für
-Proble \probeA{} $R_{H+} = \SI{<< hf_540_hall_R_H_plus
->>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<< hf_540_hall_R_H_minus
->>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen.
+Proble \probeA{} $R_{\text H+, \text S} = \SI{<< hf_540_hall_R_H_plus
+>>}{\volt\per\tesla\per\ampere}$ und $R_{\text H-, \text S} = \SI{<<
+    hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf
+    Messreihen.
 
-Bei Probe \probeB{} sind die Werte $R_{H+} = \SI{<< hf_301_hall_R_H_plus
->>}{\volt\per\tesla\per\ampere}$ und $R_{H-} = \SI{<< hf_301_hall_R_H_minus
->>}{\volt\per\tesla\per\ampere}$.
+Bei Probe \probeB{} sind die Werte $R_{\text H+, \text S} = \SI{<<
+hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{\text H-, \text
+S} = \SI{<< hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$.
 
 \subsection{Ohne Nullfeldmessung}
 
@@ -685,8 +686,8 @@ Flussdichte) so zu verrechnen, dass keine Nullfeldmessung notwendig ist. Dazu
 werden zwei Zwischenwerte berechnet \parencite[Formel (4.18) und
 (4.19)]{heldt/Diplomarbeit}:
 \begin{align*}
-    R_{\text H1} d^{-1} &= \frac{1}{BI} \frac{(V_1 - V_2) - (V_5 - V_6)}{4} \\
-    R_{\text H2} d^{-1} &= \frac{1}{BI} \frac{(V_3 - V_4) - (V_7 - V_8)}{4}.
+    R_{\text H1, \text S} &= \frac{1}{BI} \frac{(V_1 - V_2) - (V_5 - V_6)}{4} \\
+    R_{\text H2, \text S} &= \frac{1}{BI} \frac{(V_3 - V_4) - (V_7 - V_8)}{4}.
 \end{align*}
 
 Aus den beiden Hallkonstanten pro Messreihe wird der Mittelwert genommen und
@@ -696,9 +697,9 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text{H}1, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text{H}2, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text{H}, \text{S}} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in hf_540_hall_RH_mit_tabelle: ->%
         << row | join(' & ') >> \\
@@ -714,9 +715,9 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$R_{H1} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H2} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text{H}1, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text{H}2, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text{H}, \text{S}} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in hf_301_hall_RH_mit_tabelle: ->%
         << row | join(' & ') >> \\
@@ -729,8 +730,8 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
     \label{tab:B:H_12}
 \end{table}
 
-Wir bilden Mittelwert und Fehler und erhalten so $R_{H} = \SI{<<
-hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ und $R_{H} = \SI{<<
+Wir bilden Mittelwert und Fehler und erhalten so $R_{\text H} = \SI{<<
+hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ und $R_{\text H} = \SI{<<
 hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen für
 Probe \probeA{} bzw. Probe \probeB{}.
 
@@ -750,9 +751,9 @@ Die so errechneten Größen sind in Tabelle~\ref{tab:mu-p}.
     \centering
     \begin{tabular}{lSSS}
         Probe &
-        {$\sigma d / \si{\per\kilo\ohm}$} &
-        {$\mu_{\text H} d^{-1} / \si{\ohm\volt\per\tesla\per\ampere}$} &
-        {$p d / \SI{e15}{\per\square\meter}$} \\
+        {$\sigma_{\text S} / \si{\per\kilo\ohm}$} &
+        {$\mu_{\text H, \text S} / \si{\ohm\volt\per\tesla\per\ampere}$} &
+        {$p_{\text S} / \SI{e15}{\per\square\meter}$} \\
         \midrule
         %< for row in zimmertemperatur_tabelle1: ->%
         << row | join(' & ') >> \\
@@ -782,9 +783,9 @@ Alle Werte sind in Tabelle~\ref{tab:Temperaturabhängigkeit} zusammengestellt.
     \centering
     \begin{tabular}{SSSSS}
         {$T / \si\kelvin$} &
-        {$\sigma d / \si{\kilo\ohm}$} &
-        {$R_\text H d^{-1}$} &
-        {$p d^{-1} / \SI{e15}{\per\cubic\meter}$} &
+        {$\sigma_{\text S} / \si{\kilo\ohm}$} &
+        {$R_{\text H, \text S}$} &
+        {$p_{\text S} / \SI{e15}{\per\cubic\meter}$} &
         {$\mu d^{-1}$} \\
         \midrule
         %< for row in temperatur_tabelle: ->%
@@ -834,17 +835,17 @@ Ladungsträgerdichte. Davor gibt es noch ein Minimum.
 \chapter{Diskussion}
 
 In Tabelle~\ref{tab:zimmertemperatur_tabelle1} haben wir die endgültigen Werte
-für $\sigma$ zusammengetragen und $\mu_\text H$ sowie $p$ berechnet. In
-Tabelle~\ref{tab:zimmertemperatur_tabelle2} sind die Hallkonstanten
-zusammengefasst.
+für $\sigma_{\text S}$ zusammengetragen und $\mu_{\text H, \text S}$ sowie
+$p_{\text S}$ berechnet. In Tabelle~\ref{tab:zimmertemperatur_tabelle2} sind
+die Hallkonstanten zusammengefasst.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{lSSS}
         Probe &
-        {$\sigma d / \si{\per\kilo\ohm}$} &
-        {$\mu_{\text H} d^{-1} / \si{\ohm\volt\per\tesla\per\ampere}$} &
-        {$p / \SI{e15}{\per\cubic\meter}$} \\
+        {$\sigma_{\text S} / \si{\per\kilo\ohm}$} &
+        {$\mu_{\text H, \text S} / \si{\ohm\volt\per\tesla\per\ampere}$} &
+        {$p_{\text S} / \SI{e15}{\per\cubic\meter}$} \\
         \midrule
         %< for row in zimmertemperatur_tabelle1: ->%
         << row | join(' & ') >> \\
@@ -860,9 +861,9 @@ zusammengefasst.
     \centering
     \begin{tabular}{lSSS}
         Probe &
-        {$R_{\text H+} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H-} d^{-1} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H} d^{-1} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} &
+        {$R_{\text H, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in zimmertemperatur_tabelle2: ->%
         << row | join(' & ') >> \\
@@ -874,13 +875,14 @@ zusammengefasst.
     \label{tab:zimmertemperatur_tabelle2}
 \end{table}
 
-Es fällt auf, dass die Leitfähigkeiten recht nahe beiander
+Es fällt auf, dass die Leitfähigkeiten recht nahe beieinander
 liegen. Die Hallkonstanten liegen betragsmäßig ebenfalls recht nahe
 beieinander, unterscheiden sich jedoch im Vorzeichen.
 
-In beiden Fällen ist $R_\text H$ innerhalb des Fehlerbereichs der Mittelwert
-auf $R_{\text H+}$ und $R_{\text H-}$. Dies bedeutet, dass beide Mess- und
-Auswertungsmethoden das Nullfeld gleich korrigieren.
+In beiden Fällen ist $R_{\text H, \text S}$ innerhalb des Fehlerbereichs der
+Mittelwert auf $R_{\text H+, \text S}$ und $R_{\text H-, \text S}$. Dies
+bedeutet, dass beide Mess- und Auswertungsmethoden das Nullfeld gleich
+korrigieren.
 
 Aus der Ladungsträgerkonzentration (siehe
 Tabelle~\ref{tab:zimmertemperatur_tabelle1}), die für positive Ladungsträger
