@@ -68,16 +68,16 @@ Wellenvektoren und damit durch die Dispersionsrelation zusammenhängenden
 Energiewerte haben können. In einem Atomgitter überlagern sich die einzelnen
 Potenziale derart, dass die diskreten Werte zu breiten Bändern werden, welche
 durch die Elektronen von unten aufgefüllt werden. Dabei wird das höchste noch
-besetzte Band als Valenz- das nächst höhere als Leitungsband bezeichnet.
+voll besetzte Band als Valenz-, das nächst höhere als Leitungsband bezeichnet.
 
 \subsection{Fermi-Statistik}
 
 Ist keins der Elektronen angeregt, liegt also weder ein äußeres Potenzial, noch
 eine thermische Anregung vor. Sind nur Zustände bis zu einer bestimmten Energie
-$E_F$, der Fermi-Energie besetzt. Ist $T>0$, so werden vereinzelt Elektronen
+$E_F$, der Fermi-Energie, besetzt. Ist $T>0$, so werden vereinzelt Elektronen
 angeregt. Die Energieverteilung „schmiert aus“. Die Breite des
 Übergangsbereichs ist $2k_\text{B}T$. In Abbildung~\ref{fig:Fermi} ist die
-Fermi-Verteilung gezeigt.
+Fermi-Verteilung, die diese Anregungsverteilung beschreibt, gezeigt.
 
 \begin{figure}
     \centering
@@ -94,8 +94,8 @@ Die Unterscheidung zwischen Leitern, Halbleitern und Isolatoren kann anhand der
 Bandlücke zwischen Valenz- und Leitungsband getroffen werden.
 
 Bei Leitern überlappen sich Valenz- und Leitungsband, sodass Elektronen ohne
-Probleme zwischen den Bändern wechseln können. Durch die dann teilbesetzten Bänder ist das
-Material leitfähig.
+Probleme zwischen den Bändern wechseln können. Durch die dann teilbesetzten
+Bänder ist das Material leitfähig.
 
 Bei Halbleitern und Isolatoren liegt zwischen den Bändern eine Bandlücke, bei
 Halbleitern ist diese mit bis zu einigen \si{\electronvolt} relativ klein, die
@@ -105,9 +105,9 @@ mehr ausreichen.
 
 \subsection{Ladungsträger}
 
-Wird ein Elektron in das Leitungsband angeregt ist dieses quasi frei. Ein durch
-eine angelegte Spannung entstandenes elektrisches Feld kann dieses Elektron
-beschleunigen, ein Strom fließt.
+Wird ein Elektron in das Leitungsband angeregt, ist dieses quasi frei. Ein
+durch eine angelegte Spannung entstandenes elektrisches Feld kann dieses
+Elektron beschleunigen, ein Strom fließt.
 
 Im Valenzband entsteht gleichzeitig ein Loch, das heißt ein freier Zustand, in
 welches andere Elektronen wechseln können. Dieses scheinbar positiv geladene
@@ -160,39 +160,42 @@ Physik gilt dabei selbstverständlich analog für Löcherleitung.
 
 Wird ein quaderförmiger (Halb-)Leiter von einem Strom in $x$- und von einem
 Magnetfeld in $z$-Richtung durchsetzt, lenkt die Lorenz-Kraft die Elektronen
-in $ $-Richtung ab. Dort sammelt sich Ladung an, wodurch ein elektrisches Feld
+in $y$-Richtung ab. Dort sammelt sich Ladung an, wodurch ein elektrisches Feld
 aufgebaut wird, das die Ablenkung der Elektronen abschwächt. Sobald die Kräfte
 gleich groß sind, fließt der Strom wieder nur in $x$-Richtung. Es gilt
-\begin{align*}
-    Bev &= -eE.
-    \intertext{%
-        Die Driftgeschwindigkeit $v$ ist dabei proportional zur Stromdichte,
-        daher folgt für den Proportionalitätsfaktor
-    }
-    R_\text{H} &= -\frac{E}{Bj} = \frac{V}{Bjb} = \frac{dV}{BI}.
-    \intertext{%
-        Diese Hall-Konstante wird häufig unabhängig von der Dicke der Probe
-        angegeben:
-    }
-    R_\text{HS} &= \frac{V}{BI}
-    \intertext{%
-        Man sieht, dass sie das gleiche Vorzeichen hat, wie die Hall-Spannung.
-        Da bei in einem p-Dotierten Halbleiter die Löcher in die gleiche
-        Richtung abgelenkt werden ist die Spannung umgekehrt. Wir nehmen diese
-        so ab, dass sie bei p-Dotierung positiv ist.
-        Desweiteren gilt wegen $j=epv$
-    }
-    R_\text{H} &= \frac{1}{ep},
-    \intertext{%
-        wobei $p$ die Ladungsträgerkonzentration darstellt. Da wir hier jedoch
-        davon ausgehen, dass alle Ladungsträger die gleiche
-        Driftgeschwindigkeit habe, es in der Realität aber eine
-        Geschwindigkeitsverteilung gibt, die zum Beispiel auf Streuprozesse
-        zurückzuführen sind, müssen wir noch einen Korrekturfaktor hinzunehmen:
-    }
-    R_\text{H} &= \frac{r}{ep}
-\end{align*}
-Dieser hängt vom vorherrschenden Streuprozess ab und ist zum Beispiel for
+\[
+    Bev = -eE.
+\]
+
+Die Driftgeschwindigkeit $v$ ist dabei proportional zur Stromdichte,
+daher folgt für den Proportionalitätsfaktor
+\[
+    R_\text{H} = -\frac{E}{Bj} = \frac{V}{Bjb} = \frac{dV}{BI}.
+\]
+
+Diese Hall-Konstante wird häufig unabhängig von der Dicke der Probe
+angegeben:
+\[
+    R_\text{HS} = \frac{V}{BI}
+\]
+
+Man sieht, dass sie das gleiche Vorzeichen hat, wie die Hall-Spannung.
+Da bei in einem p-Dotierten Halbleiter die Löcher in die gleiche
+Richtung abgelenkt werden ist die Spannung umgekehrt. Wir nehmen diese
+so ab, dass sie bei p-Dotierung positiv ist.
+Desweiteren gilt wegen $j=epv$
+\[
+    R_\text{H} = \frac{1}{ep},
+\]
+wobei $p$ die Ladungsträgerkonzentration darstellt. Da wir hier jedoch
+davon ausgehen, dass alle Ladungsträger die gleiche
+Driftgeschwindigkeit habe, es in der Realität aber eine
+Geschwindigkeitsverteilung gibt, die zum Beispiel auf Streuprozesse
+zurückzuführen sind, müssen wir noch einen Korrekturfaktor hinzunehmen:
+\[
+    R_\text{H} = \frac{r}{ep}.
+\]
+Dieser hängt vom vorherrschenden Streuprozess ab und ist zum Beispiel für
 Streuung an ionisierten Störstellen $r = \num{1.93}$.
 
 \subsection{Driftbeweglichkeit und spezifischer Widerstand}
