@@ -638,8 +638,8 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
     \begin{tabular}{SS|SS}
         {$V_{\text H+} / \si\volt$} &
         {$V_{\text H-} / \si\volt$} &
-        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text H+, \text S} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text H-, \text S} / \si{\meter\squared\per\coulomb}$} \\
         \midrule
         %< for row in hf_540_hall_V_R_tabelle: ->%
         << row | join(' & ') >> \\
@@ -656,8 +656,8 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
     \begin{tabular}{SSSS}
         {$V_{\text H+} / \si{\milli\volt}$} &
         {$V_{\text H-} / \si{\milli\volt}$} &
-        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text H+, \text S} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text H-, \text S} / \si{\meter\squared\per\coulomb}$} \\
         \midrule
         %< for row in hf_301_hall_V_R_tabelle: ->%
         << row | join(' & ') >> \\
@@ -671,13 +671,13 @@ Magnetfeldrichtungen sind in den Tabellen \ref{tab:A:VH+-,RH+-} und
 
 Wir bilden wie im vorherigen Teil Mittelwert und Fehler. Wir erhalten so für
 Proble \probeA{} $R_{\text H+, \text S} = \SI{<< hf_540_hall_R_H_plus
->>}{\volt\per\tesla\per\ampere}$ und $R_{\text H-, \text S} = \SI{<<
-    hf_540_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$ aus allen fünf
+>>}{\meter\squared\per\coulomb}$ und $R_{\text H-, \text S} = \SI{<<
+    hf_540_hall_R_H_minus >>}{\meter\squared\per\coulomb}$ aus allen fünf
     Messreihen.
 
 Bei Probe \probeB{} sind die Werte $R_{\text H+, \text S} = \SI{<<
-hf_301_hall_R_H_plus >>}{\volt\per\tesla\per\ampere}$ und $R_{\text H-, \text
-S} = \SI{<< hf_301_hall_R_H_minus >>}{\volt\per\tesla\per\ampere}$.
+hf_301_hall_R_H_plus >>}{\meter\squared\per\coulomb}$ und $R_{\text H-, \text
+S} = \SI{<< hf_301_hall_R_H_minus >>}{\meter\squared\per\coulomb}$.
 
 \subsection{Ohne Nullfeldmessung}
 
@@ -697,9 +697,9 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$R_{\text{H}1, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text{H}2, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text{H}, \text{S}} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text{H}1, \text{S}} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text{H}2, \text{S}} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text{H}, \text{S}} / \si{\meter\squared\per\coulomb}$} \\
         \midrule
         %< for row in hf_540_hall_RH_mit_tabelle: ->%
         << row | join(' & ') >> \\
@@ -715,9 +715,9 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SS|S}
-        {$R_{\text{H}1, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text{H}2, \text{S}} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text{H}, \text{S}} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text{H}1, \text{S}} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text{H}2, \text{S}} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text{H}, \text{S}} / \si{\meter\squared\per\coulomb}$} \\
         \midrule
         %< for row in hf_301_hall_RH_mit_tabelle: ->%
         << row | join(' & ') >> \\
@@ -731,8 +731,8 @@ beiden Proben in den Tabellen \ref{tab:A:H_12} und \ref{tab:B:H_12} aufgeführt.
 \end{table}
 
 Wir bilden Mittelwert und Fehler und erhalten so $R_{\text H} = \SI{<<
-hf_540_hall_R_H >>}{\volt\per\tesla\per\ampere}$ und $R_{\text H} = \SI{<<
-hf_301_hall_R_H >>}{\volt\per\tesla\per\ampere}$ aus allen fünf Messreihen für
+hf_540_hall_R_H >>}{\meter\squared\per\coulomb}$ und $R_{\text H} = \SI{<<
+hf_301_hall_R_H >>}{\meter\squared\per\coulomb}$ aus allen fünf Messreihen für
 Probe \probeA{} bzw. Probe \probeB{}.
 
 \section{Bestimmung der Beweglichkeit und Ladungsträgerdichte}
@@ -784,7 +784,7 @@ Alle Werte sind in Tabelle~\ref{tab:Temperaturabhängigkeit} zusammengestellt.
     \begin{tabular}{SSSSS}
         {$T / \si\kelvin$} &
         {$\sigma_{\text S} / \si{\kilo\ohm}$} &
-        {$R_{\text H, \text S}$} &
+        {$R_{\text H, \text S} / \si{\meter\squared\per\coulomb}$} &
         {$p_{\text S} / \SI{e15}{\per\cubic\meter}$} &
         {$\mu_{\text S}$} \\
         \midrule
@@ -861,9 +861,9 @@ die Hallkonstanten zusammengefasst.
     \centering
     \begin{tabular}{lSSS}
         Probe &
-        {$R_{\text H+, \text S} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H-, \text S} / \si{\volt\per\tesla\per\ampere}$} &
-        {$R_{\text H, \text S} / \si{\volt\per\tesla\per\ampere}$} \\
+        {$R_{\text H+, \text S} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text H-, \text S} / \si{\meter\squared\per\coulomb}$} &
+        {$R_{\text H, \text S} / \si{\meter\squared\per\coulomb}$} \\
         \midrule
         %< for row in zimmertemperatur_tabelle2: ->%
         << row | join(' & ') >> \\
