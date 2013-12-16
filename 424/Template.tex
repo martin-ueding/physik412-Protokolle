@@ -5,6 +5,8 @@
 \usepackage[section]{placeins}
 \usepackage{booktabs}
 \usepackage{pdflscape}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
 
 \newcommand\versuchsnummer{424}
 \DeclareMathOperator\std{std}
@@ -73,15 +75,18 @@ voll besetzte Band als Valenz-, das nächst höhere als Leitungsband bezeichnet.
 \subsection{Fermi-Statistik}
 
 Ist keins der Elektronen angeregt, liegt also weder ein äußeres Potenzial, noch
-eine thermische Anregung vor. Sind nur Zustände bis zu einer bestimmten Energie
+eine thermische Anregung vor, sind nur Zustände bis zu einer bestimmten Energie
 $E_F$, der Fermi-Energie, besetzt. Ist $T>0$, so werden vereinzelt Elektronen
 angeregt. Die Energieverteilung „schmiert aus“. Die Breite des
 Übergangsbereichs ist $2k_\text{B}T$. In Abbildung~\ref{fig:Fermi} ist die
-Fermi-Verteilung, die diese Anregungsverteilung beschreibt, gezeigt.
+Fermi-Verteilung, die diese Anregungsverteilung beschreibt, gezeigt. Die Wahrscheinlichkeit ist dabei gegeben durch
+\[
+    W(E) = \frac{1}{\exp\del{\frac{E-E_\text{F}}{k_\text{B}T}}+1}.
+\]
 
 \begin{figure}
     \centering
-    %\includegraphics[width=\textwidth]{../Abbildungen/Fermi.pdf}
+    \includegraphics[width=\textwidth]{Fermi.pdf}
     \caption{%
         Besetzungswahrscheinlichkeit für verschiedene Temperaturen
     }
@@ -248,14 +253,100 @@ Wie man daraus den spezifischen Widerstand und die Leitfähigkeit bestimmt, wird
 wird in Abschnitt~\ref{sec:spez-wid-rt} näher beschrieben. Die
 Hall-Effekts-Messung ist in Abschnitt~\ref{sec:hall-rt} genauer dargestellt.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{../Abbildungen/Widerstand.pdf}
+    \caption{%
+        Anschlüsse für die Widerstandsmessung nach van der Pauw
+    }
+    \label{fig:vdPauw-wid}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.7\textwidth]{../Abbildungen/Hall-Effekt.pdf}
+    \caption{%
+        Anschlüsse für die Hall-Effekts-Messung nach van der Pauw
+    }
+    \label{fig:vdPauw-hall}
+\end{figure}
+
 \section{Magnetische Thermospannungen}
 
-\subsection{Ettingshausen-Effekt}
+\subsection{Seebeck- und Peltier-Effekt}
 
-\subsection{Nerst-Effekt}
+Liegt in einem (Halb-)Leiter ein Temperaturgradient vor, so ist die Anzahl der
+energetisch höher liegenden Elektronen nicht homogen verteilt. Der dadurch
+entstehenden Gradient sorgt für einen Stromfluss, der den
+Konzentrationsunterschied auszugleichen versucht. Dieser Effekt heißt nach
+seinem Entdecker Seebeck-Effekt.
+
+Fließt ein Strom, werden energetisch höher liegende Elektronen transportiert.
+Dies sorgt dafür, dass sich diese Elektronen in einem Bereich häufen, was zu
+einer Steigerung der Temperatur führt. Dieser umgekehrte Seebeck-Effekt heißt
+Peltier-Effekt.
+
+Kombiniert man beide Effekte, sorgt das dafür, dass ein Temperaturgradient
+ausgeglichen wird.
+
+\subsection{Ettingshausen- und Nerst-Effekt}
+
+Der Ettingshausen-Effekt wirkt ähnlich wie der Hall-Effekt: Durch die
+Ablenkung der Elektronen beim Hall-Effekt, nimmt die Anzahl der Kollisionen in
+einem Teil des Leiters zu. Dadurch wird dieser dort erwärmt.
+
+Der Nerst-Effekt ist eine Kombination des Seebeck-Effektes mit dem Hall-Effekt.
+Liegt in einem Leiter ein Temperaturgradient senkrecht zu einem angelegten
+magnetischen Feld vor, werden die durch den Seebeck-Effekt fließenden
+Elektronen wie beim Hall-Effekt abgelenkt. Dabei entsteht ein elektrisches
+Feld, bzw. ein senkrecht auf Gradient und Magnetfeld stehende Strom. Dies ist
+scheinbar eine Umkehrung des Ettingshausen-Effektes.
+
+Der Nerst- und der Ettingshausen-Effekt werden häufig auch als erster bzw.
+zweiter Ettingshausen-Nerst-Effekt bezeichnet.
+
+\subsection{Righi-Leduc-Effekt}
+
+Dieser Effekt, ist das thermische Analogon zum Hall-Effekt. Ein Wärmestrom wird
+von einem senkrecht dazu stehenden magnetischen Feld abgelenkt. Dadurch
+entsteht hier ein Temperaturgradient.
 
 \FloatBarrier
 \chapter{Aufbau}
+
+Der Aufbau des ersten Versuchsteils ist in Abbildung~\ref{fig:Aufbau1} zu
+sehen. An der Stromquelle wird ein Strom eingestellt, welcher für den ganzen
+Versuch beibehalten wird. Dieser muss für unsere beiden Indium-Arsenit-Proben
+unter \SI{15}{\milli\ampere} liegen. Am Voltmeter kann die gemessene Spannung
+abgelesen werden.
+
+Die Schaltbox sorgt für die Verteilung des Strom und der Spannungsabgriffe an
+unserer Probe. Sie hat zwei Knöpfe, jeweils mit Einstellmöglichkeit 1-12,
+welche für eine bestimmte Beschaltung stehen. Für eine Zuordnung sei auf
+\cite[Tab.~4.1]{heldt/Diplomarbeit} und \cite[Tab.~4.2]{heldt/Diplomarbeit}
+verwiesen.
+
+Der Permamagnet kann je nach Bedarf gedreht bzw. weggelassen werden.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{../Abbildungen/Aufbau1.pdf}
+    \caption{%
+        Schematischer Aufbau für Versuchsteil 1
+    }
+    \label{fig:Aufbau1}
+\end{figure}
+
+Für den zweiten Versuchsteil wird die Probe in einen abgedichteten Behälter
+gestellt. Dieser wird mit Hilfe einer Membran- und einer Turbopumpe evakuiert.
+Ein Kompressor sorgt durch Expansion und Kompression von Helium für eine starke
+Kühlung der Probe. Die Temperatur im Behälter kann an einer Termospannung
+abgelesen werden, welche mit einer ausliegenden Tabelle in \si{\celsius}
+umgerechnet werden kann.
+
+An der Befestigung der Probe sind Heizwiderstände angebracht, die an einer
+weiteren Stromquelle angeschlossen sind. Durch diese kann die Temperatur gegen
+die Kühlung hoch geregelt werden.
 
 \FloatBarrier
 \chapter{Durchführung}
