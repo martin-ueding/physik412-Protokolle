@@ -737,12 +737,13 @@ Probe \probeA{} bzw. Probe \probeB{}.
 
 \section{Bestimmung der Beweglichkeit und Ladungsträgerdichte}
 
-Aus den bisher errechneten Größen $\sigma$ und $R_\text H$ errechnen wir nun
-die Beweglichkeit $\mu$ und die Ladungsträgerdichte der Majoritätsladung $p$:
+Aus den bisher errechneten Größen $\sigma_{\text S}$ und $R_{\text H}$
+errechnen wir nun die Beweglichkeit $\mu_{\text S}$ und die Ladungsträgerdichte der
+Majoritätsladung $p_{\text S}$:
 \[
-    p = \frac1{e R_\text H}
+    p_{\text S} = \frac1{e R_{\text H, \text S}}
     \eqnsep
-    \mu = \abs{\frac{R_\text H}{\rho}}
+    \mu_{\text S} = \abs{\frac{R_{\text H, \text S}}{\rho_{\text S}}}
 \]
 
 Die so errechneten Größen sind in Tabelle~\ref{tab:mu-p}.
@@ -786,7 +787,7 @@ Alle Werte sind in Tabelle~\ref{tab:Temperaturabhängigkeit} zusammengestellt.
         {$\sigma_{\text S} / \si{\kilo\ohm}$} &
         {$R_{\text H, \text S} / \si{\meter\squared\per\coulomb}$} &
         {$p_{\text S} / \SI{e15}{\per\cubic\meter}$} &
-        {$\mu_{\text S}$} \\
+        {$\mu_{\text S} / \si{\ohm\volt\per\tesla\per\ampere}$} \\
         \midrule
         %< for row in temperatur_tabelle: ->%
         << row | join(' & ') >> \\
