@@ -286,16 +286,16 @@ def job_bild_fermi(T):
     x = np.linspace(0, 1.6, 3000)
     T = 1e-9
     y = 1/(np.exp((x-1)/(k*T))+1)
-    pl.plot(x, y, label="$T=0\mathrm{K}$")
+    pl.plot(x, y, label="$T=0\,\mathrm{K}$")
     T = 300
     y = 1/(np.exp((x-1)/(k*T))+1)
-    pl.plot(x, y, label="$T=300\mathrm{K}$")
+    pl.plot(x, y, label="$T=300\,\mathrm{K}$")
     T = 600
     y = 1/(np.exp((x-1)/(k*T))+1)
-    pl.plot(x, y, label="$T=600\mathrm{K}$")
+    pl.plot(x, y, label="$T=600\,\mathrm{K}$")
     T = 1200
     y = 1/(np.exp((x-1)/(k*T))+1)
-    pl.plot(x, y, label="$T=1200\mathrm{K}$")
+    pl.plot(x, y, label="$T=1200\,\mathrm{K}$")
     pl.grid(True)
     pl.ylim([0,1.1])
     pl.xlabel(r"$E/E_F$")
