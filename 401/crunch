@@ -18,15 +18,28 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+def polynom(x, a, b, c, d):
+    return a + b*x + c*x**2 + d*x**3
+
 def job_magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
     I = data[:, 2]
     B = data[:, 1] * 10**-3
 
-    print(I)
-    print(B)
+    used = I < 8
 
-    pl.plot(I, B, linestyle='none', marker='+')
+    I_used = I[used]
+    B_used = B[used]
+
+    popt, pconv = op.curve_fit(polynom, I_used, B_used)
+    fit_x = np.linspace(np.min(I_used), np.max(I_used))
+    fit_y = polynom(fit_x, *popt)
+
+    pl.plot(I_used, B_used, linestyle='none', marker='+', label='Messdaten')
+    pl.plot(fit_x, fit_y, label='Anpassung')
+    pl.xlabel(r'$I / \mathrm{A}$')
+    pl.ylabel(r'$B / \mathrm{T}$')
+    pl.legend(loc='best')
     pl.grid(True)
     pl.savefig('_build/Magnetfeldkalibrierung.pdf', **savefig_options)
     pl.clf()
