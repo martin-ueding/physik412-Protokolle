@@ -18,6 +18,20 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+def job_magnetfeldkalibrierung(T):
+    data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
+    I = data[:, 2]
+    B = data[:, 1] * 10**-3
+
+    print(I)
+    print(B)
+
+    pl.plot(I, B, linestyle='none', marker='+')
+    pl.grid(True)
+    pl.savefig('_build/Magnetfeldkalibrierung.pdf', **savefig_options)
+    pl.clf()
+
+
 def main():
     with multiprocessing.Manager() as manager:
         T = manager.dict()
