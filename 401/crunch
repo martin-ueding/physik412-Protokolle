@@ -37,7 +37,7 @@ def gauss(x, m, s, a):
 def tripple_gauss(x, m1, m2, m3, s1, s2, s3, a1, a2, a3, offset):
     return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
 
-def job_magnetfeldkalibrierung(T):
+def magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
     I = data[:, 2]
     B = data[:, 1] * 10**-3
@@ -60,22 +60,24 @@ def job_magnetfeldkalibrierung(T):
     pl.savefig('_build/Magnetfeldkalibrierung.pdf', **savefig_options)
     pl.clf()
 
-    return popt
+    return lambda I: polynom(I, *popt)
 
 def job_(T):
+    B = magnetfeldkalibrierung(T)
+
     files = glob.glob('Messdaten/Mit_*.txt')
     pattern = re.compile('Messdaten/Mit_(\d+(.\d+)?).txt')
     data = {}
     for file_ in files:
         m = pattern.match(file_)
         if m:
-            B = float(m.group(1))
+            I = float(m.group(1))
 
         d = np.genfromtxt(file_, skip_header=1)
         alpha = d[:, 0]
         intens = d[:, 1]
 
-        data[B] = (alpha, intens)
+        data[I] = (alpha, intens)
 
     alles_fig = pl.figure()
     zoom_fig = pl.figure()
@@ -84,11 +86,12 @@ def job_(T):
 
     citer = coloriter(len(data))
 
-    for B, (alpha, intens) in sorted(data.items()):
+    for I, (alpha, intens) in sorted(data.items()):
         color = next(citer)
-        alles.plot(alpha, intens, label='B = {}'.format(B), color=color)
+        label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
+        alles.plot(alpha, intens, label=label, color=color)
         selection = alpha[-1.2 < alpha] < -0.3
-        zoom.plot(alpha[selection], intens[selection], label='B = {}'.format(B), color=color)
+        zoom.plot(alpha[selection], intens[selection], label=label, color=color)
 
     alles.set_xlabel(r'$\alpha / ^\circ$')
     alles.set_ylabel(r'rel. Int.')
