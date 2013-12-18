@@ -51,10 +51,13 @@ def job_magnetfeldkalibrierung(T):
 def job_(T):
     files = glob.glob('Messdaten/Mit_*.txt')
     pattern = re.compile('Messdaten/Mit_(\d+(.\d+)?).txt')
+    data = {}
     for file_ in files:
         m = pattern.match(file_)
         if m:
-            print(m.group(1))
+            B = float(m.group(1))
+
+        data[B] = np.genfromtxt(file_, skip_header=1)
 
 def main():
     with multiprocessing.Manager() as manager:
