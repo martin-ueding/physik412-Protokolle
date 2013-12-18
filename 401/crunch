@@ -31,6 +31,12 @@ def coloriter(n):
 def polynom(x, a, b, c, d):
     return a + b*x + c*x**2 + d*x**3
 
+def gauss(x, m, s):
+    return 1 / s / np.sqrt(2 *np.pi) * np.exp(- 0.5 * ((x - m)/s)**2)
+
+def tripple_gauss(x, m1, m2, m3, s1, s2, s3, offset):
+    return gauss(x, m1, s1) + gauss(x, m2, s2) + gauss(x, m3, s3) + offset
+
 def job_magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
     I = data[:, 2]
@@ -95,6 +101,29 @@ def job_(T):
     zoom.legend(loc='best')
     zoom.grid(True)
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
+
+    alpha = data[8.0][0]
+    intens = data[8.0][1]
+
+    print(alpha)
+    print(intens)
+
+    selected = alpha[-1.02 < alpha] < -0.55
+
+    alpha_selected = alpha[selected]
+    intens_selected = intens[selected]
+
+    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected)
+    x = np.linspace(np.min(alpha_selected), np.max(alpha_selected))
+    y = tripple_gauss(x, *popt)
+
+    p = pl.figure()
+    a = p.add_subplot(1, 1, 1)
+    a.plot(alpha_selected, intens_selected, linestyle='none', marker='+')
+    a.plot(x, y)
+    p.savefig('_build/Fit.pdf')
+
+    print(popt)
 
 def main():
     with multiprocessing.Manager() as manager:
