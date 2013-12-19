@@ -6,6 +6,8 @@
 \usepackage[section]{placeins}
 \usepackage{booktabs}
 \usepackage{pdflscape}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
 
 \newcommand\versuchsnummer{401}
 \DeclareMathOperator\std{std}
@@ -102,7 +104,32 @@ werden sind gleich, sodass hier eine Aufspaltung in drei Linien geschieht.
 
 \begin{figure}
     \centering
-    %\includegraphics[width=0.7\textwidth]{../Abbildungen/Übergänge.pdf}
+    \begin{tikzpicture}
+        \draw[->, thick] (9,-2) to (-3,-2) to (-3,5) node[label=150:$E$] {};
+
+        \draw[thick] (0,0) node[label=180:{$m=-1$}] {} -- (2,0) coordinate (l1m-1);
+        \draw[thick] (0,.5) node[label=180:{$m=0$}] {} -- (2,.5) coordinate (l1m0);
+        \draw[thick] (0,1) node[label=180:{$m=1$}] {} -- (2,1) coordinate (l1m1);
+        \node[below] (l1) at (1,-2) {$l=1$};
+
+        \draw[thick] (5,1.5) coordinate (l2m-2) -- (7,1.5)node[label=0:{$m=-2$}] {} ;
+        \draw[thick] (5,2) coordinate (l2m-1) -- (7,2)node[label=0:{$m=-1$}] {} ;
+        \draw[thick] (5,2.5) coordinate (l2m0) -- (7,2.5)node[label=0:{$m=0$}] {} ;
+        \draw[thick] (5,3) coordinate (l2m1) -- (7,3)node[label=0:{$m=1$}] {} ;
+        \draw[thick] (5,3.5) coordinate (l2m2) -- (7,3.5)node[label=0:{$m=2$}] {} ;
+        \node[below] (l2) at (6,-2) {$l=2$};
+
+        \draw[red, ->, thick] (l1m-1) to (l2m0);
+        \draw[red, ->, thick] (l1m0) to (l2m1);
+        \draw[red, ->, thick] (l1m1) to (l2m2);
+        \draw[blue, ->, thick] (l1m-1) to (l2m-1);
+        \draw[blue, ->, thick] (l1m0) to (l2m0);
+        \draw[blue, ->, thick] (l1m1) to (l2m1);
+        \draw[green, ->, thick] (l1m-1) to (l2m-2);
+        \draw[green, ->, thick] (l1m0) to (l2m-1);
+        \draw[green, ->, thick] (l1m1) to (l2m0);
+    \end{tikzpicture}
+
     \caption{%
         Mögliche Übergänge zwischen $l=2$ und $l=1$.
     }
