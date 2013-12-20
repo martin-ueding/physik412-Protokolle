@@ -32,9 +32,9 @@ def polynom(x, a, b, c, d):
     return a + b*x + c*x**2 + d*x**3
 
 def gauss(x, m, s, a):
-    return a / s / np.sqrt(2 *np.pi) * np.exp(- 0.5 * ((x - m)/s)**2)
+    return a * np.exp(- 0.5 * ((x - m)/s)**2)
 
-def tripple_gauss(x, m1, m2, m3, s1, s2, s3, a1, a2, a3, offset):
+def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
     return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
 
 def magnetfeldkalibrierung(T):
@@ -116,14 +116,16 @@ def job_(T):
     alpha_selected = alpha[selected]
     intens_selected = intens[selected]
 
-    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.95, -0.84, -0.67, 0.1, 0.1, 0.1, 300, 500, 400, 5])
+    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.97, 0.05, 27, -0.84, 0.1, 46, -0.67, 0.1, 35, 10])
     x = np.linspace(np.min(alpha_selected), np.max(alpha_selected))
-    y = tripple_gauss(x, *popt)
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
     a.plot(alpha_selected, intens_selected, linestyle='none', marker='+')
-    a.plot(x, y)
+    a.plot(x, tripple_gauss(x, *popt))
+    a.plot(x, gauss(x, *popt[0:3]) + popt[9])
+    a.plot(x, gauss(x, *popt[3:6]) + popt[9])
+    a.plot(x, gauss(x, *popt[6:9]) + popt[9])
     a.grid(True)
     p.savefig('_build/Fit.pdf')
 
