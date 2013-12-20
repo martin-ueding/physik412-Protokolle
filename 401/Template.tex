@@ -141,6 +141,59 @@ werden, sind gleich, sodass hier eine Aufspaltung in drei Linien stattfindet.
 
 \section{Fabry-Pérot-Etalon}
 
+Das Fabry-Pérot-Etalon besteht aus einen planparallelen lichtdurchlässigen
+Material mit Brechungsindex $n>1$, dessen Oberflächen zum Beispiel durch
+aufdampfen von Silber eine hohe Reflexivität haben.
+
+Trifft ein monochromatischer Lichtstrahl mit Wellenlänge $\lambda$ unter dem
+Winkel $\alpha$ auf das Etalon, wird er gebrochen und in diesem sehr häufig
+reflektiert (siehe Abbildung~\ref{fig:Etalon}). Bei jeder Reflektion gelangt
+ein kleiner Teil der Intensität aus dem Etalon und verlässt diesen wieder unter
+dem Winkel $\alpha$. Ist der Gangunterschied zwischen zwei Teilstrahlen nun ein
+vielfaches der Wellenlänge findet konstruktive Interferenz statt, gilt dies
+nicht, heben sich die Teilstrahlen gegenseitig auf. Die Bedingung für
+konstruktive Interferenz lässt sich aus Abbildung~\ref{fig:Etalon} geometrisch
+herleiten. Sie lautet
+\[
+    k\lambda = 2d\cos\del{n\alpha}.
+\]
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        % Etalon
+        \draw[thick] (-1,-4.5) rectangle (1,3.5);
+        % Dicke
+        \draw[thick, |<->|] (-1,-4.7) to node[below] {$d$} (1,-4.7);
+        % Brechungsindizes
+        \node[label=180:{$n>1$}, label=0:{$n=1$}] at (1,3.2) {};
+        % Lot
+        \draw[dashed]
+        (-2.5,2.) -- (0.5,2.)
+        (-0.5,-3.) -- (2.5,-3.);
+        % Strahlengang
+        \draw
+        (-2.5,3.5) -- (-1,2.)
+        -- (1,1) coordinate (a)
+        -- (2.5,-.5)
+        (a) -- (-1,0)
+        -- (1,-1) coordinate (b)
+        -- (2.5,-2.5)
+        (b) -- (-1,-2)
+        -- (1,-3)
+        -- (2.5,-4.5);
+        % Winkel
+        \draw
+        (-2.0,2.) arc (180:135:1.0cm) node[label=270:$\alpha$]{}
+        (0.5,2.) arc (0:-27:1.5cm) node[label=115:{$\beta$}]{}
+        (-0.5,-3.) arc (180:153:1.5cm) node[label=290:$\beta$]{}
+        (2,-3.) arc (0:-45:1.0cm) node[label=90:{$\alpha$}]{};
+    \end{tikzpicture}
+    \caption{%
+        Strahlengang im Fabry-Pérot-Etalon
+    }
+    \label{fig:Etalon}
+\end{figure}
+
 \section{Polarisationsfilter und $\frac{\lambda}4$-Plättchen}
 
 Ein Polarisationsfilter oder Linear-Polarisator ist ein optisches Bauteil, mit
