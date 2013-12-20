@@ -93,6 +93,8 @@ def job_(T):
         selection = alpha[-1.2 < alpha] < -0.3
         zoom.plot(alpha[selection], intens[selection], label=label, color=color)
 
+    T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
+
     alles.set_xlabel(r'$\alpha / ^\circ$')
     alles.set_ylabel(r'rel. Int.')
     alles.legend(loc='best')
@@ -106,12 +108,42 @@ def job_(T):
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
 
     einzel_fit(
+        data, 0.0, -0.94, -0.7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    )
+
+    einzel_fit(
+        data, 1.0, -0.94, -0.7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    )
+
+    einzel_fit(
+        data, 2.0, -0.94, -0.7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    )
+
+    einzel_fit(
+        data, 3.0, -0.94, -0.7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    )
+
+    einzel_fit(
         data, 4.0, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
     )
 
     einzel_fit(
+        data, 4.5, -0.94, -0.7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    )
+
+    einzel_fit(
         data, 5.0, -0.98, -0.67,
+        [-0.94, 0.02, 3, -0.83, 0.05, 15, -0.71, 0.05, 7, 22]
+    )
+
+    einzel_fit(
+        data, 5.5, -0.98, -0.67,
         [-0.94, 0.02, 3, -0.83, 0.05, 15, -0.71, 0.05, 7, 22]
     )
 
@@ -165,10 +197,10 @@ def einzel_fit(data, I, min_, max_, p0):
         print(e)
 
     a.grid(True)
-    a.set_title(r'$I = {}$'.format(I))
+    #a.set_title(r'$I = {}$'.format(I))
     a.set_xlabel(r'$\alpha / ^\circ$')
     a.set_ylabel(r'rel. Int.')
-    p.savefig('_build/Fit-{}.pdf'.format(I))
+    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')))
 
 def main():
     with multiprocessing.Manager() as manager:
