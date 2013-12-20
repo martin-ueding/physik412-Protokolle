@@ -154,9 +154,18 @@ vielfaches der Wellenlänge findet konstruktive Interferenz statt, gilt dies
 nicht, heben sich die Teilstrahlen gegenseitig auf. Die Bedingung für
 konstruktive Interferenz lässt sich aus Abbildung~\ref{fig:Etalon} geometrisch
 herleiten. Sie lautet
-\[
-    k\lambda = 2d\cos\del{n\alpha}.
-\]
+\begin{align*}
+    k\lambda &= 2d\cos\del{\beta} - 2d\tan\del{\beta}\cos\del{1-\alpha}.
+    \intertext{%
+        Über den Brechungsindex erhält man einen Ausdruck für den Winkel
+        $\beta$:
+    }
+    \beta &= \arcsin\del{\frac{\sin{\alpha}}n}
+    \intertext{%
+        Dadurch ergibt sich für die Interferenzbedingung:
+    }
+    k\lambda &=
+\end{align*}
 \begin{figure}
     \centering
     \begin{tikzpicture}
