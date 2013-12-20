@@ -105,18 +105,22 @@ def job_(T):
     zoom.grid(True)
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
 
+    einzel_fit(data, 8.0, -1.02, -0.55, [-0.97, 0.05, 7, -0.84, 0.1, 26, -0.67, 0.1, 15, 20])
+
+def einzel_fit(data, I, min_, max_, p0):
+
     alpha = data[8.0][0]
     intens = data[8.0][1]
 
     print(alpha)
     print(intens)
 
-    selected = alpha[-1.02 < alpha] < -0.55
+    selected = alpha[min_ < alpha] < max_
 
     alpha_selected = alpha[selected]
     intens_selected = intens[selected]
 
-    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.97, 0.05, 7, -0.84, 0.1, 26, -0.67, 0.1, 15, 20])
+    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=p0)
     x = np.linspace(np.min(alpha_selected), np.max(alpha_selected))
 
     p = pl.figure()
@@ -129,7 +133,7 @@ def job_(T):
     a.plot(x, np.ones(x.size) * popt[9], label='Untergrund', linestyle='--')
     a.legend(loc='best')
     a.grid(True)
-    p.savefig('_build/Fit.pdf')
+    p.savefig('_build/Fit-{}.pdf'.format(I))
 
     print(popt[0:3])
     print(popt[3:6])
