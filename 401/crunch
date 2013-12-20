@@ -116,20 +116,25 @@ def job_(T):
     alpha_selected = alpha[selected]
     intens_selected = intens[selected]
 
-    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.97, 0.05, 27, -0.84, 0.1, 46, -0.67, 0.1, 35, 10])
+    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.97, 0.05, 7, -0.84, 0.1, 26, -0.67, 0.1, 15, 20])
     x = np.linspace(np.min(alpha_selected), np.max(alpha_selected))
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
-    a.plot(alpha_selected, intens_selected, linestyle='none', marker='+')
-    a.plot(x, tripple_gauss(x, *popt))
-    a.plot(x, gauss(x, *popt[0:3]) + popt[9])
-    a.plot(x, gauss(x, *popt[3:6]) + popt[9])
-    a.plot(x, gauss(x, *popt[6:9]) + popt[9])
+    a.plot(alpha_selected, intens_selected, linestyle='none', marker='+', label='Daten')
+    a.plot(x, tripple_gauss(x, *popt), label='Anpassung')
+    a.plot(x, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
+    a.plot(x, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
+    a.plot(x, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
+    a.plot(x, np.ones(x.size) * popt[9], label='Untergrund', linestyle='--')
+    a.legend(loc='best')
     a.grid(True)
     p.savefig('_build/Fit.pdf')
 
-    print(popt)
+    print(popt[0:3])
+    print(popt[3:6])
+    print(popt[6:9])
+    print(popt[9])
 
 def main():
     with multiprocessing.Manager() as manager:
