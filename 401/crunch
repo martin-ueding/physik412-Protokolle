@@ -62,7 +62,7 @@ def magnetfeldkalibrierung(T):
 
     return lambda I: polynom(I, *popt)
 
-def job_(T):
+def job_zeeman(T):
     B = magnetfeldkalibrierung(T)
 
     files = glob.glob('Messdaten/Mit_*.txt')
@@ -107,60 +107,71 @@ def job_(T):
     zoom.grid(True)
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
 
-    einzel_fit(
+    fit_ergebnisse = []
+
+    fit_ergebnisse.append(einzel_fit(
         data, 0.0, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 1.0, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 2.0, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 3.0, -0.94, -0.7,
-        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+        [-0.90, 0.05, 15, -0.83, 0.04, 27, -0.76, 0.04, 20, 10]
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 4.0, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 4.5, -0.94, -0.7,
         [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 5.0, -0.98, -0.67,
         [-0.94, 0.02, 3, -0.83, 0.05, 15, -0.71, 0.05, 7, 22]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 5.5, -0.98, -0.63,
         [-0.94, 0.02, 3, -0.83, 0.05, 15, -0.71, 0.05, 7, 22]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 6.0, -1.00, -0.64,
         [-0.94, 0.02, 3, -0.82, 0.1, 19, -0.7, 0.1, 10, 20]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 7.0, -1.02, -0.55,
         [-0.97, 0.05, 7, -0.84, 0.1, 26, -0.67, 0.1, 15, 20]
-    )
+    ))
 
-    einzel_fit(
+    fit_ergebnisse.append(einzel_fit(
         data, 8.0, -1.02, -0.55,
         [-0.97, 0.05, 7, -0.84, 0.1, 26, -0.67, 0.1, 15, 20]
-    )
+    ))
+
+    fit_ergebnisse = np.array([x for x in fit_ergebnisse if x is not None])
+
+    print(fit_ergebnisse)
+
+    fit_aufspaltungen(fit_ergebnisse):
+
+def fit_aufspaltungen(fe):
+    I = fe[:, 0]
 
 def einzel_fit(data, I, min_, max_, p0):
 
@@ -180,6 +191,8 @@ def einzel_fit(data, I, min_, max_, p0):
     a = p.add_subplot(1, 1, 1)
     a.plot(alpha_selected, intens_selected, linestyle='none', marker='+', label='Daten')
 
+    returnval = None
+
     try:
         popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=p0)
         x = np.linspace(np.min(alpha_selected), np.max(alpha_selected), 1000)
@@ -193,6 +206,8 @@ def einzel_fit(data, I, min_, max_, p0):
         print(popt[3:6])
         print(popt[6:9])
         print(popt[9])
+
+        returnval = [I] + popt + np.sqrt(pconv.diagonal())
     except RuntimeError as e:
         print(e)
 
@@ -201,6 +216,8 @@ def einzel_fit(data, I, min_, max_, p0):
     a.set_xlabel(r'$\alpha / ^\circ$')
     a.set_ylabel(r'rel. Int.')
     p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')))
+
+    return returnval
 
 def main():
     with multiprocessing.Manager() as manager:
