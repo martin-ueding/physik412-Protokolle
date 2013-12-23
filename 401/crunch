@@ -65,6 +65,15 @@ def magnetfeldkalibrierung(T):
 def job_zeeman(T):
     B = magnetfeldkalibrierung(T)
 
+    d = 4e-3
+    n = 1.457
+
+    lambda_cd = 6438.470e-10
+
+    m_max = 2 * n * d / lambda_cd
+
+    print(m_max)
+
     files = glob.glob('Messdaten/Mit_*.txt')
     pattern = re.compile('Messdaten/Mit_(\d+(.\d+)?).txt')
     data = {}
@@ -73,9 +82,12 @@ def job_zeeman(T):
         if m:
             I = float(m.group(1))
 
-        d = np.genfromtxt(file_, skip_header=1)
-        alpha = d[:, 0]
-        intens = d[:, 1]
+        file_content = np.genfromtxt(file_, skip_header=1)
+        alpha = file_content[:, 0]
+        intens = file_content[:, 1]
+        lambda_ =  2 * n * d * np.cos(alpha) / (m_max - 1)
+
+        print(lambda_)
 
         data[I] = (alpha, intens)
 
@@ -94,6 +106,8 @@ def job_zeeman(T):
         zoom.plot(alpha[selection], intens[selection], label=label, color=color)
 
     T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
+
+    T['B_dict'] = {I_: B(I_) for I_ in data.keys()}
 
     alles.set_xlabel(r'$\alpha / ^\circ$')
     alles.set_ylabel(r'rel. Int.')
@@ -168,7 +182,7 @@ def job_zeeman(T):
 
     print(fit_ergebnisse)
 
-    fit_aufspaltungen(fit_ergebnisse):
+    fit_aufspaltungen(fit_ergebnisse)
 
 def fit_aufspaltungen(fe):
     I = fe[:, 0]
