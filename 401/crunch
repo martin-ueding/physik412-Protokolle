@@ -83,7 +83,7 @@ def job_zeeman(T):
             I = float(m.group(1))
 
         file_content = np.genfromtxt(file_, skip_header=1)
-        alpha = file_content[:, 0]
+        alpha = np.radians(file_content[:, 0])
         intens = file_content[:, 1]
         lambda_ =  2 * n * d * np.cos(alpha) / (m_max - 1)
 
