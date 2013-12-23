@@ -155,8 +155,8 @@ def job_zeeman(T):
     ))
 
     fit_ergebnisse.append(einzel_fit(
-        data, 5.0, 6.4375e-7, 6.4400e-7,
-        [-0.94, 0.02, 3, -0.83, 0.05, 15, -0.71, 0.05, 7, 22]
+        data, 5.0, 6.43782e-7, 6.43821-7,
+        [6.43783e-7, 3e-12, 4, 6.43804e-7, 4e-12, 20, 6.4382e-7, 3.5e-12, 10, 20]
     ))
 
     fit_ergebnisse.append(einzel_fit(
@@ -199,6 +199,8 @@ def einzel_fit(data, I, min_, max_, p0):
     lambda_selected = lambda_[selected]
     intens_selected = intens[selected]
 
+    print('lambda_selected', lambda_selected)
+    print('intens_selected', intens_selected)
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
