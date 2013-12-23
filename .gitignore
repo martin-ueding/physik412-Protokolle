@@ -1,6 +1,7 @@
-_build
-402/Zeichnungen/Photozelle.pdf
+*.xoj.pdf
 402/Herleitungen/Gittergleichung.xoj.pdf
+402/Zeichnungen/Photozelle.pdf
 402/Zeichnungen/Photozelle.xoj.pdf
 428/Abbildungen/Bragg.xoj.pdf
 428/Abbildungen/Geiger-Mueller.xoj.pdf
+_build
