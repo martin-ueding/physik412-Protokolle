@@ -236,6 +236,57 @@ vermessen und so das Magnetfeld bestimmt werden.
 \section{Frank-Hertz-Versuch}
 
 \subsection{Aufbau und Funktionsweise}
+\label{ssec:Aufbau_FH}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[thick]
+        % Röhre
+        \draw
+            (-3,4) -- (-3,-4)
+            arc(180:360:3)
+            -- (3,4)
+            arc(0:180:3);
+        % Gegenkathode
+        \draw (-3,4) node[left] {Gegenkathode} -- (4,4);
+        % Anode
+        \draw[dashed](-3,2) node[left] {Anode}-- (3,2);
+        \draw (3,2) -- (4,2);
+        % Glühkathode
+        \draw (-3.5,-4) -- (-2.6,-4) -- (-2.5, -3.8);
+        \foreach \x in {-2.5, -2.3, ..., 2.3}
+            \draw (\x,-3.8) -- (\x+0.2,-4.2);
+        \draw (2.5,-4.2) -- (2.6,-4) -- (4,-4);
+        % Verschaltung
+        \draw
+            (-3.5,-4) -- (-3.5, -8) -- (-0.28, -8)
+            (-.2,-8) circle(0.08) node[above] {\small{$+$}}
+            (.2,-8) circle(0.08) node[above] {\small{$-$}}
+            (0.28, -8) -- (4, -8) -- (4, -4) -- (4, -1.28)
+            (4, -1.2) circle(0.08) node[left] {\small{$-$}}
+            (4, -0.8) circle(0.08) node[left] {\small{$+$}}
+            (4, -0.72) -- (4, 2.72)
+            (4, 2.8) circle(0.08) node[left] {\small{$+$}}
+            (4, 3.2) circle(0.08) node[left] {\small{$-$}}
+            (4, 3.28) -- (4,4)
+        ;
+        \draw[fill]
+            (4,-4) circle(0.05)
+            (4,2) circle(0.05);
+        % weitere Beschriftungen
+        \node[below] at (0,-8) {$U_\text{Heiz}$};
+        \node[right] at (4,-1) {$U_\text{Beschl}$};
+        \node[right] at (4, 3) {$U_\text{Gegen}$};
+        \node[below] at (0,-4.2) {Glühkathode};
+        % Füllung
+        \draw
+        (-4,0) node[left] {Hg-Dampf} -- (-1,-1);
+    \end{tikzpicture}
+    \caption{%
+        Aufbau des Frank-Hertz-Versuchs.
+    }
+    \label{fig:Aufbau_FH}
+\end{figure}
 
 \subsection{Termschema von Quecksilber}
 
