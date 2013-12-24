@@ -28,6 +28,9 @@ def coloriter(n):
         for x in range(n)
     ])
 
+def linear(x, a, b):
+    return a * x + b
+
 def polynom(x, a, b, c, d):
     return a + b*x + c*x**2 + d*x**3
 
@@ -182,15 +185,79 @@ def job_zeeman(T):
         [6.43779e-7, 3e-12, 7, 6.43804e-7, 4e-12, 26, 6.43828e-7, 2e-12, 15, 20]
     ))
 
-    fit_ergebnisse = np.array([x for x in fit_ergebnisse if x is not None])
+    fit_ergebnisse = np.array([x for x in fit_ergebnisse[1:] if x is not None])
 
     print('fit_ergebnisse')
     print(fit_ergebnisse)
 
-    #fit_aufspaltungen(fit_ergebnisse)
+    fit_aufspaltungen(fit_ergebnisse, B, fit_ergebnisse[0])
 
-def fit_aufspaltungen(fe):
+def fit_aufspaltungen(fe, B, fe0):
     I = fe[:, 0]
+
+    B_I = B(I)
+
+    s1_val = fe[:, 1]
+    s1_err = fe[:, 11]
+
+    s2_val = fe[:, 4]
+    s2_err = fe[:, 14]
+
+    s3_val = fe[:, 7]
+    s3_err = fe[:, 17]
+
+    lambda0 = fe0[0]
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+
+    plotargs = {
+        #'linestyle': 'none',
+        'marker': '+',
+    }
+
+    x1_val = np.abs(s1_val - s2_val)
+    x1_err = np.sqrt(s1_err**2 + s2_err**2)
+
+    x2_val = np.abs(s3_val - s2_val)
+    x2_err = np.sqrt(s3_err**2 + s2_err**2)
+
+    x_val = np.array([np.mean([a, b]) for a, b in zip(x1_val, x2_val)])
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    print(B_I)
+    print(x1_val)
+    print(B_I.shape)
+    print(x1_val.shape)
+    a.errorbar(B_I, x1_val, yerr=x1_err, **plotargs)
+    a.errorbar(B_I, x2_val, yerr=x2_err, **plotargs)
+    f.savefig('_build/Aufspaltungen.pdf')
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    a.plot(B_I, x1_val, **plotargs)
+    a.plot(B_I, x2_val, **plotargs)
+    a.plot(B_I, x_val, **plotargs)
+    f.savefig('_build/Aufspaltungen_ohne_Fehlerbalken.pdf')
+
+    Delta_E = 6.626e-34 * 3e8 / lambda0**2 * x_val
+
+    popt, pconv = op.curve_fit(linear, B_I, Delta_E)
+    fit_x = np.linspace(np.min(B_I), np.max(B_I))
+    fit_y = linear(fit_x, *popt)
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    a.plot(B_I, Delta_E, **plotargs)
+    a.plot(fit_x, fit_y)
+    a.set_xlabel(r'$B / \mathrm{T}$')
+    a.set_ylabel(r'$\Delta E / \mathrm{J}$')
+    a.grid(True)
+    f.savefig('_build/Energieaufspaltung.pdf')
+    
+    print(popt[0])
+    
 
 def einzel_fit(data, I, min_, max_, p0):
 
@@ -204,8 +271,10 @@ def einzel_fit(data, I, min_, max_, p0):
     lambda_selected = lambda_[selected]
     intens_selected = intens[selected]
 
-    print('lambda_selected', lambda_selected)
-    print('intens_selected', intens_selected)
+    print('lambda_selected')
+    print(lambda_selected)
+    print('intens_selected')
+    print(intens_selected)
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
@@ -220,6 +289,7 @@ def einzel_fit(data, I, min_, max_, p0):
         x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
         a.plot(x / 10**-7, funktion(x, *popt), label='Anpassung')
 
+        print('Fitparameter')
         print(popt[0:3])
 
         if len(p0) == 10:
@@ -233,9 +303,10 @@ def einzel_fit(data, I, min_, max_, p0):
         a.plot(x / 10**-7, np.ones(x.size) * popt[-1], label='Untergrund', linestyle='--')
 
         print(popt[-1])
-        print(pconv)
+        print('Fit Fehler')
+        print(np.sqrt(pconv.diagonal()))
 
-        returnval = [I] + popt + np.sqrt(pconv.diagonal())
+        returnval = [I] + list(popt) + list(np.sqrt(pconv.diagonal()))
     except RuntimeError as e:
         print(e)
     except AttributeError as e:
