@@ -32,9 +32,9 @@ def polynom(x, a, b, c, d):
     return a + b*x + c*x**2 + d*x**3
 
 def gauss(x, m, s, a):
-    return a / s / np.sqrt(2 *np.pi) * np.exp(- 0.5 * ((x - m)/s)**2)
+    return a * np.exp(- 0.5 * ((x - m)/s)**2)
 
-def tripple_gauss(x, m1, m2, m3, s1, s2, s3, a1, a2, a3, offset):
+def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
     return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
 
 def magnetfeldkalibrierung(T):
@@ -62,8 +62,17 @@ def magnetfeldkalibrierung(T):
 
     return lambda I: polynom(I, *popt)
 
-def job_(T):
+def job_zeeman(T):
     B = magnetfeldkalibrierung(T)
+
+    d = 4e-3
+    n = 1.457
+
+    lambda_cd = 6438.470e-10
+
+    m_max = np.round(2 * n * d / lambda_cd)
+
+    print('m_max', m_max)
 
     files = glob.glob('Messdaten/Mit_*.txt')
     pattern = re.compile('Messdaten/Mit_(\d+(.\d+)?).txt')
@@ -73,11 +82,15 @@ def job_(T):
         if m:
             I = float(m.group(1))
 
-        d = np.genfromtxt(file_, skip_header=1)
-        alpha = d[:, 0]
-        intens = d[:, 1]
+        file_content = np.genfromtxt(file_, skip_header=1)
+        alpha = np.radians(file_content[:, 0])
+        intens = file_content[:, 1]
+        cut = alpha < 0
+        alpha = alpha[cut]
+        intens = intens[cut]
+        lambda_ =  2 * n * d * np.cos(alpha) / (m_max - 1)
 
-        data[I] = (alpha, intens)
+        data[I] = (lambda_, intens)
 
     alles_fig = pl.figure()
     zoom_fig = pl.figure()
@@ -86,48 +99,144 @@ def job_(T):
 
     citer = coloriter(len(data))
 
-    for I, (alpha, intens) in sorted(data.items()):
+    for I, (lambda_, intens) in sorted(data.items()):
         color = next(citer)
         label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
-        alles.plot(alpha, intens, label=label, color=color)
-        selection = alpha[-1.2 < alpha] < -0.3
-        zoom.plot(alpha[selection], intens[selection], label=label, color=color)
+        alles.plot(lambda_ / 10**-9, intens, label=label, color=color)
+        selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
+        zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
 
-    alles.set_xlabel(r'$\alpha / ^\circ$')
+    T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
+
+    T['B_dict'] = {I_: B(I_) for I_ in data.keys()}
+
+    alles.set_xlabel(r'$\lambda / ^\circ$')
     alles.set_ylabel(r'rel. Int.')
     alles.legend(loc='best')
     alles.grid(True)
     alles_fig.savefig('_build/Alles.pdf', **savefig_options)
 
-    zoom.set_xlabel(r'$\alpha / ^\circ$')
+    zoom.set_xlabel(r'$\lambda / m$')
     zoom.set_ylabel(r'rel. Int.')
-    zoom.legend(loc='best')
+    #zoom.legend(loc='best')
     zoom.grid(True)
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
 
-    alpha = data[8.0][0]
-    intens = data[8.0][1]
+    fit_ergebnisse = []
 
-    print(alpha)
-    print(intens)
+    fit_ergebnisse.append(einzel_fit(
+        data, 0.0, 6.4375e-7, 6.4400e-7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    ))
 
-    selected = alpha[-1.02 < alpha] < -0.55
+    fit_ergebnisse.append(einzel_fit(
+        data, 1.0, 6.4375e-7, 6.4400e-7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    ))
 
-    alpha_selected = alpha[selected]
+    fit_ergebnisse.append(einzel_fit(
+        data, 2.0, 6.4375e-7, 6.4400e-7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 3.0, 6.4375e-7, 6.4400e-7,
+        [-0.90, 0.05, 15, -0.83, 0.04, 27, -0.76, 0.04, 20, 10]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 4.0, 6.4375e-7, 6.4400e-7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 4.5, 6.4375e-7, 6.4400e-7,
+        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 5.0, 6.43782e-7, 6.43821-7,
+        [6.43783e-7, 3e-12, 4, 6.43804e-7, 4e-12, 20, 6.4382e-7, 3.5e-12, 10, 20]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 5.5, 6.4378e-7, 6.43829e-7,
+        [6.43783e-7, 3e-12, 3, 6.43804e-7, 4e-12, 20, 6.4382e-7, 3.5e-12, 10, 20]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 6.0, 6.4378e-7, 6.43829e-7,
+        [6.43783e-7, 3e-12, 3, 6.43804e-7, 4e-12, 20, 6.4382e-7, 3.5e-12, 10, 20]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 7.0, 6.43776e-7, 6.43831e-7,
+        [6.43781e-7, 3e-12, 7, 6.43804e-7, 4e-12, 26, 6.43825e-7, 4e-12, 13, 20]
+    ))
+
+    fit_ergebnisse.append(einzel_fit(
+        data, 8.0, 6.43768e-7, 6.43837e-7,
+        [6.43779e-7, 3e-12, 7, 6.43804e-7, 4e-12, 26, 6.43828e-7, 2e-12, 15, 20]
+    ))
+
+    fit_ergebnisse = np.array([x for x in fit_ergebnisse if x is not None])
+
+    print('fit_ergebnisse')
+    print(fit_ergebnisse)
+
+    #fit_aufspaltungen(fit_ergebnisse)
+
+def fit_aufspaltungen(fe):
+    I = fe[:, 0]
+
+def einzel_fit(data, I, min_, max_, p0):
+
+    lambda_ = data[I][0]
+    intens = data[I][1]
+
+    selected = lambda_[min_ < lambda_] < max_
+
+    lambda_selected = lambda_[selected]
     intens_selected = intens[selected]
 
-    popt, pconv = op.curve_fit(tripple_gauss, alpha_selected, intens_selected, p0=[-0.95, -0.84, -0.67, 0.1, 0.1, 0.1, 300, 500, 400, 5])
-    x = np.linspace(np.min(alpha_selected), np.max(alpha_selected))
-    y = tripple_gauss(x, *popt)
+    print('lambda_selected', lambda_selected)
+    print('intens_selected', intens_selected)
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
-    a.plot(alpha_selected, intens_selected, linestyle='none', marker='+')
-    a.plot(x, y)
-    a.grid(True)
-    p.savefig('_build/Fit.pdf')
+    a.plot(lambda_selected / 10**-7, intens_selected, linestyle='none', marker='+', label='Daten')
 
-    print(popt)
+    returnval = None
+
+    try:
+        popt, pconv = op.curve_fit(tripple_gauss, lambda_selected, intens_selected, p0=p0)
+        x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
+        a.plot(x / 10**-7, tripple_gauss(x, *popt), label='Anpassung')
+        a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
+        a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
+        a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
+        a.plot(x / 10**-7, np.ones(x.size) * popt[9], label='Untergrund', linestyle='--')
+
+        print(popt[0:3])
+        print(popt[3:6])
+        print(popt[6:9])
+        print(popt[9])
+        print(pconv)
+
+        returnval = [I] + popt + np.sqrt(pconv.diagonal())
+    except RuntimeError as e:
+        print(e)
+    except AttributeError as e:
+        print(e)
+
+    a.grid(True)
+    a.legend(loc='best')
+    #a.set_title(r'$I = {}$'.format(I))
+    a.set_xlabel(r'$\lambda / ^\circ$')
+    a.set_ylabel(r'rel. Int.')
+    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')))
+
+    return returnval
 
 def main():
     with multiprocessing.Manager() as manager:
