@@ -37,6 +37,9 @@ def gauss(x, m, s, a):
 def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
     return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
 
+def single_gauss(x, m1, s1, a1, offset):
+    return gauss(x, m1, s1, a1) + offset
+
 def magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
     I = data[:, 2]
@@ -125,8 +128,8 @@ def job_zeeman(T):
     fit_ergebnisse = []
 
     fit_ergebnisse.append(einzel_fit(
-        data, 0.0, 6.4375e-7, 6.4400e-7,
-        [-0.91, 0.05, 0.5, -0.83, 0.04, 15, -0.74, 0.04, 7, 23]
+        data, 0.0, 6.4376e-7, 6.4384e-7,
+        [6.43802e-7, 6e-12, 38, 3]
     ))
 
     fit_ergebnisse.append(einzel_fit(
@@ -191,6 +194,8 @@ def fit_aufspaltungen(fe):
 
 def einzel_fit(data, I, min_, max_, p0):
 
+    print('Fit für', I)
+
     lambda_ = data[I][0]
     intens = data[I][1]
 
@@ -209,18 +214,25 @@ def einzel_fit(data, I, min_, max_, p0):
     returnval = None
 
     try:
-        popt, pconv = op.curve_fit(tripple_gauss, lambda_selected, intens_selected, p0=p0)
+        funktion = tripple_gauss if len(p0) == 10 else single_gauss
+        print(funktion)
+        popt, pconv = op.curve_fit(funktion, lambda_selected, intens_selected, p0=p0)
         x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
-        a.plot(x / 10**-7, tripple_gauss(x, *popt), label='Anpassung')
-        a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
-        a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
-        a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
-        a.plot(x / 10**-7, np.ones(x.size) * popt[9], label='Untergrund', linestyle='--')
+        a.plot(x / 10**-7, funktion(x, *popt), label='Anpassung')
 
         print(popt[0:3])
-        print(popt[3:6])
-        print(popt[6:9])
-        print(popt[9])
+
+        if len(p0) == 10:
+            a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
+            a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
+            a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
+
+            print(popt[3:6])
+            print(popt[6:9])
+
+        a.plot(x / 10**-7, np.ones(x.size) * popt[-1], label='Untergrund', linestyle='--')
+
+        print(popt[-1])
         print(pconv)
 
         returnval = [I] + popt + np.sqrt(pconv.diagonal())
