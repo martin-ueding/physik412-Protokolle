@@ -242,21 +242,45 @@ sind, ist \SI{1.9}{\ampere}. In longitudinaler Konfiguration ist der Strom
 
 \section{Auswertung}
 
+Die Messwerte für alle Flussdichten sind in Abbildung~\ref{fig:Alles}
+dargestellt.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Alles.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:Alles}
 \end{figure}
+
+Wir rechnen die gemessenen Winkel in Wellenlängen um. Dazu benutzen wir als
+Wellenlänge für Cadmium \SI{<< lambda_cd >>}{\meter}. Diese ist genau auch die,
+die der Filter durchlässt.
+
+Die Anzahl der Maxima, die das Etalon erzeugt, ist durch:
+\[
+    m_\text{max} = \frac{2nd}{\lambda}
+\]
+gegeben. Mit den gegebenen Werten erhalten wir \num{<< m_max >>} Maxima. Der
+innerste Ring hat die Ordnung $m_\text{max} - 1$. Wir rechnen nun mit
+\[
+    \lambda = \frac{2 n d \cos(\alpha)}{m_\text{max} - 1}
+\]
+die Winkel in Wellenlängen um. Dabei stimmt natürlich nur der erste Peak. Wir
+wählen den ersten Peak auf der Seite der negativen Winkel aus. Dieser ist in
+Abbildung~\ref{fig:Zoom} dargestellt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Zoom.pdf}
     \caption{%
     }
-    \label{fig:}
+    \label{fig:Zoom}
 \end{figure}
+
+Für jede Flussdichte passen wir eine Summe aus drei Gaußkurven sowie einem
+konstanten Untergrundsignal an die Messdaten an. Diese sind in den Abbildungen
+\ref{fig:Fit-<< I_list[0] >>} bis \ref{fig:Fit-<< I_list[-1] >>} gezeigt.
 
 %< for I in I_list: >%
 \begin{figure}[htbp]
@@ -265,9 +289,18 @@ sind, ist \SI{1.9}{\ampere}. In longitudinaler Konfiguration ist der Strom
     \caption{%
         Fit für \SI{<< I >>}{\ampere}.
     }
-    \label{fig:<< I >>}
+    \label{fig:Fit-<< I >>}
 \end{figure}
 %< endfor >%
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Energieaufspaltung.pdf}
+    \caption{%
+        Energieaufspaltung
+    }
+    \label{fig:Energieaufspaltung}
+\end{figure}
 
 \section{Diskussion}
 

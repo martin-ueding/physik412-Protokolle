@@ -76,11 +76,20 @@ def job_zeeman(T):
 
     lambda_cd = 6438.470e-10
 
+    T['lambda_cd'] = unitprint.siunitx(lambda_cd, digits=7)
+
     m_max = np.round(2 * n * d / lambda_cd)
 
     print('m_max', m_max)
 
+    T['m_max'] = m_max
+    
+    alles_fig = pl.figure()
+    alles = alles_fig.add_subplot(1, 1, 1)
+
     files = glob.glob('Messdaten/Mit_*.txt')
+    files.sort()
+    citer = coloriter(len(files))
     pattern = re.compile('Messdaten/Mit_(\d+(.\d+)?).txt')
     data = {}
     for file_ in files:
@@ -91,6 +100,11 @@ def job_zeeman(T):
         file_content = np.genfromtxt(file_, skip_header=1)
         alpha = np.radians(file_content[:, 0])
         intens = file_content[:, 1]
+
+        color = next(citer)
+        label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
+        alles.plot(alpha, intens, label=label, color=color)
+
         cut = alpha < 0
         alpha = alpha[cut]
         intens = intens[cut]
@@ -98,9 +112,13 @@ def job_zeeman(T):
 
         data[I] = (lambda_, intens)
 
-    alles_fig = pl.figure()
+    alles.set_xlabel(r'$\alpha / \mathrm{rad}$')
+    alles.set_ylabel(r'rel. Int.')
+    alles.legend(loc='best')
+    alles.grid(True)
+    alles_fig.savefig('_build/Alles.pdf', **savefig_options)
+
     zoom_fig = pl.figure()
-    alles = alles_fig.add_subplot(1, 1, 1)
     zoom = zoom_fig.add_subplot(1, 1, 1)
 
     citer = coloriter(len(data))
@@ -108,19 +126,12 @@ def job_zeeman(T):
     for I, (lambda_, intens) in sorted(data.items()):
         color = next(citer)
         label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
-        alles.plot(lambda_ / 10**-9, intens, label=label, color=color)
         selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
         zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
 
     T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
 
     T['B_dict'] = {I_: B(I_) for I_ in data.keys()}
-
-    alles.set_xlabel(r'$\lambda / ^\circ$')
-    alles.set_ylabel(r'rel. Int.')
-    alles.legend(loc='best')
-    alles.grid(True)
-    alles_fig.savefig('_build/Alles.pdf', **savefig_options)
 
     zoom.set_xlabel(r'$\lambda / m$')
     zoom.set_ylabel(r'rel. Int.')
