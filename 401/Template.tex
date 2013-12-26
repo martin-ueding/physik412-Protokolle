@@ -230,15 +230,11 @@ vermessen und so das Magnetfeld bestimmt werden.
 
 \subsection{Termschema von Quecksilber}
 
-\chapter{Aufbau}
-
 \chapter{Zeeman-Effekt}
 
-\section{Durchführung}
+\section{Qualitative Beobachtung der Aufspaltung}
 
-\subsection{Qualitative Beobachtung der Aufspaltung}
-
-\subsubsection{Transversale Konfiguration}
+\subsection{Transversale Konfiguration}
 
 Zuerst betrachten wir die Aufspaltung durch das Okular und fertigen qualitative
 Skizzen an. Ohne Magnetfeld erhalten wir konzentrische Kreise
@@ -287,7 +283,7 @@ Abbildung~\ref{fig:Skizze-3} und \ref{fig:Skizze-4}.
     \label{fig:Skizze-4}
 \end{figure}
 
-\subsubsection{Longitudinale Konfiguration}
+\subsection{Longitudinale Konfiguration}
 
 Ohne Magnetfeld beobachten wir das gleiche wie in transversaler Konfiguration,
 siehe Abbildung~\ref{fig:Skizze-5}.
@@ -339,7 +335,7 @@ und \ref{fig:Skizze-8}).
     \label{fig:Skizze-8}
 \end{figure}
 
-\subsection{Magnetfeldkalibrierung}
+\section{Magnetfeldkalibrierung}
 
 Wir fahren den Strom durch und lassen die Cassy-Software Strom und Induktion
 registrieren. An die Messdaten passen wir ein Polynom dritter Ordnung, $B(I) =
@@ -363,7 +359,7 @@ dargestellt.
     \label{fig:Magnetfeldkalibrierung}
 \end{figure}
 
-\subsection{Messung der Aufspaltung}
+\section{Messung der Aufspaltung}
 
 Die Messwerte für alle Flussdichten sind in Abbildung~\ref{fig:Alles}
 dargestellt.
@@ -372,15 +368,20 @@ dargestellt.
     \centering
     \includegraphics[width=\linewidth]{Alles.pdf}
     \caption{%
+        Zusammenstellung aller Messdaten aus diesem Versuchsteil.
     }
     \label{fig:Alles}
 \end{figure}
 
 Wir rechnen die gemessenen Winkel in Wellenlängen um. Dazu benutzen wir als
-Wellenlänge für Cadmium \SI{<< lambda_cd >>}{\meter}. Diese ist genau auch die,
-die der Filter durchlässt.
+Wellenlänge für Cadmium \SI{<< lambda_cd >>}{\meter}
+\parencite{NIST/Strong_Lines_of_Cadmium} \footnote{%
+    Diese Quelle scheint eine Zusammenstellung zu sein. Die besagte Linie wird
+    dort wiederum mit „K. Burns and K. B. Adams, J. Opt. Soc. Am. 46, 94
+    (1956).“ zitiert.
+}. Diese ist genau auch die, die der Filter durchlässt.
 
-Die Anzahl der Maxima, die das Etalon erzeugt, ist durch:
+Die Anzahl der Maxima, die das Etalon erzeugt, ist durch
 \[
     m_\text{max} = \frac{2nd}{\lambda}
 \]
