@@ -139,11 +139,29 @@ werden, sind gleich, sodass hier eine Aufspaltung in drei Linien stattfindet.
 
 \section{Natürliche Linienbreite und Linienverbreiterung}
 
+Die Frequenzverbreiterung ist gegeben durch
+\parencite{chemgapedia/spektrallinien/dopplerverbreiterung}:
+\[
+    \Deltaup \nu_{1/2} = \num{7.16e-7} \nu_0
+    \sqrt{\frac{T / \si\kelvin}{m / \si\atomicmassunit}}.
+\]
+
+Die Wellenlängenverbreiterung erhalten wir durch Gauß'sche
+Fehlerfortpflanzung:
+\[
+    \Deltaup \lambda = \frac{c}{\nu_0^2} \Deltaup \nu.
+\]
+
+Für eine Temperatur von \SI{1000}{\kelvin} und einem Atomgewicht von \SI{<<
+m_cd >>}{\atomicmassunit} \parencite[Umschlag]{meschede-gerthsen_24} erhalten
+wir so eine Linienverbreiterung von \SI{<< doppler_width_nu >>}{\hertz} oder
+\SI{<< doppler_width_lambda >>}{\meter}.
+
 \section{Fabry-Pérot-Etalon}
 
 Das Fabry-Pérot-Etalon besteht aus einen planparallelen lichtdurchlässigen
 Material mit Brechungsindex $n>1$, dessen Oberflächen zum Beispiel durch
-aufdampfen von Silber eine hohe Reflexivität haben.
+Aufdampfen von Silber eine hohe Reflexivität haben.
 
 Trifft ein monochromatischer Lichtstrahl mit Wellenlänge $\lambda$ unter dem
 Winkel $\alpha$ auf das Etalon, wird er gebrochen und in diesem sehr häufig
@@ -413,7 +431,8 @@ Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
     \centering
     \includegraphics[width=.9\linewidth]{Fit-<< I >>.pdf}
     \caption{%
-        Fit für \SI{<< I >>}{\ampere}.
+        Fit für \SI{<< I >>}{\ampere}, entsprechend \SI{<< B_dict[I]
+        >>}{\centi\tesla}.
     }
     \label{fig:Fit-<< I >>}
 \end{figure}
@@ -421,8 +440,9 @@ Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS}
-        {$B / \si{\centi\tesla}$}
+    \begin{tabular}{SSSSS}
+        {$I / \si{\ampere}$}
+        & {$B / \si{\centi\tesla}$}
         & {$\lambda_- / \si{\nano\meter}$}
         & {$\lambda_0 / \si{\nano\meter}$}
         & {$\lambda_+ / \si{\nano\meter}$} 
@@ -470,8 +490,8 @@ Tabelle~\ref{tab:Energieaufspaltungen} zusammengetragen.
 \end{table}
 
 Wir tragen die Aufspaltung gegen die Flussdichte auf
-(Abbildung~\ref{fig:Energieaufspaltung}) und passen eine Gerade an. Die
-Steigung ist das Bohr'sche Magneton:
+(Abbildung~\ref{fig:Energieaufspaltung}) und passen eine Ursprungsgerade an.
+Die Steigung ist das Bohr'sche Magneton:
 \[
     \mu_\text B = \SI{<< bohr_magneton >>}{\joule\per\tesla}.
 \]

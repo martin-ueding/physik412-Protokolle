@@ -24,14 +24,16 @@ savefig_options = {
     'bbox_inches': 'tight',
 }
 
+lambda_cd = 6438.470e-10
+
 def coloriter(n):
     return iter([
         colorsys.hsv_to_rgb(x*1.0/n, 1.0, .8)
         for x in range(n)
     ])
 
-def linear(x, a, b):
-    return a * x + b
+def linear(x, a):
+    return a * x
 
 def polynom(x, a, b, c, d):
     return a + b*x + c*x**2 + d*x**3
@@ -44,6 +46,16 @@ def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
 
 def single_gauss(x, m1, s1, a1, offset):
     return gauss(x, m1, s1, a1) + offset
+
+def job_doppler(T):
+    m_cd = 112.4
+    nu_cd = 3e8 / lambda_cd
+    Delta_nu = 7.16e-7 * nu_cd * np.sqrt(1000 / m_cd)
+    Delta_lambda = 3e8 / nu_cd**2 * Delta_nu
+
+    T['m_cd'] = unitprint.siunitx(m_cd)
+    T['doppler_width_nu'] = unitprint.siunitx(Delta_nu)
+    T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda)
 
 def magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
@@ -82,8 +94,6 @@ def job_zeeman(T):
 
     d = 4e-3
     n = 1.457
-
-    lambda_cd = 6438.470e-10
 
     T['lambda_cd'] = unitprint.siunitx(lambda_cd, digits=7)
 
@@ -140,7 +150,10 @@ def job_zeeman(T):
 
     T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
 
-    T['B_dict'] = {I_: B(I_) for I_ in data.keys()}
+    T['B_dict'] = {
+        str(I_).replace('.', ','): unitprint.siunitx(B(I_)/10**-2)
+        for I_ in data.keys()
+    }
 
     zoom.set_xlabel(r'$\lambda / m$')
     zoom.set_ylabel(r'rel. Int.')
@@ -211,6 +224,7 @@ def job_zeeman(T):
     logging.info(fit_ergebnisse)
 
     T['fit_tabelle'] = list(zip(
+        unitprint.siunitx(fit_ergebnisse[:, 0]),
         unitprint.siunitx(B(fit_ergebnisse[:, 0])/10**-2),
         unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 11]/10**-9),
         unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 14]/10**-9),
