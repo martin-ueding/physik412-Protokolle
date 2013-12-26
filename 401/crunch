@@ -5,13 +5,15 @@
 # Licensed under The GNU Public License Version 2 (or later)
 
 #import scipy.interpolate
+import argparse
+import colorsys
 import glob
 import json
+import logging
 import matplotlib.pyplot as pl
-import colorsys
 import multiprocessing
-import pprint
 import numpy as np
+import pprint
 import re
 import scipy.optimize as op
 import scipy.signal
@@ -80,7 +82,7 @@ def job_zeeman(T):
 
     m_max = np.round(2 * n * d / lambda_cd)
 
-    print('m_max', m_max)
+    logging.info('m_max', m_max)
 
     T['m_max'] = m_max
     
@@ -198,8 +200,8 @@ def job_zeeman(T):
 
     fit_ergebnisse = np.array([x for x in fit_ergebnisse[1:] if x is not None])
 
-    print('fit_ergebnisse')
-    print(fit_ergebnisse)
+    logging.info('fit_ergebnisse')
+    logging.info(fit_ergebnisse)
 
     fit_aufspaltungen(fit_ergebnisse, B, fit_ergebnisse[0])
 
@@ -237,10 +239,10 @@ def fit_aufspaltungen(fe, B, fe0):
 
     f = pl.figure()
     a = f.add_subplot(1, 1, 1)
-    print(B_I)
-    print(x1_val)
-    print(B_I.shape)
-    print(x1_val.shape)
+    logging.info(B_I)
+    logging.info(x1_val)
+    logging.info(B_I.shape)
+    logging.info(x1_val.shape)
     a.errorbar(B_I, x1_val, yerr=x1_err, **plotargs)
     a.errorbar(B_I, x2_val, yerr=x2_err, **plotargs)
     f.savefig('_build/Aufspaltungen.pdf')
@@ -267,12 +269,11 @@ def fit_aufspaltungen(fe, B, fe0):
     a.grid(True)
     f.savefig('_build/Energieaufspaltung.pdf')
     
-    print(popt)
+    logging.info(popt)
     
 
 def einzel_fit(data, I, min_, max_, p0):
-
-    print('Fit für', I)
+    logging.info('Fit für {}'.format(I))
 
     lambda_ = data[I][0]
     intens = data[I][1]
@@ -282,10 +283,10 @@ def einzel_fit(data, I, min_, max_, p0):
     lambda_selected = lambda_[selected]
     intens_selected = intens[selected]
 
-    print('lambda_selected')
-    print(lambda_selected)
-    print('intens_selected')
-    print(intens_selected)
+    logging.info('lambda_selected')
+    logging.info(lambda_selected)
+    logging.info('intens_selected')
+    logging.info(intens_selected)
 
     p = pl.figure()
     a = p.add_subplot(1, 1, 1)
@@ -295,33 +296,34 @@ def einzel_fit(data, I, min_, max_, p0):
 
     try:
         funktion = tripple_gauss if len(p0) == 10 else single_gauss
-        print(funktion)
+        logging.info(funktion)
         popt, pconv = op.curve_fit(funktion, lambda_selected, intens_selected, p0=p0)
         x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
         a.plot(x / 10**-7, funktion(x, *popt), label='Anpassung')
 
-        print('Fitparameter')
-        print(popt[0:3])
+        logging.info('Fitparameter')
+        logging.info(popt[0:3])
 
         if len(p0) == 10:
             a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
             a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
             a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
 
-            print(popt[3:6])
-            print(popt[6:9])
+            logging.info(popt[3:6])
+            logging.info(popt[6:9])
 
         a.plot(x / 10**-7, np.ones(x.size) * popt[-1], label='Untergrund', linestyle='--')
 
-        print(popt[-1])
-        print('Fit Fehler')
-        print(np.sqrt(pconv.diagonal()))
+        logging.info(popt[-1])
+        logging.info('Fit Fehler')
+        logging.info(pconv.diagonal())
+        logging.info(np.sqrt(pconv.diagonal()))
 
         returnval = [I] + list(popt) + list(np.sqrt(pconv.diagonal()))
     except RuntimeError as e:
-        print(e)
+        logging.error(e)
     except AttributeError as e:
-        print(e)
+        logging.error(e)
 
     a.grid(True)
     a.legend(loc='best')
@@ -333,6 +335,20 @@ def einzel_fit(data, I, min_, max_, p0):
     return returnval
 
 def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbose', action='count', default=0)
+    options = parser.parse_args()
+
+    if options.verbose == 0:
+        level = logging.WARNING
+    elif options.verbose == 1:
+        level = logging.INFO
+    elif options.verbose == 2:
+        level = logging.DEBUG
+
+    logging.basicConfig(level=level)
+
     with multiprocessing.Manager() as manager:
         T = manager.dict()
 
@@ -342,22 +358,22 @@ def main():
             if key.startswith('job_'):
                 to_run.append(value)
 
-        print('Will run the following functions:')
+        logging.debug('Will run the following functions:')
         for f in to_run:
-            print('-', f)
+            logging.debug('-', f)
 
         processes = []
         for f in to_run:
             p = multiprocessing.Process(target=f, args=(T,))
-            print("Starting", p)
+            logging.debug("Starting", p)
             p.start()
             processes.append(p)
 
         for p in processes:
-            print("Waiting for", p)
+            logging.debug("Waiting for", p)
             p.join()
 
-        print("Serializing …")
+        logging.debug("Serializing …")
 
         with open('_build/template.js', 'w') as f:
             json.dump(dict(T), f, indent=4, sort_keys=True)
