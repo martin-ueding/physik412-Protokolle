@@ -279,8 +279,29 @@ Abbildung~\ref{fig:Zoom} dargestellt.
 \end{figure}
 
 Für jede Flussdichte passen wir eine Summe aus drei Gaußkurven sowie einem
-konstanten Untergrundsignal an die Messdaten an. Diese sind in den Abbildungen
-\ref{fig:Fit-<< I_list[0] >>} bis \ref{fig:Fit-<< I_list[-1] >>} gezeigt.
+konstanten Untergrundsignal an die Messdaten an. Aus der Anpassung erhalten wir
+die Schwerpunkte der Maxima, siehe Tabelle~\ref{tab:Peakschwerpunkte}. Die
+Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
+>>} bis \ref{fig:Fit-<< I_list[-1] >>} gezeigt.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$I / \si\ampere$}
+        & {$s_1 / \si{\nano\meter}$}
+        & {$s_2 / \si{\nano\meter}$}
+        & {$s_2 / \si{\nano\meter}$} 
+        \\
+        \midrule
+        %<- for row in fit_tabelle: ->%
+        << ' & '.join(row) >> \\
+        %<- endfor ->%
+    \end{tabular}
+    \caption{%
+        Schwerpunkte der Maxima.
+    }
+    \label{tab:Peakschwerpunkte}
+\end{table}
 
 %< for I in I_list: >%
 \begin{figure}[htbp]

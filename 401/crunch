@@ -203,6 +203,13 @@ def job_zeeman(T):
     logging.info('fit_ergebnisse')
     logging.info(fit_ergebnisse)
 
+    T['fit_tabelle'] = list(zip(
+        unitprint.siunitx(fit_ergebnisse[:, 0]),
+        unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 11]/10**-9),
+        unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 14]/10**-9),
+        unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 17]/10**-9),
+    ))
+
     fit_aufspaltungen(fit_ergebnisse, B, fit_ergebnisse[0])
 
 def fit_aufspaltungen(fe, B, fe0):
@@ -316,10 +323,10 @@ def einzel_fit(data, I, min_, max_, p0):
 
         logging.info(popt[-1])
         logging.info('Fit Fehler')
-        logging.info(pconv.diagonal())
-        logging.info(np.sqrt(pconv.diagonal()))
+        err = np.sqrt(abs(pconv.diagonal()))
+        logging.info(err)
 
-        returnval = [I] + list(popt) + list(np.sqrt(pconv.diagonal()))
+        returnval = [I] + list(popt) + list(err)
     except RuntimeError as e:
         logging.error(e)
     except AttributeError as e:
