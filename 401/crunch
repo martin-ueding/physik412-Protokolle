@@ -265,7 +265,7 @@ def fit_aufspaltungen(T, fe, B, fe0):
 
     T['energieaufspaltung_tabelle'] = list(zip(
         unitprint.siunitx(B_I / 10**-2),
-        unitprint.siunitx(x_val / 10**-9),
+        unitprint.siunitx(x_val / 10**-12),
         unitprint.siunitx(Delta_E),
     ))
 
@@ -282,6 +282,11 @@ def fit_aufspaltungen(T, fe, B, fe0):
     a.set_ylabel(r'$\Delta E / \mathrm{J}$')
     a.grid(True)
     f.savefig('_build/Energieaufspaltung.pdf')
+
+    bohr_val = popt[0]
+    bohr_err = np.sqrt(pconv.diagonal()[0])
+
+    T['bohr_magneton'] = unitprint.siunitx(bohr_val, bohr_err)
     
     logging.info(popt)
     

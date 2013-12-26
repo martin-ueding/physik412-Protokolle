@@ -320,16 +320,18 @@ Energiedifferenzen aus. Dabei ist die Verschiebung der Wellenlänge:
     \Deltaup \lambda = \frac{\lambda_+ - \lambda_-}2.
 \]
 
-Daraus bestimmt sich die Energiedifferenz:
+Daraus bestimmt sich die Energiedifferenz
 \[
     \Deltaup E = \frac{hc\Deltaup\lambda}{\lambda_0^2}
 \]
+für jede Flussdichte. Diese Daten sind in
+Tabelle~\ref{tab:Energieaufspaltungen} zusammengetragen.
 
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSS}
         {$B / \si{\centi\tesla}$}
-        & {$\Deltaup \lambda / \si{\nano\meter}$} 
+        & {$\Deltaup \lambda / \si{\pico\meter}$} 
         & {$\Deltaup E / \si{\joule}$} 
         \\
         \midrule
@@ -343,6 +345,13 @@ Daraus bestimmt sich die Energiedifferenz:
     \label{tab:Energieaufspaltungen}
 \end{table}
 
+Wir tragen die Aufspaltung gegen die Flussdichte auf
+(Abbildung~\ref{fig:Energieaufspaltung}) und passen eine Gerade an. Die
+Steigung ist das Bohr'sche Magneton:
+\[
+    \mu_\text B = \SI{<< bohr_magneton >>}{\joule\per\tesla}.
+\]
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Energieaufspaltung.pdf}
@@ -353,6 +362,12 @@ Daraus bestimmt sich die Energiedifferenz:
 \end{figure}
 
 \section{Diskussion}
+
+Der Literaturwert für das Bohr'sche Magneton ist:
+\parencite{wikipedia/Bohr_Magneton} \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    \mu_\text B = \SI{9.274e-24}{\joule\per\tesla}.
+\]
 
 \chapter{Frank-Hertz-Versuch}
 
