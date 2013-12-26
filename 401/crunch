@@ -204,15 +204,15 @@ def job_zeeman(T):
     logging.info(fit_ergebnisse)
 
     T['fit_tabelle'] = list(zip(
-        unitprint.siunitx(fit_ergebnisse[:, 0]),
+        unitprint.siunitx(B(fit_ergebnisse[:, 0])/10**-2),
         unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 11]/10**-9),
         unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 14]/10**-9),
         unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 17]/10**-9),
     ))
 
-    fit_aufspaltungen(fit_ergebnisse, B, fit_ergebnisse[0])
+    fit_aufspaltungen(T, fit_ergebnisse, B, fit_ergebnisse[0])
 
-def fit_aufspaltungen(fe, B, fe0):
+def fit_aufspaltungen(T, fe, B, fe0):
     I = fe[:, 0]
 
     B_I = B(I)
@@ -262,6 +262,13 @@ def fit_aufspaltungen(fe, B, fe0):
     f.savefig('_build/Aufspaltungen_ohne_Fehlerbalken.pdf')
 
     Delta_E = 6.626e-34 * 3e8 / lambda0**2 * x_val
+
+    T['energieaufspaltung_tabelle'] = list(zip(
+        unitprint.siunitx(B_I / 10**-2),
+        unitprint.siunitx(x_val / 10**-9),
+        unitprint.siunitx(Delta_E),
+    ))
+
 
     popt, pconv = op.curve_fit(linear, B_I, Delta_E)
     fit_x = np.linspace(np.min(B_I), np.max(B_I))
@@ -379,6 +386,8 @@ def main():
         for p in processes:
             logging.debug("Waiting for", p)
             p.join()
+
+        assert all([p.exitcode == 0 for p in processes])
 
         logging.debug("Serializing …")
 

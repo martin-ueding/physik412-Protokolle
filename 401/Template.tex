@@ -284,13 +284,24 @@ die Schwerpunkte der Maxima, siehe Tabelle~\ref{tab:Peakschwerpunkte}. Die
 Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
 >>} bis \ref{fig:Fit-<< I_list[-1] >>} gezeigt.
 
+%< for I in I_list: >%
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.9\linewidth]{Fit-<< I >>.pdf}
+    \caption{%
+        Fit für \SI{<< I >>}{\ampere}.
+    }
+    \label{fig:Fit-<< I >>}
+\end{figure}
+%< endfor >%
+
 \begin{table}[htbp]
     \centering
     \begin{tabular}{SSSS}
-        {$I / \si\ampere$}
-        & {$s_1 / \si{\nano\meter}$}
-        & {$s_2 / \si{\nano\meter}$}
-        & {$s_2 / \si{\nano\meter}$} 
+        {$B / \si{\centi\tesla}$}
+        & {$\lambda_- / \si{\nano\meter}$}
+        & {$\lambda_0 / \si{\nano\meter}$}
+        & {$\lambda_+ / \si{\nano\meter}$} 
         \\
         \midrule
         %<- for row in fit_tabelle: ->%
@@ -303,16 +314,34 @@ Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
     \label{tab:Peakschwerpunkte}
 \end{table}
 
-%< for I in I_list: >%
-\begin{figure}[htbp]
+Die Schwerpunkte aus Tabelle~\ref{tab:Peakschwerpunkte} rechnen wir in
+Energiedifferenzen aus. Dabei ist die Verschiebung der Wellenlänge:
+\[
+    \Deltaup \lambda = \frac{\lambda_+ - \lambda_-}2.
+\]
+
+Daraus bestimmt sich die Energiedifferenz:
+\[
+    \Deltaup E = \frac{hc\Deltaup\lambda}{\lambda_0^2}
+\]
+
+\begin{table}[htbp]
     \centering
-    \includegraphics[width=.9\linewidth]{Fit-<< I >>.pdf}
+    \begin{tabular}{SSS}
+        {$B / \si{\centi\tesla}$}
+        & {$\Deltaup \lambda / \si{\nano\meter}$} 
+        & {$\Deltaup E / \si{\joule}$} 
+        \\
+        \midrule
+        %<- for row in energieaufspaltung_tabelle: ->%
+        << ' & '.join(row) >> \\
+        %<- endfor ->%
+    \end{tabular}
     \caption{%
-        Fit für \SI{<< I >>}{\ampere}.
+        Energieaufspaltungen
     }
-    \label{fig:Fit-<< I >>}
-\end{figure}
-%< endfor >%
+    \label{tab:Energieaufspaltungen}
+\end{table}
 
 \begin{figure}[htbp]
     \centering
