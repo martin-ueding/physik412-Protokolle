@@ -339,7 +339,34 @@ und \ref{fig:Skizze-8}).
     \label{fig:Skizze-8}
 \end{figure}
 
-\section{Auswertung}
+\subsection{Magnetfeldkalibrierung}
+
+Wir fahren den Strom durch und lassen die Cassy-Software Strom und Induktion
+registrieren. An die Messdaten passen wir ein Polynom dritter Ordnung,
+\[
+    B(I) = a + bI + cI^2 + dI^3,
+\]
+an. Als Parameter erhalten wir durch die Anpassung:
+\begin{align*}
+    a &= \SI{<< mfk_a >>}{\milli\tesla} \\
+    b &= \SI{<< mfk_b >>}{\milli\tesla\per\ampere} \\
+    c &= \SI{<< mfk_c >>}{\milli\tesla\per\ampere\squared} \\
+    d &= \SI{<< mfk_d >>}{\micro\tesla\per\ampere\cubed} \\
+\end{align*}
+
+Daten und Anpassung sind in Abbildung~\ref{fig:Magnetfeldkalibrierung}
+dargestellt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Magnetfeldkalibrierung.pdf}
+    \caption{%
+        Anpassung der Daten aus der Hallsonde gegen den Strom.
+    }
+    \label{fig:Magnetfeldkalibrierung}
+\end{figure}
+
+\subsection{Messung der Aufspaltung}
 
 Die Messwerte für alle Flussdichten sind in Abbildung~\ref{fig:Alles}
 dargestellt.

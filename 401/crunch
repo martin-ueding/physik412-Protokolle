@@ -59,6 +59,13 @@ def magnetfeldkalibrierung(T):
     fit_x = np.linspace(np.min(I_used), np.max(I_used))
     fit_y = polynom(fit_x, *popt)
 
+    coeff_err = np.sqrt(pconv.diagonal())
+
+    T['mfk_a'] = unitprint.siunitx(popt[0]/10**-3, coeff_err[0]/10**-3)
+    T['mfk_b'] = unitprint.siunitx(popt[1]/10**-3, coeff_err[1]/10**-3)
+    T['mfk_c'] = unitprint.siunitx(popt[2]/10**-3, coeff_err[2]/10**-3)
+    T['mfk_d'] = unitprint.siunitx(popt[3]/10**-6, coeff_err[3]/10**-6)
+
     pl.plot(I_used, B_used, linestyle='none', marker='+', label='Messdaten')
     pl.plot(fit_x, fit_y, label='Anpassung')
     pl.xlabel(r'$I / \mathrm{A}$')
