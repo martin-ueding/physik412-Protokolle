@@ -155,7 +155,7 @@ Fehlerfortpflanzung:
 Für eine Temperatur von \SI{1000}{\kelvin} und einem Atomgewicht von \SI{<<
 m_cd >>}{\atomicmassunit} \parencite[Umschlag]{meschede-gerthsen_24} erhalten
 wir so eine Linienverbreiterung von \SI{<< doppler_width_nu >>}{\hertz} oder
-\SI{<< doppler_width_lambda >>}{\meter}.
+\SI{<< doppler_width_lambda >>}{\pico\meter}.
 
 \section{Fabry-Pérot-Etalon}
 
@@ -456,6 +456,26 @@ Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
         Schwerpunkte der Maxima.
     }
     \label{tab:Peakschwerpunkte}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$I / \si{\ampere}$}
+        & {$B / \si{\centi\tesla}$}
+        & {$\sigma_- / \si{\pico\meter}$}
+        & {$\sigma_0 / \si{\pico\meter}$}
+        & {$\sigma_+ / \si{\pico\meter}$} 
+        \\
+        \midrule
+        %<- for row in sigma_tabelle: ->%
+        << ' & '.join(row) >> \\
+        %<- endfor ->%
+    \end{tabular}
+    \caption{%
+        Breite der Maxima, angegeben ist die Standardabweichung der Gaußkurve.
+    }
+    \label{tab:Peakbreiten}
 \end{table}
 
 Die Schwerpunkte aus Tabelle~\ref{tab:Peakschwerpunkte} rechnen wir in

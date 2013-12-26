@@ -55,7 +55,7 @@ def job_doppler(T):
 
     T['m_cd'] = unitprint.siunitx(m_cd)
     T['doppler_width_nu'] = unitprint.siunitx(Delta_nu)
-    T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda)
+    T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda / 10**-12)
 
 def magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
@@ -229,6 +229,14 @@ def job_zeeman(T):
         unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 11]/10**-9),
         unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 14]/10**-9),
         unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 17]/10**-9),
+    ))
+
+    T['sigma_tabelle'] = list(zip(
+        unitprint.siunitx(fit_ergebnisse[:, 0]),
+        unitprint.siunitx(B(fit_ergebnisse[:, 0])/10**-2),
+        unitprint.siunitx(fit_ergebnisse[:, 2]/10**-12, fit_ergebnisse[:, 12]/10**-12),
+        unitprint.siunitx(fit_ergebnisse[:, 5]/10**-12, fit_ergebnisse[:, 15]/10**-12),
+        unitprint.siunitx(fit_ergebnisse[:, 8]/10**-12, fit_ergebnisse[:, 18]/10**-12),
     ))
 
     fit_aufspaltungen(T, fit_ergebnisse, B, fit_ergebnisse[0])
