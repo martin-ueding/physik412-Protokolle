@@ -382,6 +382,36 @@ def einzel_fit(data, I, min_, max_, p0):
 
     return returnval
 
+def job_franck_hertz(T):
+    files = glob.glob('Messdaten/FH_*.txt')
+    files.sort()
+    pattern = re.compile('Messdaten/FH_(.+)_(.+)\.txt')
+    sets = []
+    for file_ in files:
+        m = pattern.match(file_)
+        data = np.genfromtxt(file_, skip_header=1)
+        sets.append({
+            'T': float(m.group(1)),
+            'U_G': float(m.group(2)),
+            'U_B': data[:, 0],
+            'U_A': data[:, 1],
+        })
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    for s in sets:
+        a.plot(
+            s['U_B'], s['U_A'],
+            label=r'$T = {T:.3g}\,\mathrm{{K}},\;U_B = {U_G:.3g}\,\mathrm{{V}}$'.format(**s),
+            linestyle='none', marker='.',
+        )
+    a.set_xlabel(r'$U_B / \mathrm{V}$')
+    a.set_ylabel(r'$U_A / \mathrm{V}$')
+    a.grid(True)
+    a.legend(loc='best')
+    f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)
+
+
 def main():
 
     parser = argparse.ArgumentParser()
