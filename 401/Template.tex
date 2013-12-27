@@ -260,9 +260,11 @@ vermessen und so das Magnetfeld bestimmt werden.
 
 \chapter{Zeeman-Effekt}
 
-\section{Qualitative Beobachtung der Aufspaltung}
+\section{Durchführung}
 
-\subsection{Transversale Konfiguration}
+\subsection{Qualitative Beobachtung der Aufspaltung}
+
+\subsubsection{Transversale Konfiguration}
 
 Zuerst betrachten wir die Aufspaltung durch das Okular und fertigen qualitative
 Skizzen an. Ohne Magnetfeld erhalten wir konzentrische Kreise
@@ -311,7 +313,7 @@ Abbildung~\ref{fig:Skizze-3} und \ref{fig:Skizze-4}.
     \label{fig:Skizze-4}
 \end{figure}
 
-\subsection{Longitudinale Konfiguration}
+\subsubsection{Longitudinale Konfiguration}
 
 Ohne Magnetfeld beobachten wir das gleiche wie in transversaler Konfiguration,
 siehe Abbildung~\ref{fig:Skizze-5}.
@@ -363,11 +365,19 @@ und \ref{fig:Skizze-8}).
     \label{fig:Skizze-8}
 \end{figure}
 
-\section{Magnetfeldkalibrierung}
+\subsection{Magnetfeldkalibrierung}
 
 Wir fahren den Strom durch und lassen die Cassy-Software Strom und Induktion
-registrieren. An die Messdaten passen wir ein Polynom dritter Ordnung, $B(I) =
-a + bI + cI^2 + dI^3$, an. Als Parameter erhalten wir durch die Anpassung:
+registrieren.
+
+\subsection{Messung der Aufspaltung}
+
+\section{Auswertung}
+
+\subsection{Magnetfeldkalibrierung}
+
+An die Messdaten passen wir ein Polynom dritter Ordnung, $B(I) = a + bI + cI^2
++ dI^3$, an. Als Parameter erhalten wir durch die Anpassung:
 \begin{align*}
     a &= \SI{<< mfk_a >>}{\milli\tesla} \\
     b &= \SI{<< mfk_b >>}{\milli\tesla\per\ampere} \\
@@ -387,7 +397,10 @@ dargestellt.
     \label{fig:Magnetfeldkalibrierung}
 \end{figure}
 
-\section{Messung der Aufspaltung}
+Im weiteren Verlauf der Auswertung werden wir diese Funktion benutzen, um
+Ströme in Magnetfelder umzurechnen.
+
+\subsection{Messung der Aufspaltung}
 
 Die Messwerte für alle Flussdichten sind in Abbildung~\ref{fig:Alles}
 dargestellt.
