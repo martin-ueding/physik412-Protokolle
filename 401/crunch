@@ -232,7 +232,33 @@ def job_zeeman(T):
         unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 8]/10**-9),
     ))
 
-    fit_aufspaltungen(T, fit_ergebnisse, B)
+    bohr_val, bohr_err = fit_aufspaltungen(T, fit_ergebnisse, B)
+
+    qualitativ_finesse(T, B, bohr_val, bohr_err)
+
+def qualitativ_finesse(T, B, bohr_val, bohr_err):
+    I_crit_long_val = 1.9
+    I_crit_trans_val = 1.0
+
+    B_crit_long_val = B(I_crit_long_val)
+    B_crit_trans_val = B(I_crit_trans_val)
+
+    Delta_E_long_val = bohr_val * B_crit_long_val
+    Delta_E_trans_val = bohr_val * B_crit_trans_val
+
+    N_long_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_long_val
+    N_trans_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_trans_val
+
+    T['I_crit_long'] = unitprint.siunitx(I_crit_long_val)
+    T['I_crit_trans'] = unitprint.siunitx(I_crit_trans_val)
+
+    T['B_crit_long'] = unitprint.siunitx(B_crit_long_val)
+    T['B_crit_trans'] = unitprint.siunitx(B_crit_trans_val)
+
+    T['N_long'] = unitprint.siunitx(N_long_val)
+    T['N_trans'] = unitprint.siunitx(N_trans_val)
+
+
 
 def fit_aufspaltungen(T, fe, B):
     I = fe[:, 0]
@@ -299,6 +325,8 @@ def fit_aufspaltungen(T, fe, B):
     T['bohr_magneton'] = unitprint.siunitx(bohr_val, bohr_err)
     
     logging.info(popt)
+
+    return bohr_val, bohr_err
     
 
 def einzel_fit(data, I, min_, max_, p0):

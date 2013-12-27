@@ -285,8 +285,8 @@ tun.
 
 Wir erhöhen das Magnetfeld, bis wir die aufgespaltenen Ringe gut unterscheiden
 können (Abbildung~\ref{fig:Skizze-2}). Der Strom, bei der die Linien zu
-unterscheiden sind, ist \SI{1.9}{\ampere}. Die Aufspaltung der Ringe kommt
-durch die Zeeman-Aufspaltung der Energieniveaus. 
+unterscheiden sind, ist \SI{<< I_crit_trans >>}{\ampere}. Die Aufspaltung der
+Ringe kommt durch die Zeeman-Aufspaltung der Energieniveaus. 
 
 \begin{figure}[htbp]
     \centering
@@ -334,13 +334,13 @@ siehe Abbildung~\ref{fig:Skizze-5}.
 
 Nun fahren wir wieder den Magnetstrom so hoch, dass wir die Linien trennen
 können (Abbildung~\ref{fig:Skizze-6}). In longitudinaler Konfiguration ist der
-kritische Strom \SI{1.0}{\ampere}. Die longitudinalen Linien sind deutlich
-dunkler. Außerdem gibt es nur noch zwei Linien, keine mittlere Linie mehr. Dies
-liegt daran, dass in longitudinaler Richtung durch das Photon positiver oder
-negativer Drehimpuls weggetragen werden muss, da sich die $z$-Komponente des
-Drehimpulses des ausstrahlenden Elektrons ändert. Daher gibt es nur zwei
-Möglichkeiten: positive und negative Helizität, also zirkulare Polarisation
-links und rechts herum.
+kritische Strom \SI{<< I_crit_long >>}{\ampere}. Die longitudinalen Linien sind
+deutlich dunkler. Außerdem gibt es nur noch zwei Linien, keine mittlere Linie
+mehr. Dies liegt daran, dass in longitudinaler Richtung durch das Photon
+positiver oder negativer Drehimpuls weggetragen werden muss, da sich die
+$z$-Komponente des Drehimpulses des ausstrahlenden Elektrons ändert. Daher gibt
+es nur zwei Möglichkeiten: positive und negative Helizität, also zirkulare
+Polarisation links und rechts herum.
 
 \begin{figure}[htbp]
     \centering
@@ -551,6 +551,42 @@ Die Steigung ist das Bohr'sche Magneton:
     }
     \label{fig:Energieaufspaltung}
 \end{figure}
+
+\section{Auflösungsvermögen und Finesse}
+
+\subsection{Theoretische Werte}
+
+\subsection{Werte aus qualitativer Messung}
+
+Wir hatten die Aufspaltung ab einem Magnetstrom von \SI{<< I_crit_trans
+>>}{\ampere} und \SI{<< I_crit_long >>}{\ampere} in der transversalen bzw\@.
+longitudinalen Konfiguration erkennen können. Dies entspricht Magnetfeldern von
+\SI{<< B_crit_trans >>}{\centi\tesla} bzw\@. \SI{<< B_crit_long >>}{\centi\tesla}.
+
+Mit unserem errechneten Bohr'schen Magneton können wir daraus nun eine
+Energiedifferenz
+\[
+    \Deltaup E = \mu_\text B B(I)
+\]
+bestimmen, aus der wir dann wiederum eine Wellenlängendifferenz errechnen:
+\[
+    \lambda = \frac1\nu = \frac{hc}{E}
+    \implies
+    \Deltaup \lambda
+    = \frac{hc}{E^2} \Deltaup E
+    = \frac{\lambda^2}{hc} \Deltaup E
+\]
+
+Daraus können wir dann das Auflösungsvermögen berechnen:
+\[
+    N = \frac{\lambda}{\Deltaup \lambda}
+    = \frac{hc}{\lambda \Deltaup E}.
+\]
+
+Somit erhalten wir $N_\text t = \num{<< N_trans >>}$ und $N_\text l = \num{<<
+N_long >>}$.
+
+\subsection{Werte aus CCD Messung}
 
 \section{Diskussion}
 
