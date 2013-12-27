@@ -277,7 +277,7 @@ def fit_aufspaltungen(T, fe, B):
     T['energieaufspaltung_tabelle'] = list(zip(
         unitprint.siunitx(B_I / 10**-2),
         unitprint.siunitx(x_val / 10**-12),
-        unitprint.siunitx(Delta_E_val, Delta_E_err),
+        unitprint.siunitx(Delta_E_val/1e-25, Delta_E_err/1e-25),
     ))
 
     popt, pconv = op.curve_fit(linear, B_I, Delta_E_val, sigma=1/Delta_E_err)
