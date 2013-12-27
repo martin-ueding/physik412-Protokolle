@@ -219,7 +219,7 @@ def job_zeeman(T):
         [6.43779e-7, 5e-12, 27, 6.43804e-7, 6e-12, 45, 6.43828e-7, 4e-12, 33, 14]
     ))
 
-    fit_ergebnisse = np.array([x for x in fit_ergebnisse[1:] if x is not None])
+    fit_ergebnisse = np.array([x for x in fit_ergebnisse if x is not None])
 
     logging.info('fit_ergebnisse')
     logging.info(fit_ergebnisse)
@@ -232,9 +232,9 @@ def job_zeeman(T):
         unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 8]/10**-9),
     ))
 
-    fit_aufspaltungen(T, fit_ergebnisse, B, fit_ergebnisse[0])
+    fit_aufspaltungen(T, fit_ergebnisse, B)
 
-def fit_aufspaltungen(T, fe, B, fe0):
+def fit_aufspaltungen(T, fe, B):
     I = fe[:, 0]
 
     B_I = B(I)
@@ -252,7 +252,7 @@ def fit_aufspaltungen(T, fe, B, fe0):
     std2_val = fe[:, 5]
     std3_val = fe[:, 8]
 
-    lambda0 = fe0[0]
+    lambda0 = s2_val
 
     f = pl.figure()
     a = f.add_subplot(1, 1, 1)
