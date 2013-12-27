@@ -227,17 +227,9 @@ def job_zeeman(T):
     T['fit_tabelle'] = list(zip(
         unitprint.siunitx(fit_ergebnisse[:, 0]),
         unitprint.siunitx(B(fit_ergebnisse[:, 0])/10**-2),
-        unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 11]/10**-9),
-        unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 14]/10**-9),
-        unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 17]/10**-9),
-    ))
-
-    T['sigma_tabelle'] = list(zip(
-        unitprint.siunitx(fit_ergebnisse[:, 0]),
-        unitprint.siunitx(B(fit_ergebnisse[:, 0])/10**-2),
-        unitprint.siunitx(fit_ergebnisse[:, 2]/10**-12, fit_ergebnisse[:, 12]/10**-12),
-        unitprint.siunitx(fit_ergebnisse[:, 5]/10**-12, fit_ergebnisse[:, 15]/10**-12),
-        unitprint.siunitx(fit_ergebnisse[:, 8]/10**-12, fit_ergebnisse[:, 18]/10**-12),
+        unitprint.siunitx(fit_ergebnisse[:, 1]/10**-9, fit_ergebnisse[:, 2]/10**-9),
+        unitprint.siunitx(fit_ergebnisse[:, 4]/10**-9, fit_ergebnisse[:, 5]/10**-9),
+        unitprint.siunitx(fit_ergebnisse[:, 7]/10**-9, fit_ergebnisse[:, 8]/10**-9),
     ))
 
     fit_aufspaltungen(T, fit_ergebnisse, B, fit_ergebnisse[0])
@@ -256,6 +248,10 @@ def fit_aufspaltungen(T, fe, B, fe0):
     s3_val = fe[:, 7]
     s3_err = fe[:, 17]
 
+    std1_val = fe[:, 2]
+    std2_val = fe[:, 5]
+    std3_val = fe[:, 8]
+
     lambda0 = fe0[0]
 
     f = pl.figure()
@@ -267,46 +263,30 @@ def fit_aufspaltungen(T, fe, B, fe0):
     }
 
     x1_val = np.abs(s1_val - s2_val)
-    x1_err = np.sqrt(s1_err**2 + s2_err**2)
+    x1_err = np.sqrt(std1_val**2 + std2_val**2)
 
     x2_val = np.abs(s3_val - s2_val)
-    x2_err = np.sqrt(s3_err**2 + s2_err**2)
+    x2_err = np.sqrt(std3_val**2 + std1_val**2)
 
     x_val = np.array([np.mean([a, b]) for a, b in zip(x1_val, x2_val)])
+    x_err = np.array([np.sqrt(a**2 + b**2)/2 for a, b in zip(x1_err, x2_err)])
 
-    f = pl.figure()
-    a = f.add_subplot(1, 1, 1)
-    logging.info(B_I)
-    logging.info(x1_val)
-    logging.info(B_I.shape)
-    logging.info(x1_val.shape)
-    a.errorbar(B_I, x1_val, yerr=x1_err, **plotargs)
-    a.errorbar(B_I, x2_val, yerr=x2_err, **plotargs)
-    f.savefig('_build/Aufspaltungen.pdf', **savefig_options)
-
-    f = pl.figure()
-    a = f.add_subplot(1, 1, 1)
-    a.plot(B_I, x1_val, **plotargs)
-    a.plot(B_I, x2_val, **plotargs)
-    a.plot(B_I, x_val, **plotargs)
-    f.savefig('_build/Aufspaltungen_ohne_Fehlerbalken.pdf', **savefig_options)
-
-    Delta_E = 6.626e-34 * 3e8 / lambda0**2 * x_val
+    Delta_E_val = 6.626e-34 * 3e8 / lambda0**2 * x_val
+    Delta_E_err = 6.626e-34 * 3e8 / lambda0**2 * x_err
 
     T['energieaufspaltung_tabelle'] = list(zip(
         unitprint.siunitx(B_I / 10**-2),
         unitprint.siunitx(x_val / 10**-12),
-        unitprint.siunitx(Delta_E),
+        unitprint.siunitx(Delta_E_val, Delta_E_err),
     ))
 
-
-    popt, pconv = op.curve_fit(linear, B_I, Delta_E)
+    popt, pconv = op.curve_fit(linear, B_I, Delta_E_val, sigma=1/Delta_E_err)
     fit_x = np.linspace(np.min(B_I), np.max(B_I))
     fit_y = linear(fit_x, *popt)
 
     f = pl.figure()
     a = f.add_subplot(1, 1, 1)
-    a.plot(B_I, Delta_E, **plotargs)
+    a.errorbar(B_I, Delta_E_val, yerr=Delta_E_err, linestyle='none', marker='+') 
     a.plot(fit_x, fit_y)
     a.set_xlabel(r'$B/\mathrm{T}$')
     a.set_ylabel(r'$\Delta E/\mathrm{J}$')
