@@ -13,6 +13,7 @@ import logging
 import matplotlib.pyplot as pl
 import multiprocessing
 import numpy as np
+import os.path
 import pprint
 import re
 import scipy.optimize as op
@@ -397,12 +398,61 @@ def job_franck_hertz(T):
             'U_A': data[:, 1],
         })
 
+    fh_roh_plot(sets)
+    fh_peaks(sets)
+
+    T['fh_sets'] = list([
+        {
+            'filename': s['filename'],
+            'T': unitprint.siunitx(s['T']),
+            'U_G': unitprint.siunitx(s['U_G']),
+            'abstand': unitprint.siunitx(s['popt'][1], s['perr'][1]),
+            'breite': unitprint.siunitx(s['popt'][2], s['perr'][2]),
+        }
+        for s in sets
+    ])
+
+def fh_peaks(sets):
+    for s in sets:
+        f = pl.figure()
+        a = f.add_subplot(1, 1, 1)
+
+        pl.plot(s['U_B'], s['U_A'], linestyle='none', marker='.')
+
+        try:
+            popt, pconv = op.curve_fit(
+                fh_gauss, s['U_B'], s['U_A'],
+                p0=[
+                    12, 5.0, 1,
+                    0.4, 1.8, 3.6, 6.0, 10.1,
+                    2/35,
+                ]
+            )
+
+            x = np.linspace(np.min(s['U_B']), np.max(s['U_B']), 1000)
+            y = fh_gauss(x, *popt)
+            pl.plot(x, y)
+            s['popt'] = popt
+            s['perr'] = np.sqrt(pconv.diagonal())
+        except RuntimeError as e:
+            logging.error(e)
+        except AttributeError as e:
+            logging.error(e)
+
+        a.set_xlabel(r'$U_B / \mathrm{V}$')
+        a.set_ylabel(r'$U_A / \mathrm{V}$')
+        a.grid(True)
+        filename = 'FH_{T}_{U_G}'.format(**s).replace('.', ',')+'.pdf'
+        s['filename'] = filename
+        f.savefig(os.path.join('_build', filename), **savefig_options)
+
+def fh_roh_plot(sets):
     f = pl.figure()
     a = f.add_subplot(1, 1, 1)
     for s in sets:
         a.plot(
             s['U_B'], s['U_A'],
-            label=r'$T = {T:.3g}\,\mathrm{{K}},\;U_B = {U_G:.3g}\,\mathrm{{V}}$'.format(**s),
+            label=r'$T = {T:.3g}\,\mathrm{{K}},\;U_G = {U_G:.3g}\,\mathrm{{V}}$'.format(**s),
             linestyle='none', marker='.',
         )
     a.set_xlabel(r'$U_B / \mathrm{V}$')
@@ -411,13 +461,19 @@ def job_franck_hertz(T):
     a.legend(loc='best')
     f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)
 
+def fh_gauss(U_B, U_B_min, abstand, breite, a1, a2, a3, a4, a5, steigung):
+    summands = []
+    summands.append(gauss(U_B, U_B_min + 1*abstand, breite, a1))
+    summands.append(gauss(U_B, U_B_min + 2*abstand, breite, a2))
+    summands.append(gauss(U_B, U_B_min + 3*abstand, breite, a3))
+    summands.append(gauss(U_B, U_B_min + 4*abstand, breite, a4))
+    summands.append(gauss(U_B, U_B_min + 5*abstand, breite, a5))
 
-def main():
+    summands.append(linear(U_B, steigung))
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-v', '--verbose', action='count', default=0)
-    options = parser.parse_args()
+    return sum(summands)
 
+def setup_logging(options):
     if options.verbose == 0:
         level = logging.WARNING
     elif options.verbose == 1:
@@ -426,6 +482,13 @@ def main():
         level = logging.DEBUG
 
     logging.basicConfig(level=level)
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbose', action='count', default=0)
+    options = parser.parse_args()
+
+    setup_logging(options)
 
     with multiprocessing.Manager() as manager:
         T = manager.dict()

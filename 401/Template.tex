@@ -539,7 +539,8 @@ Der Literaturwert für das Bohr'sche Magneton ist:
 
 \section{Auswertung}
 
-Unsere Messdaten sind in Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
+Unsere Messdaten sind für einen ersten Überblick in
+Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
 
 \begin{figure}[htbp]
     \centering
@@ -549,6 +550,39 @@ Unsere Messdaten sind in Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
     }
     \label{fig:FH_Rohdaten}
 \end{figure}
+
+%< for s in fh_sets: >%
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{<< s.filename >>}
+    \caption{%
+        $T = \SI{<< s.T >>}{\kelvin}$,
+        $\Deltaup U_G = \SI{<< s.U_G >>}{\volt}$,
+        $U_{\text{Abstand}} = \SI{<< s.abstand >>}{\volt}$,
+        $U_{\text{Breite}} = \SI{<< s.breite >>}{\volt}$.
+    }
+    \label{fig:}
+\end{figure}
+%< endfor >%
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$T / \si\kelvin$}
+        & {$\Deltaup U_G / \si\volt$}
+        & {$U_{\text{Abstand}} / \si\volt$}
+        & {$U_{\text{Breite}} / \si\volt$}
+        \\
+        \midrule
+        %< for s in fh_sets: >%
+        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> \\
+        %< endfor >%
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Anpassungsparameter.
+    }
+    \label{tab:}
+\end{table}
 
 \section{Diskussion}
 
