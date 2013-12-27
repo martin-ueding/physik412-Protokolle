@@ -408,6 +408,7 @@ def job_franck_hertz(T):
             'U_G': unitprint.siunitx(s['U_G']),
             'abstand': unitprint.siunitx(s['popt'][1], s['perr'][1]),
             'breite': unitprint.siunitx(s['popt'][2], s['perr'][2]),
+            'k': unitprint.siunitx(s['k_val']/10**2, s['k_err']/10**2)
         }
         for s in sets
     ])
@@ -439,6 +440,15 @@ def fh_peaks(T, sets):
             pl.plot(x, y)
             s['popt'] = popt
             s['perr'] = np.sqrt(pconv.diagonal())
+
+            abstand_val = s['popt'][1]
+            abstand_err = s['perr'][1]
+
+            k_val = abstand_val * 1.609e-19 / 6.626e-34 / 3e8
+            k_err = abstand_err * 1.609e-19 / 6.626e-34 / 3e8
+
+            s['k_val'] = k_val
+            s['k_err'] = k_err
         except RuntimeError as e:
             logging.error(e)
         except AttributeError as e:
@@ -477,6 +487,28 @@ def fh_gauss(U_B, U_B_min, abstand, breite, a1, a2, a3, a4, a5, steigung):
     summands.append(linear(U_B, steigung))
 
     return sum(summands)
+
+def dampfdruck(T):
+    return np.exp(10.55 - 3333/T - 0.85 * np.log(T))
+
+def job_dampfdruckkurve(T):
+    x = np.linspace(150 + 273.15, 165 + 273.15)
+    y = dampfdruck(x)
+
+    y_min = np.min(y)
+    y_max = np.max(y)
+
+    schwankung = (y_max - y_min) / np.mean([y_min, y_max])
+
+    T['ddk_schwankung'] = unitprint.siunitx(schwankung)
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    a.plot(x, y)
+    a.set_xlabel(r'$T / \mathrm{K}$')
+    a.set_ylabel(r'$p / \mathrm{Torr}$')
+    a.grid(True)
+    f.savefig('_build/Dampfdruckkurve.pdf', **savefig_options)
 
 def setup_logging(options):
     if options.verbose == 0:

@@ -559,6 +559,8 @@ Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
     \label{fig:FH_Rohdaten}
 \end{figure}
 
+\subsection{Bestimmung der Energiedifferenz}
+
 An jede der Kurve passen wir folgende Überlagerung aus fünf äquidistanten
 Gaußfunktionen \eqref{eq:gauss} mit unterschiedlicher Amplitude und einer
 Ursprungsgeraden an:
@@ -571,11 +573,8 @@ Ursprungsgeraden an:
     m U_\text B.
 \end{multline*}
 
-Die beiden interessanten Parameter sind $U_\text{Abstand}$ und
-$U_\text{Breite}$. Bei der Anpassung wird das erste Maximum trotz entsprechend
-gewählter Startwerte nicht berücksichtigt. Dies ist jedoch kein Problem, da der
-Abstand der weiteren Maxima richtig herauskommt. Die errechneten Parameter sind
-in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
+Aufgrund des Plateaus benutzen wir nur die Messwerte bis zu einer
+Beschleunigungsspannung von \SI{<< upper_limit >>}{\volt}.
 
 %< for s in fh_sets: >%
 \begin{figure}[htbp]
@@ -591,17 +590,25 @@ in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
 \end{figure}
 %< endfor >%
 
+Die beiden interessanten Parameter sind $U_\text{Abstand}$ und
+$U_\text{Breite}$. Bei der Anpassung wird das erste Maximum trotz entsprechend
+gewählter Startwerte nicht berücksichtigt. Dies ist jedoch kein Problem, da der
+Abstand der weiteren Maxima richtig herauskommt. Die errechneten Parameter sind
+in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSS}
+    \begin{tabular}{SSSSS}
         {$T / \si\kelvin$}
         & {$\Deltaup U_G / \si\volt$}
         & {$U_{\text{Abstand}} / \si\volt$}
         & {$U_{\text{Breite}} / \si\volt$}
+        & {$k / \si{\per\centi\meter}$}
         \\
         \midrule
         %< for s in fh_sets: >%
-        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> \\
+        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> & << s.k >>
+        \\
         %< endfor >%
     \end{tabular}
     \caption{%
@@ -609,6 +616,27 @@ in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
     }
     \label{tab:fh-fit1}
 \end{table}
+
+\subsection{Dampfdruck}
+
+Innerhalb des recht kleinen Temperaturintervalles von
+\SIrange{150}{165}{\celsius} ist die Dampfdruckkurve von Quecksilber in
+Abbildung~\ref{fig:Dampfdruckkurve} dargestellt. Die relative Schwankung, die
+Differenz der Extremwerte durch den Mittelwert, beträgt \num{<< ddk_schwankung
+>>}. Dies ist schon relativ viel für einen kleinen Temperaturbereich. Die Atome
+dürfen nicht zu dicht sein, damit die Elektronen auch wirklich beschleunigt
+werden können, ohne zu oft zu stoßen. Jedoch müssen auch genug Atome vorhanden
+sein, damit die Elektronen nicht ohne Widerstand durch das dünne Gas kommen. In
+diesem Fall wären die Minima nicht deutlich ausgeprägt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Dampfdruckkurve.pdf}
+    \caption{%
+        Dampfdruck in Abhängigkeit von der Temperatur.
+    }
+    \label{fig:Dampfdruckkurve}
+\end{figure}
 
 \section{Diskussion}
 
