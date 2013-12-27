@@ -308,8 +308,8 @@ def fit_aufspaltungen(T, fe, B, fe0):
     a = f.add_subplot(1, 1, 1)
     a.plot(B_I, Delta_E, **plotargs)
     a.plot(fit_x, fit_y)
-    a.set_xlabel(r'$B / \mathrm{T}$')
-    a.set_ylabel(r'$\Delta E / \mathrm{J}$')
+    a.set_xlabel(r'$B/\mathrm{T}$')
+    a.set_ylabel(r'$\Delta E/\mathrm{J}$')
     a.grid(True)
     f.savefig('_build/Energieaufspaltung.pdf', **savefig_options)
 
@@ -377,7 +377,7 @@ def einzel_fit(data, I, min_, max_, p0):
     a.grid(True)
     a.legend(loc='best')
     #a.set_title(r'$I = {}$'.format(I))
-    a.set_xlabel(r'$\lambda / ^\circ$')
+    a.set_xlabel(r'$\lambda/^\circ$')
     a.set_ylabel(r'rel. Int.')
     p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')), **savefig_options)
 
@@ -461,8 +461,8 @@ def fh_peaks(T, sets):
         except AttributeError as e:
             logging.error(e)
 
-        a.set_xlabel(r'$U_\mathrm{B} / \mathrm{V}$')
-        a.set_ylabel(r'$U_\mathrm{A} / \mathrm{V}$')
+        a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
+        a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
         a.grid(True)
         filename = 'FH_{T}_{U_G}'.format(**s).replace('.', ',')+'.pdf'
         s['filename'] = filename
@@ -474,11 +474,11 @@ def fh_roh_plot(sets):
     for s in sets:
         a.plot(
             s['U_B'], s['U_A'],
-            label=r'$T = {T:.3g}\,\mathrm{{K}},\;U_G = {U_G:.3g}\,\mathrm{{V}}$'.format(**s),
+            label=r'$T={T:.3g}\,\mathrm{{K}},\;U_\mathrm{{G}}={U_G:.3g}\,\mathrm{{V}}$'.format(**s),
             linestyle='none', marker='.',
         )
-    a.set_xlabel(r'$U_\mathrm{B} / \mathrm{V}$')
-    a.set_ylabel(r'$U_\mathrm{A} / \mathrm{V}$')
+    a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
+    a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
     a.grid(True)
     a.legend(loc='best')
     f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)
