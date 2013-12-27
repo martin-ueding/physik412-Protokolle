@@ -408,7 +408,8 @@ def job_franck_hertz(T):
             'U_G': unitprint.siunitx(s['U_G']),
             'abstand': unitprint.siunitx(s['popt'][1], s['perr'][1]),
             'breite': unitprint.siunitx(s['popt'][2], s['perr'][2]),
-            'k': unitprint.siunitx(s['k_val']/10**2, s['k_err']/10**2)
+            'k': unitprint.siunitx(s['k_val']*10**-2, s['k_err']*10**-2),
+            'lambda': unitprint.siunitx(s['lambda_val']/10**-9, s['lambda_err']/10**-9),
         }
         for s in sets
     ])
@@ -447,8 +448,14 @@ def fh_peaks(T, sets):
             k_val = abstand_val * 1.609e-19 / 6.626e-34 / 3e8
             k_err = abstand_err * 1.609e-19 / 6.626e-34 / 3e8
 
+            lambda_val = 1 / k_val
+            lambda_err = 1 / k_val**2 * k_err
+
             s['k_val'] = k_val
             s['k_err'] = k_err
+
+            s['lambda_val'] = lambda_val
+            s['lambda_err'] = lambda_err
         except RuntimeError as e:
             logging.error(e)
         except AttributeError as e:

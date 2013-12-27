@@ -598,17 +598,15 @@ in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{SSSSS}
+    \begin{tabular}{SSSS}
         {$T / \si\kelvin$}
         & {$\Deltaup U_G / \si\volt$}
         & {$U_{\text{Abstand}} / \si\volt$}
         & {$U_{\text{Breite}} / \si\volt$}
-        & {$k / \si{\per\centi\meter}$}
         \\
         \midrule
         %< for s in fh_sets: >%
-        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> & << s.k >>
-        \\
+        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> \\
         %< endfor >%
     \end{tabular}
     \caption{%
@@ -616,6 +614,44 @@ in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
     }
     \label{tab:fh-fit1}
 \end{table}
+
+\FloatBarrier
+\subsection{Wellenzahlunterschiede}
+
+Wir rechnen die Spannungsdifferenzen in Wellenzahlunterschiede um, wobei wir
+die Variante mit $k = \lambda^{-1}$ (anstelle von $k = 2\piup\lambda^{-1}$)
+benutzen:
+\[
+    \Deltaup k = \frac{U_{\text{Abstand}} e}{h c}.
+\]
+Die erhaltenen Wellenzahlen sind in Tabelle~\ref{tab:fh-k}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {$U_{\text{Abstand}} / \si\volt$}
+        & {$k / \si{\per\centi\meter}$}
+        & {$\lambda / \si{\nano\meter}$}
+        \\
+        \midrule
+        %< for s in fh_sets: >%
+        << s.abstand >> & << s.k >> & << s.lambda >> \\
+        %< endfor >%
+    \end{tabular}
+    \caption{%
+        Wellenzahl der Übergänge.
+    }
+    \label{tab:fh-k}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{../termschema_quecksilber.pdf}
+    \caption{%
+        \ccbyncsa \parencite{Krähling/Termschema_Quecksilber}
+    }
+    \label{fig:}
+\end{figure}
 
 \subsection{Dampfdruck}
 
