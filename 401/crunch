@@ -90,6 +90,22 @@ def magnetfeldkalibrierung(T):
 
     return lambda I: polynom(I, *popt)
 
+def job_theoretische_finesse(T):
+    d = 4e-3
+    n = 1.457
+    r = 0.85
+
+    finesse = np.pi * np.sqrt(r) / (1 - r)
+
+    frequenz = 3e8 / lambda_cd
+    Delta_frequenz = 3e8 / (2 * n * d)
+
+    Delta_lambda = 3e8 / frequenz**2 * Delta_frequenz
+    N = lambda_cd / Delta_lambda
+
+    T['finesse_theoretisch'] = unitprint.siunitx(finesse)
+    T['N_theoretisch'] = unitprint.siunitx(N)
+
 def job_zeeman(T):
     B = magnetfeldkalibrierung(T)
 
@@ -140,7 +156,6 @@ def job_zeeman(T):
 
     zoom_fig = pl.figure()
     zoom = zoom_fig.add_subplot(1, 1, 1)
-
     citer = coloriter(len(data))
 
     for I, (lambda_, intens) in sorted(data.items()):
@@ -149,18 +164,31 @@ def job_zeeman(T):
         selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
         zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
 
+    zoom.set_xlabel(r'$\lambda / m$')
+    zoom.set_ylabel(r'rel. Int.')
+    zoom.grid(True)
+    zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
+
+    zoom_dreifach_fig = pl.figure()
+    zoom_dreifach = zoom_dreifach_fig.add_subplot(1, 1, 1)
+    citer = coloriter(len(data))
+
+    for I, (lambda_, intens) in sorted(data.items()):
+        selection = lambda_[6.4368e-7 < lambda_] < 6.4395e-7
+        zoom_dreifach.plot(lambda_[selection] / 10**-7, intens[selection])
+        break
+
+    zoom_dreifach.set_xlabel(r'$\lambda / m$')
+    zoom_dreifach.set_ylabel(r'rel. Int.')
+    zoom_dreifach.grid(True)
+    zoom_dreifach_fig.savefig('_build/Zoom_dreifach.pdf', **savefig_options)
+
     T['I_list'] = [str(x).replace('.', ',') for x in sorted(data.keys())]
 
     T['B_dict'] = {
         str(I_).replace('.', ','): unitprint.siunitx(B(I_)/10**-2)
         for I_ in data.keys()
     }
-
-    zoom.set_xlabel(r'$\lambda / m$')
-    zoom.set_ylabel(r'rel. Int.')
-    #zoom.legend(loc='best')
-    zoom.grid(True)
-    zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
 
     fit_ergebnisse = []
 
@@ -252,8 +280,8 @@ def qualitativ_finesse(T, B, bohr_val, bohr_err):
     T['I_crit_long'] = unitprint.siunitx(I_crit_long_val)
     T['I_crit_trans'] = unitprint.siunitx(I_crit_trans_val)
 
-    T['B_crit_long'] = unitprint.siunitx(B_crit_long_val)
-    T['B_crit_trans'] = unitprint.siunitx(B_crit_trans_val)
+    T['B_crit_long'] = unitprint.siunitx(B_crit_long_val / 1e-2)
+    T['B_crit_trans'] = unitprint.siunitx(B_crit_trans_val / 1e-2)
 
     T['N_long'] = unitprint.siunitx(N_long_val)
     T['N_trans'] = unitprint.siunitx(N_trans_val)
