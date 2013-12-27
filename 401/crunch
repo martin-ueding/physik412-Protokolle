@@ -165,8 +165,8 @@ def job_zeeman(T):
     fit_ergebnisse = []
 
     fit_ergebnisse.append(einzel_fit(
-        data, 0.0, 6.4376e-7, 6.4384e-7,
-        [6.43802e-7, 6e-12, 38, 3]
+        data, 0.0, 6.43766e-7, 6.43837e-7,
+        [6.43800e-7, 5e-12, 15, 6.43803e-7, 6e-12, 18, 6.43805e-7, 5e-12, 15, 3]
     ))
 
     fit_ergebnisse.append(einzel_fit(
