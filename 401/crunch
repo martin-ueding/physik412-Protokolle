@@ -282,14 +282,14 @@ def fit_aufspaltungen(T, fe, B, fe0):
     logging.info(x1_val.shape)
     a.errorbar(B_I, x1_val, yerr=x1_err, **plotargs)
     a.errorbar(B_I, x2_val, yerr=x2_err, **plotargs)
-    f.savefig('_build/Aufspaltungen.pdf')
+    f.savefig('_build/Aufspaltungen.pdf', **savefig_options)
 
     f = pl.figure()
     a = f.add_subplot(1, 1, 1)
     a.plot(B_I, x1_val, **plotargs)
     a.plot(B_I, x2_val, **plotargs)
     a.plot(B_I, x_val, **plotargs)
-    f.savefig('_build/Aufspaltungen_ohne_Fehlerbalken.pdf')
+    f.savefig('_build/Aufspaltungen_ohne_Fehlerbalken.pdf', **savefig_options)
 
     Delta_E = 6.626e-34 * 3e8 / lambda0**2 * x_val
 
@@ -311,7 +311,7 @@ def fit_aufspaltungen(T, fe, B, fe0):
     a.set_xlabel(r'$B / \mathrm{T}$')
     a.set_ylabel(r'$\Delta E / \mathrm{J}$')
     a.grid(True)
-    f.savefig('_build/Energieaufspaltung.pdf')
+    f.savefig('_build/Energieaufspaltung.pdf', **savefig_options)
 
     bohr_val = popt[0]
     bohr_err = np.sqrt(pconv.diagonal()[0])
@@ -379,7 +379,7 @@ def einzel_fit(data, I, min_, max_, p0):
     #a.set_title(r'$I = {}$'.format(I))
     a.set_xlabel(r'$\lambda / ^\circ$')
     a.set_ylabel(r'rel. Int.')
-    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')))
+    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')), **savefig_options)
 
     return returnval
 
@@ -399,7 +399,7 @@ def job_franck_hertz(T):
         })
 
     fh_roh_plot(sets)
-    fh_peaks(sets)
+    fh_peaks(T, sets)
 
     T['fh_sets'] = list([
         {
@@ -412,16 +412,21 @@ def job_franck_hertz(T):
         for s in sets
     ])
 
-def fh_peaks(sets):
+def fh_peaks(T, sets):
+    upper_limit = 35
+    T['upper_limit'] = unitprint.siunitx(upper_limit)
+
     for s in sets:
         f = pl.figure()
         a = f.add_subplot(1, 1, 1)
+
+        selection = s['U_B'] <= upper_limit
 
         pl.plot(s['U_B'], s['U_A'], linestyle='none', marker='.')
 
         try:
             popt, pconv = op.curve_fit(
-                fh_gauss, s['U_B'], s['U_A'],
+                fh_gauss, s['U_B'][selection], s['U_A'][selection],
                 p0=[
                     12, 5.0, 1,
                     0.4, 1.8, 3.6, 6.0, 10.1,
@@ -429,7 +434,7 @@ def fh_peaks(sets):
                 ]
             )
 
-            x = np.linspace(np.min(s['U_B']), np.max(s['U_B']), 1000)
+            x = np.linspace(np.min(s['U_B'][selection]), np.max(s['U_B'][selection]), 1000)
             y = fh_gauss(x, *popt)
             pl.plot(x, y)
             s['popt'] = popt
@@ -439,8 +444,8 @@ def fh_peaks(sets):
         except AttributeError as e:
             logging.error(e)
 
-        a.set_xlabel(r'$U_B / \mathrm{V}$')
-        a.set_ylabel(r'$U_A / \mathrm{V}$')
+        a.set_xlabel(r'$U_\mathrm{B} / \mathrm{V}$')
+        a.set_ylabel(r'$U_\mathrm{A} / \mathrm{V}$')
         a.grid(True)
         filename = 'FH_{T}_{U_G}'.format(**s).replace('.', ',')+'.pdf'
         s['filename'] = filename
@@ -455,8 +460,8 @@ def fh_roh_plot(sets):
             label=r'$T = {T:.3g}\,\mathrm{{K}},\;U_G = {U_G:.3g}\,\mathrm{{V}}$'.format(**s),
             linestyle='none', marker='.',
         )
-    a.set_xlabel(r'$U_B / \mathrm{V}$')
-    a.set_ylabel(r'$U_A / \mathrm{V}$')
+    a.set_xlabel(r'$U_\mathrm{B} / \mathrm{V}$')
+    a.set_ylabel(r'$U_\mathrm{A} / \mathrm{V}$')
     a.grid(True)
     a.legend(loc='best')
     f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)

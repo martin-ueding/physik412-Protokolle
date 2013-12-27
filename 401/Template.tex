@@ -421,7 +421,15 @@ Abbildung~\ref{fig:Zoom} dargestellt.
 \end{figure}
 
 Für jede Flussdichte passen wir eine Summe aus drei Gaußkurven sowie einem
-konstanten Untergrundsignal an die Messdaten an. Aus der Anpassung erhalten wir
+konstanten Untergrundsignal an die Messdaten an. Unsere Gaußkurve ist wie folgt
+definiert:
+\begin{equation}
+    \label{eq:gauss}
+    \mathop{\text{Gauß}} (x; \mu, \sigma, a)
+    := a \exp\del{- \frac12 \del{\frac{x-\mu}{\sigma}}^2}
+\end{equation}
+
+Aus der Anpassung erhalten wir
 die Schwerpunkte der Maxima, siehe Tabelle~\ref{tab:Peakschwerpunkte}. Die
 Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
 >>} bis \ref{fig:Fit-<< I_list[-1] >>} gezeigt.
@@ -429,7 +437,7 @@ Daten und ihre Anpassungen sind in den Abbildungen \ref{fig:Fit-<< I_list[0]
 %< for I in I_list: >%
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=.9\linewidth]{Fit-<< I >>.pdf}
+    \includegraphics[width=.8\linewidth]{Fit-<< I >>.pdf}
     \caption{%
         Fit für \SI{<< I >>}{\ampere}, entsprechend \SI{<< B_dict[I]
         >>}{\centi\tesla}.
@@ -551,15 +559,33 @@ Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
     \label{fig:FH_Rohdaten}
 \end{figure}
 
+An jede der Kurve passen wir folgende Überlagerung aus fünf äquidistanten
+Gaußfunktionen \eqref{eq:gauss} mit unterschiedlicher Amplitude und einer
+Ursprungsgeraden an:
+\begin{multline*}
+    U_\text A (U_\text B; U_{\text B, \text{min}}, U_\text{Abstand}, U_\text{Breite}, \{a_i\}, m)
+    = \\
+    \sum_{i=1}^5 \mathop{\text{Gauß}} (U_\text B; U_{\text B, \text{min}} + i
+    U_\text{Abstand}, U_\text{Breite}, a_i)
+    +
+    m U_\text B.
+\end{multline*}
+
+Die beiden interessanten Parameter sind $U_\text{Abstand}$ und
+$U_\text{Breite}$. Bei der Anpassung wird das erste Maximum trotz entsprechend
+gewählter Startwerte nicht berücksichtigt. Dies ist jedoch kein Problem, da der
+Abstand der weiteren Maxima richtig herauskommt. Die errechneten Parameter sind
+in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
+
 %< for s in fh_sets: >%
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\linewidth]{<< s.filename >>}
+    \includegraphics[width=0.8\linewidth]{<< s.filename >>}
     \caption{%
         $T = \SI{<< s.T >>}{\kelvin}$,
-        $\Deltaup U_G = \SI{<< s.U_G >>}{\volt}$,
-        $U_{\text{Abstand}} = \SI{<< s.abstand >>}{\volt}$,
-        $U_{\text{Breite}} = \SI{<< s.breite >>}{\volt}$.
+        $U_\text G = \SI{<< s.U_G >>}{\volt}$,
+        $U_\text{Abstand} = \SI{<< s.abstand >>}{\volt}$,
+        $U_\text{Breite} = \SI{<< s.breite >>}{\volt}$.
     }
     \label{fig:}
 \end{figure}
@@ -581,7 +607,7 @@ Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
     \caption{%
         Zusammenstellung der Anpassungsparameter.
     }
-    \label{tab:}
+    \label{tab:fh-fit1}
 \end{table}
 
 \section{Diskussion}
