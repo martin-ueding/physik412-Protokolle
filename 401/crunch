@@ -496,7 +496,7 @@ def fh_gauss(U_B, U_B_min, abstand, breite, a1, a2, a3, a4, a5, steigung):
     return sum(summands)
 
 def dampfdruck(T):
-    return np.exp(10.55 - 3333/T - 0.85 * np.log(T))
+    return np.exp(10.55 - 3333/T - 0.85 * np.log(T)) * 133.322
 
 def job_dampfdruckkurve(T):
     x = np.linspace(150 + 273.15, 165 + 273.15)
@@ -513,7 +513,7 @@ def job_dampfdruckkurve(T):
     a = f.add_subplot(1, 1, 1)
     a.plot(x, y)
     a.set_xlabel(r'$T / \mathrm{K}$')
-    a.set_ylabel(r'$p / \mathrm{Torr}$')
+    a.set_ylabel(r'$p / \mathrm{Pa}$')
     a.grid(True)
     f.savefig('_build/Dampfdruckkurve.pdf', **savefig_options)
 

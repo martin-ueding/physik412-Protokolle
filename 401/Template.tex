@@ -616,7 +616,7 @@ in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
 \end{table}
 
 \FloatBarrier
-\subsection{Wellenzahlunterschiede}
+\subsection{Energiedifferenzen}
 
 Wir rechnen die Spannungsdifferenzen in Wellenzahlunterschiede um, wobei wir
 die Variante mit $k = \lambda^{-1}$ (anstelle von $k = 2\piup\lambda^{-1}$)
@@ -624,7 +624,7 @@ benutzen:
 \[
     k = \frac{U_{\text{Abstand}} e}{h c}
     \eqnsep
-    \lambda k = \frac 1\lambda.
+    \lambda = \frac 1k.
 \]
 Die erhaltenen Wellenzahlen und -längen sind in Tabelle~\ref{tab:fh-k_lambda}.
 
@@ -647,7 +647,11 @@ Die erhaltenen Wellenzahlen und -längen sind in Tabelle~\ref{tab:fh-k_lambda}.
 \end{table}
 
 Der einzige Übergang, der aus dem Termschema in Abbildung~\ref{fig:Termschema}
-in Frage kommt, ist der $\mathrm{6{}^1S_0 \to 6{}^3P_1}$.
+in Frage kommt, ist der $\mathrm{6{}^1S_0 \to 6{}^3P_1}$ mit
+\SI{253.65}{\nano\meter}. Dieser Übergang hat auch einen maximalen
+Wirkungsquerschnitt (siehe \cite[Abbildung~P401.5]{physik412-Anleitung}) bei
+Elektronenenergien von \SI{5}{\electronvolt}, dies entspricht ebenfalls unseren
+Überlegungen.
 
 \begin{figure}[htbp]
     \centering
@@ -658,6 +662,24 @@ in Frage kommt, ist der $\mathrm{6{}^1S_0 \to 6{}^3P_1}$.
     }
     \label{fig:Termschema}
 \end{figure}
+
+\subsection{Abhängigkeit des Anodenstroms}
+
+Bei ganzen Vielfachen der Anregungsenergie gibt es keinen scharfen Einbruch, da
+trotzdem einige Elektronen die Anode erreichen. Dies können sie aus einem der
+folgenden Gründen:
+
+Die angeregten Zustände haben eine gewisse Lebensdauer. Innerhalb dieser Zeit
+kann ein Atom kein weiteres Energiequant von \SI{5}{\electronvolt} aufnehmen.
+Das Elektron fliegt ungestört weiter.
+
+Das Quecksilber ist recht dünn (einige \si{\deka\pascal}, siehe
+Abbildung~\ref{fig:Dampfdruckkurve}), so dass die freie Weglänge der
+Quecksilberatome \SIrange{0.1}{100}{\micro\meter} beträgt
+\parencite{wikipedia/Mittlere_freie_Weglaenge}. Daher kann es auch sein, dass
+ein Elektron, wenn es die richtige kinetische Energie hat, kein Quecksilberatom
+trifft. Je höher die Spannung ist, desto schmaler wird der Raumbereich, in dem
+das Elektron die richtige Energie hat.
 
 \subsection{Dampfdruck}
 
