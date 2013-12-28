@@ -183,19 +183,29 @@ dem Winkel $\alpha$. Ist der Gangunterschied zwischen zwei Teilstrahlen nun ein
 vielfaches der Wellenlänge findet konstruktive Interferenz statt, gilt dies
 nicht, heben sich die Teilstrahlen gegenseitig auf. Die Bedingung für
 konstruktive Interferenz lässt sich aus Abbildung~\ref{fig:Etalon} geometrisch
-herleiten. Sie lautet
+herleiten. Die optische Weglängendifferenz ist mit Berücksichtigung der
+Brechungsindizes
 \begin{align*}
-    k\lambda &= 2d\cos\del{\beta} - 2d\tan\del{\beta}\cos\del{1-\alpha}.
+    \Delta s &= 2dn\sec\del{\beta} -
+    2dn_\text{Luft}\tan\del{\beta}\sin\del{\alpha}\\
+    &= 2d\sec\del{\beta}
+    \del{n -\underbrace{n_\text{Luft}\sin\del{\alpha}}_
+    {=n\sin\del{\beta}}\sin\del{\beta}}\\
+    &=2nd\sec\del{\beta}\del{1-\sin^2\del{\beta}} \\
+    &=2nd\cos\del{\beta}.
+    \intertext{Diese soll nun ein Vielfaches der Wellenlänge sein:}
+    m\lambda &= 2nd\cos\del\beta
     \intertext{%
-        Über den Brechungsindex erhält man einen Ausdruck für den Winkel
-        $\beta$:
+        Da nun $\beta = \arcsin\del{\frac{\sin\alpha}n}$ ist, gilt
     }
-    \beta &= \arcsin\del{\frac{\sin{\alpha}}n}
+    &= 2nd\cos\del{\arcsin\del{\frac{\sin\alpha}n}},
     \intertext{%
-        Dadurch ergibt sich für die Interferenzbedingung:
+        für kleine Winkel $\alpha$ entsprechend
     }
-    k\lambda &=
+    m\lambda &= 2nd\cos\del{\frac\alpha n}.
 \end{align*}
+%TODO: Finesse
+%TODO: Auflösungsvermögen
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -204,7 +214,7 @@ herleiten. Sie lautet
         % Dicke
         \draw[thick, |<->|] (-1,-4.7) to node[below] {$d$} (1,-4.7);
         % Brechungsindizes
-        \node[label=180:{$n>1$}, label=0:{$n=1$}] at (1,3.2) {};
+        \node[label=180:{$n>1$}, label=0:{$n_\text{Luft}=1$}] at (1,3.2) {};
         % Lot
         \draw[dashed]
         (-2.5,2.) -- (0.5,2.)
@@ -218,7 +228,7 @@ herleiten. Sie lautet
         -- (1,-1) coordinate (b)
         -- (2.5,-2.5)
         (b) -- (-1,-2)
-        -- (1,-3)
+        -- (1,-3) coordinate (c)
         -- (2.5,-4.5);
         % Winkel
         \draw
@@ -226,6 +236,8 @@ herleiten. Sie lautet
         (0.5,2.) arc (0:-27:1.5cm) node[label=115:{$\beta$}]{}
         (-0.5,-3.) arc (180:153:1.5cm) node[label=290:$\beta$]{}
         (2,-3.) arc (0:-45:1.0cm) node[label=90:{$\alpha$}]{};
+        \draw[dotted] (c) -- (2., -2.) node[left]{.} ;
+        \draw (1.75,-1.75) arc(135:225:0.35);
     \end{tikzpicture}
     \caption{%
         Strahlengang im Fabry-Pérot-Etalon
