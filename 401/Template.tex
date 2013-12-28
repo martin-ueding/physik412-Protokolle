@@ -136,7 +136,6 @@ werden, sind gleich, sodass hier eine Aufspaltung in drei Linien stattfindet.
     \label{fig:Übergänge}
 \end{figure}
 
-
 \section{Natürliche Linienbreite und Linienverbreiterung}
 
 In Abschnitt \ref{ssec:Niveau} ist die Rede von Linien, die durch diskrete
@@ -152,11 +151,29 @@ starke Dopplerverschiebung der Wellenlänge statt. Die eigentlich scharfe Linie
 wird so zu einer Verteilung von nah aneinander liegenden Wellenlängen. Sie
 verbreitert sich also.
 
+Die Frequenzverbreiterung ist gegeben durch
+\parencite{chemgapedia/spektrallinien/dopplerverbreiterung}:
+\[
+    \Deltaup \nu_{1/2} = \num{7.16e-7} \nu_0
+    \sqrt{\frac{T / \si\kelvin}{m / \si\atomicmassunit}}.
+\]
+
+Die Wellenlängenverbreiterung erhalten wir durch Gauß'sche
+Fehlerfortpflanzung:
+\[
+    \Deltaup \lambda = \frac{c}{\nu_0^2} \Deltaup \nu.
+\]
+
+Für eine Temperatur von \SI{1000}{\kelvin} und einem Atomgewicht von \SI{<<
+m_cd >>}{\atomicmassunit} \parencite[Umschlag]{meschede-gerthsen_24} erhalten
+wir so eine Linienverbreiterung von \SI{<< doppler_width_nu >>}{\hertz} oder
+\SI{<< doppler_width_lambda >>}{\pico\meter}.
+
 \section{Fabry-Pérot-Etalon}
 
 Das Fabry-Pérot-Etalon besteht aus einen planparallelen lichtdurchlässigen
 Material mit Brechungsindex $n>1$, dessen Oberflächen zum Beispiel durch
-aufdampfen von Silber eine hohe Reflexivität haben.
+Aufdampfen von Silber eine hohe Reflexivität haben.
 
 Trifft ein monochromatischer Lichtstrahl mit Wellenlänge $\lambda$ unter dem
 Winkel $\alpha$ auf das Etalon, wird er gebrochen und in diesem sehr häufig
@@ -306,52 +323,562 @@ sehen.
 
 \subsection{Termschema von Quecksilber}
 
-\chapter{Aufbau}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{../termschema_quecksilber.pdf}
+    \caption{%
+        Termschema von Quecksilber. Lizenziert unter \ccbyncsa.
+        \parencite{Kraehling/Termschema_Quecksilber}.
+    }
+    \label{fig:Termschema}
+\end{figure}
 
 \chapter{Zeeman-Effekt}
 
-\section{Durchführung}
+\section{Qualitative Beobachtung der Aufspaltung}
 
-Der Strom, bei der in transversaler Konfiguration die Linien zu unterscheiden
-sind, ist \SI{1.9}{\ampere}. In longitudinaler Konfiguration ist der Strom
-\SI{1.0}{\ampere}. Die longitudinalen Linien sind deutlich dunkler.
+\subsection{Transversale Konfiguration}
 
-\section{Auswertung}
+Zuerst betrachten wir die Aufspaltung durch das Okular und fertigen qualitative
+Skizzen an. Die beobachtete Linie ist rot, daher haben wir dies als Hauptfarbe
+genommen. Um die (roten) Aufspaltungen unterscheiden zu können, sind diese in
+der Skizze blau.
+
+Ohne Magnetfeld erhalten wir konzentrische Kreise
+(Abbildung~\ref{fig:Skizze-1}). Hier sind die drei Energieniveaus entartet, da
+kein externe magnetische Flussdichte anliegt. Jeder Ring ist ein
+Interferenzmaximum des Etalons und hat nichts mit der Zeeman-Aufspaltung zu
+tun.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-1.pdf}
+    \caption{%
+        Transversal, ohne Magnetfeld.
+    }
+    \label{fig:Skizze-1}
+\end{figure}
+
+Wir erhöhen das Magnetfeld, bis wir die aufgespaltenen Ringe gut unterscheiden
+können (Abbildung~\ref{fig:Skizze-2}). Der Strom, bei der die Linien zu
+unterscheiden sind, ist \SI{<< I_crit_trans >>}{\ampere}. Die Aufspaltung der
+Ringe kommt durch die Zeeman-Aufspaltung der Energieniveaus. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-2.pdf}
+    \caption{%
+        Transversal, mit Magnetfeld.
+    }
+    \label{fig:Skizze-2}
+\end{figure}
+
+Als nächstes betrachten wir die Polarisation, siehe
+Abbildung~\ref{fig:Skizze-3} und \ref{fig:Skizze-4}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-3.pdf}
+    \caption{%
+        Transversal, mit Magnetfeld und \SI{90}{\degree} Linearpolarisator.
+    }
+    \label{fig:Skizze-3}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-4.pdf}
+    \caption{%
+        Transversal, mit Magnetfeld und \SI{0}{\degree} Linearpolarisator.
+    }
+    \label{fig:Skizze-4}
+\end{figure}
+
+\subsection{Longitudinale Konfiguration}
+
+Ohne Magnetfeld beobachten wir das gleiche wie in transversaler Konfiguration,
+siehe Abbildung~\ref{fig:Skizze-5}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-5.pdf}
+    \caption{%
+        Longitudinal, ohne Magnetfeld.
+    }
+    \label{fig:Skizze-5}
+\end{figure}
+
+Nun fahren wir wieder den Magnetstrom so hoch, dass wir die Linien trennen
+können (Abbildung~\ref{fig:Skizze-6}). In longitudinaler Konfiguration ist der
+kritische Strom \SI{<< I_crit_long >>}{\ampere}. Die longitudinalen Linien sind
+deutlich dunkler. Außerdem gibt es nur noch zwei Linien, keine mittlere Linie
+mehr. Dies liegt daran, dass in longitudinaler Richtung durch das Photon
+positiver oder negativer Drehimpuls weggetragen werden muss, da sich die
+$z$-Komponente des Drehimpulses des ausstrahlenden Elektrons ändert. Daher gibt
+es nur zwei Möglichkeiten: positive und negative Helizität, also zirkulare
+Polarisation links und rechts herum.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-6.pdf}
+    \caption{%
+        Longitudinal, mit Magnetfeld.
+    }
+    \label{fig:Skizze-6}
+\end{figure}
+
+Mit einer $\lambda/4$-Platte konvertieren wir die zirkulare Polarisation in
+Lineare und können so die Helizität unterscheiden (Abbildung~\ref{fig:Skizze-7}
+und \ref{fig:Skizze-8}). So können wir zeigen, dass die beiden Ringe
+tatsächlich den Übergängen mit $\Deltaup m_l = \pm 1$ entsprechen.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-7.pdf}
+    \caption{%
+        Longitudinal, mit Magnetfeld, \SI{0}{\degree} $\lambda/4$-Platte und
+        \SI{-45}{\degree} Linearpolarisator.
+    }
+    \label{fig:Skizze-7}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{../Skizze-8.pdf}
+    \caption{%
+        Longitudinal, mit Magnetfeld, \SI{0}{\degree} $\lambda/4$-Platte und
+        \SI{+45}{\degree} Linearpolarisator.
+    }
+    \label{fig:Skizze-8}
+\end{figure}
+
+\section{Magnetfeldkalibrierung}
+
+Wir fahren den Strom durch und lassen die Cassy-Software Strom und Induktion
+registrieren.
+
+An die Messdaten passen wir ein Polynom dritter Ordnung, $B(I) = a + bI + cI^2
++ dI^3$, an. Als Parameter erhalten wir durch die Anpassung:
+\begin{align*}
+    a &= \SI{<< mfk_a >>}{\milli\tesla} \\
+    b &= \SI{<< mfk_b >>}{\milli\tesla\per\ampere} \\
+    c &= \SI{<< mfk_c >>}{\milli\tesla\per\ampere\squared} \\
+    d &= \SI{<< mfk_d >>}{\micro\tesla\per\ampere\cubed}
+\end{align*}
+
+Daten und Anpassung sind in Abbildung~\ref{fig:Magnetfeldkalibrierung}
+dargestellt. Da die Anpassung gut passt, haben wir keine vierte Ordnung
+hinzugefügt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Magnetfeldkalibrierung.pdf}
+    \caption{%
+        Anpassung der Daten aus der Hallsonde gegen den Strom.
+    }
+    \label{fig:Magnetfeldkalibrierung}
+\end{figure}
+
+Im weiteren Verlauf der Auswertung werden wir diese Funktion benutzen, um
+Ströme in Magnetfelder umzurechnen.
+
+\section{Messung der Aufspaltung}
+
+Die Messwerte für alle Flussdichten sind in Abbildung~\ref{fig:Alles}
+dargestellt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Alles.pdf}
     \caption{%
+        Zusammenstellung aller Messdaten aus diesem Versuchsteil.
     }
-    \label{fig:}
+    \label{fig:Alles}
 \end{figure}
+
+Wir rechnen die gemessenen Winkel in Wellenlängen um. Dazu benutzen wir als
+Wellenlänge für Cadmium \SI{<< lambda_cd >>}{\meter}
+\parencite{NIST/Strong_Lines_of_Cadmium} \footnote{%
+    Diese Quelle scheint eine Zusammenstellung zu sein. Die besagte Linie wird
+    dort wiederum mit „K. Burns and K. B. Adams, J. Opt. Soc. Am. 46, 94
+    (1956).“ zitiert.
+}. Diese ist genau auch die, die der Filter durchlässt.
+
+Die Anzahl der Maxima, die das Etalon erzeugt, ist durch
+\[
+    m_\text{max} = \frac{2nd}{\lambda}
+\]
+gegeben. Mit den gegebenen Werten erhalten wir \num{<< m_max >>} Maxima. Der
+innerste Ring hat die Ordnung $m_\text{max} - 1$. Wir rechnen nun mit
+\[
+    \lambda = \frac{2 n d \cos(\alpha)}{m_\text{max} - 1}
+\]
+die Winkel in Wellenlängen um. Dabei stimmt natürlich nur das erste Maximum. Wir
+wählen das erste Maximum auf der Seite der negativen Winkel aus. Dieser ist in
+Abbildung~\ref{fig:Zoom} dargestellt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{Zoom.pdf}
     \caption{%
+        Ausschnittsvergrößerung des ersten richtigen Maximums auf der linken
+        Seite von Abbildung~\ref{fig:Alles}. Die Farben haben die gleiche
+        Bedeutung. Die Winkel sind hier schon in Wellenlängen umgerechnet.
     }
-    \label{fig:}
+    \label{fig:Zoom}
 \end{figure}
+
+Für jede Flussdichte passen wir eine Summe aus drei Gaußkurven sowie einem
+konstanten Untergrundsignal an die Messdaten an. Unsere Gaußkurve ist wie folgt
+definiert:
+\begin{equation}
+    \label{eq:gauss}
+    \mathop{\text{Gauß}} (x; \mu, \sigma, a)
+    := a \exp\del{- \frac12 \del{\frac{x-\mu}{\sigma}}^2}
+\end{equation}
+
+Aus der Anpassung erhalten wir die Schwerpunkte der Maxima, siehe
+Tabelle~\ref{tab:Peakschwerpunkte}. Die Daten und ihre Anpassungen sind in den
+Abbildungen \ref{fig:Fit-<< I_list[0] >>} bis \ref{fig:Fit-<< I_list[-1] >>}
+gezeigt. Die Anpassung konvergiert aufgrund der 10 Freiheitsgrade nicht
+zuverlässig. Wir mussten die Startwerte sehr nah an den optimalen Werten
+wählen, um überhaupt eine Konvergenz zu erhalten. Die Einträge in der
+Fehlermatrix sind jedoch um mehrere Größenordnungen größer als die Parameter
+selbst. Da die Ergebnisse jedoch brauchbar aussehen, nehmen wir die
+Standardabweichung aus den einzelnen Gaußkurven als Fehler für den Schwerpunkt.
+Fehlerangaben gehen implizit von Gaußverteilung aus, also ist dies in diesem
+Fall genau richtig.
 
 %< for I in I_list: >%
 \begin{figure}[htbp]
     \centering
-    %\includegraphics[width=.9\linewidth]{Fit-<< I >>.pdf}
+    \includegraphics[width=.8\linewidth]{Fit-<< I >>.pdf}
     \caption{%
-        Fit für \SI{<< I >>}{\ampere}.
+        Daten und Anpassung für \SI{<< I >>}{\ampere}, entsprechend \SI{<<
+        B_dict[I] >>}{\centi\tesla}.
     }
-    \label{fig:<< I >>}
+    \label{fig:Fit-<< I >>}
 \end{figure}
 %< endfor >%
 
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSSS}
+        {$I / \si{\ampere}$}
+        & {$B / \si{\centi\tesla}$}
+        & {$\lambda_- / \si{\nano\meter}$}
+        & {$\lambda_0 / \si{\nano\meter}$}
+        & {$\lambda_+ / \si{\nano\meter}$} 
+        \\
+        \midrule
+        %<- for row in fit_tabelle: ->%
+        << ' & '.join(row) >> \\
+        %<- endfor ->%
+    \end{tabular}
+    \caption{%
+        Schwerpunkte der Maxima.
+    }
+    \label{tab:Peakschwerpunkte}
+\end{table}
+
+Die Schwerpunkte aus Tabelle~\ref{tab:Peakschwerpunkte} rechnen wir in
+Energiedifferenzen aus. Dabei ist die Verschiebung der Wellenlänge:
+\[
+    \Deltaup \lambda = \frac{\lambda_+ - \lambda_-}2.
+\]
+
+Daraus bestimmt sich die Energiedifferenz
+\[
+    \Deltaup E = \frac{hc\Deltaup\lambda}{\lambda_0^2}
+\]
+für jede Flussdichte. Diese Daten sind in
+Tabelle~\ref{tab:Energieaufspaltungen} zusammengetragen.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {$B / \si{\centi\tesla}$}
+        & {$\Deltaup \lambda / \si{\pico\meter}$} 
+        & {$\Deltaup E / \SI{e-25}{\joule}$} 
+        \\
+        \midrule
+        %<- for row in energieaufspaltung_tabelle: ->%
+        << ' & '.join(row) >> \\
+        %<- endfor ->%
+    \end{tabular}
+    \caption{%
+        Energieaufspaltungen
+    }
+    \label{tab:Energieaufspaltungen}
+\end{table}
+
+Wir tragen die Aufspaltung gegen die Flussdichte auf
+(Abbildung~\ref{fig:Energieaufspaltung}) und passen eine Ursprungsgerade an.
+Die Steigung ist das Bohr'sche Magneton:
+\[
+    \mu_\text B = \SI{<< bohr_magneton >>}{\joule\per\tesla}.
+\]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Energieaufspaltung.pdf}
+    \caption{%
+        Energieaufspaltung
+    }
+    \label{fig:Energieaufspaltung}
+\end{figure}
+
+\section{Auflösungsvermögen und Finesse}
+
+\subsection{Theoretische Werte}
+
+Für die Finesse erhalten wir:
+\[
+    \mathcal F_\text{theo.} = \frac{\piup \sqrt r}{r-1} = \num{<< finesse_theoretisch >>}.
+\]
+
+Und das Auflösungsvermögen erhalten wir mit dem freien Spektralbereich
+$\Deltaup \nu = c / (2nd)$. Wir errechnen $\Deltaup \lambda = c \Deltaup \nu /
+\nu^2$ mit der Frequenz $\nu$ der Cadmiumlinie. Somit erhalten wir:
+\[
+    N_\text{theo.} = \num{<< N_theoretisch >>}.
+\]
+
+\subsection{Werte aus qualitativer Messung}
+
+Wir hatten die Aufspaltung ab einem Magnetstrom von \SI{<< I_crit_trans
+>>}{\ampere} und \SI{<< I_crit_long >>}{\ampere} in der transversalen bzw\@.
+longitudinalen Konfiguration erkennen können. Dies entspricht Magnetfeldern von
+\SI{<< B_crit_trans >>}{\centi\tesla} bzw\@. \SI{<< B_crit_long >>}{\centi\tesla}.
+
+Mit unserem errechneten Bohr'schen Magneton können wir daraus nun eine
+Energiedifferenz
+\[
+    \Deltaup E = \mu_\text B B(I)
+\]
+bestimmen, aus der wir dann wiederum eine Wellenlängendifferenz errechnen:
+\[
+    \lambda = \frac1\nu = \frac{hc}{E}
+    \implies
+    \Deltaup \lambda
+    = \frac{hc}{E^2} \Deltaup E
+    = \frac{\lambda^2}{hc} \Deltaup E.
+\]
+
+Daraus können wir dann das Auflösungsvermögen berechnen:
+\[
+    N = \frac{\lambda}{\Deltaup \lambda}
+    = \frac{hc}{\lambda \Deltaup E}.
+\]
+
+Somit erhalten wir $N_\text{trans.} = \num{<< N_trans >>}$ und $N_\text{long.}
+= \num{<< N_long >>}$.
+
+Finesse \fehlt
+
+\subsection{Werte aus CCD Messung}
+
+\fehlt
+
+\subsection{Vergleich}
+
+\fehlt
+
 \section{Diskussion}
+
+Der Literaturwert für das Bohr'sche Magneton ist:
+\parencite{wikipedia/Bohr_Magneton} \parencite[Umschlag]{meschede-gerthsen_24}
+\[
+    \mu_\text B = \SI{9.274e-24}{\joule\per\tesla}.
+\]
+
+Unser Wert von \SI{<< bohr_magneton >>}{\joule\per\tesla} liegt um einen Faktor
+4 zu hoch.
 
 \chapter{Frank-Hertz-Versuch}
 
 \section{Durchführung}
 
 \section{Auswertung}
+
+Unsere Messdaten sind für einen ersten Überblick in
+Abbildung~\ref{fig:FH_Rohdaten} dargestellt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{FH_Rohdaten.pdf}
+    \caption{%
+        Rohdaten zum Franck-Hertz-Versuch.
+    }
+    \label{fig:FH_Rohdaten}
+\end{figure}
+
+\subsection{Bestimmung der Energiedifferenz}
+
+An jede der Kurve passen wir folgende Überlagerung aus fünf äquidistanten
+Gaußfunktionen \eqref{eq:gauss} mit unterschiedlicher Amplitude und einer
+Ursprungsgeraden an:
+\begin{multline*}
+    U_\text A (U_\text B; U_{\text B, \text{min}}, U_\text{Abstand}, U_\text{Breite}, \{a_i\}, m)
+    = \\
+    \sum_{i=1}^5 \mathop{\text{Gauß}} (U_\text B; U_{\text B, \text{min}} + i
+    U_\text{Abstand}, U_\text{Breite}, a_i)
+    +
+    m U_\text B.
+\end{multline*}
+
+Wir benutzen Gaußkurven, da wir an den Schwerpunkten der Maxima interessiert
+sind. In den Graphen ist zu sehen, dass die Maxima tatsächlich annähernd
+gaußförmig sind. Den linearen Teil haben wir hinzugefügt, da die Minima
+annähernd auf einer Geraden liegen. Bei hohen Beschleunigungsspannungen liegen
+die Minima etwas höher, so dass hier eventuell noch ein quadratischer Term
+benutzt werden kann. Jedoch passen die Kurven gut und konvergieren ausreichend
+schnell. Daher lassen wir diesen Teil weg.
+
+Aufgrund des Plateaus benutzen wir nur die Messwerte bis zu einer
+Beschleunigungsspannung von \SI{<< upper_limit >>}{\volt}.
+
+%< for s in fh_sets: >%
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{<< s.filename >>}
+    \caption{%
+        $T = \SI{<< s.T >>}{\kelvin}$,
+        $U_\text G = \SI{<< s.U_G >>}{\volt}$,
+        $U_\text{Abstand} = \SI{<< s.abstand >>}{\volt}$,
+        $U_\text{Breite} = \SI{<< s.breite >>}{\volt}$.
+    }
+    \label{fig:}
+\end{figure}
+%< endfor >%
+
+Die beiden interessanten Parameter sind $U_\text{Abstand}$ und
+$U_\text{Breite}$. Bei der Anpassung wird das erste Maximum trotz entsprechend
+gewählter Startwerte nicht berücksichtigt. Dies ist jedoch kein Problem, da der
+Abstand der weiteren Maxima richtig herauskommt. Die errechneten Parameter sind
+in Tabelle~\ref{tab:fh-fit1} zusammengetragen.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSSS}
+        {$T / \si\kelvin$}
+        & {$\Deltaup U_G / \si\volt$}
+        & {$U_{\text{Abstand}} / \si\volt$}
+        & {$U_{\text{Breite}} / \si\volt$}
+        \\
+        \midrule
+        %< for s in fh_sets: >%
+        << s.T >> & << s.U_G >> & << s.abstand >> & << s.breite >> \\
+        %< endfor >%
+    \end{tabular}
+    \caption{%
+        Zusammenstellung der Anpassungsparameter.
+    }
+    \label{tab:fh-fit1}
+\end{table}
+
+\FloatBarrier
+\subsection{Energiedifferenzen}
+
+Wir rechnen die Spannungsdifferenzen in Wellenzahlunterschiede um, wobei wir
+die Variante mit $k = \lambda^{-1}$ (anstelle von $k = 2\piup\lambda^{-1}$)
+benutzen:
+\[
+    k = \frac{U_{\text{Abstand}} e}{h c}
+    \eqnsep
+    \lambda = \frac 1k.
+\]
+Die erhaltenen Wellenzahlen und -längen sind in Tabelle~\ref{tab:fh-k_lambda}.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{SSS}
+        {$U_{\text{Abstand}} / \si\volt$}
+        & {$k / \si{\per\centi\meter}$}
+        & {$\lambda / \si{\nano\meter}$}
+        \\
+        \midrule
+        %< for s in fh_sets: >%
+        << s.abstand >> & << s.k >> & << s.lambda >> \\
+        %< endfor >%
+    \end{tabular}
+    \caption{%
+        Wellenzahl und -länge der Übergänge.
+    }
+    \label{tab:fh-k_lambda}
+\end{table}
+
+Der einzige Übergang, der aus dem Termschema in Abbildung~\ref{fig:Termschema}
+in Frage kommt, ist der $\mathrm{6{}^1S_0 \to 6{}^3P_1}$ mit
+\SI{253.65}{\nano\meter}. Dieser Übergang hat auch einen maximalen
+Wirkungsquerschnitt (siehe \cite[Abbildung~P401.5]{physik412-Anleitung}) bei
+Elektronenenergien von \SI{5}{\electronvolt}, dies entspricht ebenfalls unseren
+Überlegungen.
+
+\subsection{Abhängigkeit des Anodenstroms}
+
+Bei ganzen Vielfachen der Anregungsenergie gibt es keinen scharfen Einbruch, da
+trotzdem einige Elektronen die Anode erreichen. Dies können sie aus einem der
+folgenden Gründen:
+
+Die angeregten Zustände haben eine gewisse Lebensdauer. Innerhalb dieser Zeit
+kann ein Atom kein weiteres Energiequant von \SI{5}{\electronvolt} aufnehmen.
+Das Elektron fliegt ungestört weiter.
+
+Das Quecksilber ist recht dünn (einige \si{\deka\pascal}, siehe
+Abbildung~\ref{fig:Dampfdruckkurve}), so dass die freie Weglänge der
+Quecksilberatome \SIrange{0.1}{100}{\micro\meter} beträgt
+\parencite{wikipedia/Mittlere_freie_Weglaenge}. Daher kann es auch sein, dass
+ein Elektron, wenn es die richtige kinetische Energie hat, kein Quecksilberatom
+trifft. Je höher die Spannung ist, desto schmaler wird der Raumbereich, in dem
+das Elektron die richtige Energie hat.
+
+In Abbildung~\ref{fig:FH_Rohdaten} sind alle Messdaten zusammengestellt. Den
+höchsten Anodenstrom haben wir für die niedrigste Temperatur, also für den
+niedrigsten Druck erhalten. Im Graph ist zu sehen, dass der lineare Teil dort
+auch am stärksten ist. Dies interpretieren wir so, dass die Elektronen dort
+häufig keinen Stoßpartner finden. Aus diesem Grund sind auch die Maxima höher.
+
+Die letzten vier Kurven in Abbildung~\ref{fig:FH_Rohdaten} sind bei gleicher
+Temperatur, jedoch mit unterschiedlichen Gegenspannungen aufgenommen. Die
+türkise und die lila Kurve, also für Gegenspannungen von \SIlist{1;2}{\volt}
+unterscheiden sich in den Maxima kaum, in den Minima jedoch recht deutlich.
+
+Die Gleichheit in den Maxima liegt daran, dass ein Maximum genau dann entsteht,
+wenn der letzte Elektronenstoß eine halbe Beschleunigungsstrecke (für einen
+weiteren Stoß) von der Anode entfernt liegt. Die Elektronen haben so die
+maximale kinetische Energie und können mit \SI{2.5}{\electronvolt} gegen die
+Gegenspannung laufen.
+
+Bei einer Gegenspannung von \SIlist{3;4}{\volt} (gelb und schwarz) ist die
+halbe Stoßenergie von \SI{2.5}{\electronvolt} jedoch nicht mehr genug. Daher
+werden jetzt auch im Maximum weniger Elektronen durchgelassen, der Anodenstrom
+sinkt.
+
+Die höhere Gegenspannung verhindert ebenfalls, das Elektronen, die gerade
+gestoßen sind, noch die Anode erreichen. Dies führt dann dazu, dass die Minima
+bei höherer Gegenspannung tiefer liegen.
+
+\subsection{Dampfdruck}
+
+Innerhalb des recht kleinen Temperaturintervalles von
+\SIrange{150}{165}{\celsius} ist die Dampfdruckkurve von Quecksilber in
+Abbildung~\ref{fig:Dampfdruckkurve} dargestellt. Die relative Schwankung, die
+Differenz der Extremwerte durch den Mittelwert, beträgt \num{<< ddk_schwankung
+>>}. Dies ist schon relativ viel für einen kleinen Temperaturbereich. Die Atome
+dürfen nicht zu dicht sein, damit die Elektronen auch wirklich beschleunigt
+werden können, ohne zu oft zu stoßen. Jedoch müssen auch genug Atome vorhanden
+sein, damit die Elektronen nicht ohne Widerstand durch das dünne Gas kommen. In
+diesem Fall wären die Minima nicht deutlich ausgeprägt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Dampfdruckkurve.pdf}
+    \caption{%
+        Dampfdruck in Abhängigkeit von der Temperatur.
+    }
+    \label{fig:Dampfdruckkurve}
+\end{figure}
 
 \section{Diskussion}
 
