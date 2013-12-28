@@ -295,10 +295,12 @@ vermessen und so das Magnetfeld bestimmt werden.
             (0.28, -8) -- (4, -8) -- (4, -4) -- (4, -1.28)
             (4, -1.2) circle(0.08) node[left] {\small{$-$}}
             (4, -0.8) circle(0.08) node[left] {\small{$+$}}
-            (4, -0.72) -- (4, 2.72)
-            (4, 2.8) circle(0.08) node[left] {\small{$+$}}
-            (4, 3.2) circle(0.08) node[left] {\small{$-$}}
-            (4, 3.28) -- (4,4)
+            (4, -0.72) -- (4, 2.22)
+            (4, 2.3) circle(0.08) node[left] {\small{$+$}}
+            (4, 2.7) circle(0.08) node[left] {\small{$-$}}
+            (4, 2.78) -- (4,3.2)
+            (4, 3.5) circle(.3) node {A}
+            (4, 3.8) -- (4, 4)
         ;
         \draw[fill]
             (4,-4) circle(0.05)
@@ -306,7 +308,7 @@ vermessen und so das Magnetfeld bestimmt werden.
         % weitere Beschriftungen
         \node[below] at (0,-8) {$U_\text{Heiz}$};
         \node[right] at (4,-1) {$U_\text{Beschl}$};
-        \node[right] at (4, 3) {$U_\text{Gegen}$};
+        \node[right] at (4, 2.5) {$U_\text{Gegen}$};
         \node[below] at (0,-4.2) {Glühkathode};
         % Füllung
         \draw
@@ -320,6 +322,23 @@ vermessen und so das Magnetfeld bestimmt werden.
 
 Der Aufbau des Frank-Hertz-Versuchs ist in Abbildung~\ref{fig:Aufbau_FH} zu
 sehen.
+
+Durch eine angelegte Heizspannung treten Elektronen aus der Glühkathode aus.
+Diese werden dann durch die Beschleunigungsspannung in Richtung Anode
+Beschleunigt. Auf dem Weg stoßen sie mit den Quecksilberatomen, sie verlieren
+aber nur dann ihre Energie, wenn diese genau einem Übergang im Termschema des
+Quecksilbers entspricht. Nach einem solchen inelastischen Stoß wird das
+Elektron wieder beschleunigt. Da die Anode netzförmig ist, fliegen die meisten
+Elektronen durch diese hindurch zur Gegenkathode. Sie können dort als Strom
+gemessen werden.
+
+Wird nun die Beschleunigungsspannung langsam von \SI{0}{\volt} an erhöht, steigt
+der gemessene Strom an. Bei einer bestimmten Spannung fällt er deutlich ab.
+Hier haben die Elektronen eine Energie erreicht, bei der sie inelastisch stoßen
+und so ihre Energie abgeben. Wird die Spannung weiter erhöht steigt der Strom
+wieder, bis die Elektronen ein zweites Mal inelastisch stoßen können. Analog
+geht es weiter, bis eine Spannung erreicht wird, bei der die Röhre durchzündet,
+das heißt, bei der lawinenartig Elektronen ausgelöst werden.
 
 \subsection{Termschema von Quecksilber}
 
