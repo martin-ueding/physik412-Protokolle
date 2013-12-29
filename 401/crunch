@@ -166,7 +166,7 @@ def einzel_fit(data, I, min_, max_, p0):
     a.grid(True)
     a.legend(loc='best')
     #a.set_title(r'$I = {}$'.format(I))
-    a.set_xlabel(r'$\lambda/^\circ$')
+    a.set_xlabel(r'$\lambda/10^{-7}\,\mathrm{m}$')
     a.set_ylabel(r'rel. Int.')
     p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')), **savefig_options)
 
@@ -394,7 +394,7 @@ def job_zeeman(T):
         selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
         zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
 
-    zoom.set_xlabel(r'$\lambda / m$')
+    zoom.set_xlabel(r'$\lambda / 10^{-7}\,\mathrm{m}$')
     zoom.set_ylabel(r'rel. Int.')
     zoom.grid(True)
     zoom_fig.savefig('_build/Zoom.pdf', **savefig_options)
