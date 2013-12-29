@@ -144,7 +144,7 @@ def job_zeeman(T):
         cut = alpha < 0
         alpha = alpha[cut]
         intens = intens[cut]
-        lambda_ =  2 * n * d * np.cos(alpha) / (m_max - 1)
+        lambda_ =  2 * d * np.cos(n * alpha) / (m_max - 1)
 
         data[I] = (lambda_, intens)
 
@@ -161,8 +161,8 @@ def job_zeeman(T):
     for I, (lambda_, intens) in sorted(data.items()):
         color = next(citer)
         label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
-        selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
-        zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
+        selection = lambda_[5.4375e-7 < lambda_] < 7.440e-7
+        zoom.plot(lambda_ / 10**-7, intens, label=label, color=color)
 
     zoom.set_xlabel(r'$\lambda / m$')
     zoom.set_ylabel(r'rel. Int.')
