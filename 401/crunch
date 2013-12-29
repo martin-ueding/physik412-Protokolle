@@ -105,8 +105,6 @@ def qualitativ_finesse(T, B, bohr_val, bohr_err):
     T['N_long'] = unitprint.siunitx(N_long_val)
     T['N_trans'] = unitprint.siunitx(N_trans_val)
 
-
-
 def einzel_fit(data, I, min_, max_, p0):
     logging.info('Fit für {}'.format(I))
 
@@ -245,7 +243,6 @@ def fit_aufspaltungen(T, fe, B):
     logging.info(popt)
 
     return bohr_val, bohr_err
-    
 
 def fh_peaks(T, sets):
     upper_limit = 35
@@ -512,7 +509,6 @@ def job_theoretische_finesse(T):
 
     T['finesse_theoretisch'] = unitprint.siunitx(finesse)
     T['N_theoretisch'] = unitprint.siunitx(N)
-
 
 def job_franck_hertz(T):
     files = glob.glob('Messdaten/FH_*.txt')
