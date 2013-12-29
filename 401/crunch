@@ -169,8 +169,8 @@ def job_zeeman(T):
     for I, (lambda_, intens) in sorted(data.items()):
         color = next(citer)
         label = r'$B = {:.2g} \, \mathrm{{cT}}$'.format(B(I) * 100)
-        selection = lambda_[5.4375e-7 < lambda_] < 7.440e-7
-        zoom.plot(lambda_ / 10**-7, intens, label=label, color=color)
+        selection = lambda_[6.4375e-7 < lambda_] < 6.440e-7
+        zoom.plot(lambda_[selection] / 10**-7, intens[selection], label=label, color=color)
 
     zoom.set_xlabel(r'$\lambda / m$')
     zoom.set_ylabel(r'rel. Int.')
@@ -246,13 +246,13 @@ def job_zeeman(T):
     ))
 
     fit_ergebnisse.append(einzel_fit(
-        data, 7.0, lc(6.43764e-7), lc(6.43841e-7),
-        [lc(6.43781e-7), 6e-12, 27, lc(6.43804e-7), 6e-12, 45, lc(6.43825e-7), 6e-12, 33, 12]
+        data, 7.0, 6.43821e-7, 6.43857e-7,
+        [6.43829e-7, 21e-13, 27, 6.43839e-7, 28e-13, 45, 6.43850e-7, 23e-13, 33, 12]
     ))
 
     fit_ergebnisse.append(einzel_fit(
-        data, 8.0, lc(6.43764e-7), lc(6.43841e-7),
-        [lc(6.43779e-7), 5e-12, 27, lc(6.43804e-7), 6e-12, 45, lc(6.43828e-7), 4e-12, 33, 14]
+        data, 8.0, 6.43821e-7, 6.43857e-7,
+        [6.43829e-7, 21e-13, 27, 6.43839e-7, 28e-13, 45, 6.43852e-7, 23e-13, 33, 14]
     ))
 
     fit_ergebnisse = np.array([x for x in fit_ergebnisse if x is not None])
