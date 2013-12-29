@@ -33,6 +33,9 @@ def coloriter(n):
         for x in range(n)
     ])
 
+def dampfdruck(T):
+    return np.exp(10.55 - 3333/T - 0.85 * np.log(T)) * 133.322
+
 def linear(x, a):
     return a * x
 
@@ -42,21 +45,11 @@ def polynom(x, a, b, c, d):
 def gauss(x, m, s, a):
     return a * np.exp(- 0.5 * ((x - m)/s)**2)
 
-def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
-    return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
-
 def single_gauss(x, m1, s1, a1, offset):
     return gauss(x, m1, s1, a1) + offset
 
-def job_doppler(T):
-    m_cd = 112.4
-    nu_cd = 3e8 / lambda_cd
-    Delta_nu = 7.16e-7 * nu_cd * np.sqrt(1000 / m_cd)
-    Delta_lambda = 3e8 / nu_cd**2 * Delta_nu
-
-    T['m_cd'] = unitprint.siunitx(m_cd)
-    T['doppler_width_nu'] = unitprint.siunitx(Delta_nu)
-    T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda / 10**-12)
+def tripple_gauss(x, m1, s1, a1, m2, s2, a2, m3, s3, a3, offset):
+    return gauss(x, m1, s1, a1) + gauss(x, m2, s2, a2) + gauss(x, m3, s3, a3) + offset
 
 def magnetfeldkalibrierung(T):
     data = np.genfromtxt('Messdaten/Magnetfeldkalibrierung_1.txt', skip_header=1)
@@ -90,22 +83,260 @@ def magnetfeldkalibrierung(T):
 
     return lambda I: polynom(I, *popt)
 
-def job_theoretische_finesse(T):
-    d = 4e-3
-    n = 1.457
-    r = 0.85
+def qualitativ_finesse(T, B, bohr_val, bohr_err):
+    I_crit_long_val = 1.9
+    I_crit_trans_val = 1.0
 
-    finesse = np.pi * np.sqrt(r) / (1 - r)
+    B_crit_long_val = B(I_crit_long_val)
+    B_crit_trans_val = B(I_crit_trans_val)
 
-    frequenz = 3e8 / lambda_cd
-    Delta_frequenz = 3e8 / (2 * n * d)
+    Delta_E_long_val = bohr_val * B_crit_long_val
+    Delta_E_trans_val = bohr_val * B_crit_trans_val
 
-    Delta_lambda = 3e8 / frequenz**2 * Delta_frequenz
-    N = lambda_cd / Delta_lambda
+    N_long_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_long_val
+    N_trans_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_trans_val
 
-    T['finesse_theoretisch'] = unitprint.siunitx(finesse)
-    T['N_theoretisch'] = unitprint.siunitx(N)
+    T['I_crit_long'] = unitprint.siunitx(I_crit_long_val)
+    T['I_crit_trans'] = unitprint.siunitx(I_crit_trans_val)
 
+    T['B_crit_long'] = unitprint.siunitx(B_crit_long_val / 1e-2)
+    T['B_crit_trans'] = unitprint.siunitx(B_crit_trans_val / 1e-2)
+
+    T['N_long'] = unitprint.siunitx(N_long_val)
+    T['N_trans'] = unitprint.siunitx(N_trans_val)
+
+
+
+def einzel_fit(data, I, min_, max_, p0):
+    logging.info('Fit für {}'.format(I))
+
+    lambda_ = data[I][0]
+    intens = data[I][1]
+
+    selected = lambda_[min_ < lambda_] < max_
+
+    lambda_selected = lambda_[selected]
+    intens_selected = intens[selected]
+
+    logging.info('lambda_selected')
+    logging.info(lambda_selected)
+    logging.info('intens_selected')
+    logging.info(intens_selected)
+
+    p0[2] -= p0[-1]
+    if len(p0) >= 10:
+        p0[5] -= p0[-1]
+        p0[8] -= p0[-1]
+
+    p = pl.figure()
+    a = p.add_subplot(1, 1, 1)
+    a.plot(lambda_selected / 10**-7, intens_selected, linestyle='none', marker='+', label='Daten')
+
+    returnval = None
+
+    try:
+        funktion = tripple_gauss if len(p0) == 10 else single_gauss
+        logging.info(funktion)
+        popt, pconv = op.curve_fit(funktion, lambda_selected, intens_selected, p0=p0)
+        x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
+        a.plot(x / 10**-7, funktion(x, *popt), label='Anpassung')
+
+        logging.info('Fitparameter')
+        logging.info(popt[0:3])
+
+        if len(p0) == 10:
+            a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
+            a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
+            a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
+
+            logging.info(popt[3:6])
+            logging.info(popt[6:9])
+
+        a.plot(x / 10**-7, np.ones(x.size) * popt[-1], label='Untergrund', linestyle='--')
+
+        logging.info(popt[-1])
+        logging.info('Fit Fehler')
+        err = np.sqrt(abs(pconv.diagonal()))
+        logging.info(err)
+
+        returnval = [I] + list(popt) + list(err)
+    except RuntimeError as e:
+        logging.error(e)
+    except AttributeError as e:
+        logging.error(e)
+
+    a.grid(True)
+    a.legend(loc='best')
+    #a.set_title(r'$I = {}$'.format(I))
+    a.set_xlabel(r'$\lambda/^\circ$')
+    a.set_ylabel(r'rel. Int.')
+    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')), **savefig_options)
+
+    return returnval
+
+def fit_aufspaltungen(T, fe, B):
+    I = fe[:, 0]
+
+    B_I = B(I)
+
+    s1_val = fe[:, 1]
+    s1_err = fe[:, 11]
+
+    s2_val = fe[:, 4]
+    s2_err = fe[:, 14]
+
+    s3_val = fe[:, 7]
+    s3_err = fe[:, 17]
+
+    std1_val = fe[:, 2]
+    std2_val = fe[:, 5]
+    std3_val = fe[:, 8]
+
+    lambda0 = s2_val
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+
+    plotargs = {
+        #'linestyle': 'none',
+        'marker': '+',
+    }
+
+    x1_val = np.abs(s1_val - s2_val)
+    x1_err = np.sqrt(std1_val**2 + std2_val**2)
+
+    x2_val = np.abs(s3_val - s2_val)
+    x2_err = np.sqrt(std3_val**2 + std1_val**2)
+
+    x_val = np.array([np.mean([a, b]) for a, b in zip(x1_val, x2_val)])
+    x_err = np.array([np.sqrt(a**2 + b**2)/2 for a, b in zip(x1_err, x2_err)])
+
+    Delta_E_val = 6.626e-34 * 3e8 / lambda0**2 * x_val
+    Delta_E_err = 6.626e-34 * 3e8 / lambda0**2 * x_err
+
+    T['energieaufspaltung_tabelle'] = list(zip(
+        unitprint.siunitx(B_I / 10**-2),
+        unitprint.siunitx(x_val / 10**-12),
+        unitprint.siunitx(Delta_E_val/1e-25, Delta_E_err/1e-25),
+    ))
+
+    popt, pconv = op.curve_fit(linear, B_I, Delta_E_val, sigma=1/Delta_E_err)
+    fit_x = np.linspace(np.min(B_I), np.max(B_I))
+    fit_y = linear(fit_x, *popt)
+
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    a.errorbar(B_I, Delta_E_val, yerr=Delta_E_err, linestyle='none', marker='+') 
+    a.plot(fit_x, fit_y)
+    a.set_xlabel(r'$B/\mathrm{T}$')
+    a.set_ylabel(r'$\Delta E/\mathrm{J}$')
+    a.grid(True)
+    f.savefig('_build/Energieaufspaltung.pdf', **savefig_options)
+
+    bohr_manuell_val = np.median(Delta_E_val / B_I)
+    bohr_manuell_err = np.median(Delta_E_err / B_I)
+
+    bohr_val = popt[0]
+    bohr_err = np.sqrt(pconv.diagonal()[0])
+
+    T['bohr_magneton'] = unitprint.siunitx(bohr_val, bohr_err)
+    T['bohr_magneton_manuell'] = unitprint.siunitx(bohr_manuell_val, bohr_manuell_err)
+    
+    logging.info(popt)
+
+    return bohr_val, bohr_err
+    
+
+def fh_peaks(T, sets):
+    upper_limit = 35
+    T['upper_limit'] = unitprint.siunitx(upper_limit)
+
+    for s in sets:
+        f = pl.figure()
+        a = f.add_subplot(1, 1, 1)
+
+        selection = s['U_B'] <= upper_limit
+
+        pl.plot(s['U_B'], s['U_A'], linestyle='none', marker='.')
+
+        try:
+            popt, pconv = op.curve_fit(
+                fh_gauss, s['U_B'][selection], s['U_A'][selection],
+                p0=[
+                    12, 5.0, 1,
+                    0.4, 1.8, 3.6, 6.0, 10.1,
+                    2/35,
+                ]
+            )
+
+            x = np.linspace(np.min(s['U_B'][selection]), np.max(s['U_B'][selection]), 1000)
+            y = fh_gauss(x, *popt)
+            pl.plot(x, y)
+            s['popt'] = popt
+            s['perr'] = np.sqrt(pconv.diagonal())
+
+            abstand_val = s['popt'][1]
+            abstand_err = s['perr'][1]
+
+            k_val = abstand_val * 1.609e-19 / 6.626e-34 / 3e8
+            k_err = abstand_err * 1.609e-19 / 6.626e-34 / 3e8
+
+            lambda_val = 1 / k_val
+            lambda_err = 1 / k_val**2 * k_err
+
+            s['k_val'] = k_val
+            s['k_err'] = k_err
+
+            s['lambda_val'] = lambda_val
+            s['lambda_err'] = lambda_err
+        except RuntimeError as e:
+            logging.error(e)
+        except AttributeError as e:
+            logging.error(e)
+
+        a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
+        a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
+        a.grid(True)
+        filename = 'FH_{T}_{U_G}'.format(**s).replace('.', ',')+'.pdf'
+        s['filename'] = filename
+        f.savefig(os.path.join('_build', filename), **savefig_options)
+
+def fh_roh_plot(sets):
+    f = pl.figure()
+    a = f.add_subplot(1, 1, 1)
+    for s in sets:
+        a.plot(
+            s['U_B'], s['U_A'],
+            label=r'$T={T:.3g}\,\mathrm{{K}},\;U_\mathrm{{G}}={U_G:.3g}\,\mathrm{{V}}$'.format(**s),
+            linestyle='none', marker='.',
+        )
+    a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
+    a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
+    a.grid(True)
+    a.legend(loc='best')
+    f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)
+
+def fh_gauss(U_B, U_B_min, abstand, breite, a1, a2, a3, a4, a5, steigung):
+    summands = []
+    summands.append(gauss(U_B, U_B_min + 1*abstand, breite, a1))
+    summands.append(gauss(U_B, U_B_min + 2*abstand, breite, a2))
+    summands.append(gauss(U_B, U_B_min + 3*abstand, breite, a3))
+    summands.append(gauss(U_B, U_B_min + 4*abstand, breite, a4))
+    summands.append(gauss(U_B, U_B_min + 5*abstand, breite, a5))
+
+    summands.append(linear(U_B, steigung))
+
+    return sum(summands)
+
+def job_doppler(T):
+    m_cd = 112.4
+    nu_cd = 3e8 / lambda_cd
+    Delta_nu = 7.16e-7 * nu_cd * np.sqrt(1000 / m_cd)
+    Delta_lambda = 3e8 / nu_cd**2 * Delta_nu
+
+    T['m_cd'] = unitprint.siunitx(m_cd)
+    T['doppler_width_nu'] = unitprint.siunitx(Delta_nu)
+    T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda / 10**-12)
 
 def job_zeeman(T):
     B = magnetfeldkalibrierung(T)
@@ -266,169 +497,22 @@ def job_zeeman(T):
 
     qualitativ_finesse(T, B, bohr_val, bohr_err)
 
-def qualitativ_finesse(T, B, bohr_val, bohr_err):
-    I_crit_long_val = 1.9
-    I_crit_trans_val = 1.0
+def job_theoretische_finesse(T):
+    d = 4e-3
+    n = 1.457
+    r = 0.85
 
-    B_crit_long_val = B(I_crit_long_val)
-    B_crit_trans_val = B(I_crit_trans_val)
+    finesse = np.pi * np.sqrt(r) / (1 - r)
 
-    Delta_E_long_val = bohr_val * B_crit_long_val
-    Delta_E_trans_val = bohr_val * B_crit_trans_val
+    frequenz = 3e8 / lambda_cd
+    Delta_frequenz = 3e8 / (2 * n * d)
 
-    N_long_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_long_val
-    N_trans_val = 6.626e-34 * 3e8 / lambda_cd / Delta_E_trans_val
+    Delta_lambda = 3e8 / frequenz**2 * Delta_frequenz
+    N = lambda_cd / Delta_lambda
 
-    T['I_crit_long'] = unitprint.siunitx(I_crit_long_val)
-    T['I_crit_trans'] = unitprint.siunitx(I_crit_trans_val)
+    T['finesse_theoretisch'] = unitprint.siunitx(finesse)
+    T['N_theoretisch'] = unitprint.siunitx(N)
 
-    T['B_crit_long'] = unitprint.siunitx(B_crit_long_val / 1e-2)
-    T['B_crit_trans'] = unitprint.siunitx(B_crit_trans_val / 1e-2)
-
-    T['N_long'] = unitprint.siunitx(N_long_val)
-    T['N_trans'] = unitprint.siunitx(N_trans_val)
-
-
-
-def fit_aufspaltungen(T, fe, B):
-    I = fe[:, 0]
-
-    B_I = B(I)
-
-    s1_val = fe[:, 1]
-    s1_err = fe[:, 11]
-
-    s2_val = fe[:, 4]
-    s2_err = fe[:, 14]
-
-    s3_val = fe[:, 7]
-    s3_err = fe[:, 17]
-
-    std1_val = fe[:, 2]
-    std2_val = fe[:, 5]
-    std3_val = fe[:, 8]
-
-    lambda0 = s2_val
-
-    f = pl.figure()
-    a = f.add_subplot(1, 1, 1)
-
-    plotargs = {
-        #'linestyle': 'none',
-        'marker': '+',
-    }
-
-    x1_val = np.abs(s1_val - s2_val)
-    x1_err = np.sqrt(std1_val**2 + std2_val**2)
-
-    x2_val = np.abs(s3_val - s2_val)
-    x2_err = np.sqrt(std3_val**2 + std1_val**2)
-
-    x_val = np.array([np.mean([a, b]) for a, b in zip(x1_val, x2_val)])
-    x_err = np.array([np.sqrt(a**2 + b**2)/2 for a, b in zip(x1_err, x2_err)])
-
-    Delta_E_val = 6.626e-34 * 3e8 / lambda0**2 * x_val
-    Delta_E_err = 6.626e-34 * 3e8 / lambda0**2 * x_err
-
-    T['energieaufspaltung_tabelle'] = list(zip(
-        unitprint.siunitx(B_I / 10**-2),
-        unitprint.siunitx(x_val / 10**-12),
-        unitprint.siunitx(Delta_E_val/1e-25, Delta_E_err/1e-25),
-    ))
-
-    popt, pconv = op.curve_fit(linear, B_I, Delta_E_val, sigma=1/Delta_E_err)
-    fit_x = np.linspace(np.min(B_I), np.max(B_I))
-    fit_y = linear(fit_x, *popt)
-
-    f = pl.figure()
-    a = f.add_subplot(1, 1, 1)
-    a.errorbar(B_I, Delta_E_val, yerr=Delta_E_err, linestyle='none', marker='+') 
-    a.plot(fit_x, fit_y)
-    a.set_xlabel(r'$B/\mathrm{T}$')
-    a.set_ylabel(r'$\Delta E/\mathrm{J}$')
-    a.grid(True)
-    f.savefig('_build/Energieaufspaltung.pdf', **savefig_options)
-
-    bohr_manuell_val = np.median(Delta_E_val / B_I)
-    bohr_manuell_err = np.median(Delta_E_err / B_I)
-
-    bohr_val = popt[0]
-    bohr_err = np.sqrt(pconv.diagonal()[0])
-
-    T['bohr_magneton'] = unitprint.siunitx(bohr_val, bohr_err)
-    T['bohr_magneton_manuell'] = unitprint.siunitx(bohr_manuell_val, bohr_manuell_err)
-    
-    logging.info(popt)
-
-    return bohr_val, bohr_err
-    
-
-def einzel_fit(data, I, min_, max_, p0):
-    logging.info('Fit für {}'.format(I))
-
-    lambda_ = data[I][0]
-    intens = data[I][1]
-
-    selected = lambda_[min_ < lambda_] < max_
-
-    lambda_selected = lambda_[selected]
-    intens_selected = intens[selected]
-
-    logging.info('lambda_selected')
-    logging.info(lambda_selected)
-    logging.info('intens_selected')
-    logging.info(intens_selected)
-
-    p0[2] -= p0[-1]
-    if len(p0) >= 10:
-        p0[5] -= p0[-1]
-        p0[8] -= p0[-1]
-
-    p = pl.figure()
-    a = p.add_subplot(1, 1, 1)
-    a.plot(lambda_selected / 10**-7, intens_selected, linestyle='none', marker='+', label='Daten')
-
-    returnval = None
-
-    try:
-        funktion = tripple_gauss if len(p0) == 10 else single_gauss
-        logging.info(funktion)
-        popt, pconv = op.curve_fit(funktion, lambda_selected, intens_selected, p0=p0)
-        x = np.linspace(np.min(lambda_selected), np.max(lambda_selected), 1000)
-        a.plot(x / 10**-7, funktion(x, *popt), label='Anpassung')
-
-        logging.info('Fitparameter')
-        logging.info(popt[0:3])
-
-        if len(p0) == 10:
-            a.plot(x / 10**-7, gauss(x, *popt[0:3]), label='Summand 1', linestyle='--')
-            a.plot(x / 10**-7, gauss(x, *popt[3:6]), label='Summand 2', linestyle='--')
-            a.plot(x / 10**-7, gauss(x, *popt[6:9]), label='Summand 3', linestyle='--')
-
-            logging.info(popt[3:6])
-            logging.info(popt[6:9])
-
-        a.plot(x / 10**-7, np.ones(x.size) * popt[-1], label='Untergrund', linestyle='--')
-
-        logging.info(popt[-1])
-        logging.info('Fit Fehler')
-        err = np.sqrt(abs(pconv.diagonal()))
-        logging.info(err)
-
-        returnval = [I] + list(popt) + list(err)
-    except RuntimeError as e:
-        logging.error(e)
-    except AttributeError as e:
-        logging.error(e)
-
-    a.grid(True)
-    a.legend(loc='best')
-    #a.set_title(r'$I = {}$'.format(I))
-    a.set_xlabel(r'$\lambda/^\circ$')
-    a.set_ylabel(r'rel. Int.')
-    p.savefig('_build/Fit-{}.pdf'.format(str(I).replace('.', ',')), **savefig_options)
-
-    return returnval
 
 def job_franck_hertz(T):
     files = glob.glob('Messdaten/FH_*.txt')
@@ -460,90 +544,6 @@ def job_franck_hertz(T):
         }
         for s in sets
     ])
-
-def fh_peaks(T, sets):
-    upper_limit = 35
-    T['upper_limit'] = unitprint.siunitx(upper_limit)
-
-    for s in sets:
-        f = pl.figure()
-        a = f.add_subplot(1, 1, 1)
-
-        selection = s['U_B'] <= upper_limit
-
-        pl.plot(s['U_B'], s['U_A'], linestyle='none', marker='.')
-
-        try:
-            popt, pconv = op.curve_fit(
-                fh_gauss, s['U_B'][selection], s['U_A'][selection],
-                p0=[
-                    12, 5.0, 1,
-                    0.4, 1.8, 3.6, 6.0, 10.1,
-                    2/35,
-                ]
-            )
-
-            x = np.linspace(np.min(s['U_B'][selection]), np.max(s['U_B'][selection]), 1000)
-            y = fh_gauss(x, *popt)
-            pl.plot(x, y)
-            s['popt'] = popt
-            s['perr'] = np.sqrt(pconv.diagonal())
-
-            abstand_val = s['popt'][1]
-            abstand_err = s['perr'][1]
-
-            k_val = abstand_val * 1.609e-19 / 6.626e-34 / 3e8
-            k_err = abstand_err * 1.609e-19 / 6.626e-34 / 3e8
-
-            lambda_val = 1 / k_val
-            lambda_err = 1 / k_val**2 * k_err
-
-            s['k_val'] = k_val
-            s['k_err'] = k_err
-
-            s['lambda_val'] = lambda_val
-            s['lambda_err'] = lambda_err
-        except RuntimeError as e:
-            logging.error(e)
-        except AttributeError as e:
-            logging.error(e)
-
-        a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
-        a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
-        a.grid(True)
-        filename = 'FH_{T}_{U_G}'.format(**s).replace('.', ',')+'.pdf'
-        s['filename'] = filename
-        f.savefig(os.path.join('_build', filename), **savefig_options)
-
-def fh_roh_plot(sets):
-    f = pl.figure()
-    a = f.add_subplot(1, 1, 1)
-    for s in sets:
-        a.plot(
-            s['U_B'], s['U_A'],
-            label=r'$T={T:.3g}\,\mathrm{{K}},\;U_\mathrm{{G}}={U_G:.3g}\,\mathrm{{V}}$'.format(**s),
-            linestyle='none', marker='.',
-        )
-    a.set_xlabel(r'$U_\mathrm{B}/\mathrm{V}$')
-    a.set_ylabel(r'$U_\mathrm{A}/\mathrm{V}$')
-    a.grid(True)
-    a.legend(loc='best')
-    f.savefig('_build/FH_Rohdaten.pdf', **savefig_options)
-
-def fh_gauss(U_B, U_B_min, abstand, breite, a1, a2, a3, a4, a5, steigung):
-    summands = []
-    summands.append(gauss(U_B, U_B_min + 1*abstand, breite, a1))
-    summands.append(gauss(U_B, U_B_min + 2*abstand, breite, a2))
-    summands.append(gauss(U_B, U_B_min + 3*abstand, breite, a3))
-    summands.append(gauss(U_B, U_B_min + 4*abstand, breite, a4))
-    summands.append(gauss(U_B, U_B_min + 5*abstand, breite, a5))
-
-    summands.append(linear(U_B, steigung))
-
-    return sum(summands)
-
-def dampfdruck(T):
-    return np.exp(10.55 - 3333/T - 0.85 * np.log(T)) * 133.322
 
 def job_dampfdruckkurve(T):
     x = np.linspace(150 + 273.15, 165 + 273.15)
