@@ -577,12 +577,14 @@ Tabelle~\ref{tab:Peakschwerpunkte}. Die Daten und ihre Anpassungen sind in den
 Abbildungen \ref{fig:Fit-<< I_list[0] >>} bis \ref{fig:Fit-<< I_list[-1] >>}
 gezeigt. Die Anpassung konvergiert aufgrund der 10 Freiheitsgrade nicht
 zuverlässig. Wir mussten die Startwerte sehr nah an den optimalen Werten
-wählen, um überhaupt eine Konvergenz zu erhalten. Die Einträge in der
-Fehlermatrix sind jedoch um mehrere Größenordnungen größer als die Parameter
-selbst. Da die Ergebnisse jedoch brauchbar aussehen, nehmen wir die
-Standardabweichung aus den einzelnen Gaußkurven als Fehler für den Schwerpunkt.
-Fehlerangaben gehen implizit von Gaußverteilung aus, also ist dies in diesem
-Fall genau richtig.
+wählen, um überhaupt eine Konvergenz zu erhalten, oder zumindest einige
+einigermaßen akzeptable Anpassung.
+
+Die Einträge in der Fehlermatrix sind jedoch um mehrere Größenordnungen größer
+als die Parameter selbst. Da die Ergebnisse jedoch recht brauchbar aussehen,
+nehmen wir die Standardabweichung aus den einzelnen Gaußkurven als Fehler für
+den Schwerpunkt. Fehlerangaben gehen implizit von Gaußverteilung aus, also ist
+dies in diesem Fall machbar.
 
 %< for I in I_list: >%
 \begin{figure}[htbp]
