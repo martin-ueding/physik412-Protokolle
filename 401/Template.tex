@@ -711,15 +711,28 @@ Daraus können wir dann das Auflösungsvermögen berechnen:
 Somit erhalten wir $N_\text{trans.} = \num{<< N_trans >>}$ und $N_\text{long.}
 = \num{<< N_long >>}$.
 
-Finesse \fehlt
-
 \subsection{Werte aus CCD Messung}
 
-\fehlt
+Aus Abbildung~\ref{fig:Zoom} lesen wir den Abstand zwischen zwei Ordnungen von
+\SI{<< fsr_ccd >>}{\meter} ab, die Halbwertsbreite rechnen wir aus der
+Standardabweichung der Anpassungskurven um und erhalten \SI{<< fwhm_ccd
+>>}{\meter}. Somit erhalten wir eine Finesse von
+\[
+    \mathcal F_\text{CCD} = \num{<< finesse_ccd >>}.
+\]
+
+Die Maxima sind aus den Daten der CCD Zeile zu unterscheiden, wenn sie einen
+Abstand von $\Deltaup \lambda = \SI{<< delta_lambda_ccd >>}{\meter}$ haben. Bei
+der Cadmiumlinie erhalten wir ein Auflösungsvermögen von
+\[
+    N_\text{CCD} = \num{<< N_ccd >>}.
+\]
 
 \subsection{Vergleich}
 
-\fehlt
+Die theoretischen Werte liegen erstaunlicherweise unterhalb der experimentellen
+Werte. Die Auflösungsvermögen aus der qualitativen Messung und der CCD Messung
+liegen zwar auch etwas auseinander, jedoch in der gleichen Größenordnung.
 
 \section{Diskussion}
 
@@ -929,6 +942,15 @@ diesem Fall wären die Minima nicht deutlich ausgeprägt.
 \end{figure}
 
 \section{Diskussion}
+
+Unsere Messung erfüllt die Erwartungen durch die Theorie. Die Wellenlänge des
+Übergangs konnten wir zuordnen, auch wenn diese mehrere Standardabweichungen
+von jedem Messwert entfernt liegt. Den Graphen nach hat die Anpassung an die
+Abstände der Maxima gut geklappt, vielleicht jedoch nicht auf drei signifikante
+Stellen genau.
+
+Durch eine falsche Eichung der Beschleunigungsspannung können die leicht
+abweichenden Wellenlängen auch erklärt werden.
 
 \printbibliography
 
