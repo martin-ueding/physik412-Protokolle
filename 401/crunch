@@ -144,7 +144,7 @@ def job_zeeman(T):
         cut = alpha < 0
         alpha = alpha[cut]
         intens = intens[cut]
-        lambda_ =  2 * d * np.cos(n * alpha) / (m_max - 1)
+        lambda_ =  2 * n * d * np.cos(alpha / n) / (m_max - 1)
 
         data[I] = (lambda_, intens)
 
