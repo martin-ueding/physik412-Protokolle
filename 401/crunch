@@ -355,10 +355,14 @@ def fit_aufspaltungen(T, fe, B):
     a.grid(True)
     f.savefig('_build/Energieaufspaltung.pdf', **savefig_options)
 
+    bohr_manuell_val = np.median(Delta_E_val / B_I)
+    bohr_manuell_err = np.median(Delta_E_err / B_I)
+
     bohr_val = popt[0]
     bohr_err = np.sqrt(pconv.diagonal()[0])
 
     T['bohr_magneton'] = unitprint.siunitx(bohr_val, bohr_err)
+    T['bohr_magneton_manuell'] = unitprint.siunitx(bohr_manuell_val, bohr_manuell_err)
     
     logging.info(popt)
 

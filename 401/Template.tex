@@ -727,8 +727,19 @@ Der Literaturwert für das Bohr'sche Magneton ist:
     \mu_\text B = \SI{9.274e-24}{\joule\per\tesla}.
 \]
 
-Unser Wert von \SI{<< bohr_magneton >>}{\joule\per\tesla} liegt um einen Faktor
-4 zu hoch.
+Unser Wert von \SI{<< bohr_magneton >>}{\joule\per\tesla} liegt vier
+Standardabweichungen vom Literaturwert entfernt. Da die Anpassungen für die
+Aufspaltungen recht große Unsicherheiten haben, sind die Datenpunkte in
+Abbildung~\ref{fig:Energieaufspaltung} mit großen Fehlern behaftet. Die
+Anpassungsfunktion \texttt{scipy.optimize} passt die Funktion zwar
+fehlergewichtet an, gibt als Unsicherheit jedoch nur die Unsicherheit der
+Anpassung aus.
+
+Wenn wir die Steigung, also $\mu_\text B$, sowie den Fehler mit Gauß'scher
+Fehlerfortplanzung für jeden Datenpunkt ausrechnen und den Median nehmen,
+erhalten wir \SI{<< bohr_magneton_manuell >>}{\joule\per\tesla}. Hier ist der
+Fehler sehr groß, jedoch realistischer als der reine Fehler durch die
+Anpassung.
 
 \chapter{Frank-Hertz-Versuch}
 
