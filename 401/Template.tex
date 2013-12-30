@@ -8,6 +8,7 @@
 \usepackage{pdflscape}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
+\usetikzlibrary{calc}
 
 \newcommand\versuchsnummer{401}
 \DeclareMathOperator\std{std}
@@ -373,13 +374,139 @@ Abbildung~\ref{fig:Termschema} dargestellt.
 \section{Aufbau}
 
 Eine Cadmiumlampe befindet sich zwischen zwei Polschuhen, die magnetische
-Induktion von zwei Spulen auf die Lichtquelle bündeln. Das Licht der Lampe wird
+Induktion von zwei Spulen auf die Lichtquelle bündeln. Die Lampe kann samt
+Magnet um \SI{90}{\degree} gedreht werden. Das Magnetfeld ist so
+durch die Stromversorgung der Spulen regelbar. Das Licht der Lampe wird
 durch einen Kondensor ($f = \SI{150}{\milli\meter}$) gesammelt und in einem
 Fabry-Pérot-Etalon (Dicke $d = \SI{4}{\milli\meter}$, Brechungsindex $n =
 \num{1.457}$ und Reflexionskoeffizient $r = \num{0.85}$) nach Wellenlängen
 aufgespalten. Eine weitere Abbildungslinse ($f = \SI{150}{\milli\meter}$)
 bildet das Licht durch einen roten Interferenzfilter ($\lambda = \SI{642.8 +-
 2.0}{\nano\meter}$) auf das Okular ab.
+
+Zur Betrachtung der Polarisation kann zwischen den Kondensor und das Etalon
+ein Linearpolarisator und ein $\frac{\lambda}4$-Plättchen gestellt werden.
+Für die Kalibrierung des Magnetfeldes wird die Cadmium-Lampe durch eine
+Hall-Sonde ersetzt.
+
+Eine Skizze dieses Aufbaus ist in Abbildung~\ref{fig:Aufbau_Zeeman} zu sehen.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{tikzpicture}[thick]
+        % optische Achse
+        \draw (0,-.2) rectangle (10,0);
+        % Lampe
+        \draw 
+        (.7,0) -- (.7,.7)
+        (.8,0)--(.8,.8)
+        (0,.5) rectangle (.5,1.5)
+        (.5,.5) coordinate (vru) -- (1.5,1.5) coordinate (hru)
+        (.5,1.5) coordinate (vro) -- (1.5,2.5) coordinate (hro)
+        (0,1.5) coordinate (vlo) -- (1,2.5) coordinate (hlo)
+        -- (hro) -- (hru)
+        ($(vlo)!1/3!(hlo)$) -- ($(vro)!1/3!(hro)$) -- ($(vru)!1/3!(hru)$)
+        ($(vlo)!2/3!(hlo)$) -- ($(vro)!2/3!(hro)$) -- ($(vru)!2/3!(hru)$)
+        (.25,1) circle (.05)
+        ;
+        \draw[->, >=latex, shorten >= -2pt, thin]
+        (.65,.4) arc (120:330: .2 and .1);
+        % erste Linse
+        \draw
+        (3,0) -- (3,.75)
+        -- (2.9,.75) -- (2.9,0)
+        (3,1.5) ellipse (.3 and .75)
+        (3,1.5) ellipse (.2 and 0.6)
+        (2.9,.75) arc (270:90: .3 and .75)
+        (3,2.25) -- (2.9,2.25)
+        ;
+        % Etalon
+        \draw
+        (5,0) -- (5,.75)
+        -- (4.9,.75) -- (4.9,0)
+        (5,1.5) ellipse (.3 and .75)
+        (5,1.5) ellipse (.15 and 0.5)
+        (4.9,.75) arc (270:90: .3 and .75)
+        (5,2.25) -- (4.9,2.25)
+        ;
+        % zweite Linse
+        \draw
+        (7,0) -- (7,.75)
+        -- (6.9,.75) -- (6.9,0)
+        (7,1.5) ellipse (.3 and .75)
+        (7,1.5) ellipse (.2 and 0.6)
+        (6.9,.75) arc (270:90: .3 and .75)
+        (7,2.25) -- (6.9,2.25)
+        ;
+        % Interferenzfilter
+        \draw
+        (8,0) -- (8,.75)
+        -- (7.9,.75) -- (7.9,0)
+        (8,1.5) ellipse (.3 and .75)
+        (8,1.5) ellipse (.15 and 0.5)
+        (7.9,.75) arc (270:90: .3 and .75)
+        (8,2.25) -- (7.9,2.25)
+        ;
+        % Okular
+        \draw
+        (9,0) -- (9,.75)
+        -- (8.9,.75) -- (8.9,0)
+        (9,.75) arc (270:24: .3 and .75)
+        (9,.75) arc (270:336: .3 and .75)
+        (8.9,.75) arc (270:90: .3 and .75)
+        (9,2.25) -- (8.9,2.25)
+        (9.5,1.2) -- (9,1.2) arc (270:90: .08 and .3) -- (9.5,1.8)
+        (9.5,1.5) ellipse (.08 and .3)
+        (9.5,1.5) ellipse (.04 and .2)
+        ;
+        % Beschriftungen
+        % Lampe und Magnet
+        \draw
+        (.35,1.65) -- (.6,3)
+        (1.1, 2.3) --(.7,3)
+        ;
+        \node[above] at (.65, 3) {\parbox{2cm}{\center{\small{Magnet-\\
+        polschuhe}}}};
+        \draw
+        (1.0,1.5) -- (1.3,0.8) node[right]
+        {\parbox{1.2cm}{\center{\small{Cd-\\Lampe}}}};
+        % erste Linse
+        \draw (2.9,2.3) -- (2.9,3) node[above]
+        {\parbox{2cm}{\center{\small{Linse\\$f =
+        \SI{150}{\milli\meter}$}}}};
+        % Etalon
+        \draw (4.9,2.3) -- (4.9,3) node[above]
+        {\parbox{2cm}{\center{\small{Fabry-Pérot-\\Etalon}}}};
+        % zweite Linse
+        \draw (6.8,2.3) -- (6.5,2.6) node[above]
+        {\parbox{2cm}{\center{\small{Linse\\$f =
+        \SI{150}{\milli\meter}$}}}};
+        % Interferenzfilter
+        \draw (7.9,2.3) -- (7.9,3) node[above]
+        {\parbox{1.8cm}{\center{\small{Interferenz-\\filter}}}};
+        % Okular
+        \draw (9.35,1.9) -- (9.4,2.5) node[above] {\small{Okular}};
+
+        % Stromquelle
+        \draw
+        (-1,1) -- ++ (-1,0) -- ++ (0,1) -- ++ (.5,.5) -- ++ (1,0) -- ++ (-.5,-.5)
+        coordinate (cube) -- ++ (-1,0)
+        (cube) -- ++ (0,-1) -- ++ (.5,.5) -- ++ (0,1)
+        (-1.5,1.5) circle (.2) node[label=330:{\small{$I$}}]{};
+        \draw[->]
+        (-1.75,1.25) to (-1.25,1.75);
+        \draw[out=0, in=180]
+        (-.75,1.6) to (0,1)
+        (-.75,1.7) to (0,1.1)
+        (-.75,1.9) to (.6,2.1)
+        (-.75,1.8) to (.5,2);
+        \node[below] at (-1.5,1) {\parbox{2cm}{\small{Stromquelle\\(regelbar)}}};
+    \end{tikzpicture}
+    \caption{%
+        Versuchsaufbau zur Beobachtung des Zeeman-Effektes.
+    }
+    \label{fig:Aufbau_Zeeman}
+\end{figure}
 
 \section{Qualitative Beobachtung der Aufspaltung}
 
