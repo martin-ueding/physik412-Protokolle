@@ -204,9 +204,16 @@ Brechungsindizes
         für kleine Winkel $\alpha$ entsprechend
     }
     m\lambda &= 2nd\cos\del{\frac\alpha n}.
+    \intertext{%
+        Eine für Fabry-Pérot-Interferometer wichtige Größe ist die Finesse.
+        Sie beschreibt das Verhältnis zwischen dem Abstand zweier Maxima,
+        dem freien Spektralbereich FSR, und der Halbwertsbreite eines
+        Maximums:
+    }
+    \mathcal{F} &= \frac{\Delta\lambda}{\delta\lambda} =
+    \frac{\piup\sqrt{R}}{1-R}
 \end{align*}
-%TODO: Finesse
-%TODO: Auflösungsvermögen
+
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -386,7 +393,7 @@ bildet das Licht durch einen roten Interferenzfilter ($\lambda = \SI{642.8 +-
 
 Zur Betrachtung der Polarisation kann zwischen den Kondensor und das Etalon
 ein Linearpolarisator und ein $\frac{\lambda}4$-Plättchen gestellt werden.
-Für die Kalibrierung des Magnetfeldes wird die Cadmium-Lampe durch eine
+Für die Kalibrierung des Magnetfeldes wird die Cadmiumlampe durch eine
 Hall-Sonde ersetzt.
 
 Eine Skizze dieses Aufbaus ist in Abbildung~\ref{fig:Aufbau_Zeeman} zu sehen.
