@@ -119,15 +119,15 @@ werden, sind gleich, sodass hier eine Aufspaltung in drei Linien stattfindet.
         \draw[thick] (5,3) coordinate (l2m1) -- (7,3)node[label=0:{$m=1$}] {} ;
         \draw[thick] (5,3.5) coordinate (l2m2) -- (7,3.5)node[label=0:{$m=2$}] {} ;
         \node[below] (l2) at (6,-2) {$l=2$};
-        \draw[red, ->, thick] (l1m-1) to (l2m0);
-        \draw[red, ->, thick] (l1m0) to (l2m1);
-        \draw[red, ->, thick] (l1m1) to (l2m2);
-        \draw[blue, ->, thick] (l1m-1) to (l2m-1);
-        \draw[blue, ->, thick] (l1m0) to (l2m0);
-        \draw[blue, ->, thick] (l1m1) to (l2m1);
-        \draw[green, ->, thick] (l1m-1) to (l2m-2);
-        \draw[green, ->, thick] (l1m0) to (l2m-1);
-        \draw[green, ->, thick] (l1m1) to (l2m0);
+        \draw[red, <->, thick] (l1m-1) to (l2m0);
+        \draw[red, <->, thick] (l1m0) to (l2m1);
+        \draw[red, <->, thick] (l1m1) to (l2m2);
+        \draw[blue, <->, thick] (l1m-1) to (l2m-1);
+        \draw[blue, <->, thick] (l1m0) to (l2m0);
+        \draw[blue, <->, thick] (l1m1) to (l2m1);
+        \draw[green, <->, thick] (l1m-1) to (l2m-2);
+        \draw[green, <->, thick] (l1m0) to (l2m-1);
+        \draw[green, <->, thick] (l1m1) to (l2m0);
     \end{tikzpicture}
 
     \caption{%
