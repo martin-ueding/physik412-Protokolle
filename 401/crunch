@@ -331,7 +331,8 @@ def job_doppler(T):
     Delta_nu = 7.16e-7 * nu_cd * np.sqrt(1000 / m_cd)
     Delta_lambda = 3e8 / nu_cd**2 * Delta_nu
 
-    T['m_cd'] = unitprint.siunitx(m_cd)
+    T['m_cd'] = unitprint.siunitx(m_cd, digits=4)
+    T['lambda_cd_nm'] = unitprint.siunitx(lambda_cd*1e9, digits=6)
     T['doppler_width_nu'] = unitprint.siunitx(Delta_nu)
     T['doppler_width_lambda'] = unitprint.siunitx(Delta_lambda / 10**-12)
 
